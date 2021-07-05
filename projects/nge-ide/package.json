@@ -1,0 +1,34 @@
+{
+  "name": "@mcisse/nge-ide",
+  "version": "0.0.0",
+  "description": "An extensible and flexible open source ide written in Angular.",
+  "keywords": [
+    "angular"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mciissee/nge-ide"
+  },
+  "bugs": {
+    "url": "https://github.com/mciissee/nge-ide/issues"
+  },
+  "homepage": "https://github.com/mciissee/nge-ide",
+  "author": {
+    "name": "Mamadou Cisse",
+    "email": "mciissee@gmail.com"
+  },
+  "license": "MIT",
+  "peerDependencies": {
+    "@angular/common": "^9.1.12",
+    "@angular/core": "^9.1.12"
+  },
+  "dependencies": {
+    "tslib": "^1.10.0"
+  },
+  "ngPackage": {
+    "dest": "../../dist/nge-ide",
+    "lib": {
+      "entryFile": "index.ts"
+    }
+  }
+}
