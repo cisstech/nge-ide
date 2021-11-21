@@ -1,0 +1,19 @@
+<as-split [direction]="direction" [gutterSize]="2" [useTransition]="true" (dragEnd)="_dragEnd($event)">
+  <ng-container *ngFor="let view of views; let i=index; trackBy: _trackById">
+    <as-split-area [size]="state.sizes[i]" [minSize]="minSize">
+      <header class="tab-bar" (click)="_toggle(i)">
+        <ng-container *ngIf="views.length > 1">
+          <div class="tab-item" *ngIf="direction === 'vertical'">
+            <div [class]="_chevron(i)"></div>
+          </div>
+        </ng-container>
+        <span>{{ view.title }}</span>
+        <div class="spacer"></div>
+        <ide-command-group [commands]="(view.commands|async) || []"></ide-command-group>
+      </header>
+      <section class="content">
+        <ng-template [view]="view"></ng-template>
+      </section>
+  </as-split-area>
+  </ng-container>
+</as-split>

@@ -1,0 +1,42 @@
+.as-split-area {
+  position: relative !important;
+  overflow: hidden !important;
+}
+
+.tab-bar {
+  z-index: 1;
+  display: flex;
+  position: relative;
+  height: var(--tab-height);
+  align-items: center;
+  overflow: hidden;
+  padding: 0px;
+  margin: 0;
+  font-size: 0.7rem;
+  background-color: var(--sideBarSectionHeader-background);
+  color: var(--sideBarSectionHeader-foreground);
+  border-bottom: 1px solid var(--sideBar-border);
+  cursor: pointer;
+  .tab-item {
+    display: inline-flex;
+    height: 100%;
+    align-items: center;
+    position: relative;
+    font-size: 14px;
+    font-style: normal;
+    padding: 0 4px;
+    cursor: pointer;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+}
+
+.spacer {
+  flex: 1;
+}
+
+.content {
+  width: 100%;
+  height: calc(100% - var(--tab-height));
+  overflow-y: auto;
+}

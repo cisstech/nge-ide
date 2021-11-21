@@ -1,0 +1,530 @@
+import { Injectable } from '@angular/core';
+import { BehaviorSubject, Observable, Subject } from 'rxjs';
+import { map } from 'rxjs/operators';
+import { URI } from 'vscode-uri';
+import { IContribution } from '../contributions';
+import { Paths } from '../utils/paths';
+import { IFile, IFolder, isResourceAncestor, isResourceParent, isSameResource, resourceId } from './file';
+import { FileSystemError } from './file-system-error';
+import {
+    FileChangeType,
+    FileSystemProviderCapabilities,
+    fileSystemProviderCapabilityName,
+    IFileChange,
+    IFileSystemProvider
+} from './file-system-provider';
+
+declare type FilePredicate = (file: IFile) => boolean;
+
+interface FileContent {
+    initial: string;
+    current: string;
+    changed: boolean;
+}
+
+@Injectable()
+export class FileService implements IContribution {
+    readonly id = 'workbench.contrib.file-service';
+
+    private readonly providers = new Map<string, IFileSystemProvider>();
+
+    private readonly folders: IFolder[] = [];
+    private readonly entries: Map<string, IFile> = new Map();
+    private readonly children: Map<string, IFile[]> = new Map();
+
+    private readonly tree = new BehaviorSubject<IFile[]>([]);
+    private readonly contents = new BehaviorSubject(new Map<string, FileContent>());
+
+    private readonly didChangeFile: Subject<IFileChange[]> = new Subject();
+    private readonly willChangeFile: Subject<IFileChange[]> = new Subject();
+
+    private readonly didRefresh: Subject<void> = new Subject();
+    private readonly willRefresh: Subject<void> = new Subject();
+
+    private readonly didSaveFile = new Subject<URI>();
+    private readonly willSaveFile = new Subject<URI>();
+    private readonly didCloseFile = new Subject<URI>();
+    private readonly willCloseFile = new Subject<URI>();
+
+    readonly treeChange: Observable<IFile[]> = this.tree.asObservable();
+
+    /** Emitted after refreshing the files.. */
+    readonly onDidRefresh = this.didRefresh.asObservable();
+    /** Emitted before refreshing the files. */
+    readonly onWillRefresh = this.willRefresh.asObservable();
+
+    /** Emitted after saving a file. */
+    readonly onDidSaveFile = this.didSaveFile.asObservable();
+    /** Emitted before saving a file. */
+    readonly onWillSaveFile = this.willSaveFile.asObservable();
+
+    /** Emitted after closing a file. */
+    readonly onDidCloseFile = this.didCloseFile.asObservable();
+    /** Emitted before closing a file. */
+    readonly onWillCloseFile = this.willCloseFile.asObservable();;
+
+    /** Emitted after creating/updating/deleting a file. */
+    readonly onDidChangeFile = this.didChangeFile.asObservable();
+    /** Emitted before creating/updating/deleting a file. */
+    readonly onWillChangeFile = this.willChangeFile.asObservable();
+
+    deactivate(): void {
+        this.entries.clear();
+        this.children.clear();
+        this.providers.clear();
+
+        this.folders.splice(0, this.folders.length);
+
+        this.tree.next([]);
+        this.contents.next(new Map());
+    }
+
+    async refresh(): Promise<void> {
+        this.entries.clear();
+        this.children.clear();
+
+        for (const folder of this.folders) {
+            const provider = await this.withProvider(folder.uri);
+            const files = await provider.readDirectory(folder.uri);
+            files.forEach((file) => {
+                this.entries.set(resourceId(file), file);
+                this.children.set(resourceId(file), files.filter(other => isResourceParent(other, file)));
+            });
+        }
+
+        const contents = this.contents.value;
+        contents.forEach((v, k) => {
+            if (!this.entries.has(k)) {
+                contents.delete(k);
+            }
+        });
+        this.contents.next(contents);
+        this.rebuild();
+    }
+
+    // PROVIDERS
+
+    hasProvider(scheme: string) {
+        return this.providers.has(scheme);
+    }
+
+    /**
+     * Registers a new {@link FileSystemProvider} for the certain scheme.
+     * @param provider The file system provider that should be registered.
+     */
+    registerProvider(provider: IFileSystemProvider): void {
+        if (this.providers.has(provider.scheme)) {
+            throw new Error(`A provider for the scheme ${provider.scheme} is already registered.`);
+        }
+        this.providers.set(provider.scheme, provider);
+    }
+
+    registerFolders(...folders: IFolder[]): Promise<void> {
+        this.folders.push(...folders);
+        return this.refresh();
+    }
+
+    /**
+     * Checks if the service can handle the given uri.
+     * @param uri URI to test.
+     *
+     * @returns `true` if the uri can be handled `false` otherwise.
+     */
+    canHandle(uri: monaco.Uri | URI): boolean {
+        return this.providers.has(uri.scheme);
+    }
+
+    /**
+     * Checks if the {@link IFileSystemProvider} registered for the the given uri scheme provides the given `capability`.
+     * @param uri URI to test.
+     * @param capability The required capability.
+     *
+     * @returns `true` if the uri can be handled and the required capability can be provided.
+     */
+    hasCapability(uri: monaco.Uri | URI, capability: FileSystemProviderCapabilities) {
+        const provider = this.providers.get(uri.scheme);
+        if (!provider) {
+            return false;
+        }
+        return provider.hasCapability(capability);
+    }
+
+    // CONTENT MANAGEMENT
+
+    contentChange(uri: monaco.Uri | URI): Observable<FileContent | undefined> {
+        return this.contents.pipe(
+            map(value => value.get(resourceId(uri)))
+        );
+    }
+
+    isDirty(uri?: monaco.Uri | URI): boolean {
+        const map = this.contents.value;
+        if (uri) {
+            return !!map.get(resourceId(uri))?.changed;
+        }
+
+        for (const content of map.values()) {
+            if (content.changed) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    update(uri: monaco.Uri | URI, content: string): void {
+        const map = this.contents.value;
+
+        const id = resourceId(uri);
+        const fileContent = map.get(id);
+        if (!fileContent) {
+            throw FileSystemError.FileNotFound(uri);
+        }
+
+        map.set(id, {
+            ...fileContent,
+            current: content,
+            changed: fileContent.initial !== content
+        });
+
+        this.contents.next(map);
+    }
+
+    async open(uri: monaco.Uri | URI): Promise<FileContent> {
+        const map = this.contents.value;
+
+        const id = resourceId(uri);
+        const content = map.get(id);
+        if (content) {
+            return content;
+        }
+
+        const value = await this.readFile(uri);
+
+        const newContent = {
+            initial: value,
+            current: value,
+            changed: false
+        };
+
+        map.set(id, newContent);
+        this.contents.next(map);
+
+        return newContent;
+    }
+
+    async save(uri: monaco.Uri | URI): Promise<void> {
+        const contents = this.contents.value;
+        const id = resourceId(uri);
+        const content = contents.get(id);
+        if (content?.changed) {
+            this.willSaveFile.next(uri);
+
+            await this.writeFile(uri, content.current);
+
+            content.changed = false;
+            contents.set(id, content);
+            this.contents.next(contents);
+
+            this.didSaveFile.next(uri);
+        }
+    }
+
+    async close(uri: monaco.Uri | URI): Promise<void> {
+        this.willCloseFile.next(uri);
+        this.contents.value.delete(resourceId(uri));
+        this.contents.next(this.contents.value);
+        this.didCloseFile.next(uri);
+    }
+
+    // SEARCH
+
+    /**
+     * Removes redundant entries from the list.
+     *
+     * A redundant item is an item in the list whose parent is also present.
+     *
+     * Ex. If B is a child of A then B will be removed from the list.
+     * @param entries The entries to normalize.
+     */
+    normalize(entries: IFile[]): IFile[] {
+        const nodes: IFile[] = [];
+        entries.forEach((r1) => {
+            if (!entries.some(r2 => isResourceAncestor(r1, r2))) {
+                nodes.push(r1);
+            }
+        });
+        return nodes;
+    }
+
+    find(uri: URI): IFile | undefined {
+        return this.entries.get(resourceId(uri));
+    }
+
+    findAll(predicate: FilePredicate): IFile[] {
+        const entries = [];
+        for (const pair of this.entries) {
+            if (predicate(pair[1])) {
+                entries.push(pair[1]);
+            }
+        }
+        return entries;
+    }
+
+    findChildren(entry: IFile): IFile[] {
+        return this.children.get(resourceId(entry)) || [];
+    }
+
+    findPredicate(predicate: FilePredicate): IFile | undefined {
+        for (const pair of this.entries) {
+            if (predicate(pair[1])) {
+                return pair[1];
+            }
+        }
+        return undefined;
+    }
+
+    // UTILS
+
+    isRoot(uri: monaco.Uri | URI): boolean {
+        return this.folders.some(f => resourceId(uri) === resourceId(f.uri));
+    }
+
+    entryName(entry: IFile): string {
+        const folder = this.folders.find(f => resourceId(entry) === resourceId(f.uri));
+        return folder?.name || Paths.basename(entry.uri.path);
+    }
+
+    // OPERATIONS
+
+    async readFile(
+        uri: URI
+    ): Promise<string> {
+        const provider = await this.withProvider(uri, FileSystemProviderCapabilities.FileRead);
+        return provider.read(uri);
+    }
+
+    async writeFile(
+        uri: URI,
+        content: string
+    ): Promise<void> {
+        const provider = await this.withProvider(uri, FileSystemProviderCapabilities.FileWrite);
+        return provider.write(uri, content, true);
+    }
+
+    async createFile(
+        parent: IFile,
+        fileName: string
+    ): Promise<void> {
+        await this.doCreate(parent, fileName, false);
+        await this.refresh();
+    }
+
+    async createDirectory(
+        parent: IFile,
+        dirName: string
+    ): Promise<void> {
+        await this.doCreate(parent, dirName, true);
+        await this.refresh();
+    }
+
+    async upload(
+        file: File,
+        destination: IFile,
+    ) {
+        const provider = await this.withProvider(destination.uri, FileSystemProviderCapabilities.FileUpload);
+
+        const uri = destination.uri.with({
+            path: Paths.normalize(Paths.join([destination.uri.path, file.name])),
+        });
+
+        this.willChangeFile.next([
+            { type: FileChangeType.Created, uri }
+        ]);
+
+        await provider.upload(file, destination.uri);
+
+        this.didChangeFile.next([
+            { type: FileChangeType.Created, uri }
+        ]);
+
+        await this.refresh();
+    }
+
+    async rename(
+        entry: IFile,
+        newName: string
+    ): Promise<void> {
+        newName = newName.trim();
+        if (this.entryName(entry) === newName) {
+            return;
+        }
+        const provider = await this.withProvider(entry.uri, FileSystemProviderCapabilities.FileWrite);
+
+        const newUri = entry.uri.with({
+            path: Paths.normalize(Paths.join([
+                Paths.dirname(entry.uri.path),
+                newName
+            ])),
+        });
+
+        this.willChangeFile.next([
+            { type: FileChangeType.Deleted, uri: entry.uri }
+        ]);
+        this.willChangeFile.next([
+            { type: FileChangeType.Created, uri: newUri }
+        ]);
+
+        await provider.rename(entry.uri, newName);
+
+        this.didChangeFile.next([
+            { type: FileChangeType.Deleted, uri: entry.uri }
+        ]);
+        this.didChangeFile.next([
+            { type: FileChangeType.Created, uri: newUri }
+        ]);
+
+        await this.refresh();
+    }
+
+    async delete(
+        entry: IFile
+    ): Promise<void> {
+        await this.doDelete(entry);
+        await this.refresh();
+    }
+
+    async deleteAll(
+        entries: IFile[]
+    ) {
+        await Promise.all(entries.map(this.doDelete.bind(this)));
+        await this.refresh();
+    }
+
+    async move(
+        source: IFile,
+        destination: IFile
+    ): Promise<void> {
+        await this.doMove(source, destination);
+        await this.refresh();
+    }
+
+    async copy(
+        source: IFile[],
+        destination: IFile
+    ) {
+        const entries = this.normalize(source);
+        await Promise.all(entries.map(entry => this.doMove(entry, destination, true)));
+    }
+
+
+    private async doMove(
+        source: IFile,
+        destination: IFile,
+        copy?: boolean
+    ): Promise<void> {
+        if (this.isRoot(source.uri)) {
+            throw FileSystemError.NoPermissions('Cannot move root file.');
+        }
+
+        const sourceProvider = await this.withProvider(source.uri, FileSystemProviderCapabilities.FileMove);
+        const targetProvider = await this.withProvider(destination.uri, FileSystemProviderCapabilities.FileMove);
+        if (sourceProvider.scheme !== targetProvider.scheme) {
+            throw FileSystemError.NoPermissions(`The scheme of the destination should be the same as the source file to move.`);
+        }
+
+        if (isSameResource(source, destination)) {
+            return;
+        }
+
+        if (isResourceAncestor(destination, source)) {
+            return;
+        }
+
+        // TODO emit change events
+        await sourceProvider.move(source.uri, destination.uri, { copy: !!copy });
+    }
+
+    private async doCreate(
+        parent: IFile,
+        name: string,
+        isFolder: boolean
+    ): Promise<void> {
+        const provider = await this.withProvider(parent.uri, FileSystemProviderCapabilities.FileWrite);
+        if (parent.readOnly) {
+            throw FileSystemError.NoPermissions(parent.uri);
+        }
+
+        const uri = parent.uri.with({
+            path: Paths.normalize(Paths.join([parent.uri.path, name])),
+        });
+
+        this.willChangeFile.next([
+            { type: FileChangeType.Created, uri }
+        ]);
+
+        if (isFolder) {
+            await provider.createDirectory(uri);
+        } else {
+            await provider.write(uri, '', false);
+        }
+
+        this.didChangeFile.next([
+            { type: FileChangeType.Created, uri }
+        ]);
+    }
+
+    private async doDelete(
+        entry: IFile
+    ) {
+        const provider = await this.withProvider(entry.uri, FileSystemProviderCapabilities.FileDelete);
+        this.willChangeFile.next([
+            { type: FileChangeType.Deleted, uri: entry.uri }
+        ]);
+        await provider.delete(entry.uri);
+        this.didChangeFile.next([
+            { type: FileChangeType.Deleted, uri: entry.uri }
+        ]);
+    }
+
+    private async withProvider(
+        uri: URI,
+        ...capabilities: FileSystemProviderCapabilities[]
+    ): Promise<IFileSystemProvider> {
+        if (!Paths.isAbsolutePath(uri.path)) {
+            throw new Error(`Unable to resolve filesystem provider with relative file path "${uri.toString()}"`);
+        }
+
+        const provider = this.providers.get(uri.scheme);
+        if (!provider) {
+            throw new Error(`No file system provider found for ${uri.toString()}`);
+        }
+
+        for (const capability of capabilities) {
+            if (!provider.hasCapability(capability)) {
+                const name = fileSystemProviderCapabilityName(capability);
+                throw new Error(`Filesystem provider for scheme '${uri.scheme}' does not have ${name} capability.`);
+            }
+        }
+
+        return provider;
+    }
+
+
+    private rebuild(): void {
+        const tree: IFile[] = [];
+        this.folders.forEach(f => tree.push(this.find(f.uri)!))
+        this.tree.next(this.sortFiles(tree));
+    }
+
+    private sortFiles(files: IFile[]): IFile[] {
+        return files.sort((a, b) => {
+            const isBothDir = a.isFolder && b.isFolder;
+            const isBothNotDir = !a.isFolder && !b.isFolder;
+            if (isBothDir || isBothNotDir) {
+                return Paths.basename(a.uri.path).localeCompare(Paths.basename(b.uri.path));
+            }
+            return a.isFolder ? -1 : 1;
+        });
+    }
+}

@@ -1,0 +1,18 @@
+:host {
+  display: flex;
+  align-items: center;
+  height: 100%;
+}
+
+.command {
+  cursor: pointer;
+  display: block;
+  width: 16px;
+  height: 16px;
+  margin: 0 4px;
+  background-color: transparent;
+  &:hover {
+    background-color: #f0f0f0;
+    border-radius: 4px;
+  }
+}

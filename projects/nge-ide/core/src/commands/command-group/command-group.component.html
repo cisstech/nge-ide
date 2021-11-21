@@ -1,0 +1,14 @@
+<ng-container *ngIf="commands">
+  <ng-container *ngFor="let command of commands; trackBy: _trackById">
+    <ng-container *ngIf="command.enabled">
+      <div
+        class="command"
+        role="button"
+        [attr.command-id]="command.id"
+        [matTooltip]="command.label"
+        (click)="_execute(command, $event)">
+        <ui-icon [icon]="command.icon"></ui-icon>
+      </div>
+    </ng-container>
+  </ng-container>
+</ng-container>
