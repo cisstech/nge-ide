@@ -7,6 +7,6 @@ import { Paths } from '../utils';
 })
 export class FileNamePipe implements PipeTransform {
     transform(value: URI): string {
-        return Paths.basename(value.path);
+        return Paths.basename(value.path) || value.path;
     }
 }

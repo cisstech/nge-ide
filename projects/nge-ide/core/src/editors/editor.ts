@@ -21,6 +21,11 @@ declare type CloseGuard = (
     resource: URI
 ) => Promise<boolean>;
 
+interface GroupTab {
+    readonly resource: URI;
+    readonly title: string;
+}
+
 /**
  * Represents the state of the editor.
  */
@@ -82,8 +87,8 @@ export abstract class Editor {
 export class EditorGroup {
     private static NEXT_ID = 0;
 
+    private _tabs: GroupTab[] = [];
     private _request?: OpenRequest;
-    private _resources: URI[] = [];
     private _activeEditor?: Editor;
     private _activeIndex = 0;
 
@@ -91,11 +96,11 @@ export class EditorGroup {
     readonly id: string = 'editor-group#' + ++EditorGroup.NEXT_ID;
 
     get isEmpty(): boolean {
-        return this._resources.length === 0;
+        return this._tabs.length === 0;
     }
 
-    get resources(): URI[] {
-        return this._resources;
+    get tabs(): GroupTab[] {
+        return this._tabs;
     }
 
     get activeEditor(): Editor | undefined {
@@ -116,8 +121,8 @@ export class EditorGroup {
         }
 
         this._activeIndex = index;
-        if (this._resources[index]) {
-            this.open(this._resources[index], {});
+        if (this._tabs[index]) {
+            this.open(this._tabs[index], {});
         }
     }
 
@@ -159,7 +164,7 @@ export class EditorGroup {
      * @throws {ReferenceError} if any of the arguments is null.
      */
     contains(resource: URI): boolean {
-        return this._resources.some(e => compareURI(e, resource));
+        return this._tabs.some(e => compareURI(e.resource, resource));
     }
 
     /**
@@ -176,16 +181,17 @@ export class EditorGroup {
     }
 
     /**
-     * Opens a resource inside the group.
+     * Opens a resoucr inside the group.
      *
      * Note: this method will creates a new instance of a component able
      * to open the resource only if needed otherwise it will reuse an existing one.
-     * @param resource the resource to open.
+     * @param tab the resource to open.
      * @param options options to pass to the editor that will open the resource.
      * @throws {ReferenceError} if any of the arguments is null.
      * @returns An promise that resolve once the resource is opened.
      */
-    async open(resource: URI, options: OpenOptions): Promise<void> {
+    async open(tab: GroupTab, options: OpenOptions): Promise<void> {
+        const resource = tab.resource;
         const request = new OpenRequest(resource, this.injector, options);
 
         return new Promise<void>((resolve, reject) => {
@@ -207,11 +213,11 @@ export class EditorGroup {
             editor.handle(request);
 
             if (!this.contains(resource)) {
-                this._resources.push(resource);
+                this._tabs.push(tab);
             }
 
-            this._activeIndex = this._resources.findIndex(r => {
-                return compareURI(r, resource);
+            this._activeIndex = this._tabs.findIndex(e => {
+                return compareURI(e.resource, resource);
             }) || 0;
 
             this.opened(this, editor, resource);
@@ -227,14 +233,14 @@ export class EditorGroup {
      * @returns A promise that resolve with `true` if the resource is removed `false` otherwise.
      */
     async close(resource: URI): Promise<boolean> {
-        const index = this._resources.findIndex(e => compareURI(e, resource));
+        const index = this._tabs.findIndex(e => compareURI(e.resource, resource));
         if (index !== -1) {
-            const canClose = await this.closeGuard(this, this._resources[index]);
+            const canClose = await this.closeGuard(this, this._tabs[index].resource);
             if (!canClose) {
                 return false;
             }
 
-            const toClose = this._resources.splice(index, 1).pop() as URI;
+            const toClose = this._tabs.splice(index, 1).pop()?.resource as URI;
             if (this.isActive(resource) || this.isEmpty) {
                 this._request = undefined;
                 this._activeEditor = undefined;
@@ -242,8 +248,8 @@ export class EditorGroup {
 
             const newIndex = Math.max(0, index - 1);
             let toFocus: URI | undefined;
-            if (!this.activeResource && newIndex < this._resources.length) {
-                toFocus = this._resources[newIndex];
+            if (!this.activeResource && newIndex < this._tabs.length) {
+                toFocus = this._tabs[newIndex].resource;
             }
 
             this.closed(this, toClose, toFocus);
@@ -258,8 +264,8 @@ export class EditorGroup {
      * @returns A promise that resolve once the closing succeed or fail.
      */
     async closeAll(): Promise<boolean> {
-        while (this._resources.length) {
-            if (!(await this.close(this._resources[0]))) {
+        while (this._tabs.length) {
+            if (!(await this.close(this._tabs[0].resource))) {
                 return false;
             }
         }

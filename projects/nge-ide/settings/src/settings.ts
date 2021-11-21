@@ -1,12 +1,8 @@
 import { Injector, NgModule } from '@angular/core';
-import { CONTRIBUTION, IContribution, SidebarContainer, ViewContainerService, ViewService } from '@mcisse/nge-ide/core';
+import { CONTRIBUTION, EditorService, IContribution, SidebarContainer, ViewContainerService } from '@mcisse/nge-ide/core';
 import { CodIcon } from '@mcisse/nge/ui/icon';
-import { of } from 'rxjs';
-
-/**
- * Identifier of the settings view component.
- */
-export const SETTINGS_VIEW_ID = 'workbench.view.settings';
+import { URI } from 'vscode-uri';
+import { SettingsEditor } from './settings-editor/settings-editor';
 
 /**
  * Identifier of the settings container.
@@ -18,20 +14,10 @@ class Contribution implements IContribution {
     readonly id = 'workbench.contrib.settings';
 
     activate(injector: Injector) {
-        const viewService = injector.get(ViewService);
+        const editorService = injector.get(EditorService)
         const viewContainerService = injector.get(ViewContainerService);
 
-        viewService.register({
-            id: SETTINGS_VIEW_ID,
-            title: 'Paramètres',
-            commands: of([]),
-            viewContainerId: SETTINGS_CONTAINER_ID,
-            component: () =>
-                import(
-                    /* webpackChunkName: "ide-sidebar-settings" */
-                    './settings.module'
-                ).then((m) => m.SettingsModule),
-        });
+        editorService.registerEditors(new SettingsEditor());
 
         viewContainerService.register(
             new (class extends SidebarContainer {
@@ -40,6 +26,9 @@ class Contribution implements IContribution {
                 readonly icon = new CodIcon('settings-gear');
                 readonly side = 'left';
                 readonly align = 'bottom';
+                readonly onClickHandler = () => editorService.open(URI.parse('editor://settings'), {
+                    tabTitle: 'Paramètres'
+                })
             })()
         );
     }

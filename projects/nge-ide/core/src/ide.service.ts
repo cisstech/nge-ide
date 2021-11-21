@@ -1,7 +1,7 @@
 import { Injectable, Injector } from '@angular/core';
+import { NgeMonacoLoaderService } from '@mcisse/nge/monaco';
 import { fromEvent, PartialObserver, Subject, Subscription } from 'rxjs';
 import { CONTRIBUTION, IContribution } from './contributions';
-import { NgeMonacoLoaderService } from '@mcisse/nge/monaco';
 import { FileService } from './files';
 
 declare type Observer<T> = () => (T | Promise<T>) | PartialObserver<T | Promise<T>>;

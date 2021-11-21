@@ -7,6 +7,7 @@ export * from './src/editors';
 export * from './src/files';
 export * from './src/ide.service';
 export * from './src/notification';
+export * from './src/pipes';
 export * from './src/status-bar';
 export * from './src/storage';
 export * from './src/utils';

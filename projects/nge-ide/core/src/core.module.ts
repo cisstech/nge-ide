@@ -3,7 +3,7 @@ import { NgEventBus } from 'ng-event-bus';
 import { CommandService } from './commands';
 import { CONTRIBUTION } from './contributions';
 import { DiagnosticService } from './diagnostics';
-import { MonacoService, EditorService } from './editors';
+import { MonacoService, EditorService, SettingsService } from './editors';
 import { FileService } from './files';
 import { IdeService } from './ide.service';
 import { NotificationService } from './notification';
@@ -20,6 +20,7 @@ import { ViewContainerService, ViewService } from './views';
         ViewService,
         EditorService,
         CommandService,
+        SettingsService,
         StatusBarService,
         DiagnosticService,
         MonacoService,
@@ -31,6 +32,7 @@ import { ViewContainerService, ViewService } from './views';
         { provide: CONTRIBUTION, multi: true, useExisting: CommandService },
         { provide: CONTRIBUTION, multi: true, useExisting: FileService },
         { provide: CONTRIBUTION, multi: true, useExisting: EditorService },
+        { provide: CONTRIBUTION, multi: true, useExisting: SettingsService },
         { provide: CONTRIBUTION, multi: true, useExisting: MonacoService },
         { provide: CONTRIBUTION, multi: true, useExisting: ViewContainerService },
     ],

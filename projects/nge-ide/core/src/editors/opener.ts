@@ -22,6 +22,9 @@ export interface OpenOptions {
         column: number;
     };
 
+    /** custom tab title. */
+    readonly tabTitle?: string;
+
     /** open the resource with diff editor */
     readonly diff?: {
         content: string

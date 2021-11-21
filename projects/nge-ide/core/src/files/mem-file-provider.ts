@@ -47,7 +47,7 @@ export class MemFileProvider extends FileSystemProvider {
 
     constructor() {
         super();
-        for (let i = 1; i <= 200; i++) {
+        for (let i = 1; i <= 5; i++) {
             this.entries.set(`/folder-${i}`, new MemFile('folder', `/folder-${i}`));
             this.entries.set(`/folder-${i}/file.ts`, new MemFile('file', `/folder-${i}/file.ts`));
             this.entries.set(`/folder-${i}/file.scss`, new MemFile('file', `/folder-${i}/file.scss`));

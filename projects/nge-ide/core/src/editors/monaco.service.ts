@@ -8,6 +8,7 @@ import { Diagnostic, DiagnosticService, DiagnosticSeverity } from '../diagnostic
 import { compareURI, FileChangeType, FileService, resourceId } from '../files';
 import { StatusBarService } from '../status-bar';
 import { Paths } from '../utils';
+import { SettingsService } from './settings.service';
 
 import IPosition = monaco.IPosition;
 import IDisposable = monaco.IDisposable;
@@ -32,7 +33,7 @@ export class MonacoService implements IContribution {
     private readonly cursor$ = new BehaviorSubject<Nullable<IPosition>>(undefined);
     private readonly activeEditor$ = new BehaviorSubject<Nullable<IStandaloneCodeEditor>>(undefined);
     private readonly activeLanguage$ = new BehaviorSubject<Nullable<string>>(undefined)
-    private readonly didFollowLink = new Subject<{uri: monaco.Uri, link: string}>();
+    private readonly didFollowLink = new Subject<{ uri: monaco.Uri, link: string }>();
 
     private setModelMarkers?: any;
     private monacoApiDecorated = false;
@@ -49,6 +50,7 @@ export class MonacoService implements IContribution {
 
     constructor(
         private readonly fileService: FileService,
+        private readonly settingsService: SettingsService,
         private readonly statusBarService: StatusBarService,
         private readonly diagnosticService: DiagnosticService,
     ) { }
@@ -65,6 +67,9 @@ export class MonacoService implements IContribution {
                 }
             });
         }));
+
+        this.subscriptions.push(this.settingsService.onDidChange.subscribe(this.updateSettings.bind(this)));
+
         this.registerStatusBarItems();
     }
 
@@ -200,6 +205,8 @@ export class MonacoService implements IContribution {
         }, '');
 
         this.holders.set(editor.getId(), { editor, disposables });
+
+        this.updateSettings();
     }
 
     onDisposeEditor(editor: IStandaloneCodeEditor): void {
@@ -229,12 +236,19 @@ export class MonacoService implements IContribution {
     }
 
 
-    private disposeModel(uri: URI) {
+    private disposeModel(uri: URI): void {
         const model = monaco.editor.getModel(uri);
         model?.dispose();
     }
 
-    private registerStatusBarItems() {
+    private updateSettings(): void {
+        const settings = this.settingsService.extract('editor');
+        this.holders.forEach(holder => {
+            holder.editor.updateOptions(settings);
+        });
+    }
+
+    private registerStatusBarItems(): void {
         this.statusBarService.register({
             id: 'workbench.status-bar-item.cursor',
             side: 'right',
@@ -299,14 +313,17 @@ export class MonacoService implements IContribution {
         }
     }
 
-    private decorateMonacoEditorApi() {
+    private decorateMonacoEditorApi(): void {
         if (!this.monacoApiDecorated) {
             this.monacoApiDecorated = true;
             this.decorateSetModelMarkers();
+            this.subscriptions.push(
+
+            )
         }
     }
 
-    private undecorateMonacoEditorApi() {
+    private undecorateMonacoEditorApi(): void {
         if (this.monacoApiDecorated) {
             this.monacoApiDecorated = false;
             monaco.editor.setModelMarkers = (model, owner, markers) => {
@@ -316,7 +333,7 @@ export class MonacoService implements IContribution {
         }
     }
 
-    private decorateSetModelMarkers() {
+    private decorateSetModelMarkers(): void {
         this.setModelMarkers = monaco.editor.setModelMarkers;
         monaco.editor.setModelMarkers = (model, owner, markers) => {
             this.setModelMarkers.call(monaco.editor, model, owner, markers);
@@ -349,4 +366,5 @@ export class MonacoService implements IContribution {
             );
         };
     }
+
 }

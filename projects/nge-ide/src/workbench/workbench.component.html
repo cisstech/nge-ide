@@ -9,15 +9,15 @@
         nzType="card"
         [(nzSelectedIndex)]="group.activeIndex"
         [nzTabBarExtraContent]="tabExtra">
-        <ng-container *ngFor="let resource of group.resources; trackByUri">
+        <ng-container *ngFor="let tab of group.tabs; trackByUri">
           <nz-tab [nzTitle]="tabTitle"></nz-tab>
           <ng-template #tabTitle>
-            <ui-icon [icon]="resource.path | fileIcon"></ui-icon>
-            <span [matTooltip]="resource.fsPath">{{resource|fileName}}</span>
-            <ng-container *ngIf="resource|fileChanged|async">
+            <ui-icon [icon]="tab.resource.path | fileIcon"></ui-icon>
+            <span [matTooltip]="tab.resource.fsPath">{{tab.title}}</span>
+            <ng-container *ngIf="tab.resource|fileChanged|async">
               <span class="codicon codicon-close-dirty"></span>
             </ng-container>
-            <span class="codicon codicon-close close-group-btn" (click)="group.close(resource)"></span>
+            <span class="codicon codicon-close close-group-btn" (click)="group.close(tab.resource)"></span>
           </ng-template>
         </ng-container>
         <ng-template #tabExtra>

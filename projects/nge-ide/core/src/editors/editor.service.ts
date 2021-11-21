@@ -151,7 +151,10 @@ export class EditorService implements IContribution {
 
         this.willOpen.next(resource);
 
-        return group.open(resource, options);
+        return group.open({
+            resource,
+            title: options?.tabTitle || Paths.basename(resource.path),
+        }, options);
     }
 
     /**
@@ -196,9 +199,9 @@ export class EditorService implements IContribution {
     async saveAll(): Promise<any> {
         const changes: URI[] = [];
         this.listGroups().forEach(group => {
-           group.resources.forEach(resource => {
-               if (this.fileService.isDirty(resource)) {
-                   changes.push(resource);
+           group.tabs.forEach(tab => {
+               if (this.fileService.isDirty(tab.resource)) {
+                   changes.push(tab.resource);
                }
 
            });
