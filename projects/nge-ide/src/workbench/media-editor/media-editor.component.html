@@ -1,0 +1,22 @@
+<div class="media-editor">
+  <ng-container [ngSwitch]="type">
+    <ng-container *ngSwitchCase="'image'">
+      <img [src]="url" />
+    </ng-container>
+    <ng-container *ngSwitchCase="'video'">
+      <video controls>
+        <source [src]="url" />
+        Sorry, your browser doesn't support embedded videos.
+      </video>
+    </ng-container>
+    <ng-container *ngSwitchCase="'audio'">
+      <audio controls>
+        <source [src]="url" />
+        Sorry, your browser doesn't support embedded audio.
+      </audio>
+    </ng-container>
+    <ng-container *ngSwitchDefault>
+      <h2>Unsupported media type</h2>
+    </ng-container>
+  </ng-container>
+</div>

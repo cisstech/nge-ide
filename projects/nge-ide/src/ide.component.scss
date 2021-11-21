@@ -1,0 +1,77 @@
+:host {
+  display: flex;
+  flex-flow: column;
+  position: relative;
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+  padding: 0;
+  margin: 0;
+}
+
+:host::ng-deep {
+  --tab-height: 36px;
+
+  --activityBar-background: #f6f8fa; // Activity Bar background color
+  --activityBar-foreground: #24292e; //  Activity Bar foreground color (for example used for the icons)
+  --activityBar-activeBorder: #526fff; // Activity Bar active indicator border color
+  --activityBar-dropBackground: #f6f8fa; // Drag and drop feedback color for the Activity Bar items
+  --activityBar-inactiveForeground: #24292e99; // Activity Bar item foreground color when it is inactive
+
+  --activityBarBadge-background: #526fff; // Activity notification badge background color
+  --activityBarBadge-foreground: #ffffff; // Activity notification badge foreground color
+
+  --sideBar-dropBackground: #2930391a; // Drag and drop feedback color for the side bar sections- The color should have transparency so that the side bar sections can still shine through
+  --sideBar-background: #fafbfc; // Side Bar background color
+  --sideBar-foreground: #586069; // Side Bar foreground color
+  --sideBar-border: #dddddd; // Side Bar border color on the side separating the editor
+  --sideBarSectionHeader-background: #fafbfc; // Side Bar section header background color
+  --sideBarSectionHeader-foreground: #24292e; // Side Bar section header foreground color
+}
+
+// DARK
+:host-context(.dark-theme) :host::ng-deep {
+  --activityBar-background: #15181f; // #f6f8fa; // Activity Bar background color
+  --activityBar-foreground: #ffffff; //#24292e; //  Activity Bar foreground color (for example used for the icons)
+  --activityBar-activeBorder: #526fff; // Activity Bar active indicator border color
+  --activityBar-dropBackground: #f6f8fa; // Drag and drop feedback color for the Activity Bar items
+  --activityBar-inactiveForeground: #ffffff99; //#24292e99; // Activity Bar item foreground color when it is inactive
+
+  --activityBarBadge-background: #526fff; // Activity notification badge background color
+  --activityBarBadge-foreground: #ffffff; // Activity notification badge foreground color
+
+  --sideBar-dropBackground: #2930391a; // Drag and drop feedback color for the side bar sections- The color should have transparency so that the side bar sections can still shine through
+  --sideBar-background: #293039; //#fafbfc; // Side Bar background color
+  --sideBar-foreground: #ffffff; // #586069; // Side Bar foreground color
+  --sideBar-border: #293039; // #dddddd; // Side Bar border color on the side separating the editor
+  --sideBarSectionHeader-background: #293039; //#fafbfc; // Side Bar section header background color
+  --sideBarSectionHeader-foreground: #ffffff; //#24292e; // Side Bar section header foreground color
+
+  --tab-activeBackground: #3b4252;
+  --tab-activeBorder: #88c0d000;
+  --tab-activeBorderTop: #88c0d000;
+  --tab-activeForeground: #d8dee9;
+  --tab-border: #3b425200;
+  --tab-hoverBackground: #3b4252cc;
+  --tab-hoverBorder: #88c0d000;
+  --tab-inactiveBackground: #2e3440;
+  --tab-inactiveForeground: #d8dee966;
+  --tab-unfocusedActiveBorder: #88c0d000;
+  --tab-unfocusedActiveBorderTop: #88c0d000;
+  --tab-unfocusedActiveForeground: #d8dee999;
+  --tab-unfocusedHoverBackground: #3b4252b3;
+  --tab-unfocusedHoverBorder: #88c0d000;
+  --tab-unfocusedInactiveForeground: #d8dee966;
+}
+
+:host::ng-deep {
+  as-split {
+    position: relative;
+    height: 100%;
+  }
+  .as-split-area {
+    height: 100% !important;
+    position: relative;
+    overflow: hidden !important;
+  }
+}

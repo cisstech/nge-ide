@@ -1,0 +1,30 @@
+<ng-container *ngIf="!isEmpty">
+  <ul class="activitybar" role="toolbar" aria-label="Activity Bar" cdkDropList (cdkDropListDropped)="reorder($event)">
+    <li *ngFor="let item of top; trackBy: trackById" cdkDrag cdkDragLockAxis="y">
+      <ng-container *ngTemplateOutlet="activityBarItemTplt; context: { $implicit: item }"></ng-container>
+    </li>
+    <li class="spacer"></li>
+    <li *ngFor="let item of bottom; trackBy: trackById">
+      <ng-container *ngTemplateOutlet="activityBarItemTplt; context: { $implicit: item }"></ng-container>
+    </li>
+  </ul>
+  <div class="sidebar" aria-label="Side Bar">
+    <ide-view-group *ngIf="active" [container]="active"></ide-view-group>
+  </div>
+</ng-container>
+<ng-template #activityBarItemTplt let-item>
+  <div
+    class="activitybar-item"
+    role="button"
+    [class.active]="isActive(item)"
+    [attr.aria-label]="item.title">
+    <ui-icon
+      class="activitybar-icon"
+      [id]="item.id"
+      [icon]="item.icon"
+      [matBadge]="(item.badge|async) || ''"
+      [matTooltip]="item.title"
+      (click)="setActive(item)">
+    </ui-icon>
+  </div>
+</ng-template>

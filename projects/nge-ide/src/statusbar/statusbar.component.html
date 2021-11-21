@@ -1,0 +1,23 @@
+<div class="status-bar-container">
+  <ng-container *ngFor="let item of leftViews; trackBy: track">
+    <div
+      *ngIf="item.active | async"
+      [matTooltip]="item.tooltip || ''"
+      class="status-bar-item"
+      [class.clickable]="!!item.action"
+      [innerHTML]="item.content | async | safe: 'html'"
+      (click)="item.action && item.action()">
+    </div>
+  </ng-container>
+  <div class="spacer"></div>
+  <ng-container *ngFor="let item of rightViews; trackBy: track">
+    <div
+      *ngIf="item.active | async"
+      [matTooltip]="item.tooltip || ''"
+      class="status-bar-item"
+      [class.clickable]="!!item.action"
+      [innerHTML]="item.content | async | safe: 'html'"
+      (click)="item.action && item.action()">
+    </div>
+  </ng-container>
+</div>

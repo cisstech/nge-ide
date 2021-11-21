@@ -1,0 +1,32 @@
+<as-split
+  direction="horizontal"
+  [gutterSize]="2"
+  [useTransition]="true"
+  cdkDropListGroup>
+  <ng-container *ngFor="let group of groups | async; trackBy: trackById">
+    <as-split-area class="editor-group" style="overflow: hidden;">
+      <nz-tabset
+        nzType="card"
+        [(nzSelectedIndex)]="group.activeIndex"
+        [nzTabBarExtraContent]="tabExtra">
+        <ng-container *ngFor="let resource of group.resources; trackByUri">
+          <nz-tab [nzTitle]="tabTitle"></nz-tab>
+          <ng-template #tabTitle>
+            <ui-icon [icon]="resource.path | fileIcon"></ui-icon>
+            <span [matTooltip]="resource.fsPath">{{resource|fileName}}</span>
+            <ng-container *ngIf="resource|fileChanged|async">
+              <span class="codicon codicon-close-dirty"></span>
+            </ng-container>
+            <span class="codicon codicon-close close-group-btn" (click)="group.close(resource)"></span>
+          </ng-template>
+        </ng-container>
+        <ng-template #tabExtra>
+          <ide-command-group [commands]="(commands|async)||[]"></ide-command-group>
+        </ng-template>
+      </nz-tabset>
+      <div class="editor-wrapper">
+        <ng-template [editor]="group.activeEditor"></ng-template>
+      </div>
+    </as-split-area>
+  </ng-container>
+</as-split>

@@ -1,0 +1,47 @@
+:host {
+  --statusBar-background: rgb(59, 66, 82);
+  --statusBar-foreground: rgb(216, 222, 233);
+  --statusBarItem-hoverBackground: rgba(216, 222, 233, 0.2);
+  &::ng-deep {
+    .status-bar-icon {
+      font-size: 10px !important;
+      margin: 0 4px;
+      width: 10px;
+      height: 10px;
+    }
+  }
+}
+
+.status-bar-container {
+  display: flex;
+  align-content: center;
+  align-items: center;
+  box-sizing: border-box;
+  height: 20px;
+  background-color: var(--statusBar-background);
+  color: var(--statusBar-foreground);
+  font-size: 0.8em;
+  padding: 0.2rem 0;
+}
+
+.status-bar-item {
+  padding: 0 0.6rem;
+  display: flex;
+  align-items: center;
+  &.clickable {
+    cursor: pointer;
+  }
+}
+
+.status-bar-item:hover {
+  background-color: var(--statusBarItem-hoverBackground);
+}
+
+.spacer {
+  flex: 1;
+}
+
+a {
+  color: var(--statusBar-foreground);
+  text-decoration: none;
+}

@@ -1,0 +1,30 @@
+<nz-tabset [nzType]="'card'" [nzTabBarExtraContent]="extra" [(nzSelectedIndex)]="activeContainerIndex">
+  <ng-container *ngFor="let container of containers; trackBy: trackById">
+    <nz-tab
+      [nzTitle]="title"
+      (nzClick)="setActiveContainer(container)">
+      <ng-template #title>
+        <nz-badge [nzCount]="(container.badge|async) || 0" [nzShowZero]="false" [nzOffset]="[0, 0]">
+          <span>{{container.title}}</span>
+        </nz-badge>
+      </ng-template>
+    </nz-tab>
+  </ng-container>
+  <ng-template #extra>
+    <ng-container *ngIf="activeContainerView">
+      <ng-container *ngIf="activeContainerViews.length > 1">
+        <nz-select [ngModel]="activeContainerView!.id" (ngModelChange)="setActiveView($event)">
+          <ng-container *ngFor="let view of activeContainerViews; trackBy: trackById">
+            <nz-option [nzValue]="view.id" [nzLabel]="view.title"></nz-option>
+          </ng-container>
+        </nz-select>
+      </ng-container>
+      <ide-command-group [commands]="(activeContainerView!.commands|async) || []"></ide-command-group>
+    </ng-container>
+  </ng-template>
+</nz-tabset>
+<ng-container *ngIf="activeContainerView">
+  <div class="infobar-content">
+    <ng-template [view]="activeContainerView"></ng-template>
+  </div>
+</ng-container>
