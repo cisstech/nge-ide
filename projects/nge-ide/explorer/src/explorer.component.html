@@ -1,0 +1,27 @@
+<ui-tree #treeRef [adapter]="adapter" [nodes]="(root|async)||[]">
+  <ng-container *treeNode="let node">
+    <ui-icon [icon]="node.name | fileIcon: _fileIconOptions(node)"></ui-icon>
+    <div class="tree-label" [title]="node.id">{{ node.name }}</div>
+    <div class="tree-commands">
+      <div class="tree-command" *ngIf="node.data.readOnly">
+        <div class="codicon codicon-lock"></div>
+      </div>
+    </div>
+  </ng-container>
+</ui-tree>
+<nz-dropdown-menu #menu="nzDropdownMenu">
+  <ul nz-menu role="menu">
+    <ng-container *ngFor="let group of _commands()|async; let isLast = last">
+      <ng-container *ngFor="let command of group; trackBy: _trackById">
+        <ng-container *ngIf="command.enabled">
+          <ng-container>
+            <li role="menuitem" nz-menu-item (click)="_execute(command, $event)">
+              {{command.label}}
+            </li>
+          </ng-container>
+        </ng-container>
+      </ng-container>
+      <mat-divider *ngIf="!isLast"></mat-divider>
+    </ng-container>
+  </ul>
+</nz-dropdown-menu>

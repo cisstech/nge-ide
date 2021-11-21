@@ -1,0 +1,47 @@
+:host {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.tree-label {
+  display: inline-flex;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  .highlight {
+    color: red;
+  }
+}
+
+.tree-commands {
+  position: absolute;
+  right: 8px;
+  display: flex;
+  align-items: center;
+  visibility: hidden;
+}
+
+.tree-command {
+  display: inline-flex;
+  cursor: pointer;
+  padding: 0 0 0 2px !important;
+  font-size: 14px;
+  --icon-size: 14px;
+}
+
+:host::ng-deep {
+  .tree-node:hover {
+    .tree-commands {
+      visibility: visible;
+    }
+  }
+}
+
+ui-icon {
+  --icon-size: 16px;
+  margin-right: 4px;
+}
