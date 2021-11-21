@@ -1,0 +1,42 @@
+.list-notifs {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  position: relative;
+}
+
+.item-notif {
+  position: relative;
+  list-style-type: none;
+  list-style-type: none;
+  display: flex;
+  align-items: center;
+  padding: 0 8px;
+
+  &:hover {
+    background-color: var(--list-hoverBackground);
+  }
+}
+
+.item-notif__content {
+  padding: 0 8px;
+}
+
+.item-notif--info .item-notif__icon {
+  color: #007acc;
+}
+
+.item-notif--warn .item-notif__icon {
+  color: #ddb100;
+}
+
+.item-notif--error .item-notif__icon {
+  color: #a1260d;
+}
+
+.label-empty {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
