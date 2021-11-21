@@ -1,0 +1,30 @@
+.list-problems {
+    height: 100%;
+    padding: 0;
+    position: relative;
+}
+
+.label-empty {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%,-50%);
+}
+
+.tree-node__label {
+  display: flex;
+  align-items: center;
+}
+
+.icon-info, .icon-hint {
+    color: #007ACC;
+}
+
+.icon-warn {
+    color: #DDB100;
+}
+
+.icon-error {
+    color: #A1260D;
+}
+
