@@ -18,6 +18,7 @@ import {
     NgeMarkdownHighlighterProvider,
     NgeMarkdownHighlighterMonacoProvider,
 } from '@mcisse/nge/markdown';
+import { NgeUiDialogModule } from '@mcisse/nge/ui/dialog';
 
 // MODULE
 import { AppRoutingModule } from './app-routing.module';
@@ -32,6 +33,7 @@ import { AppComponent } from './app.component';
         HttpClientModule,
 
         NgeMarkdownModule,
+        NgeUiDialogModule,
         NgeMonacoModule.forRoot({
             locale: 'fr',
             theming: {

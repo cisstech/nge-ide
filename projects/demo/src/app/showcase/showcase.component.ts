@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { FileService, MemFileProvider } from '@mcisse/nge-ide/core';
+import { URI } from 'vscode-uri';
 
 @Component({
     selector: 'app-showcase',
@@ -6,7 +8,15 @@ import { Component, OnInit } from '@angular/core';
     styleUrls: ['showcase.component.scss']
 })
 export class ShowcaseComponent implements OnInit {
-    constructor() { }
+    constructor(
+        private readonly fileService: FileService
+    ) { }
 
-    ngOnInit() { }
+    ngOnInit() {
+        this.fileService.registerProvider(new MemFileProvider());
+        this.fileService.registerFolders({
+            name: 'Home',
+            uri: URI.parse('inmemory:///')
+        })
+    }
 }
