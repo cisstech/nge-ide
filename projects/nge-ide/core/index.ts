@@ -2,6 +2,7 @@ export * from './src/commands';
 export * from './src/contributions';
 export * from './src/core.module';
 export * from './src/diagnostics';
+export * from './src/directives';
 export * from './src/editors';
 export * from './src/files';
 export * from './src/ide.service';

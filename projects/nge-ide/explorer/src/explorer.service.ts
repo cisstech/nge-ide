@@ -78,10 +78,10 @@ export class ExplorerService {
             CommandScopes.EXPLORER_TREE
         ).pipe(
             map(commands => {
-                const groups = commands.reduce((prev, next) => {
-                    prev[next.group] = (prev[next.group] || []);
-                    prev[next.group].push(next);
-                    return prev;
+                const groups = commands.reduce((rec, next) => {
+                    rec[next.group] = (rec[next.group] || []);
+                    rec[next.group].push(next);
+                    return rec;
                 }, {} as Record<string, IExplorerCommand[]>);
                 return Object
                     .keys(groups)

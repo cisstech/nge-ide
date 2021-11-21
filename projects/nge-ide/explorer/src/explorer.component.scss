@@ -4,6 +4,22 @@
   height: 100%;
 }
 
+
+:host::ng-deep {
+  .highlight {
+    color: #0066bf;
+  }
+  .dnd-drag {
+    opacity: 0.5;
+  }
+
+  .dnd-over {
+    box-shadow: inset 0px 0px 0px 2px var(--sideBar-dropBackground);
+    background: var(--sideBar-dropBackground);
+  }
+}
+
+
 .tree-label {
   display: inline-flex;
   align-items: center;
@@ -12,9 +28,6 @@
   white-space: nowrap;
   text-overflow: ellipsis;
   overflow: hidden;
-  .highlight {
-    color: red;
-  }
 }
 
 .tree-commands {

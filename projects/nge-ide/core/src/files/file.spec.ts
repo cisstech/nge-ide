@@ -1,8 +1,8 @@
 import { URI } from 'vscode-uri';
-import { compareURI } from './uri';
+import { compareURI } from './file';
 
-describe('Uri', () => {
-    it('should compareUris works', () => {
+describe('File', () => {
+    it('should compareUri works', () => {
         expect(
             compareURI(URI.parse('folder/a.txt'), URI.parse('folder/a.txt'))
         ).toBe(true);

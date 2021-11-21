@@ -7,7 +7,7 @@ import { MatDividerModule } from '@angular/material/divider';
 
 import { NzDropDownModule } from 'ng-zorro-antd/dropdown';
 
-import { CommandModule } from '@mcisse/nge-ide/core';
+import { CommandModule, DirectivesModule } from '@mcisse/nge-ide/core';
 
 import { IDynamicModule } from '@mcisse/nge/services';
 import { NgeUiIconModule } from '@mcisse/nge/ui/icon';
@@ -28,6 +28,7 @@ import { ExplorerComponent } from './explorer.component';
 
         NgeUiIconModule,
         NgeUiTreeModule,
+        DirectivesModule,
     ],
     declarations: [
         ExplorerComponent,

@@ -28,11 +28,11 @@ export class ExplorerCommandRefresh implements ICommand {
     async execute(): Promise<void> {
         const shouldConfirm = this.fileService.isDirty();
         try {
-
             const askConfirmation = () => this.dialogService.confirmAsync({
-                    title: 'Vous perdrez toutes les modifications non sauvegardées. Vous êtes sûr ?',
+                    title: 'Actualiser l\'explorateur',
+                    message: 'Vous perdrez toutes les modifications non sauvegardées. Vous êtes sûr ?',
+                    noTitle: 'Annuler',
                     okTitle: 'Actualiser',
-                    noTitle: 'Annuler'
                 });
 
             if (!shouldConfirm || await askConfirmation()) {

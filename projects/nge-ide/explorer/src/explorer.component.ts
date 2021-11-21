@@ -12,7 +12,14 @@ import {
     resourceId,
     StorageService,
     NotificationService,
+    FileService,
+    DndData,
+    Paths,
+    asUri,
+    isResourceParent,
+    FileSystemProviderCapabilities,
 } from '@mcisse/nge-ide/core';
+import { DialogService } from '@mcisse/nge/ui/dialog';
 import { FileIconOptions } from '@mcisse/nge/ui/icon';
 import {
     ITreeNodeHolder,
@@ -25,6 +32,7 @@ import {
     NzDropdownMenuComponent
 } from 'ng-zorro-antd/dropdown';
 import { Observable, Subscription } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { IExplorerCommand } from './commands';
 import { ExplorerService } from './explorer.service';
 
@@ -48,7 +56,9 @@ export class ExplorerComponent implements OnInit, OnDestroy {
 
     constructor(
         private readonly ideService: IdeService,
+        private readonly fileService: FileService,
         private readonly editorService: EditorService,
+        private readonly dialogService: DialogService,
         private readonly storageService: StorageService,
         private readonly explorerService: ExplorerService,
         private readonly contextMenuService: NzContextMenuService,
@@ -95,6 +105,66 @@ export class ExplorerComponent implements OnInit, OnDestroy {
         return this.explorerService.findTreeCommands();
     }
 
+    _draggable(node: ITreeNodeHolder<IFile>) {
+        return !this.fileService.isRoot(node.data.uri);
+    }
+
+    _droppable(node: ITreeNodeHolder<IFile>) {
+        return node.data.isFolder && !node.data.readOnly;
+    }
+
+    /**
+     * Handles drag and drop event by asking a confirmation to the user then :
+     * - If 'data.file' exists, the function will save the file on the server to the directory 'data.dst'.
+     * - If data.src exists, the function will move the resource 'data.src' to the directory 'data.dst'.
+     * @param e the dropped data.
+     */
+    async _onDropped(e: DndData) {
+        const srcPath =  e.src || e.file?.name || '';
+        const dstPath = e.dst;
+        if (srcPath === dstPath) {
+            return;
+        }
+
+        if (!srcPath)
+            return;
+
+        if (!dstPath)
+            return;
+
+        const srcName = Paths.basename(srcPath);
+        const src = this.fileService.find(asUri(srcPath));
+        const dst = this.fileService.find(asUri(dstPath));
+
+        if (!src)
+            return;
+
+        if (!dst)
+            return;
+
+        if (e.file && !this.fileService.hasCapability(dst.uri, FileSystemProviderCapabilities.FileUpload))
+            return false;
+
+        if (src && isResourceParent(src, dst))
+            return;
+
+        const options = {
+            title: `Vous êtes sûr de vouloir déplacer '${srcName}' dans '${Paths.basename(dst.uri.path)}'?`,
+            noTitle: 'Annuler',
+            okTitle: 'Déplacer',
+        };
+
+        try {
+            const confirmed = await this.dialogService.confirmAsync(options);
+            if (confirmed) {
+                await this.fileService.move(src || e.file , dst);
+                this.tree.expand(dst);
+            }
+        } catch (error) {
+            this.notificationService.publishError(error);
+        }
+    }
+
     _fileIconOptions(node: ITreeNodeHolder<IFile>): FileIconOptions {
         return {
             alt: node.name,
@@ -104,10 +174,8 @@ export class ExplorerComponent implements OnInit, OnDestroy {
         };
     }
 
-    async _execute(command: IExplorerCommand, event: Event) {
+    async _execute(command: IExplorerCommand) {
         try {
-            event.preventDefault();
-            event.stopPropagation();
             await command.execute();
         } catch (error) {
             this.notificationService.publishError(error);

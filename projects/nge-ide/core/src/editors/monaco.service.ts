@@ -5,10 +5,9 @@ import { map } from 'rxjs/operators';
 import { URI } from 'vscode-uri';
 import { IContribution } from '../contributions';
 import { Diagnostic, DiagnosticService, DiagnosticSeverity } from '../diagnostics';
-import { FileChangeType, FileService, resourceId } from '../files';
+import { compareURI, FileChangeType, FileService, resourceId } from '../files';
 import { StatusBarService } from '../status-bar';
 import { Paths } from '../utils';
-import { compareURI } from '../utils/uri';
 
 import IPosition = monaco.IPosition;
 import IDisposable = monaco.IDisposable;

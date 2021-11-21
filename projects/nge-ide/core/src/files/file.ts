@@ -73,10 +73,31 @@ export function isSameResource(
     return resourceId(a) === resourceId(b);
 }
 
-function asUri(o: monaco.Uri | URI | IFile): URI {
-    const uri: URI = 'uri' in o ? o.uri : o;
+
+
+export function asUri(o: monaco.Uri | URI | IFile | string): URI {
+    let uri: URI;
+    if (typeof o === 'string') {
+        uri = URI.parse(o);
+    } else {
+        uri = 'uri' in o ? o.uri : o;
+    }
     return uri.with({
         fragment: '',
         query: ''
     })
+}
+
+export function compareURI(a: URI, b: URI) {
+    const s1 = a.with({
+        fragment: '',
+        query: ''
+    }).toString();
+
+    const s2 = b.with({
+        fragment: '',
+        query: '',
+    }).toString();
+
+    return s1 === s2;
 }

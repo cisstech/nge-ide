@@ -415,6 +415,7 @@ export class FileService implements IContribution {
     ) {
         const entries = this.normalize(source);
         await Promise.all(entries.map(entry => this.doMove(entry, destination, true)));
+        await this.refresh();
     }
 
 

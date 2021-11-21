@@ -214,7 +214,7 @@ export class EditorService implements IContribution {
         const options: ConfirmOptions = {
             title: `Voulez-vous fermer le fichier "${Paths.basename(resource.path)}"?`,
             message: 'Vos modifications seront perdues si vous ne les enregistrez pas.',
-            buttons: [{ id: 'save', title: 'Ne pas sauvegarder', role: 'custom' }],
+            buttons: [{ id: 'dontsave', title: 'Ne pas sauvegarder', role: 'custom' }],
             okTitle: 'Sauvegarder',
             noTitle: 'Annuler'
         };

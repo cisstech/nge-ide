@@ -36,17 +36,6 @@ class MemFile implements IFile {
 export class MemFileProvider extends FileSystemProvider {
     private readonly entries = new Map<string, MemFile>([
         ['/', new MemFile('folder', '/')],
-
-        ['/hello', new MemFile('folder', '/hello')],
-        ['/hello/hello.component.ts', new MemFile('file', '/hello/hello.component.ts', '')],
-        ['/hello/hello.component.html', new MemFile('file', '/hello/hello.component.html', '')],
-        ['/hello/hello.component.scss', new MemFile('file', '/hello/hello.component.scss', '')],
-
-
-        ['/world', new MemFile('folder', '/world')],
-        ['/world/world.component.ts', new MemFile('file', '/world/world.component.ts', '')],
-        ['/world/world.component.html', new MemFile('file', '/world/world.component.html', '')],
-        ['/world/world.component.scss', new MemFile('file', '/world/world.component.scss', '')],
     ]);
 
     readonly scheme = 'inmemory';
@@ -56,6 +45,15 @@ export class MemFileProvider extends FileSystemProvider {
         FileSystemProviderCapabilities.FileDelete;
 
 
+    constructor() {
+        super();
+        for (let i = 1; i <= 200; i++) {
+            this.entries.set(`/folder-${i}`, new MemFile('folder', `/folder-${i}`));
+            this.entries.set(`/folder-${i}/file.ts`, new MemFile('file', `/folder-${i}/file.ts`));
+            this.entries.set(`/folder-${i}/file.scss`, new MemFile('file', `/folder-${i}/file.scss`));
+            this.entries.set(`/folder-${i}/file.html`, new MemFile('file', `/folder-${i}/file.html`));
+        }
+    }
     readDirectory(uri: URI): Promise<IFile[]> {
         const entry = this._lookupAsDirectory(uri, false);
         const result: IFile[] = [entry];
@@ -149,7 +147,7 @@ export class MemFileProvider extends FileSystemProvider {
         const oldPrefixDir = Paths.dirname(oldPrefix);
         const entriesKeys = Array.from(this.entries.keys());
         for (const oldPath of entriesKeys) {
-            if (oldPath.startsWith(oldPrefix)) {
+            if (oldPath.startsWith(oldPrefix + '/')  || oldPath === oldPrefix) {
                 const newPath = Paths.join([
                     destination.path,
                     oldPath.substring(oldPrefixDir.length)

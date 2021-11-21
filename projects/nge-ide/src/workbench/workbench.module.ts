@@ -9,7 +9,7 @@ import { NzTabsModule } from 'ng-zorro-antd/tabs';
 import { AngularSplitModule } from 'angular-split';
 import { NgeUiIconModule } from '@mcisse/nge/ui/icon';
 
-import { CommandModule, EditorModule, FileModule } from '@mcisse/nge-ide/core';
+import { CommandModule, DirectivesModule, FileModule } from '@mcisse/nge-ide/core';
 
 import { WorkbenchComponent } from './workbench.component';
 
@@ -23,10 +23,10 @@ import { WorkbenchComponent } from './workbench.component';
         NzTabsModule,
 
         FileModule,
-        EditorModule,
         CommandModule,
-        AngularSplitModule,
         NgeUiIconModule,
+        DirectivesModule,
+        AngularSplitModule,
     ],
     exports: [
         WorkbenchComponent,

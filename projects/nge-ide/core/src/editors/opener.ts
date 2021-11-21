@@ -1,6 +1,6 @@
 import { Injector } from '@angular/core';
 import { URI } from 'vscode-uri';
-import { compareURI } from '../utils/uri';
+import { compareURI } from '../files';
 import { EditorGroup } from './editor';
 
 /**
