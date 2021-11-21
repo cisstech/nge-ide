@@ -1,0 +1,49 @@
+<div class="search-container">
+  <input
+    type="text"
+    class="app-input-box"
+    spellcheck="false"
+    autocapitalize="off"
+    [attr.aria-label]="ariaLabel"
+    [placeholder]="title"
+    [title]="title"
+    (keydown.enter)="onKeyEnter()"
+    [(ngModel)]="query"
+    [class.error]="!!error"
+  />
+  <div *ngIf="controls" class="search-controls">
+    <div
+      title="Match Case"
+      class="search-control codicon codicon-case-sensitive"
+      [class.checked]="matchCase"
+      tabindex="0"
+      role="checkbox"
+      aria-checked="false"
+      aria-label="Match Case"
+      (click)="matchCase = !matchCase; onKeyEnter()">
+    </div>
+    <div
+      title="Match Whole Word"
+      class="search-control codicon codicon-whole-word"
+      [class.checked]="matchWord"
+      tabindex="0"
+      role="checkbox"
+      aria-checked="false"
+      aria-label="Match Whole Word"
+      (click)="matchWord = !matchWord; onKeyEnter()">
+    </div>
+    <div
+      title="Use Regular Expression"
+      class="search-control codicon codicon-regex"
+      [class.checked]="useRegex"
+      tabindex="0"
+      role="checkbox"
+      aria-checked="true"
+      aria-label="Use Regular Expression"
+      (click)="useRegex = !useRegex; onKeyEnter()">
+    </div>
+  </div>
+</div>
+<div *ngIf="error" class="search-error">
+  <mat-error>{{ error }}</mat-error>
+</div>
