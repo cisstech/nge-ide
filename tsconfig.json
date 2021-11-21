@@ -9,6 +9,7 @@
     "strict": true,
     "strictNullChecks": true,
     "experimentalDecorators": true,
+    "allowSyntheticDefaultImports": true,
     "module": "esnext",
     "moduleResolution": "node",
     "importHelpers": true,
@@ -19,10 +20,17 @@
     ],
     "paths": {
       "@mcisse/nge-ide": ["projects/nge-ide"],
+      "@mcisse/nge-ide/core": ["projects/nge-ide/core"],
+      "@mcisse/nge-ide/explorer": ["projects/nge-ide/explorer"],
+      "@mcisse/nge-ide/search": ["projects/nge-ide/search"],
+      "@mcisse/nge-ide/settings": ["projects/nge-ide/settings"],
+      "@mcisse/nge-ide/problems": ["projects/nge-ide/problems"],
+      "@mcisse/nge-ide/notifications": ["projects/nge-ide/notifications"]
     }
   },
   "angularCompilerOptions": {
     "fullTemplateTypeCheck": true,
+    "strictTemplates": true,
     "strictInjectionParameters": true
   }
 }

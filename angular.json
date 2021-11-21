@@ -64,11 +64,16 @@
             "assets": [
               "projects/demo/src/favicon.ico",
               "projects/demo/src/assets",
+              { "glob": "**/*", "input": "./node_modules/@ant-design/icons-angular/src/inline-svg/", "output": "/assets/@ant-design/assets/" },
               { "glob": "**/*", "input": "./node_modules/monaco-editor/min", "output": "./assets/vendors/nge/monaco/min" },
               { "glob": "**/*", "input": "./node_modules/monaco-editor/min-maps", "output": "./assets/vendors/nge/monaco/min-maps" },
-              { "glob": "**/*", "input": "./node_modules/@mcisse/nge/assets/monaco", "output": "./assets/vendors/nge/monaco/" }
+              { "glob": "**/*", "input": "./node_modules/@mcisse/nge/assets/monaco", "output": "./assets/vendors/nge/monaco/" },
+              { "glob": "**/*", "input": "./node_modules/@mcisse/nge/assets/icons/files", "output": "./assets/vendors/nge/icons/files/" }
             ],
-            "styles": ["projects/demo/src/styles.scss"],
+            "styles": [
+              "projects/demo/src/styles.scss",
+              "node_modules/ng-zorro-antd/ng-zorro-antd.min.css"
+            ],
             "scripts": []
           },
           "configurations": {
