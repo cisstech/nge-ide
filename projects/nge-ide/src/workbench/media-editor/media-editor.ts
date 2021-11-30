@@ -2,7 +2,7 @@ import { Editor, FileService, OpenRequest, Paths } from "@mcisse/nge-ide/core";
 
 const extensions = [
     'mp3', 'wav', 'ogg', // audio
-    'mp4', 'webm',  // video
+    'mp4', 'webm', 'mov',  // video
     'jpeg', 'gif', 'png', 'apng', 'svg', 'bmp', 'bmp', 'ico', 'ico', // img
 ];
 

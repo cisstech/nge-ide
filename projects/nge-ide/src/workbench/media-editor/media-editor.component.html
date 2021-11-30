@@ -1,17 +1,17 @@
 <div class="media-editor">
   <ng-container [ngSwitch]="type">
     <ng-container *ngSwitchCase="'image'">
-      <img [src]="url" />
+      <img [src]="$any(url)|safe:'url'" />
     </ng-container>
     <ng-container *ngSwitchCase="'video'">
       <video controls>
-        <source [src]="url" />
+        <source [src]="$any(url)|safe:'url'" />
         Sorry, your browser doesn't support embedded videos.
       </video>
     </ng-container>
     <ng-container *ngSwitchCase="'audio'">
       <audio controls>
-        <source [src]="url" />
+        <source [src]="$any(url)|safe:'url'" />
         Sorry, your browser doesn't support embedded audio.
       </audio>
     </ng-container>
