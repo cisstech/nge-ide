@@ -1,8 +1,8 @@
 import { Directive, Input, SimpleChanges, Renderer2, ElementRef, OnChanges } from '@angular/core';
 
 @Directive({
-  // tslint:disable-next-line: directive-selector
-  selector: '[highlight]'
+    // tslint:disable-next-line: directive-selector
+    selector: '[highlight]'
 })
 export class HighlightDirective implements OnChanges {
 
@@ -10,7 +10,7 @@ export class HighlightDirective implements OnChanges {
     text!: string;
 
     @Input('highlightPattern')
-    pattern!: string | string[] | RegExp;
+    pattern?: string | string[] | RegExp | null;
 
     @Input()
     options = 'gi';
@@ -21,20 +21,39 @@ export class HighlightDirective implements OnChanges {
     ) { }
 
     ngOnChanges(_: SimpleChanges): void {
-        if (typeof(this.pattern) === 'string' || this.pattern instanceof RegExp) {
-            this.renderer.setProperty(this.el.nativeElement, 'innerHTML', this.searchRegex());
-        } else {
-            if (!this.pattern || !this.pattern.length) {
-                this.renderer.setProperty(this.el.nativeElement, 'innerHTML', this.text);
-                return;
-            }
-            this.renderer.setProperty(this.el.nativeElement, 'innerHTML', this.searchWords(this.pattern));
+        if (!this.pattern) { // null or undefined
+            this.renderer.setProperty(this.el.nativeElement, 'innerHTML', this.text);
+            return;
+        }
+
+        if (typeof this.pattern === 'string') { // string
+            this.pattern = this.pattern.trim();
+            this.renderer.setProperty(this.el.nativeElement, 'innerHTML', !!this.pattern ? this.hightlightRegex() : this.text);
+            return;
+        }
+
+        if (this.pattern instanceof RegExp) { // RegExp
+            this.renderer.setProperty(this.el.nativeElement, 'innerHTML', this.hightlightRegex());
+            return;
+        }
+
+        // array
+        this.renderer.setProperty(this.el.nativeElement, 'innerHTML', this.pattern.length ? this.highlightWords(this.pattern) : this.text);
+    }
+
+
+    private highlightWords(words: string[]): string {
+        try {
+            const re = new RegExp(`(${words.join('|')})`, this.options);
+            return this.escape(this.text).replace(re, `<span class="highlight">$1</span>`);
+        } catch {
+            return this.text;
         }
     }
 
-    private searchRegex() {
+    private hightlightRegex() {
         let regex: RegExp;
-        if (typeof(this.pattern) === 'string') {
+        if (typeof this.pattern === 'string') {
             try {
                 regex = new RegExp(this.pattern, this.options);
             } catch {
@@ -43,6 +62,7 @@ export class HighlightDirective implements OnChanges {
         } else {
             regex = this.pattern as RegExp;
         }
+
         let html = this.escape(this.text);
         const matches = html.match(regex);
         if (matches) {
@@ -53,25 +73,13 @@ export class HighlightDirective implements OnChanges {
         return html;
     }
 
-    private searchWords(words: string[]) {
-        try {
-            const re = new RegExp(`(${ words.join('|') })`, this.options);
-            return this.escape(this.text).replace(re, `<span class="highlight">$1</span>`);
-        } catch {
-            return this.text;
-        }
-    }
-
     private escape(str: string) {
-        const tagsToReplace: any = {
+        const replacements: any = {
             '&': '&amp;',
             '<': '&lt;',
             '>': '&gt;'
         };
-        const replaceTag = (tag: string) => {
-            return tagsToReplace[tag] || tag;
-        };
-        return str.replace(/[&<>]/g, replaceTag);
-    }
 
+        return str.replace(/[&<>]/g, (tag: string) => replacements[tag] || tag);
+    }
 }

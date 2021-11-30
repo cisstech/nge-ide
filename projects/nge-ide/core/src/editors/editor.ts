@@ -229,13 +229,14 @@ export class EditorGroup {
     /**
      * Removes a resource from the group.
      * @param resource the resource to close.
+     * @param force When `true`, force close the resource without asking to save dirty files.
      * @throws {ReferenceError} if any of the arguments is null.
      * @returns A promise that resolve with `true` if the resource is removed `false` otherwise.
      */
-    async close(resource: URI): Promise<boolean> {
+    async close(resource: URI, force?: boolean): Promise<boolean> {
         const index = this._tabs.findIndex(e => compareURI(e.resource, resource));
         if (index !== -1) {
-            const canClose = await this.closeGuard(this, this._tabs[index].resource);
+            const canClose =  force || await this.closeGuard(this, this._tabs[index].resource);
             if (!canClose) {
                 return false;
             }
@@ -261,11 +262,12 @@ export class EditorGroup {
 
     /**
      * Closes all the resources of the group.
+     * @param force When `true`, force close the files without asking to save dirty files.
      * @returns A promise that resolve once the closing succeed or fail.
      */
-    async closeAll(): Promise<boolean> {
+    async closeAll(force?: boolean): Promise<boolean> {
         while (this._tabs.length) {
-            if (!(await this.close(this._tabs[0].resource))) {
+            if (!(await this.close(this._tabs[0].resource, force))) {
                 return false;
             }
         }

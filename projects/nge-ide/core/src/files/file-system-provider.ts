@@ -3,8 +3,7 @@
 
 import { URI } from 'vscode-uri';
 import { IFile } from './file';
-import { FileSystemError } from './file-system-error';
-import { SearchQuery, SearchResult } from './file-system-search';
+import { SearchForm, SearchResult } from './file-system-search';
 
 /**
  * Possible changes that can occur to a file.
@@ -155,9 +154,9 @@ export interface IFileSystemProvider {
      * Uploads `file` to the directory `destination`.
      *
      * @param file The file object to upload.
-     * @param destination The uri of the folder where the file should be uploaded.
-     * @throws {@link FileSystemError.FileNotFound} when the `destination` doesn't exist.
-     * @throws {@link FileSystemError.FileExists} when `uri` already exists.
+     * @param destination The uri where the file should be uploaded.
+     * @throws {@link FileSystemError.FileNotFound} when the `destination` parent doesn't exist.
+     * @throws {@link FileSystemError.FileExists} when `destination` already exists.
      * @throws {@link FileSystemError.NoPermissions} when permissions aren't sufficient.
      */
     upload(
@@ -167,9 +166,8 @@ export interface IFileSystemProvider {
 
     searchIn(
         entry: IFile,
-        query: SearchQuery
+        search: SearchForm
     ): Promise<SearchResult<IFile>[]>;
-
 }
 
 export abstract class FileSystemProvider implements IFileSystemProvider {
@@ -238,7 +236,7 @@ export abstract class FileSystemProvider implements IFileSystemProvider {
 
     searchIn(
         entry: IFile,
-        query: SearchQuery
+        query: SearchForm
     ): Promise<SearchResult<IFile>[]> {
         throw new Error('Operation not supported');
     }

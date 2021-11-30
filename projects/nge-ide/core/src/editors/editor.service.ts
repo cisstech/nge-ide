@@ -167,12 +167,13 @@ export class EditorService implements IContribution {
     }
 
    /**
-    * Closes all the groups
+    * Closes all the groups.
+    * @param force When `true`, force close the group whithout asking to save dirty files.
     */
-    async closeAll(): Promise<void> {
+    async closeAll(force?: boolean): Promise<void> {
         let groups = this.listGroups();
         while (groups.length !== 0) {
-            await groups[0].closeAll();
+            await groups[0].closeAll(force);
             groups = this.listGroups();
         }
 

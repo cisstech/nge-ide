@@ -3,6 +3,7 @@ import { Paths } from "../utils";
 import { IFile } from "./file";
 import { FileSystemError } from "./file-system-error";
 import { FileSystemProvider, FileSystemProviderCapabilities } from "./file-system-provider";
+import { SearchForm, SearchResult } from "./file-system-search";
 
 class MemFile implements IFile {
     uri: URI;
@@ -10,6 +11,7 @@ class MemFile implements IFile {
     content?: string;
     readOnly: boolean;
     isFolder: boolean;
+    downloadUrl?: string;
 
     constructor(
         type: 'folder' | 'file',
@@ -42,18 +44,20 @@ export class MemFileProvider extends FileSystemProvider {
     readonly capabilities = FileSystemProviderCapabilities.FileRead |
         FileSystemProviderCapabilities.FileWrite |
         FileSystemProviderCapabilities.FileMove |
-        FileSystemProviderCapabilities.FileDelete;
-
+        FileSystemProviderCapabilities.FileDelete |
+        FileSystemProviderCapabilities.FileSearch |
+        FileSystemProviderCapabilities.FileUpload;
 
     constructor() {
         super();
-        for (let i = 1; i <= 5; i++) {
+        for (let i = 1; i <= 9; i++) {
             this.entries.set(`/folder-${i}`, new MemFile('folder', `/folder-${i}`));
             this.entries.set(`/folder-${i}/file.ts`, new MemFile('file', `/folder-${i}/file.ts`));
             this.entries.set(`/folder-${i}/file.scss`, new MemFile('file', `/folder-${i}/file.scss`));
             this.entries.set(`/folder-${i}/file.html`, new MemFile('file', `/folder-${i}/file.html`));
         }
     }
+
     readDirectory(uri: URI): Promise<IFile[]> {
         const entry = this._lookupAsDirectory(uri, false);
         const result: IFile[] = [entry];
@@ -88,9 +92,7 @@ export class MemFileProvider extends FileSystemProvider {
         if (!entry) {
             entry = new MemFile('file', uri.path, content);
             this.entries.set(uri.path, entry);
-        }
-
-        if (entry.isFolder) {
+        } else if (entry.isFolder) {
             throw FileSystemError.FileIsADirectory(uri);
         }
 
@@ -168,6 +170,80 @@ export class MemFileProvider extends FileSystemProvider {
             }
         }
     }
+
+    upload(
+        file: File,
+        destination: URI,
+    ): Promise<void> {
+        this._lookupParentDirectory(destination);
+
+        let entry = this._lookup(destination, true);
+        if (entry) {
+            throw FileSystemError.FileExists(destination);
+        }
+
+        return new Promise<void>((resolve, reject) => {
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                const content = e.target?.result as string;
+                entry = new MemFile('file', destination.path, content);
+                entry.downloadUrl = URL.createObjectURL(file);
+                this.entries.set(destination.path, entry);
+                resolve();
+            };
+            reader.onerror = reject;
+            reader.readAsText(file);
+        });
+    }
+
+
+    searchIn(
+        entry: IFile,
+        search: SearchForm
+    ): Promise<SearchResult<IFile>[]> {
+        this._lookupAsDirectory(entry.uri, false);
+        const options: string[] = ['g'];
+        if (!search.matchCase) {
+            options.push('i');
+        }
+
+        let query = search.useRegex
+            ? search.query
+            : search.query.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
+        if (search.matchWord) {
+            query = `\\b${query}\\b`;
+        }
+
+        const pattern  = new RegExp(query, options.join(''));
+        const results: SearchResult<IFile>[] = [];
+        for (const f of this.entries.values()) {
+            if (f.uri.path !== entry.uri.path && f.uri.path.startsWith(entry.uri.path)) {
+                if (f.content) {
+                    const r: SearchResult<IFile> = { entry: f, matches: [] };
+                    const lines  = f.content.split('\n');
+                    for (let i = 0; i < lines.length; i++) {
+                        const line = lines[i];
+                        const matches = pattern.exec(line);
+                        if (matches) {
+                            r.matches.push({
+                                match: line,
+                                lineno: i + 1,
+                            });
+                        }
+                    }
+
+                    if (r.matches.length > 0) {
+                        results.push(r);
+                    }
+                }
+            }
+        }
+
+        return Promise.resolve(results);
+
+    }
+
+
 
     private _lookup(uri: URI, silent: boolean): MemFile | undefined {
         const entry = this.entries.get(uri.path);

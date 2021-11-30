@@ -13,6 +13,7 @@ import {
     IFileChange,
     IFileSystemProvider
 } from './file-system-provider';
+import { SearchForm, SearchResult } from './file-system-search';
 
 declare type FilePredicate = (file: IFile) => boolean;
 
@@ -80,26 +81,9 @@ export class FileService implements IContribution {
     }
 
     async refresh(): Promise<void> {
-        this.entries.clear();
-        this.children.clear();
-
-        for (const folder of this.folders) {
-            const provider = await this.withProvider(folder.uri);
-            const files = await provider.readDirectory(folder.uri);
-            files.forEach((file) => {
-                this.entries.set(resourceId(file), file);
-                this.children.set(resourceId(file), files.filter(other => isResourceParent(other, file)));
-            });
-        }
-
-        const contents = this.contents.value;
-        contents.forEach((v, k) => {
-            if (!this.entries.has(k)) {
-                contents.delete(k);
-            }
-        });
-        this.contents.next(contents);
-        this.rebuild();
+        await this.readEntries();
+        this.removeMissingFileContents();
+        this.rebuildIndex();
     }
 
     // PROVIDERS
@@ -284,6 +268,21 @@ export class FileService implements IContribution {
         return undefined;
     }
 
+    async search(form: SearchForm): Promise<SearchResult<IFile>[]> {
+        const results = await Promise.all(this.folders.map(async folder => {
+            try {
+                const file = this.find(folder.uri);
+                if (!file)
+                    return [];
+                const provider = await this.withProvider(folder.uri, FileSystemProviderCapabilities.FileSearch);
+                return await provider.searchIn(file, form);
+            } catch {
+                return [];
+            }
+        }));
+        return results.reduce((acc, val) => acc.concat(val), []);
+    }
+
     // UTILS
 
     isRoot(uri: monaco.Uri | URI): boolean {
@@ -342,7 +341,7 @@ export class FileService implements IContribution {
             { type: FileChangeType.Created, uri }
         ]);
 
-        await provider.upload(file, destination.uri);
+        await provider.upload(file, uri);
 
         this.didChangeFile.next([
             { type: FileChangeType.Created, uri }
@@ -511,19 +510,56 @@ export class FileService implements IContribution {
         return provider;
     }
 
+    private async readEntries() {
+        this.entries.clear();
+        this.children.clear();
 
-    private rebuild(): void {
+        for (const folder of this.folders) {
+            const provider = await this.withProvider(folder.uri);
+            const files = await provider.readDirectory(folder.uri);
+            files.forEach((file) => {
+                const id = resourceId(file);
+                this.entries.set(id, file);
+
+                const parent = Paths.dirname(id);
+                const children = this.children.get(parent) || [];
+                children.push(file);
+                this.sortFiles(children);
+                this.children.set(parent, children);
+                if (parent.endsWith(':')) {
+                    this.children.set(parent + '/', children);
+                }
+
+                // this.children.set(id, files.filter(other => isResourceParent(other, file)));
+            });
+        }
+    }
+
+    private rebuildIndex(): void {
         const tree: IFile[] = [];
-        this.folders.forEach(f => tree.push(this.find(f.uri)!))
+        this.folders.forEach(folder => {
+            tree.push(this.find(folder.uri)!);
+        });
         this.tree.next(this.sortFiles(tree));
     }
+
+    private removeMissingFileContents() {
+        const contents = this.contents.value;
+        contents.forEach((_, k) => {
+            if (!this.entries.has(k)) {
+                contents.delete(k);
+            }
+        });
+        this.contents.next(contents);
+    }
+
 
     private sortFiles(files: IFile[]): IFile[] {
         return files.sort((a, b) => {
             const isBothDir = a.isFolder && b.isFolder;
-            const isBothNotDir = !a.isFolder && !b.isFolder;
-            if (isBothDir || isBothNotDir) {
-                return Paths.basename(a.uri.path).localeCompare(Paths.basename(b.uri.path));
+            const isBothFile = !a.isFolder && !b.isFolder;
+            if (isBothDir || isBothFile) {
+                return a.uri.path.localeCompare(b.uri.path);
             }
             return a.isFolder ? -1 : 1;
         });

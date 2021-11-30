@@ -1,10 +1,10 @@
-export interface SearchQuery {
-    readonly path: string;
-    readonly query: string;
-    readonly exclude?: string;
-    readonly matchWord?: boolean;
-    readonly matchCase?: boolean;
-    readonly useRegex?: boolean;
+export interface SearchForm {
+    query: string;
+    // include?: string;
+    // exclude?: string;
+    matchWord?: boolean;
+    matchCase?: boolean;
+    useRegex?: boolean;
 }
 
 export interface SearchMatch {
@@ -15,4 +15,16 @@ export interface SearchMatch {
 export interface SearchResult<T> {
     readonly entry: T;
     readonly matches: SearchMatch[];
+}
+
+
+export function emptySearchForm() {
+    return {
+        query: '',
+        // include: '',
+        // exclude: '',
+        matchWord: false,
+        matchCase: false,
+        useRegex: false
+    };
 }
