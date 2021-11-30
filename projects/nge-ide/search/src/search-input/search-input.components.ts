@@ -7,17 +7,14 @@ import { Component, OnInit, Input, Output, EventEmitter, ChangeDetectionStrategy
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SearchInputComponent implements OnInit {
-
-    @Input() title = '';
-
     @Input() ariaLabel = '';
+    @Input() placeholder = '';
 
     @Input() query = '';
     @Output() queryChange = new EventEmitter<string>();
 
     @Input() useRegex: boolean = false;
-    @Output()
-    useRegexChange = new EventEmitter<boolean>();
+    @Output() useRegexChange = new EventEmitter<boolean>();
 
     @Input() matchWord = false;
     @Output() matchWordChange = new EventEmitter<boolean>();
@@ -42,7 +39,7 @@ export class SearchInputComponent implements OnInit {
         this.error = '';
         if (this.controls) {
             try {
-                /* function escape(text: string) {
+                function escape(text: string) {
                     return text.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, '\\$&');
                 }
 
@@ -60,9 +57,9 @@ export class SearchInputComponent implements OnInit {
                     this.pattern = new RegExp(`(\\b${query}\\b)`, opts.join(''));
                 } else {
                     this.pattern = new RegExp(`(${query})`, opts.join(''));
-                } */
+                }
             } catch (error) {
-                this.error = error.message;
+                this.error = (error as any).message;
             }
         }
 

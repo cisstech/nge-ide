@@ -1,6 +1,6 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { Diagnostic, DiagnosticGroup, DiagnosticService, DiagnosticSeverity, EditorService, NotificationService, StorageService } from '@mcisse/nge-ide/core';
-import { ITree, ITreeAdapter, ITreeNode, ITreeState, TreeComponent, TreeState } from '@mcisse/nge/ui/tree';
+import { AfterViewChecked, ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Diagnostic, DiagnosticGroup, DiagnosticService, DiagnosticSeverity, EditorService, NotificationService } from '@mcisse/nge-ide/core';
+import { ITree, ITreeAdapter, TreeComponent } from '@mcisse/nge/ui/tree';
 import { Subscription } from 'rxjs';
 import { URI } from 'vscode-uri';
 
@@ -10,7 +10,7 @@ import { URI } from 'vscode-uri';
     styleUrls: ['./problems.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ProblemsComponent implements OnInit, OnDestroy {
+export class ProblemsComponent implements OnInit, OnDestroy, AfterViewChecked {
     private readonly subscriptions: Subscription[] = [];
 
     readonly adapter: ITreeAdapter<TreeNode> = {
@@ -38,11 +38,12 @@ export class ProblemsComponent implements OnInit, OnDestroy {
 
     @ViewChild(TreeComponent, { static: true })
     tree!: ITree<TreeNode>;
+
     nodes: TreeNode[] = [];
 
     constructor(
         private readonly editorService: EditorService,
-        private readonly storageService: StorageService,
+        private readonly elementRef: ElementRef<HTMLElement>,
         private readonly diagnosticService: DiagnosticService,
         private readonly changeDetectorRef: ChangeDetectorRef,
         private readonly notificationService: NotificationService,
@@ -59,6 +60,13 @@ export class ProblemsComponent implements OnInit, OnDestroy {
 
     ngOnDestroy(): void {
         this.subscriptions.forEach(e => e.unsubscribe());
+    }
+
+    ngAfterViewChecked(): void {
+        const height = this.elementRef.nativeElement.offsetHeight + 'px';
+        if (height !== this.adapter.treeHeight) {
+           this.adapter.treeHeight = height;
+        }
     }
 
     private buildNode(group: DiagnosticGroup): TreeNode {
@@ -106,7 +114,7 @@ export class ProblemsComponent implements OnInit, OnDestroy {
 
 }
 
-interface TreeNode extends ITreeNode {
+interface TreeNode {
     id: string;
     uri: string;
     name: string;

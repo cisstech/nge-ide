@@ -1,6 +1,8 @@
 import {
+    AfterViewChecked,
     ChangeDetectionStrategy,
     Component,
+    ElementRef,
     OnDestroy,
     OnInit,
     ViewChild
@@ -32,7 +34,6 @@ import {
     NzDropdownMenuComponent
 } from 'ng-zorro-antd/dropdown';
 import { Observable, Subscription } from 'rxjs';
-import { map } from 'rxjs/operators';
 import { IExplorerCommand } from './commands';
 import { ExplorerService } from './explorer.service';
 
@@ -42,7 +43,7 @@ import { ExplorerService } from './explorer.service';
     styleUrls: ['./explorer.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ExplorerComponent implements OnInit, OnDestroy {
+export class ExplorerComponent implements OnInit, OnDestroy, AfterViewChecked {
     private readonly subscriptions: Subscription[] = [];
 
     readonly root = this.explorerService.root;
@@ -56,6 +57,7 @@ export class ExplorerComponent implements OnInit, OnDestroy {
 
     constructor(
         private readonly ideService: IdeService,
+        private readonly elementRef: ElementRef<HTMLElement>,
         private readonly fileService: FileService,
         private readonly editorService: EditorService,
         private readonly dialogService: DialogService,
@@ -69,17 +71,17 @@ export class ExplorerComponent implements OnInit, OnDestroy {
         this.restoreState();
 
         this.subscriptions.push(
+            this.ideService.onBeforeStop(() => {
+                this.saveState();
+            })
+        );
+
+        this.subscriptions.push(
             this.editorService.state.subscribe((state) => {
                 const { activeResource } = state;
                 if (activeResource) {
                     this.tree.focus(resourceId(activeResource));
                 }
-            })
-        );
-
-        this.subscriptions.push(
-            this.ideService.onBeforeStop(() => {
-                this.saveState();
             })
         );
 
@@ -95,6 +97,13 @@ export class ExplorerComponent implements OnInit, OnDestroy {
         this.subscriptions.forEach((s) => s.unsubscribe());
     }
 
+    ngAfterViewChecked(): void {
+        const height = this.elementRef.nativeElement.offsetHeight + 'px';
+        if (height !== this.adapter.treeHeight) {
+           this.adapter.treeHeight = height;
+        }
+    }
+
     //#region CALLED FROM TEMPLATE
 
     _trackById(_: number, e: any): string {
@@ -103,6 +112,15 @@ export class ExplorerComponent implements OnInit, OnDestroy {
 
     _commands(): Observable<IExplorerCommand[][]> {
         return this.explorerService.findTreeCommands();
+    }
+
+    _iconOptions(node: ITreeNodeHolder<IFile>): FileIconOptions {
+        return {
+            alt: node.name,
+            isRoot: node.level === 0,
+            expanded: this.tree.isExpanded(node),
+            isDirectory: node.expandable,
+        };
     }
 
     _draggable(node: ITreeNodeHolder<IFile>) {
@@ -165,16 +183,7 @@ export class ExplorerComponent implements OnInit, OnDestroy {
         }
     }
 
-    _fileIconOptions(node: ITreeNodeHolder<IFile>): FileIconOptions {
-        return {
-            alt: node.name,
-            isRoot: this.explorerService.isRoot(node.data),
-            expanded: this.tree.isExpanded(node),
-            isDirectory: node.data.isFolder,
-        };
-    }
-
-    async _execute(command: IExplorerCommand) {
+    async _executeCommand(command: IExplorerCommand) {
         try {
             await command.execute();
         } catch (error) {

@@ -1,10 +1,11 @@
 <ui-tree #treeRef [adapter]="adapter" [nodes]="(root|async)||[]">
   <ng-container *treeNode="let node">
-    <ui-icon [icon]="node.name | fileIcon: _fileIconOptions(node)"></ui-icon>
+    <ui-icon [icon]="node.name | fileIcon: _iconOptions(node)"></ui-icon>
     <div class="tree-label"
       [title]="node.id"
       [highlight]="node.name"
       [highlightPattern]="treeRef.filter.term"
+
       dnd
       (dropped)="_onDropped($event)"
       [dndData]="node.id"
@@ -24,7 +25,7 @@
       <ng-container *ngFor="let command of group; trackBy: _trackById; let isLastCommand = last;">
         <ng-container *ngIf="command.enabled">
           <ng-container>
-            <li role="menuitem" nz-menu-item (click)="_execute(command)">
+            <li role="menuitem" nz-menu-item (click)="_executeCommand(command)">
               {{command.label}}
             </li>
           </ng-container>

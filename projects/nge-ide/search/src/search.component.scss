@@ -1,3 +1,34 @@
-.app-search {
-    padding: 8px 8px;
+:host::ng-deep {
+  position: relative;
+  display: block;
+  height: 100%;
+  padding: 8px;
+}
+
+:host::ng-deep {
+  .highlight {
+    color: #0066bf;
+  }
+}
+
+.input-wrapper {
+  height: 32px;
+  margin: 0 0 8px 0;
+}
+
+.tree-label {
+  display: inline-flex;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+.center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }

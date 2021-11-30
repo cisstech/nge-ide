@@ -29,10 +29,12 @@ import { IExplorerCommand } from './commands';
 export class ExplorerService {
     private readonly didContextMenu = new Subject<ITreeMouseAction<IFile>>();
     private clipboardData: IFile[] = [];
+    private newFileType: 'file' | 'folder' | undefined;
 
     readonly root = this.fileService.treeChange;
     readonly adapter: ITreeAdapter<IFile> = {
         id: 'explorer.tree',
+        itemHeight: '32px',
         idProvider: (node) => resourceId(node.uri),
         nameProvider: (node) => this.fileService.entryName(node),
         childrenProvider: (node) => this.fileService.findChildren(node),
@@ -68,7 +70,6 @@ export class ExplorerService {
         private readonly treeService: TreeService,
         private readonly fileService: FileService,
         private readonly editorService: EditorService,
-        private readonly dialogService: DialogService,
         private readonly commandService: CommandService,
         private readonly notificationService: NotificationService
     ) { }
@@ -208,29 +209,13 @@ export class ExplorerService {
         return this.fileService.hasCapability(focus.uri, FileSystemProviderCapabilities.FileWrite);
     }
 
-    async createFile(): Promise<void>  {
+    async createFile(): Promise<void> {
         if (!this.canCreateFile()) {
             return;
         }
 
-        const focus = this.focusedNode() as IFile;
-        const [input] = (await this.dialogService.promptAsync({
-            title: 'Entrez un nom de fichier',
-            okTitle: 'Créer',
-            noTitle: 'Annuler',
-            fields: [{ type: 'text', value: '', placeholder: 'Nom', required: true }],
-        })).fields;
-
-        input.value = input.value.trim();
-        if (input.value.trim()) {
-            this.fileService.createFile(
-                focus,
-                input.value
-            ).catch(error => {
-                console.log(error);
-                this.notificationService.publishError(error);
-            });
-        }
+        this.newFileType = 'file';
+        this.tree.startEdition(this.focusedNode() as IFile, true);
     }
 
     async createFolder(): Promise<void> {
@@ -238,23 +223,8 @@ export class ExplorerService {
             return;
         }
 
-        const focus = this.focusedNode() as IFile;
-        const [input] = (await this.dialogService.promptAsync({
-            title: 'Entrez un nom de dossier',
-            okTitle: 'Créer',
-            noTitle: 'Annuler',
-            fields: [{ type: 'text', value: '', placeholder: 'Nom', required: true }],
-        })).fields;
-
-        input.value = input.value.trim();
-        if (input.value.trim()) {
-            this.fileService.createDirectory(
-                focus,
-                input.value
-            ).catch(error => {
-                this.notificationService.publishError(error);
-            });
-        }
+        this.newFileType = 'folder';
+        this.tree.startEdition(this.focusedNode() as IFile, true);
     }
 
     canDownload(): boolean {
@@ -365,9 +335,17 @@ export class ExplorerService {
     }
 
     private async onEditNode(e: ITreeEdition<IFile>): Promise<void> {
-        const { node, text } = e;
+        const { node, text, creation } = e;
         try {
-            await this.fileService.rename(node, text);
+            if (creation) {
+                if (this.newFileType === 'file') {
+                    await this.fileService.createFile(node, text);
+                } else {
+                    await this.fileService.createDirectory(node, text);
+                }
+            } else {
+                await this.fileService.rename(node, text);
+            }
         } catch (error) {
             this.notificationService.publishError(error);
         }

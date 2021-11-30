@@ -1,52 +1,66 @@
-<div class="app-search">
+<div class="input-wrapper">
   <ide-search-input
     [controls]="true"
-    [(query)]="query"
-    [(useRegex)]="useRegex"
-    [(matchCase)]="matchCase"
-    [(matchWord)]="matchWord"
+    [(query)]="form.query"
+    [(useRegex)]="form.useRegex"
+    [(matchCase)]="form.matchCase"
+    [(matchWord)]="form.matchWord"
     [(pattern)]="pattern"
-    title="Search"
-    arialLabel="Search: Type Search Term and press Enter to search or Escape to cancel"
+    placeholder="Rechercher"
+    arialLabel="Rechercher: Écrivez votre texte et pressez Entrer pour rechercher or Esc pour annuler"
     (search)="search()">
   </ide-search-input>
-  <div>
-    <span>files to include</span>
-    <ide-search-input
-      [controls]="false"
-      [(query)]="include"
-      arialLabel="Search Include Patterns"
-      (search)="search()">
-    </ide-search-input>
-  </div>
-  <div>
-    <span>files to exclude</span>
-    <ide-search-input
-      [controls]="false"
-      [(query)]="exclude"
-      arialLabel="Search Exclude Patterns"
-      (search)="search()">
-    </ide-search-input>
-  </div>
-  <ng-container *ngIf="query && empty">
-    <p>
-      No results found for '{{ query }}'
-      <span *ngIf="include"> in '{{ include }}' </span>
-      <span *ngIf="exclude"> excluding '{{ exclude }}' </span>
-    </p>
-  </ng-container>
-  <!-- <lib-tree [nodes]="nodes" [options]="options">
-        <ng-container *treeNode="let node">
-            <span class="tree-node-label" matTooltip="{{ node.id }}">
-                <ng-container *ngIf="node.expandable; else notexpandable">
-                    <i class="fas fa-chevron-{{ node.expanded ? 'down' : 'right' }}"></i>
-                    <lib-icon [icon]="node.name | fileIcon"></lib-icon>
-                </ng-container>
-                <ng-template #notexpandable>
-                    {{ node.data.lineno }}:&nbsp;
-                </ng-template>
-                <span [highlight]="node.name" [pattern]="pattern"></span>
-            </span>
-        </ng-container>
-    </lib-tree> -->
 </div>
+<!--
+<div>
+  <span>Fichiers à inclure</span>
+  <ide-search-input
+    [controls]="false"
+    [(query)]="form.include"
+    placeholder="src,home/a.ts"
+    arialLabel="Fichiers à inclure"
+    (search)="search()">
+  </ide-search-input>
+</div>
+<div>
+  <span>Fichers à exclure</span>
+  <ide-search-input
+    [controls]="false"
+    [(query)]="form.exclude"
+    placeholder="src,home/a.ts"
+    arialLabel="Fichiers à exclure"
+    (search)="search()">
+  </ide-search-input>
+</div>
+-->
+<ng-container *ngIf="isEmpty">
+  <div>
+    Aucun résultat pour '{{ form.query }}'
+    <!--
+    <span *ngIf="form.include"> in '{{ form.include }}' </span>
+    <span *ngIf="form.exclude"> excluding '{{ form.exclude }}' </span>
+    -->
+  </div>
+</ng-container>
+<ng-container *ngIf="searching">
+  <div class="center">
+    <mat-spinner diameter="64" strokeWidth="2"></mat-spinner>
+  </div>
+</ng-container>
+<ui-tree #treeRef [nodes]="nodes" [adapter]="adapter">
+  <ng-container *treeNode="let node">
+    <span class="tree-label">
+      <ng-container *ngIf="node.expandable; else leafTemplate">
+        <div class="codicon codicon-{{treeRef.isExpanded(node) ? 'chevron-down' : 'chevron-right' }}"></div>&nbsp;
+        <ui-icon [icon]="node.name | fileIcon"></ui-icon>&nbsp;
+        <span [highlight]="node.name" [highlightPattern]="pattern"></span>
+      </ng-container>
+      <ng-template #leafTemplate>
+        <div [style.margin]="'0 8px'">
+          <span>{{ node.data.lineno }}:</span>&nbsp;
+          <span [highlight]="node.name" [highlightPattern]="pattern"></span>
+        </div>
+      </ng-template>
+    </span>
+  </ng-container>
+</ui-tree>

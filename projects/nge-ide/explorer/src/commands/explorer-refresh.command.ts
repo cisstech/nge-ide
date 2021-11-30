@@ -30,13 +30,13 @@ export class ExplorerCommandRefresh implements ICommand {
         try {
             const askConfirmation = () => this.dialogService.confirmAsync({
                     title: 'Actualiser l\'explorateur',
-                    message: 'Vous perdrez toutes les modifications non sauvegardées. Vous êtes sûr ?',
+                    message: 'Vous perdrez toutes les modifications non sauvegardées.',
                     noTitle: 'Annuler',
                     okTitle: 'Actualiser',
                 });
 
             if (!shouldConfirm || await askConfirmation()) {
-                await this.editorService.closeAll();
+                await this.editorService.closeAll(true);
                 await this.fileService.refresh();
             }
         } catch (error) {
