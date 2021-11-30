@@ -40,6 +40,7 @@ export class ExplorerService {
         childrenProvider: (node) => this.fileService.findChildren(node),
         isExpandable: (node) => node.isFolder,
         onDidEditName: this.onEditNode.bind(this),
+        keepStateOnChangeNodes: true,
         enableKeyboardFiltering: true,
         actions: {
             mouse: {

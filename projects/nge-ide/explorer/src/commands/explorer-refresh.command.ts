@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { CommandScopes, EditorService, FileService, ICommand, NotificationService } from '@mcisse/nge-ide/core';
 import { CodIcon } from '@mcisse/nge/ui/icon';
 import { DialogService } from '@mcisse/nge/ui/dialog';
+import { ExplorerService } from '../explorer.service';
 
 
 export const EXPLORER_COMMAND_REFRESH = 'explorer.commands.refresh';
@@ -22,6 +23,7 @@ export class ExplorerCommandRefresh implements ICommand {
         private readonly fileService: FileService,
         private readonly dialogService: DialogService,
         private readonly editorService: EditorService,
+        private readonly explorerService: ExplorerService,
         private readonly notificationService: NotificationService,
     ) {}
 
@@ -38,6 +40,7 @@ export class ExplorerCommandRefresh implements ICommand {
             if (!shouldConfirm || await askConfirmation()) {
                 await this.editorService.closeAll(true);
                 await this.fileService.refresh();
+                this.explorerService.collapseAll();
             }
         } catch (error) {
             this.notificationService.publishError(error);
