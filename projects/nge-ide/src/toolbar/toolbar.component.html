@@ -1,0 +1,34 @@
+<ng-container *ngFor="let tuple of menus">
+  <ng-container *ngIf="tuple[1]|async as items">
+    <ng-container *ngIf="items.length">
+      <button
+        mat-button
+        class="menu"
+        [matMenuTriggerFor]="menu"
+        [matMenuTriggerData]="{ items: items }">
+        {{ tuple[0] }}
+      </button>
+      <mat-menu #menu="matMenu" yPosition="below">
+        <ng-template matMenuContent let-items="items">
+          <ng-container *ngFor="let item of items; let isLast=last;">
+            <ng-container *ngIf="!item.isSeparator; else separator">
+              <div
+                role="menuitem"
+                class="menu-item"
+                [class.disabled]="!item.command.enabled"
+                [attr.data-command]="item.command.id"
+                (click)="item.command.execute()">
+                <div class="menu-icon"></div>
+                <div class="menu-label">{{ item.command.label }}</div>
+                <div class="menu-shorcut">{{ item.shorcut }}</div>
+              </div>
+            </ng-container>
+            <ng-template #separator>
+              <mat-divider *ngIf="!isLast"></mat-divider>
+            </ng-template>
+          </ng-container>
+        </ng-template>
+      </mat-menu>
+    </ng-container>
+  </ng-container>
+</ng-container>

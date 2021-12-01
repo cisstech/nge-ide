@@ -1,24 +1,22 @@
-import { Injectable, OnDestroy } from '@angular/core';
+import { HttpErrorResponse } from '@angular/common/http';
+import { Injectable } from '@angular/core';
 import { NgEventBus } from 'ng-event-bus';
 import {
     BehaviorSubject,
-    Observable,
-    PartialObserver,
-    Subscription,
+    Observable, Subscription
 } from 'rxjs';
-import {
-    Notification,
-    ErrorNotification,
-    NOTIFICATION_EVENT_CHANNEL,
-} from './notification';
 import { map } from 'rxjs/operators';
-import { HttpErrorResponse } from '@angular/common/http';
+import { IContribution } from '../contributions';
+import {
+    ErrorNotification, Notification, NOTIFICATION_EVENT_CHANNEL
+} from './notification';
 
 @Injectable()
-export class NotificationService implements OnDestroy {
+export class NotificationService implements IContribution {
+    readonly id = 'workbench.contrib.notification-service';
+
     private readonly subscriptions: Subscription[] = [];
     private readonly subject = new BehaviorSubject<Notification[]>([]);
-
 
     get count(): Observable<number> {
         return this.subject.pipe(
@@ -48,7 +46,7 @@ export class NotificationService implements OnDestroy {
         );
     }
 
-    ngOnDestroy(): void {
+    deactivate(): void {
         this.subscriptions.forEach((e) => e.unsubscribe());
     }
 

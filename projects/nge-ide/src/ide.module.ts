@@ -10,6 +10,7 @@ import { InfobarModule } from './infobar/infobar.module';
 import { SidebarModule } from './sidebar/sidebar.module';
 import { StatusbarModule } from './statusbar/statusbar.module';
 import { WorkbenchModule } from './workbench/workbench.module';
+import { ToolbarModule } from './toolbar/toolbar.module';
 
 @NgModule({
     imports: [
@@ -20,6 +21,7 @@ import { WorkbenchModule } from './workbench/workbench.module';
         CoreModule,
 
         InfobarModule,
+        ToolbarModule,
         SidebarModule,
         StatusbarModule,
         WorkbenchModule,

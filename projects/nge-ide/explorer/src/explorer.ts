@@ -4,6 +4,10 @@ import {
     CONTRIBUTION,
     IContribution,
     SidebarContainer,
+    ToolbarButton,
+    ToolbarGroups,
+    ToolbarSeparator,
+    ToolbarSevice,
     ViewContainerService,
     ViewService
 } from '@mcisse/nge-ide/core';
@@ -40,6 +44,7 @@ class ExplorerContribution implements IContribution {
     activate(injector: Injector) {
         const viewService = injector.get(ViewService);
         const commandService = injector.get(CommandService);
+        const toolbarService = injector.get(ToolbarSevice);
         const viewContainerService = injector.get(ViewContainerService);
 
         commandService.register(
@@ -56,6 +61,14 @@ class ExplorerContribution implements IContribution {
             ExplorerCommandRename,
         );
 
+        toolbarService.register(
+            new ToolbarButton(ToolbarGroups.FILE, commandService.find(ExplorerCommandCollapse)),
+            new ToolbarSeparator(ToolbarGroups.FILE),
+
+            new ToolbarButton(ToolbarGroups.FILE, commandService.find(ExplorerCommandFileUpload)),
+            new ToolbarButton(ToolbarGroups.FILE, commandService.find(ExplorerCommandFileExport)),
+            new ToolbarSeparator(ToolbarGroups.FILE),
+        );
 
         viewContainerService.register(new class extends SidebarContainer {
             readonly id = EXPLORER_CONTAINER_ID;
@@ -80,7 +93,6 @@ class ExplorerContribution implements IContribution {
                 ).then((m) => m.ExplorerModule),
         });
     }
-
 }
 
 

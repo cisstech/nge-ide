@@ -2,14 +2,16 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { filter, map } from 'rxjs/operators';
 import { URI } from 'vscode-uri';
+import { IContribution } from '../contributions';
 import { resourceId } from '../files';
 import { Diagnostic, DiagnosticSeverity, DiagnosticGroup } from './diagnostic';
 
-// TODO implements IContribution and clear on deactivate
-
 @Injectable()
-export class DiagnosticService {
+export class DiagnosticService implements IContribution {
+    readonly id = 'workbench.contrib.diagnostic-service';
+
     private readonly subject = new BehaviorSubject<Record<string, Diagnostic[]>>({});
+
 
     get count(): Observable<number> {
         return this.reduce((previous) => previous + 1, 0);
@@ -45,6 +47,10 @@ export class DiagnosticService {
         )
     }
 
+
+    deactivate(): void {
+        this.clear();
+    }
 
     clear() {
         this.subject.next({})
