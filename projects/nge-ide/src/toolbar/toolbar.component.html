@@ -4,31 +4,35 @@
       <button
         mat-button
         class="menu"
-        [matMenuTriggerFor]="menu"
-        [matMenuTriggerData]="{ items: items }">
+        nz-dropdown
+        [nzDropdownMenu]="menu">
         {{ tuple[0] }}
       </button>
-      <mat-menu #menu="matMenu" yPosition="below">
-        <ng-template matMenuContent let-items="items">
-          <ng-container *ngFor="let item of items; let isLast=last;">
+      <nz-dropdown-menu #menu="nzDropdownMenu">
+        <ul nz-menu role="menu">
+          <ng-container *ngFor="let item of items; let isLast = last;">
             <ng-container *ngIf="!item.isSeparator; else separator">
-              <div
+              <li
+                nz-menu-item
                 role="menuitem"
                 class="menu-item"
-                [class.disabled]="!item.command.enabled"
-                [attr.data-command]="item.command.id"
-                (click)="item.command.execute()">
+                [class.disabled]="!item.command?.enabled"
+                [attr.data-command]="item.command?.id"
+                (click)="item.command?.execute()">
                 <div class="menu-icon"></div>
-                <div class="menu-label">{{ item.command.label }}</div>
-                <div class="menu-shorcut">{{ item.shorcut }}</div>
-              </div>
+                <div class="menu-label">{{ item.command?.label }}</div>
+                <div class="menu-shorcut">{{ item.command?.keybinding }}</div>
+              </li>
             </ng-container>
             <ng-template #separator>
               <mat-divider *ngIf="!isLast"></mat-divider>
             </ng-template>
           </ng-container>
-        </ng-template>
-      </mat-menu>
+        </ul>
+      </nz-dropdown-menu>
     </ng-container>
   </ng-container>
 </ng-container>
+
+<div class="spacer"></div>
+<a href="https://github.com/mciissee/nge-ide" target="_blank" mat-button>NGE IDE</a>

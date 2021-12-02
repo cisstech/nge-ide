@@ -1,14 +1,21 @@
 import { Injectable } from '@angular/core';
-import { ACTION_GOTO_LINE, ACTION_INDENT_USING_SPACES, LINK_DETECTOR_CONTRIB } from '@mcisse/nge/monaco';
+import { ACTION_ADD_SELECTION_TO_NEXT_FIND_MATCH, ACTION_ADD_SELECTION_TO_PREVIOUS_FIND_MATCH, ACTION_BLOCK_COMMENT, ACTION_COMMENT_LINE, ACTION_COPY_LINES_DOWN, ACTION_COPY_LINES_UP, ACTION_CURSOR_REDO, ACTION_CURSOR_UNDO, ACTION_DUPLICATE_SELECTION, ACTION_EDITOR_FOLD_ALL, ACTION_EDITOR_UNFOLD_ALL, ACTION_FIND, ACTION_GOTO_LINE, ACTION_INDENT_USING_SPACES, ACTION_INSERT_CURSOR_ABOVE, ACTION_INSERT_CURSOR_AT_END_OF_EACH_LINE_SELECTED, ACTION_INSERT_CURSOR_BELOW, ACTION_MOVE_LINES_DOWN, ACTION_MOVE_LINES_UP, ACTION_QUICK_COMMAND, ACTION_SMART_SELECT_EXPAND, ACTION_SMART_SELECT_SHRINK, ACTION_START_FIND_REPLACE, LINK_DETECTOR_CONTRIB } from '@mcisse/nge/monaco';
 import { BehaviorSubject, Subject, Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { URI } from 'vscode-uri';
+import { ICommand } from '../commands';
 import { IContribution } from '../contributions';
 import { Diagnostic, DiagnosticService, DiagnosticSeverity } from '../diagnostics';
 import { compareURI, FileChangeType, FileService, resourceId } from '../files';
+import { SettingsService } from '../settings';
 import { StatusBarService } from '../status-bar';
+import { ToolbarGroups, ToolbarSeparator, ToolbarSevice } from '../toolbar';
 import { Paths } from '../utils';
-import { SettingsService } from './settings.service';
+
+// @ts-ignore
+// import { MenuRegistry } from 'monaco-editor/esm/vs/platform/actions/common/actions';
+// @ts-ignore
+// import { StandaloneCodeEditorServiceImpl } from 'monaco-editor/esm/vs/editor/standalone/browser/standaloneCodeServiceImpl.js';
 
 import IPosition = monaco.IPosition;
 import IDisposable = monaco.IDisposable;
@@ -33,29 +40,47 @@ export class MonacoService implements IContribution {
     private readonly cursor$ = new BehaviorSubject<Nullable<IPosition>>(undefined);
     private readonly activeEditor$ = new BehaviorSubject<Nullable<IStandaloneCodeEditor>>(undefined);
     private readonly activeLanguage$ = new BehaviorSubject<Nullable<string>>(undefined)
+
     private readonly didFollowLink = new Subject<{ uri: monaco.Uri, link: string }>();
 
     private setModelMarkers?: any;
     private monacoApiDecorated = false;
 
-
     /** Emitted when active editor cursor position change. */
     readonly cursorChange = this.cursor$.asObservable();
-    /** Emitted when active editor language change. */
-    readonly languageChange = this.activeLanguage$.asObservable();
     /** Emitted when active editor change. */
     readonly activeEditorChange = this.activeEditor$.asObservable();
+    /** Emitted when active editor language change. */
+    readonly activeLangageChange = this.activeLanguage$.asObservable();
+
     /** Emitted when a link is clicked inside the editor */
     readonly onDidFollowLink = this.didFollowLink.asObservable();
 
+
+    get cursor(): Nullable<IPosition> {
+        return this.cursor$.value;
+    }
+
+    get activeEditor(): Nullable<IStandaloneCodeEditor> {
+        return this.activeEditor$.value;
+    }
+
+    get activeLanguage(): Nullable<string> {
+        return this.activeLanguage$.value;
+    }
+
     constructor(
         private readonly fileService: FileService,
+        private readonly toolbarService: ToolbarSevice,
         private readonly settingsService: SettingsService,
         private readonly statusBarService: StatusBarService,
         private readonly diagnosticService: DiagnosticService,
     ) { }
 
-    activate(): void {
+    async activate(): Promise<void> {
+        await this.registerToolbarItems();
+        this.registerStatusBarItems();
+
         this.subscriptions.push(
             this.fileService.onDidCloseFile.subscribe(this.disposeModel.bind(this))
         );
@@ -69,8 +94,6 @@ export class MonacoService implements IContribution {
         }));
 
         this.subscriptions.push(this.settingsService.onDidChange.subscribe(this.updateSettings.bind(this)));
-
-        this.registerStatusBarItems();
     }
 
     deactivate(): void {
@@ -88,13 +111,17 @@ export class MonacoService implements IContribution {
         options: {
             uri: monaco.Uri | URI;
             editor: IStandaloneCodeEditor;
-            readOnly?: boolean;
         }
     ): Promise<void> {
-        const { uri, editor, readOnly } = options;
+        const { uri, editor } = options;
         let model = editor.getModel();
         if (model && compareURI(uri, model.uri)) {
             return; // already opened
+        }
+
+        const file = this.fileService.find(uri);
+        if (!file) {
+            return;
         }
 
         const language = this.findLanguage(options.uri);
@@ -111,7 +138,7 @@ export class MonacoService implements IContribution {
         }
 
         editor.setModel(model);
-        editor.updateOptions({ readOnly });
+        editor.updateOptions({ readOnly: file.readOnly });
 
         const viewState = this.viewStates.get(resourceId(uri));
         if (viewState) {
@@ -123,19 +150,6 @@ export class MonacoService implements IContribution {
         this.cursor$.next(editor.getPosition());
         this.activeEditor$.next(editor);
         this.activeLanguage$.next(language);
-    }
-
-    runAction(id: string): Promise<void> {
-        const editor = this.activeEditor$.value;
-        if (editor) {
-            editor.focus();
-            const action = editor.getAction(id);
-            if (!action) {
-                return Promise.reject('Action Not found');
-            }
-            action.run();
-        }
-        return Promise.reject('No active editor');
     }
 
     findLanguage(uri: monaco.Uri | URI): string {
@@ -197,13 +211,6 @@ export class MonacoService implements IContribution {
             })
         )
 
-        editor.addCommand(monaco.KeyMod.CtrlCmd | monaco.KeyCode.KEY_S, () => {
-            if (!editor.getRawOptions().readOnly) {
-                const model = editor.getModel()!;
-                this.fileService.save(model.uri);
-            }
-        }, '');
-
         this.holders.set(editor.getId(), { editor, disposables });
 
         this.updateSettings();
@@ -235,7 +242,6 @@ export class MonacoService implements IContribution {
         });
     }
 
-
     private disposeModel(uri: URI): void {
         const model = monaco.editor.getModel(uri);
         model?.dispose();
@@ -262,7 +268,11 @@ export class MonacoService implements IContribution {
             })),
             active: this.cursorChange.pipe(map(e => !!e)),
             action: () => {
-                this.runAction(ACTION_GOTO_LINE);
+                const editor = this.activeEditor$.value;
+                if (editor) {
+                    editor.focus();
+                    editor.trigger('code', ACTION_GOTO_LINE, null)
+                }
             }
         });
 
@@ -283,7 +293,11 @@ export class MonacoService implements IContribution {
             })),
             active: this.activeEditorChange.pipe(map(e => !!e?.getModel())),
             action: () => {
-                this.runAction(ACTION_INDENT_USING_SPACES);
+                const editor = this.activeEditor$.value;
+                if (editor) {
+                    editor.focus();
+                    editor.trigger('code', ACTION_INDENT_USING_SPACES, null)
+                }
             }
         });
 
@@ -292,8 +306,8 @@ export class MonacoService implements IContribution {
             side: 'right',
             priority: 1,
             tooltip: 'Langage',
-            content: this.languageChange.pipe(map(e => e || '')),
-            active: this.languageChange.pipe(map(e => !!e)),
+            content: this.activeLangageChange.pipe(map(e => e || '')),
+            active: this.activeLangageChange.pipe(map(e => !!e)),
         });
     }
 
@@ -317,9 +331,6 @@ export class MonacoService implements IContribution {
         if (!this.monacoApiDecorated) {
             this.monacoApiDecorated = true;
             this.decorateSetModelMarkers();
-            this.subscriptions.push(
-
-            )
         }
     }
 
@@ -365,6 +376,137 @@ export class MonacoService implements IContribution {
                 })
             );
         };
+    }
+
+    private async registerToolbarItems(): Promise<void> {
+        // create dummy editor
+        const n = document.createElement('div');
+        const e = monaco.editor.create(n);
+        e.focus();
+
+        const {
+            // _themeService,
+            // _commandService,
+            // _instantiationService,
+            // _contextKeyService,
+            // _codeEditorService,
+            // _standaloneThemeService,
+            _standaloneKeybindingService
+        } = e as any;
+
+        const lookup = await new Promise<any>(resolve => {
+            setTimeout(() => {
+                const { _cachedResolver } = _standaloneKeybindingService;
+                resolve(_cachedResolver._lookupMap);
+            });
+        });
+
+        //const binding = _cachedResolver._lookupMap.get('editor.action.insertCursorBelow');
+        //console.log(binding[0].resolvedKeybinding.getLabel());
+
+        const registerEditorAction = (action: string, group: ToolbarGroups, priority: number, separator?: boolean) => {
+            const editorService = this;
+            this.toolbarService.register({
+                group,
+                priority,
+                isSeparator: false,
+                command: new class implements ICommand {
+                    readonly id = action;
+                    readonly scope = [];
+                    readonly label = e.getAction(action).label;
+                    readonly keybinding = lookup.get(action)?.[0]?.resolvedKeybinding?.getLabel();
+
+                    get enabled() {
+                        return !!editorService.activeEditor;;
+                    }
+
+                    execute() {
+                        const editor = editorService.activeEditor;
+                        if (editor) {
+                            editor.trigger('code', action, null);
+                        }
+                    }
+                }
+            });
+
+            if (separator) {
+                this.toolbarService.register(new ToolbarSeparator(group, priority));
+            }
+        };
+
+        const registerOptionAction = (id: string, label: string, run: () => void) => {
+            this.toolbarService.register({
+                group: ToolbarGroups.VIEW,
+                priority: 100,
+                isSeparator: false,
+                command: new class implements ICommand {
+                    readonly id = id;
+                    readonly scope = [];
+                    readonly label = label;
+
+                    get enabled() {
+                        return true;
+                    }
+
+                    execute() {
+                        run();
+                    }
+                }
+            });
+
+        };
+
+        // EDIT
+        registerEditorAction(ACTION_CURSOR_UNDO, ToolbarGroups.EDIT, 10);
+        registerEditorAction(ACTION_CURSOR_REDO, ToolbarGroups.EDIT, 10, true);
+
+        registerEditorAction(ACTION_FIND, ToolbarGroups.EDIT, 20);
+        registerEditorAction(ACTION_START_FIND_REPLACE, ToolbarGroups.EDIT, 20, true);
+
+        registerEditorAction(ACTION_COMMENT_LINE, ToolbarGroups.EDIT, 20);
+        registerEditorAction(ACTION_BLOCK_COMMENT, ToolbarGroups.EDIT, 20, true);
+
+
+        // SELECTION
+        registerEditorAction(ACTION_SMART_SELECT_EXPAND, ToolbarGroups.SELECTION, 10);
+        registerEditorAction(ACTION_SMART_SELECT_SHRINK, ToolbarGroups.SELECTION, 10, true);
+
+        registerEditorAction(ACTION_EDITOR_FOLD_ALL, ToolbarGroups.SELECTION, 20);
+        registerEditorAction(ACTION_EDITOR_UNFOLD_ALL, ToolbarGroups.SELECTION, 20, true);
+
+        registerEditorAction(ACTION_COPY_LINES_UP, ToolbarGroups.SELECTION, 30);
+        registerEditorAction(ACTION_COPY_LINES_DOWN, ToolbarGroups.SELECTION, 30);
+        registerEditorAction(ACTION_MOVE_LINES_UP, ToolbarGroups.SELECTION, 30);
+        registerEditorAction(ACTION_MOVE_LINES_DOWN, ToolbarGroups.SELECTION, 30);
+        registerEditorAction(ACTION_DUPLICATE_SELECTION, ToolbarGroups.SELECTION, 30, true);
+
+        registerEditorAction(ACTION_INSERT_CURSOR_ABOVE, ToolbarGroups.SELECTION, 40);
+        registerEditorAction(ACTION_INSERT_CURSOR_BELOW, ToolbarGroups.SELECTION, 40);
+        registerEditorAction(ACTION_INSERT_CURSOR_AT_END_OF_EACH_LINE_SELECTED, ToolbarGroups.SELECTION, 40);
+        registerEditorAction(ACTION_ADD_SELECTION_TO_NEXT_FIND_MATCH, ToolbarGroups.SELECTION, 40);
+        registerEditorAction(ACTION_ADD_SELECTION_TO_PREVIOUS_FIND_MATCH, ToolbarGroups.SELECTION, 40, true);
+
+
+        // SELECTION
+        registerEditorAction(ACTION_QUICK_COMMAND, ToolbarGroups.VIEW, 10, true);
+
+        registerOptionAction('view.toggle-minimap', 'Afficher/Cacher le minimap', () => {
+            const s = this.settingsService.get('editor.minimap', 'minimap.enabled') as any;
+            this.settingsService.set('editor.minimap', 'minimap.enabled', !s.value);
+        });
+
+        registerOptionAction('view.renderWhitespace', 'Afficher/Cacher les espaces', () => {
+            const s = this.settingsService.get('editor', 'renderWhitespace') as any;
+            this.settingsService.set('editor', 'renderWhitespace', !s.value);
+        });
+
+        registerOptionAction('view.renderControlCharacters', 'Afficher/Cacher les caractères de contrôle', () => {
+            const s = this.settingsService.get('editor', 'renderControlCharacters') as any;
+            this.settingsService.set('editor', 'renderControlCharacters', !s.value);
+        });
+
+        n.remove();
+        e.dispose();
     }
 
 }

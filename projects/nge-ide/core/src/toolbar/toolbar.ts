@@ -9,22 +9,31 @@ export enum ToolbarGroups {
 
 export interface IToolbarItem {
     readonly group: ToolbarGroups;
-    readonly shorcut: string;
     readonly command?: ICommand;
+    readonly priority: number;
     readonly isSeparator: boolean;
 }
 
 export class ToolbarButton implements IToolbarItem {
     readonly isSeparator = false;
+    readonly group: ToolbarGroups;
+    readonly command: ICommand;
+    readonly priority: number;
     constructor(
-        readonly group: ToolbarGroups,
-        readonly command: ICommand,
-        readonly shorcut = ''
-    ) {}
+        args: {
+            group: ToolbarGroups,
+            command: ICommand,
+            priority: number,
+        }
+    ) {
+        this.group = args.group;
+        this.command = args.command;
+        this.priority = args.priority;
+    }
 }
 
 export class ToolbarSeparator implements IToolbarItem {
     readonly shorcut = '';
     readonly isSeparator = true;
-    constructor(readonly group: ToolbarGroups) {}
+    constructor(readonly group: ToolbarGroups, readonly priority: number) { }
 }

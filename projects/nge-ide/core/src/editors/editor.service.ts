@@ -13,18 +13,15 @@ import { OpenOptions } from './opener';
 export class EditorService implements IContribution {
     readonly id = 'workbench.contrib.editor-service';
 
-    private editors: Editor[] = [];
     private readonly groups: Map<string, EditorGroup> = new Map();
 
     private readonly didOpen = new Subject<URI>();
     private readonly willOpen = new Subject<URI>();
 
-    /** State of the editor. */
     private readonly state$ = new BehaviorSubject<EditorState>({ visibleEditors: [] });
-
-    /** Opened opened editor groups. */
     private readonly editorGroups$ = new BehaviorSubject<EditorGroup[]>([]);
 
+    private editors: Editor[] = [];
 
     /** State of the editor. */
     readonly state = this.state$.asObservable();
@@ -61,7 +58,7 @@ export class EditorService implements IContribution {
         private readonly injector: Injector,
         private readonly fileService: FileService,
         private readonly dialogService: DialogService,
-    ) {}
+    ) { }
 
     deactivate(): void {
         this.editors = [];
@@ -166,10 +163,10 @@ export class EditorService implements IContribution {
         return Promise.all(groups.map(g => g.close(resource)));
     }
 
-   /**
-    * Closes all the groups.
-    * @param force When `true`, force close the group whithout asking to save dirty files.
-    */
+    /**
+     * Closes all the groups.
+     * @param force When `true`, force close the group whithout asking to save dirty files.
+     */
     async closeAll(force?: boolean): Promise<void> {
         let groups = this.listGroups();
         while (groups.length !== 0) {
@@ -187,12 +184,6 @@ export class EditorService implements IContribution {
         });
     }
 
-    /**
-     * Saves the resource on the disk.
-     */
-    async save(resource: URI): Promise<void> {
-        await this.fileService.save(resource);
-    }
 
     /**
      * Saves unsaved resources.
@@ -200,14 +191,27 @@ export class EditorService implements IContribution {
     async saveAll(): Promise<any> {
         const changes: URI[] = [];
         this.listGroups().forEach(group => {
-           group.tabs.forEach(tab => {
-               if (this.fileService.isDirty(tab.resource)) {
-                   changes.push(tab.resource);
-               }
+            group.tabs.forEach(tab => {
+                if (this.fileService.isDirty(tab.resource)) {
+                    changes.push(tab.resource);
+                }
 
-           });
+            });
         });
         return Promise.all(changes.map(r => this.save(r)));
+    }
+
+    /**
+     * Saves the current active resource on the disk if it's exists.
+     */
+    async saveActiveResource(): Promise<void> {
+        if (this.activeResource) {
+            this.save(this.activeResource);
+        }
+    }
+
+    private async save(resource: URI): Promise<void> {
+        await this.fileService.save(resource);
     }
 
     private async closeGuard(

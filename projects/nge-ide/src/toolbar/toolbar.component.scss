@@ -1,39 +1,43 @@
 :host {
-    display: flex;
-    align-content: center;
-    align-items: center;
-    height: 40px;
-    font-size: 12px;
-    padding: 0 8px;
-    background-color: var(--tab-inactiveBackground);
-    border-bottom: 1px solid var(--tab-border);
+  display: flex;
+  align-content: center;
+  align-items: center;
+  height: 40px;
+  font-size: 12px;
+  padding: 0 8px;
+  background-color: rgb(59, 66, 82);
+  color: rgb(216, 222, 233);
+  border-bottom: 1px solid var(--tab-border);
 }
 
 .menu {
-    min-width: 36px;
-    line-height: 36px;
-    padding: 0 8px;
+  min-width: 36px;
+  line-height: 36px;
+  padding: 0 8px;
 }
 
 .menu-item {
-    min-height: 24px;
-    max-height: 24px;
-    line-height: 24px;
-    font-size: 14px;
-    padding: 0;
-    display: grid;
-    cursor: pointer;
-    grid-template-columns: 32px 1fr auto 32px;
-    &.disabled {
-        opacity: .4;
+  min-height: 24px;
+  max-height: 24px;
+  line-height: 24px;
+  font-size: 14px;
+  padding: 0;
+  display: grid;
+  cursor: pointer;
+  grid-template-columns: 32px 1fr auto 32px;
+  &.disabled {
+    opacity: 0.4;
+    &:hover {
+      background-color: transparent;
     }
-    &:not(.disabled):hover {
-        color: var(--list-activeSelectionForeground) !important;
-        background-color: var(--list-activeSelectionBackground) !important;
-    }
+  }
+}
+
+.menu-label {
+  padding: 0px 32px 0px 2px;
 }
 
 
-.menu-label {
-    padding: 0px 32px 0px 2px
+.spacer {
+  flex: 1;
 }

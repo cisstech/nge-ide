@@ -17,7 +17,7 @@
             <ng-container *ngIf="tab.resource|fileChanged|async">
               <span class="codicon codicon-close-dirty"></span>
             </ng-container>
-            <span class="codicon codicon-close close-group-btn" (click)="group.close(tab.resource)"></span>
+            <span class="codicon codicon-close close-btn" (click)="group.close(tab.resource)"></span>
           </ng-template>
         </ng-container>
         <ng-template #tabExtra>

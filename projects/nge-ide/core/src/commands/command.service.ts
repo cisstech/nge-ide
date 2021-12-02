@@ -3,19 +3,22 @@ import { ICommand, CommandScopes } from './command';
 import { filter, map } from 'rxjs/operators';
 import { NgEventBus } from 'ng-event-bus';
 import { CommandEvent } from './command-event';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, Subscription } from 'rxjs';
 import { IContribution } from '../contributions';
+import { KeyBindService } from '../keybinding';
 
 @Injectable()
 export class CommandService implements IContribution {
     private readonly registry = new BehaviorSubject<ICommand[]>([]);
+    private readonly subscriptions: Subscription[] = [];
 
     readonly id = 'workbench.contrib.commands';
 
     constructor(
         private readonly injector: Injector,
         private readonly eventBus: NgEventBus,
-    ) {}
+        private readonly keybindingService: KeyBindService,
+    ) { }
 
     /**
      * Finds and executes the command identified by the given `id`.
@@ -52,12 +55,14 @@ export class CommandService implements IContribution {
                 );
             }
             this.decorate(command);
+            this.registerKeybindings(command);
             registry.push(command);
         });
         this.registry.next(registry);
     }
 
     deactivate(): void {
+        this.subscriptions.forEach(s => s.unsubscribe());
         this.registry.next([]);
     }
 
@@ -164,5 +169,16 @@ export class CommandService implements IContribution {
                 }, 300);
             }
         };
+    }
+
+    private registerKeybindings(command: ICommand) {
+        if (command.keybinding && typeof command.keybinding !== 'string') {
+            const { key, modifiers } = command.keybinding;
+            this.subscriptions.push(this.keybindingService.match(key, modifiers).subscribe((e) => {
+                if (command.enabled) {
+                    command.execute();
+                }
+            }));
+        }
     }
 }

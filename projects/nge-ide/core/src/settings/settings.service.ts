@@ -1,24 +1,25 @@
 // tslint:disable: max-line-length
 
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Subject } from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
 import { IContribution } from '../contributions';
 import { Settings } from './settings';
 
 
 @Injectable()
 export class SettingsService implements IContribution {
-    readonly id = 'workbench.contrib.settings-service';
     private readonly settings = new BehaviorSubject<Record<string, Settings.Setting[]>>({});
     private readonly customSettings: Settings.Setting[] = [];
 
+    readonly id = 'workbench.contrib.settings-service';
     readonly onDidChange = this.settings.asObservable();
+
 
     async activate(): Promise<void> {
         await this.loadSettings();
     }
 
-    deactivate() {
+    deactivate(): void {
         this.customSettings.splice(0, this.customSettings.length);
     }
 
@@ -29,16 +30,14 @@ export class SettingsService implements IContribution {
     }
 
     get(groupName: string, settingName: string) {
-        const settings = this.settings.value;
-        return (settings[groupName] || []).find(item => {
+        return (this.settings.value[groupName] || []).find(item => {
             return item.group === groupName && item.name === settingName;
         });
     }
 
-    set(groupName: string, settingName: string, value: Settings.Setting) {
+    set(groupName: string, settingName: string, value: any) {
         const groups = this.settings.value;
         const group = (groups[groupName] || []);
-
         let setting: Settings.Setting;
         for (let i = 0; i < group.length; i++) {
             setting = group[i];
@@ -52,11 +51,11 @@ export class SettingsService implements IContribution {
         this.settings.next(groups)
     }
 
-    save() {
+    save(): void {
         localStorage.setItem(Settings.STORAGE_KEY, JSON.stringify(this.settings.value));
     }
 
-    update(groups: Settings.Group[]) {
+    update(groups: Settings.Group[]): void {
         const settings = this.settings.value;
 
         groups.forEach(g => {

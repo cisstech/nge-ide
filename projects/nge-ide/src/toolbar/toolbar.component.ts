@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { IToolbarItem, ToolbarGroups, ToolbarSevice } from '@mcisse/nge-ide/core';
 import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 
 @Component({
@@ -25,7 +26,9 @@ export class ToolbarComponent implements OnInit {
         Object.values(ToolbarGroups).forEach(group => {
             this.menus.push([
                 titles[group],
-                this.toolbarService.listOfGroup(group)
+                this.toolbarService.listOfGroup(group).pipe(
+                    map(arr => arr.sort((a, b) => a.priority - b.priority))
+                )
             ]);
         });
     }

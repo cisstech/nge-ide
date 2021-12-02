@@ -13,9 +13,6 @@ export interface OpenOptions {
     /** force the editor to open the file in this group */
     readonly openInGroup?: EditorGroup;
 
-    /** open the editor in a readonly mode? */
-    readonly readOnly?: boolean;
-
     /** jumping at the given position after the resource is opened */
     readonly position?: {
         line: number;

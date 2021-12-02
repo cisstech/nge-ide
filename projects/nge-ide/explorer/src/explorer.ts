@@ -62,14 +62,18 @@ class ExplorerContribution implements IContribution {
         );
 
         toolbarService.register(
-            new ToolbarButton(ToolbarGroups.FILE, commandService.find(ExplorerCommandCollapse)),
-            new ToolbarSeparator(ToolbarGroups.FILE),
-
-            new ToolbarButton(ToolbarGroups.FILE, commandService.find(ExplorerCommandFileUpload)),
-            new ToolbarButton(ToolbarGroups.FILE, commandService.find(ExplorerCommandFileExport)),
-            new ToolbarSeparator(ToolbarGroups.FILE),
+            new ToolbarButton({
+                group: ToolbarGroups.FILE,
+                command: commandService.find(ExplorerCommandFileUpload),
+                priority: 1
+            }),
+            new ToolbarButton({
+                group: ToolbarGroups.FILE,
+                command: commandService.find(ExplorerCommandFileExport),
+                priority: 1
+            }),
+            new ToolbarSeparator(ToolbarGroups.FILE, 1),
         );
-
         viewContainerService.register(new class extends SidebarContainer {
             readonly id = EXPLORER_CONTAINER_ID;
             readonly title = 'Explorateur';
@@ -118,5 +122,5 @@ class ExplorerContribution implements IContribution {
         }
     ]
 })
-export class NgeIdeExplorerModule {}
+export class NgeIdeExplorerModule { }
 

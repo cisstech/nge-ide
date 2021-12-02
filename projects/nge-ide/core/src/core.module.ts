@@ -3,14 +3,16 @@ import { NgEventBus } from 'ng-event-bus';
 import { CommandService } from './commands';
 import { CONTRIBUTION } from './contributions';
 import { DiagnosticService } from './diagnostics';
-import { MonacoService, EditorService, SettingsService } from './editors';
+import { EditorService, MonacoService } from './editors';
 import { FileService } from './files';
 import { IdeService } from './ide.service';
 import { NotificationService } from './notification';
+import { SettingsService } from './settings';
 import { StatusBarService } from './status-bar';
 import { StorageService } from './storage';
 import { ToolbarSevice } from './toolbar';
 import { ViewContainerService, ViewService } from './views';
+
 
 @NgModule({
     providers: [

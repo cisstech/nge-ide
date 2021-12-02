@@ -5,6 +5,8 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDividerModule } from '@angular/material/divider';
 
+import { NzDropDownModule } from 'ng-zorro-antd/dropdown';
+
 import { ToolbarComponent } from './toolbar.component';
 
 @NgModule({
@@ -14,6 +16,8 @@ import { ToolbarComponent } from './toolbar.component';
         MatMenuModule,
         MatButtonModule,
         MatDividerModule,
+
+        NzDropDownModule,
     ],
     exports: [
         ToolbarComponent,

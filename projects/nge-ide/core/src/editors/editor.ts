@@ -57,9 +57,14 @@ export abstract class Editor {
         return this.constructor.name;
     }
 
+    get options(): OpenOptions | undefined {
+        return this.request.value?.options;
+    }
+
     get onChangeRequest(): Observable<OpenRequest> {
         return this.request.asObservable() as Observable<OpenRequest>;
     }
+
 
     /**
      * Checks whether this editor can handle the given `request`.

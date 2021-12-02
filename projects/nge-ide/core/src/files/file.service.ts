@@ -4,7 +4,7 @@ import { map } from 'rxjs/operators';
 import { URI } from 'vscode-uri';
 import { IContribution } from '../contributions';
 import { Paths } from '../utils/paths';
-import { IFile, IFolder, isResourceAncestor, isResourceParent, isSameResource, resourceId } from './file';
+import { IFile, IFolder, isResourceAncestor, isSameResource, resourceId } from './file';
 import { FileSystemError } from './file-system-error';
 import {
     FileChangeType,
@@ -175,40 +175,52 @@ export class FileService implements IContribution {
     }
 
     async open(uri: monaco.Uri | URI): Promise<FileContent> {
+        const id = resourceId(uri);
         const map = this.contents.value;
 
-        const id = resourceId(uri);
         const content = map.get(id);
         if (content) {
             return content;
         }
 
         const value = await this.readFile(uri);
-
-        const newContent = {
-            initial: value,
-            current: value,
-            changed: false
-        };
-
-        map.set(id, newContent);
-        this.contents.next(map);
+        const newContent = { initial: value, current: value, changed: false };
+        this.contents.next(map.set(id, newContent));
 
         return newContent;
     }
 
+    /**
+     * Saves the file of the given uri if it's not a readonly file.
+     * @param uri URI to save.
+     * @returns A promises that resolves once the operation done.
+     * @throws {@link FileSystemError.FileNotFound} when `uri` doesn't exist.
+     */
     async save(uri: monaco.Uri | URI): Promise<void> {
-        const contents = this.contents.value;
+        const file = this.find(uri);
+        if (!file) {
+            throw FileSystemError.FileNotFound(uri);
+        }
+
+        if (file.readOnly) {
+            return;
+        }
+
         const id = resourceId(uri);
-        const content = contents.get(id);
-        if (content?.changed) {
+        const content = this.contents.value.get(id);
+        if (!content) {
+            throw FileSystemError.FileNotFound(uri);
+        }
+
+        if (content.changed) {
             this.willSaveFile.next(uri);
 
             await this.writeFile(uri, content.current);
 
             content.changed = false;
-            contents.set(id, content);
-            this.contents.next(contents);
+
+            this.contents.value.set(id, content);
+            this.contents.next(this.contents.value);
 
             this.didSaveFile.next(uri);
         }

@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 
 import { AngularSplitModule } from 'angular-split';
 
-import { CoreModule } from '@mcisse/nge-ide/core';
+import { CoreModule, EditorModule } from '@mcisse/nge-ide/core';
 
 import { IdeComponent } from './ide.component';
 import { InfobarModule } from './infobar/infobar.module';
@@ -19,6 +19,7 @@ import { ToolbarModule } from './toolbar/toolbar.module';
         AngularSplitModule,
 
         CoreModule,
+        EditorModule,
 
         InfobarModule,
         ToolbarModule,

@@ -44,6 +44,7 @@ export class CodeEditorComponent implements OnInit, OnDestroy {
         }
     }
 
+
     onCreateEditor(editor: IStandaloneCodeEditor): void {
         this.monacoService.onCreateEditor(this.codeEditor = editor);
         this.handleRequest();
@@ -60,7 +61,6 @@ export class CodeEditorComponent implements OnInit, OnDestroy {
             await this.monacoService.open({
                 uri: this.request.uri,
                 editor: this.codeEditor,
-                readOnly: options.readOnly,
             });
         } catch(error) {
             this.notificationService.publishError(error);

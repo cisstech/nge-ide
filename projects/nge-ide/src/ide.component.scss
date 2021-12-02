@@ -46,22 +46,6 @@
   --sideBar-border: #293039; // #dddddd; // Side Bar border color on the side separating the editor
   --sideBarSectionHeader-background: #293039; //#fafbfc; // Side Bar section header background color
   --sideBarSectionHeader-foreground: #ffffff; //#24292e; // Side Bar section header foreground color
-
-  --tab-activeBackground: #3b4252;
-  --tab-activeBorder: #88c0d000;
-  --tab-activeBorderTop: #88c0d000;
-  --tab-activeForeground: #d8dee9;
-  --tab-border: #3b425200;
-  --tab-hoverBackground: #3b4252cc;
-  --tab-hoverBorder: #88c0d000;
-  --tab-inactiveBackground: #2e3440;
-  --tab-inactiveForeground: #d8dee966;
-  --tab-unfocusedActiveBorder: #88c0d000;
-  --tab-unfocusedActiveBorderTop: #88c0d000;
-  --tab-unfocusedActiveForeground: #d8dee999;
-  --tab-unfocusedHoverBackground: #3b4252b3;
-  --tab-unfocusedHoverBorder: #88c0d000;
-  --tab-unfocusedInactiveForeground: #d8dee966;
 }
 
 :host::ng-deep {

@@ -1,39 +1,33 @@
+:host::ng-deep {
+  .ant-tabs-bar {
+    margin: 0;
+  }
+
+  .ant-tabs-nav {
+    margin: 0;
+    padding: 0 12px 0 0;
+  }
+
+  .ant-tabs-tab {
+    padding: 0;
+    border-bottom: 2px solid;
+    display: inline-flex;
+    align-items: center;
+  }
+
+  .ant-tabs-extra-content {
+    height: 40px;
+  }
+
+  .close-btn:hover {
+    border: 1px solid;
+    border-radius: 8px;
+  }
+}
+
 .editor-group {
   position: relative;
   overflow: hidden;
-}
-
-nz-tabset {
-  &::ng-deep {
-    .ant-tabs-nav {
-      margin: 0;
-    }
-
-    .ant-tabs-bar {
-      margin: 0;
-    }
-
-    .ant-tabs-tab {
-      padding: 0;
-      border-bottom: 2px solid;
-      display: inline-flex;
-      align-items: center;
-    }
-
-    .codicon {
-      cursor: pointer;
-      margin: 0 0 0 4px;
-    }
-
-    .close-group-btn:hover {
-      border: 1px solid;
-      border-radius: 8px;
-    }
-  }
-
-  ui-icon {
-    margin-right: 4px;
-  }
 }
 
 .editor-wrapper {
