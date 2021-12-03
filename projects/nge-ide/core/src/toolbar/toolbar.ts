@@ -5,6 +5,7 @@ export enum ToolbarGroups {
     EDIT = "EDIT",
     SELECTION = "SELECTION",
     VIEW = "VIEW",
+    GO = "GO",
 }
 
 export interface IToolbarItem {

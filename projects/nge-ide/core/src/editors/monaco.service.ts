@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { ACTION_ADD_SELECTION_TO_NEXT_FIND_MATCH, ACTION_ADD_SELECTION_TO_PREVIOUS_FIND_MATCH, ACTION_BLOCK_COMMENT, ACTION_COMMENT_LINE, ACTION_COPY_LINES_DOWN, ACTION_COPY_LINES_UP, ACTION_CURSOR_REDO, ACTION_CURSOR_UNDO, ACTION_DUPLICATE_SELECTION, ACTION_EDITOR_FOLD_ALL, ACTION_EDITOR_UNFOLD_ALL, ACTION_FIND, ACTION_GOTO_LINE, ACTION_INDENT_USING_SPACES, ACTION_INSERT_CURSOR_ABOVE, ACTION_INSERT_CURSOR_AT_END_OF_EACH_LINE_SELECTED, ACTION_INSERT_CURSOR_BELOW, ACTION_MOVE_LINES_DOWN, ACTION_MOVE_LINES_UP, ACTION_QUICK_COMMAND, ACTION_SMART_SELECT_EXPAND, ACTION_SMART_SELECT_SHRINK, ACTION_START_FIND_REPLACE, LINK_DETECTOR_CONTRIB } from '@mcisse/nge/monaco';
+import { ACTION_ADD_SELECTION_TO_NEXT_FIND_MATCH, ACTION_ADD_SELECTION_TO_PREVIOUS_FIND_MATCH, ACTION_BLOCK_COMMENT, ACTION_COMMENT_LINE, ACTION_COPY_LINES_DOWN, ACTION_COPY_LINES_UP, ACTION_CURSOR_REDO, ACTION_CURSOR_UNDO, ACTION_DUPLICATE_SELECTION, ACTION_EDITOR_FOLD_ALL, ACTION_EDITOR_UNFOLD_ALL, ACTION_FIND, ACTION_GOTO_LINE, ACTION_INDENT_USING_SPACES, ACTION_INSERT_CURSOR_ABOVE, ACTION_INSERT_CURSOR_AT_END_OF_EACH_LINE_SELECTED, ACTION_INSERT_CURSOR_BELOW, ACTION_JUMP_TO_BRACKET, ACTION_MARKER_NEXT, ACTION_MARKER_PREV, ACTION_MOVE_LINES_DOWN, ACTION_MOVE_LINES_UP, ACTION_QUICK_COMMAND, ACTION_SMART_SELECT_EXPAND, ACTION_SMART_SELECT_SHRINK, ACTION_START_FIND_REPLACE, LINK_DETECTOR_CONTRIB } from '@mcisse/nge/monaco';
 import { BehaviorSubject, Subject, Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { URI } from 'vscode-uri';
@@ -439,9 +439,6 @@ export class MonacoService implements IContribution {
             });
         });
 
-        //const binding = _cachedResolver._lookupMap.get('editor.action.insertCursorBelow');
-        //console.log(binding[0].resolvedKeybinding.getLabel());
-
         const registerEditorAction = (action: string, group: ToolbarGroups, priority: number, separator?: boolean) => {
             const editorService = this;
             this.toolbarService.register({
@@ -543,6 +540,13 @@ export class MonacoService implements IContribution {
             const s = this.settingsService.get('editor', 'renderControlCharacters') as any;
             this.settingsService.set('editor', 'renderControlCharacters', !s.value);
         });
+
+
+        // GO
+        registerEditorAction(ACTION_GOTO_LINE, ToolbarGroups.GO, 20);
+        registerEditorAction(ACTION_JUMP_TO_BRACKET, ToolbarGroups.GO, 20, true);
+        registerEditorAction(ACTION_MARKER_NEXT, ToolbarGroups.GO, 30);
+        registerEditorAction(ACTION_MARKER_PREV, ToolbarGroups.GO, 30, true);
 
         n.remove();
         e.dispose();

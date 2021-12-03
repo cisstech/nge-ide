@@ -22,6 +22,7 @@ export class ToolbarComponent implements OnInit {
             'EDIT': 'Modifier',
             'SELECTION': 'Sélection',
             'VIEW': 'Affichage',
+            'GO': 'Aller',
         };
         Object.values(ToolbarGroups).forEach(group => {
             this.menus.push([
