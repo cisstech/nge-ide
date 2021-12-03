@@ -61,27 +61,13 @@ export class CodeEditorComponent implements OnInit, OnDestroy {
             await this.monacoService.open({
                 uri: this.request.uri,
                 editor: this.codeEditor,
+                position: options.position,
             });
         } catch(error) {
             this.notificationService.publishError(error);
         }
 
-        this.handleCodeOptions(options);
         this.handleDiffOptions(options);
-    }
-
-    private handleCodeOptions(options: OpenOptions): void {
-        const { position } = options;
-        if (position) {
-            this.codeEditor.setPosition({
-                lineNumber: position.line,
-                column: position.column
-            });
-            this.codeEditor.revealLineInCenter(
-                position.line,
-                monaco.editor.ScrollType.Smooth
-            );
-        }
     }
 
     private handleDiffOptions(options: OpenOptions): void {

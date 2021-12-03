@@ -60,6 +60,14 @@ export class WorkbenchComponent implements OnInit, OnDestroy {
         this.subscriptions.forEach(s => s.unsubscribe());
     }
 
+    isActiveGroup(group: EditorGroup): boolean {
+        return this.editorService.isActiveGroup(group);
+    }
+
+    setActiveGroup(group: EditorGroup): void {
+        this.editorService.setActiveGroup(group);
+    }
+
     trackById(_: number, item: any) {
         return item.id;
     }

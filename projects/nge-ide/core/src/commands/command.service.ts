@@ -56,7 +56,7 @@ export class CommandService implements IContribution {
             }
             this.decorate(command);
             this.registerKeybindings(command);
-            registry.push(command);
+            registry.unshift(command);
         });
         this.registry.next(registry);
     }

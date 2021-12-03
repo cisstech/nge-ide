@@ -3,6 +3,7 @@ import { ACTION_ADD_SELECTION_TO_NEXT_FIND_MATCH, ACTION_ADD_SELECTION_TO_PREVIO
 import { BehaviorSubject, Subject, Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { URI } from 'vscode-uri';
+import { EditorService } from './editor.service';
 import { ICommand } from '../commands';
 import { IContribution } from '../contributions';
 import { Diagnostic, DiagnosticService, DiagnosticSeverity } from '../diagnostics';
@@ -27,6 +28,14 @@ interface IEditorHolder {
     editor: IStandaloneCodeEditor;
     disposables: IDisposable[];
 }
+
+interface IResourceInput {
+    resource: monaco.Uri;
+    options?: {
+        selection: monaco.IRange;
+        selectionRevealType?: number;
+    };
+};
 
 @Injectable()
 export class MonacoService implements IContribution {
@@ -71,6 +80,7 @@ export class MonacoService implements IContribution {
 
     constructor(
         private readonly fileService: FileService,
+        private readonly editorService: EditorService,
         private readonly toolbarService: ToolbarSevice,
         private readonly settingsService: SettingsService,
         private readonly statusBarService: StatusBarService,
@@ -111,9 +121,13 @@ export class MonacoService implements IContribution {
         options: {
             uri: monaco.Uri | URI;
             editor: IStandaloneCodeEditor;
+            position?: {
+                line: number,
+                column: number
+            }
         }
     ): Promise<void> {
-        const { uri, editor } = options;
+        const { uri, editor, position } = options;
         let model = editor.getModel();
         if (model && compareURI(uri, model.uri)) {
             return; // already opened
@@ -147,6 +161,17 @@ export class MonacoService implements IContribution {
 
         editor.focus();
 
+        if (position) {
+            editor.setPosition({
+                lineNumber: position.line,
+                column: position.column
+            });
+            editor.revealLineInCenter(
+                position.line,
+                monaco.editor.ScrollType.Smooth
+            );
+        }
+
         this.cursor$.next(editor.getPosition());
         this.activeEditor$.next(editor);
         this.activeLanguage$.next(language);
@@ -167,51 +192,64 @@ export class MonacoService implements IContribution {
     onCreateEditor(editor: IStandaloneCodeEditor): void {
         this.decorateMonacoEditorApi();
 
-        const linkDetector: any = editor.getContribution(LINK_DETECTOR_CONTRIB);
-        linkDetector.openerService.open = (uri: monaco.Uri) => {
-            this.didFollowLink.next({
-                uri,
-                link: uri.path,
-            });
+        const linkDetector = (editor as any).getContribution(LINK_DETECTOR_CONTRIB);
+        const openBase = linkDetector.openerService.open;
+        linkDetector.openerService.open = async (uri: monaco.Uri, options?: { openToSide?: boolean }) => {
+            const opened = await openBase.call(linkDetector.openerService, uri, options);
+            if (!opened) {
+                this.didFollowLink.next({
+                    uri,
+                    link: uri.path,
+                });
+            }
         };
 
-        const disposables = [linkDetector];
-
-        disposables.push(
-            editor.onDidBlurEditorText(() => {
-                const model = editor.getModel();
-                if (model) {
-                    this.viewStates.set(resourceId(model.uri), editor.saveViewState());
+        const editorService = (editor as any)._codeEditorService;
+        const openEditorBase = editorService.openCodeEditor.bind(editorService);
+        editorService.openCodeEditor = async (input: IResourceInput, source: IStandaloneCodeEditor, sideBySide?: boolean) => {
+            const result: IStandaloneCodeEditor | undefined = await openEditorBase(input, source);
+            if (result == null) {
+                let position = undefined;
+                if (input.options?.selection) {
+                    position = {
+                        line: input.options.selection.startLineNumber,
+                        column: input.options.selection.startColumn,
+                    }
                 }
-            })
-        );
 
-        disposables.push(
-            editor.onDidFocusEditorText(() => {
-                this.activeEditor$.next(editor);
-            })
-        );
+                await this.editorService.open(input.resource, {
+                    position,
+                    openToSide: sideBySide,
+                });
+            }
+            return result; // always return the base result
+        };
 
-        disposables.push(
-            editor.onDidChangeCursorPosition(e => {
-                this.onDidChangeCursorPosition(e, editor);
-            })
-        );
-
-        disposables.push(
-            editor.onDidChangeModelLanguage(e => {
-                this.activeLanguage$.next(e.newLanguage);
-            })
-        );
-
-        disposables.push(
-            editor.onDidChangeModelContent(e => {
-                const uri = editor.getModel()!.uri;
-                this.fileService.update(uri, editor.getValue());
-            })
-        )
-
-        this.holders.set(editor.getId(), { editor, disposables });
+        this.holders.set(editor.getId(), {
+            editor,
+            disposables: [
+                linkDetector,
+                editor.onDidBlurEditorText(() => {
+                    const model = editor.getModel();
+                    if (model) {
+                        this.viewStates.set(resourceId(model.uri), editor.saveViewState());
+                    }
+                }),
+                editor.onDidFocusEditorText(() => {
+                    this.activeEditor$.next(editor);
+                }),
+                editor.onDidChangeCursorPosition(e => {
+                    this.onDidChangeCursorPosition(e, editor);
+                }),
+                editor.onDidChangeModelLanguage(e => {
+                    this.activeLanguage$.next(e.newLanguage);
+                }),
+                editor.onDidChangeModelContent(e => {
+                    const uri = editor.getModel()!.uri;
+                    this.fileService.update(uri, editor.getValue());
+                })
+            ]
+        });
 
         this.updateSettings();
     }
@@ -423,6 +461,7 @@ export class MonacoService implements IContribution {
                     execute() {
                         const editor = editorService.activeEditor;
                         if (editor) {
+                            editor.focus();
                             editor.trigger('code', action, null);
                         }
                     }

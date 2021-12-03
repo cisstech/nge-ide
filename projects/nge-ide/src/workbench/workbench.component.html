@@ -7,6 +7,7 @@
     <as-split-area class="editor-group" style="overflow: hidden;">
       <nz-tabset
         nzType="card"
+        (click)="setActiveGroup(group)"
         [(nzSelectedIndex)]="group.activeIndex"
         [nzTabBarExtraContent]="tabExtra">
         <ng-container *ngFor="let tab of group.tabs; trackByUri">
@@ -21,10 +22,12 @@
           </ng-template>
         </ng-container>
         <ng-template #tabExtra>
-          <ide-command-group [commands]="(commands|async)||[]"></ide-command-group>
+          <ng-container *ngIf="isActiveGroup(group)">
+            <ide-command-group [commands]="(commands|async)||[]"></ide-command-group>
+          </ng-container>
         </ng-template>
       </nz-tabset>
-      <div class="editor-wrapper">
+      <div class="editor-wrapper" (click)="setActiveGroup(group)">
         <ng-template [editor]="group.activeEditor"></ng-template>
       </div>
     </as-split-area>

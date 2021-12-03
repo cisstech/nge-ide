@@ -4,8 +4,10 @@ import { CONTRIBUTION, IContribution } from "../contributions";
 import { ToolbarButton, ToolbarGroups, ToolbarSeparator, ToolbarSevice } from "../toolbar";
 import { EditorCloseAllCommand } from "./commands/editor-close-all.command";
 import { EditorCloseCommand } from "./commands/editor-close-command";
+import { EditorPreviewommand } from "./commands/editor-preview.command";
 import { EditorSaveAllCommand } from "./commands/editor-save-all.command";
 import { EditorSaveCommand } from "./commands/editor-save.command";
+import { EditorSplitCommand } from "./commands/editor-split.command";
 
 
 class EditorContribution implements IContribution {
@@ -16,10 +18,12 @@ class EditorContribution implements IContribution {
         const toolbarService = injector.get(ToolbarSevice);
 
         commandService.register(
+            EditorCloseAllCommand,
+            EditorSplitCommand,
+            EditorPreviewommand,
             EditorSaveCommand,
             EditorSaveAllCommand,
             EditorCloseCommand,
-            EditorCloseAllCommand,
         );
 
         toolbarService.register(
@@ -59,6 +63,8 @@ class EditorContribution implements IContribution {
         EditorCloseCommand,
         EditorSaveAllCommand,
         EditorSaveCommand,
+        EditorSplitCommand,
+        EditorPreviewommand,
 
         { provide: CONTRIBUTION, multi: true, useClass: EditorContribution }
     ]

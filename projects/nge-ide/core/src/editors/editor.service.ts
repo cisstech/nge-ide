@@ -64,6 +64,13 @@ export class EditorService implements IContribution {
         this.editors = [];
     }
 
+    /**
+     * Register new editor types.
+     *
+     * Note:
+     * The editor opening algorithm will go through the list from the last registered to the first to choose the one that can open a resource.
+     * @param editors Editors to register.
+     */
     registerEditors(...editors: Editor[]): void {
         editors.forEach(editor => {
             if (this.editors.find((entry) => entry.name === editor.name)) {
@@ -71,6 +78,7 @@ export class EditorService implements IContribution {
                     `There is already a editor registered with the id ${editor.name}`
                 );
             }
+
             this.editors.unshift(editor);
         });
     }
@@ -90,10 +98,18 @@ export class EditorService implements IContribution {
      */
     isActiveGroup(group: EditorGroup): boolean {
         const active = this.state$.value.activeGroup;
-        if (!active) {
-            return false;
-        }
-        return active.id === group.id;
+        return !!active && active.id === group.id;
+    }
+
+    /**
+     * Sets `group` as the active group.
+     * @param group the group to focus.
+     */
+    setActiveGroup(group: EditorGroup): void {
+        this.state$.next({
+            ...this.state$.value,
+            activeGroup: group,
+        });
     }
 
     /**
@@ -244,7 +260,6 @@ export class EditorService implements IContribution {
     ): void {
         this.groups.set(group.id, group);
         this.editorGroups$.next(this.listGroups());
-
         const { visibleEditors } = this.state$.value;
         this.state$.next({
             activeGroup: group,

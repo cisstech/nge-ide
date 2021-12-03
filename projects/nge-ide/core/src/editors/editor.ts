@@ -122,6 +122,7 @@ export class EditorGroup {
 
     set activeIndex(index: number) {
         if (this._activeIndex === index) {
+            this.opened(this, this._activeEditor!, this.activeResource!);
             return;
         }
 
