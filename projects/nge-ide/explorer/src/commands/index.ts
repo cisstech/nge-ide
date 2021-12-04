@@ -9,6 +9,5 @@ export * from './explorer-file-upload.command';
 export * from './explorer-paste.command';
 export * from './explorer-refresh.command';
 export * from './explorer-rename.command';
+export * from './explorer-toggle-filtering.command';
 export * from './explorer.command';
-
-

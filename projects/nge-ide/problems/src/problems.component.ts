@@ -1,5 +1,5 @@
 import { AfterViewChecked, ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { Diagnostic, DiagnosticGroup, DiagnosticService, DiagnosticSeverity, EditorService, NotificationService } from '@mcisse/nge-ide/core';
+import { Diagnostic, DiagnosticGroup, DiagnosticService, DiagnosticSeverity, EditorService, NotificationService, Paths } from '@mcisse/nge-ide/core';
 import { ITree, ITreeAdapter, TreeComponent } from '@mcisse/nge/ui/tree';
 import { Subscription } from 'rxjs';
 import { URI } from 'vscode-uri';
@@ -73,7 +73,8 @@ export class ProblemsComponent implements OnInit, OnDestroy, AfterViewChecked {
         return {
             id: group.uri,
             uri: group.uri,
-            name: group.uri,
+            name: Paths.basename(group.uri),
+            tooltip: group.uri,
             children: group.diagnostics
                 .map((e, i) => {
                     const icons = {
@@ -119,7 +120,7 @@ interface TreeNode {
     uri: string;
     name: string;
     column?: number;
-    tooltip?: string;
+    tooltip: string;
     children?: TreeNode[];
     iconClass?: string;
     lineNumber?: number;

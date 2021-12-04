@@ -44,11 +44,17 @@ export class CommandService implements IContribution {
      * @throws if any of the command is already registered.
      */
     register(
-        ...commands: Type<ICommand>[]
+        ...commands: (Type<ICommand> | ICommand)[]
     ): void {
         const registry = this.registry.value;
         commands.forEach((type) => {
-            const command = this.injector.get(type);
+            let command: ICommand;
+            if (typeof type === 'function') {
+                command = this.injector.get(type);
+            } else {
+                command = type;
+            }
+
             if (registry.find((v) => v.id === command.id)) {
                 throw new Error(
                     `There is already a command registered with the id ${command.id}`

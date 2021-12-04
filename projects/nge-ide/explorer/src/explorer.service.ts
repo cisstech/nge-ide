@@ -34,14 +34,13 @@ export class ExplorerService {
     readonly root = this.fileService.treeChange;
     readonly adapter: ITreeAdapter<IFile> = {
         id: 'explorer.tree',
-        itemHeight: '32px',
         idProvider: (node) => resourceId(node.uri),
         nameProvider: (node) => this.fileService.entryName(node),
         childrenProvider: (node) => this.fileService.findChildren(node),
         isExpandable: (node) => node.isFolder,
         onDidEditName: this.onEditNode.bind(this),
         keepStateOnChangeNodes: true,
-        enableKeyboardFiltering: true,
+        enableKeyboardFiltering: false,
         actions: {
             mouse: {
                 click: this.onMouseDown.bind(this),

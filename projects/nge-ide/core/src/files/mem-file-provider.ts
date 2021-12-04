@@ -5,6 +5,13 @@ import { FileSystemError } from "./file-system-error";
 import { FileSystemProvider, FileSystemProviderCapabilities } from "./file-system-provider";
 import { SearchForm, SearchResult } from "./file-system-search";
 
+const isChildOf = (child: string, parent: string) => {
+    if (child === parent) return false
+    const childs = child.split('/').filter(e => e.length);
+    const parents = parent.split('/').filter(e => e.length);
+    return parents.every((t, i) => childs[i] === t)
+}
+
 class MemFile implements IFile {
     uri: URI;
     version: any;
@@ -50,7 +57,7 @@ export class MemFileProvider extends FileSystemProvider {
 
     constructor() {
         super();
-        for (let i = 1; i <= 9; i++) {
+        for (let i = 1; i <= 1000; i++) {
             this.entries.set(`/folder-${i}`, new MemFile('folder', `/folder-${i}`));
             this.entries.set(`/folder-${i}/file.ts`, new MemFile('file', `/folder-${i}/file.ts`));
             this.entries.set(`/folder-${i}/file.scss`, new MemFile('file', `/folder-${i}/file.scss`));
@@ -64,7 +71,7 @@ export class MemFileProvider extends FileSystemProvider {
         const entry = this._lookupAsDirectory(uri, false);
         const result: IFile[] = [entry];
         for (const f of this.entries.values()) {
-            if (f.uri.path !== entry.uri.path && f.uri.path.startsWith(entry.uri.path)) {
+            if (f.uri.path !== entry.uri.path && isChildOf(f.uri.path, entry.uri.path)) {
                 result.push(f);
             }
         }
@@ -198,7 +205,6 @@ export class MemFileProvider extends FileSystemProvider {
         });
     }
 
-
     searchIn(
         entry: IFile,
         search: SearchForm
@@ -244,8 +250,6 @@ export class MemFileProvider extends FileSystemProvider {
         return Promise.resolve(results);
 
     }
-
-
 
     private _lookup(uri: URI, silent: boolean): MemFile | undefined {
         const entry = this.entries.get(uri.path);

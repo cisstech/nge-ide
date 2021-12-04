@@ -52,6 +52,10 @@
   as-split {
     position: relative;
     height: 100%;
+    &.blur {
+      filter: blur(4px);
+      opacity: 0.5;
+    }
   }
   .as-split-area {
     height: 100% !important;

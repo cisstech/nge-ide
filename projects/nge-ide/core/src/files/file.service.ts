@@ -565,7 +565,6 @@ export class FileService implements IContribution {
         this.contents.next(contents);
     }
 
-
     private sortFiles(files: IFile[]): IFile[] {
         return files.sort((a, b) => {
             const isBothDir = a.isFolder && b.isFolder;

@@ -63,15 +63,8 @@ export class HighlightDirective implements OnChanges {
             regex = this.pattern as RegExp;
         }
 
-        let html = this.escape(this.text);
-        const matches = html.match(regex);
-        if (matches) {
-            for (const match of matches) {
-                html = html.replace(match, `<span class="highlight">${match}</span>`);
-            }
-        }
-        return html;
-    }
+        return this.escape(this.text).replace(regex, `<span class="highlight">$&</span>`);
+      }
 
     private escape(str: string) {
         const replacements: any = {

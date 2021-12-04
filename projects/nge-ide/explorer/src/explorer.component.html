@@ -2,10 +2,9 @@
   <ng-container *treeNode="let node">
     <ui-icon [icon]="node.name | fileIcon: _iconOptions(node)"></ui-icon>
     <div class="tree-label"
-      [title]="node.id"
+      [title]="node.data.uri.path"
       [highlight]="node.name"
       [highlightPattern]="treeRef.filter.term"
-
       dnd
       (dropped)="_onDropped($event)"
       [dndData]="node.id"

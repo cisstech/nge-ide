@@ -24,7 +24,8 @@ import {
     ExplorerCommandFileUpload,
     ExplorerCommandPaste,
     ExplorerCommandRefresh,
-    ExplorerCommandRename
+    ExplorerCommandRename,
+    ExplorerCommandToggleFiltering
 } from './commands';
 import { ExplorerService } from './explorer.service';
 
@@ -48,6 +49,7 @@ class ExplorerContribution implements IContribution {
         const viewContainerService = injector.get(ViewContainerService);
 
         commandService.register(
+            ExplorerCommandToggleFiltering,
             ExplorerCommandCollapse,
             ExplorerCommandCopy,
             ExplorerCommandCopyPath,
@@ -86,6 +88,7 @@ class ExplorerContribution implements IContribution {
             id: EXPLORER_VIEW_ID,
             title: 'Explorateur',
             commands: of([
+                commandService.find(ExplorerCommandToggleFiltering),
                 commandService.find(ExplorerCommandRefresh),
                 commandService.find(ExplorerCommandCollapse),
             ]),
@@ -113,6 +116,7 @@ class ExplorerContribution implements IContribution {
         ExplorerCommandPaste,
         ExplorerCommandRefresh,
         ExplorerCommandRename,
+        ExplorerCommandToggleFiltering,
 
         ExplorerService,
         {

@@ -1,5 +1,6 @@
 <ide-toolbar></ide-toolbar>
-<as-split direction="horizontal" [gutterSize]="1" [useTransition]="true" unit="pixel">
+<ide-quick-open #quickOpen></ide-quick-open>
+<as-split [class.blur]="quickOpen.visible" direction="horizontal" [gutterSize]="1" [useTransition]="true" unit="pixel">
     <as-split-area
       [order]="0"
       [minSize]="36"

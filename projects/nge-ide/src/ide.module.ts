@@ -11,6 +11,7 @@ import { SidebarModule } from './sidebar/sidebar.module';
 import { StatusbarModule } from './statusbar/statusbar.module';
 import { WorkbenchModule } from './workbench/workbench.module';
 import { ToolbarModule } from './toolbar/toolbar.module';
+import { QuickOpenModule } from './quick-open/quick-open.module';
 
 @NgModule({
     imports: [
@@ -26,6 +27,7 @@ import { ToolbarModule } from './toolbar/toolbar.module';
         SidebarModule,
         StatusbarModule,
         WorkbenchModule,
+        QuickOpenModule,
     ],
     exports: [IdeComponent],
     declarations: [IdeComponent]

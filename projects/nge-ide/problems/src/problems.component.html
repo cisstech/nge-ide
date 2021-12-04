@@ -9,7 +9,7 @@
       </div>
     </ng-container>
     <ng-template #leafTemplate>
-      <div class="tree-label" [style.margin]="'0 8px'">
+      <div class="tree-label" [style.margin]="'0 8px'" [title]="node.data.tooltip">
         <div [class]="node.data.iconClass"></div>&nbsp;
         <div> {{ node.name }} [{{ node.data.lineNumber }}, {{ node.data.column }}]</div>
       </div>

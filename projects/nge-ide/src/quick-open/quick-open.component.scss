@@ -1,0 +1,62 @@
+.quick-open-container {
+  z-index: 100000;
+  left: 0;
+  right: 0;
+  width: 40%;
+  margin: auto;
+  position: absolute;
+  top: 42px;
+  padding: 0 4px;
+}
+
+input {
+  width: 100%;
+  height: 32px;
+  margin: 0 0 0 16px;
+  padding: 0.1rem 0.3rem;
+  line-height: 1.5;
+  background-clip: padding-box;
+  border: 1px solid #ced4da;
+  border-radius: 0.15rem;
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+  &:focus {
+    border-color: #80bdff;
+    outline: 0;
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+  }
+}
+
+.entry {
+  display: flex;
+  align-items: center;
+}
+
+.entry-icon,
+.entry-name,
+.entry-path {
+  display: inline-block;
+}
+
+.entry-icon {
+  margin: 0 2px;
+}
+
+.entry-name {
+  font-size: 14px;
+  margin: 0 4px;
+}
+
+.entry-path {
+  font-size: .6em;
+}
+
+.mat-option {
+  height: 32px;
+  line-height: 32px;
+}
+
+div.mat-autocomplete-panel {
+  height: auto;
+  max-height: 400px;
+  overflow-y: auto;
+}

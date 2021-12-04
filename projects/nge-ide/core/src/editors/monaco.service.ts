@@ -10,7 +10,7 @@ import { Diagnostic, DiagnosticService, DiagnosticSeverity } from '../diagnostic
 import { compareURI, FileChangeType, FileService, resourceId } from '../files';
 import { SettingsService } from '../settings';
 import { StatusBarService } from '../status-bar';
-import { ToolbarGroups, ToolbarSeparator, ToolbarSevice } from '../toolbar';
+import { ToolbarButton, ToolbarGroups, ToolbarSeparator, ToolbarSevice } from '../toolbar';
 import { Paths } from '../utils';
 
 // @ts-ignore
@@ -471,24 +471,19 @@ export class MonacoService implements IContribution {
         };
 
         const registerOptionAction = (id: string, label: string, run: () => void) => {
-            this.toolbarService.register({
+            this.toolbarService.register(new ToolbarButton({
                 group: ToolbarGroups.VIEW,
                 priority: 100,
-                isSeparator: false,
                 command: new class implements ICommand {
                     readonly id = id;
                     readonly scope = [];
                     readonly label = label;
-
-                    get enabled() {
-                        return true;
-                    }
-
+                    readonly enabled = true;
                     execute() {
                         run();
                     }
                 }
-            });
+            }));
 
         };
 
@@ -540,7 +535,6 @@ export class MonacoService implements IContribution {
             const s = this.settingsService.get('editor', 'renderControlCharacters') as any;
             this.settingsService.set('editor', 'renderControlCharacters', !s.value);
         });
-
 
         // GO
         registerEditorAction(ACTION_GOTO_LINE, ToolbarGroups.GO, 20);
