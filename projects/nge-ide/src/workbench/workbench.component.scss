@@ -1,4 +1,10 @@
-:host::ng-deep {
+.editor-group {
+  position: relative !important;
+  overflow: hidden !important;
+}
+
+
+.editor-group::ng-deep {
   .ant-tabs-bar {
     margin: 0;
   }
@@ -9,28 +15,36 @@
   }
 
   .ant-tabs-tab {
-    padding: 0;
-    border-bottom: 2px solid;
     display: inline-flex;
     align-items: center;
+    padding: 8px 4px !important;
   }
 
   .ant-tabs-extra-content {
     height: 40px;
   }
-
-  .close-btn:hover {
-    border: 1px solid;
-    border-radius: 8px;
-  }
 }
 
-.editor-group {
-  position: relative;
-  overflow: hidden;
+
+.editor-group--active::ng-deep {
+  .ant-tabs-tab-active {
+    border-bottom: 1.5px solid !important;
+  }
 }
 
 .editor-wrapper {
   display: block;
   height: calc(100% - 41px); // 41px is the height of the nz-tabset element
+  width: 100%;
+}
+
+.tab-icon,
+.tab-dirty,
+.tab-close {
+  margin: 0 4px;
+}
+
+.tab-dirty:hover, .tab-close:hover {
+  border: 1px solid;
+  border-radius: 8px;
 }

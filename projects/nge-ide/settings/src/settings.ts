@@ -1,7 +1,6 @@
 import { Injector, NgModule } from '@angular/core';
-import { CONTRIBUTION, EditorService, IContribution, SidebarContainer, ViewContainerService } from '@mcisse/nge-ide/core';
+import { CONTRIBUTION, EditorService, IContribution, SETTINGS_URI, SidebarContainer, ViewContainerService } from '@mcisse/nge-ide/core';
 import { CodIcon } from '@mcisse/nge/ui/icon';
-import { URI } from 'vscode-uri';
 import { SettingsEditor } from './settings-editor/settings-editor';
 
 /**
@@ -26,8 +25,8 @@ class Contribution implements IContribution {
                 readonly icon = new CodIcon('settings-gear');
                 readonly side = 'left';
                 readonly align = 'bottom';
-                readonly onClickHandler = () => editorService.open(URI.parse('editor://settings'), {
-                    tabTitle: 'Paramètres'
+                readonly onClickHandler = () => editorService.open(SETTINGS_URI, {
+                    title: 'Paramètres'
                 })
             })()
         );

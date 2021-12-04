@@ -1,9 +1,10 @@
 import { Injectable, Injector, Predicate } from '@angular/core';
 import { ConfirmOptions, DialogService } from '@mcisse/nge/ui/dialog';
-import { BehaviorSubject, Subject } from 'rxjs';
+import { CodIcon, FileIcon } from '@mcisse/nge/ui/icon';
+import { BehaviorSubject, Subject, Subscription } from 'rxjs';
 import { URI } from 'vscode-uri';
 import { IContribution } from '../contributions';
-import { FileService } from '../files';
+import { FileChangeType, FileService } from '../files';
 import { Paths } from '../utils';
 import { Editor, EditorGroup, EditorState } from './editor';
 import { OpenOptions } from './opener';
@@ -12,7 +13,7 @@ import { OpenOptions } from './opener';
 @Injectable()
 export class EditorService implements IContribution {
     readonly id = 'workbench.contrib.editor-service';
-
+    private readonly subscriptions: Subscription[] = [];
     private readonly groups: Map<string, EditorGroup> = new Map();
 
     private readonly didOpen = new Subject<URI>();
@@ -60,8 +61,23 @@ export class EditorService implements IContribution {
         private readonly dialogService: DialogService,
     ) { }
 
+    activate(): void {
+        this.subscriptions.push(
+            this.fileService.onDidChangeFile.subscribe(changes => {
+                changes.forEach(change => {
+                    if (change.type === FileChangeType.Deleted) {
+                        this.close(change.uri, true);
+                    }
+                })
+            })
+        );
+    }
+
     deactivate(): void {
         this.editors = [];
+        this.subscriptions.forEach(s => s.unsubscribe());
+        this.subscriptions.splice(0, this.subscriptions.length);
+        this.groups.clear();
     }
 
     /**
@@ -78,7 +94,6 @@ export class EditorService implements IContribution {
                     `There is already a editor registered with the id ${editor.name}`
                 );
             }
-
             this.editors.unshift(editor);
         });
     }
@@ -109,6 +124,9 @@ export class EditorService implements IContribution {
         this.state$.next({
             ...this.state$.value,
             activeGroup: group,
+            activeEditor: group.activeEditor,
+            activeResource: group.activeResource,
+            visibleEditors: this.editorGroups$.value.map(g => g.activeEditor as any).filter(e => !!e)
         });
     }
 
@@ -144,17 +162,22 @@ export class EditorService implements IContribution {
      * @param resource The resource to open.
      * @param options Open options.
      */
-    async open(resource: URI, options?: OpenOptions): Promise<void> {
+    async open(resource: URI, options?: Partial<OpenOptions>): Promise<void> {
         let group: EditorGroup;
         const editorGroups = this.listGroups();
         options = options || {};
-        if (options.openToSide) {
+
+        if (options.preview) {
+            group = editorGroups.find(g => g.containsPreview(resource)) ||
+                editorGroups.find(g => !this.isActiveGroup(g)) || // open with any non active group
+                this.createGroup(); // open with a new group
+        } else if (options.openToSide) {
             group = this.createGroup();
         } else {
             group =
                 options.openInGroup ||
                 editorGroups.find(g => g.contains(resource)) || // open with an existing group containing the resource
-                editorGroups.find(g => this.isActiveGroup(g)) || // open with the active group
+                this.activeGroup || // open with the active group
                 editorGroups.find(_ => true) || // open with any group
                 this.createGroup(); // open with a new group
         }
@@ -164,24 +187,37 @@ export class EditorService implements IContribution {
 
         this.willOpen.next(resource);
 
-        return group.open({
-            resource,
-            title: options?.tabTitle || Paths.basename(resource.path),
-        }, options);
+        let title = options.title || Paths.basename(resource.path);
+        if (options?.preview) {
+            title = 'Preview: ' + title;
+        }
+
+        let icon = options.icon;
+        if (!icon && options.preview) {
+            icon = new CodIcon('preview');
+        }
+
+        return group.open(resource, {
+            ...options,
+            icon,
+            title,
+            tooltip: resource.path,
+        });
     }
 
     /**
      * Closes the resource from all the editor groups.
      * @param resource the resource to close.
+     * @param force When `true`, force close the resource without asking to save it if it is dirty.
      */
-    async close(resource: URI): Promise<any> {
+    async close(resource: URI, force?: boolean): Promise<any> {
         const groups = this.findGroups(group => group.contains(resource));
-        return Promise.all(groups.map(g => g.close(resource)));
+        return Promise.all(groups.map(g => g.close(resource, force)));
     }
 
     /**
-     * Closes all the groups.
-     * @param force When `true`, force close the group whithout asking to save dirty files.
+     * Closes all the opened resources.
+     * @param force When `true`, force close the resources without asking to save the dirty ones.
      */
     async closeAll(force?: boolean): Promise<void> {
         let groups = this.listGroups();
@@ -234,7 +270,10 @@ export class EditorService implements IContribution {
         _: EditorGroup,
         resource: URI
     ): Promise<boolean> {
-        const shouldConfirm = this.shouldConfirmClose(resource);
+        const shouldConfirm = (
+            this.fileService.isDirty(resource) &&
+            this.findGroups(group => group.contains(resource)).length === 1
+        );
         const options: ConfirmOptions = {
             title: `Voulez-vous fermer le fichier "${Paths.basename(resource.path)}"?`,
             message: 'Vos modifications seront perdues si vous ne les enregistrez pas.',
@@ -260,53 +299,41 @@ export class EditorService implements IContribution {
     ): void {
         this.groups.set(group.id, group);
         this.editorGroups$.next(this.listGroups());
-        const { visibleEditors } = this.state$.value;
         this.state$.next({
             activeGroup: group,
             activeEditor: editor,
             activeResource: resource,
-            visibleEditors: [
-                editor,
-                ...visibleEditors.filter(e => !e.equals(editor))
-            ]
+            visibleEditors: this.editorGroups$.value.map(g => g.activeEditor as any).filter(e => !!e)
         });
-
         this.didOpen.next(resource);
     }
 
     private closeHandler(
         group: EditorGroup,
-        toClose: URI,
-        toFocus?: URI
+        resource: URI,
+        isPreview?: boolean
     ): void {
         if (group.isEmpty) {
             this.groups.delete(group.id);
         }
-        if (!this.isOpened(toClose)) {
-            this.fileService.close(toClose);
+
+        if (!isPreview && !this.isOpened(resource)) {
+            this.fileService.close(resource);
         }
 
-        this.editorGroups$.next(
-            this.listGroups()
-        );
+        this.editorGroups$.next(this.listGroups());
 
         this.state$.next({
+            activeGroup: undefined,
             activeEditor: undefined,
             activeResource: undefined,
-            activeGroup: undefined,
             visibleEditors: []
         });
 
-        if (toFocus) {
-            this.open(toFocus, {
-                openInGroup: group
-            }).catch(console.error);
-        } else {
+        if (group.isEmpty) {
             const randomGroup = this.findGroup(g => !g.isEmpty);
-            if (randomGroup && randomGroup.activeResource) {
-                this.open(randomGroup.activeResource, {
-                    openInGroup: randomGroup
-                }).catch(console.error);
+            if (randomGroup) {
+                this.setActiveGroup(randomGroup);
             }
         }
     }
@@ -326,12 +353,4 @@ export class EditorService implements IContribution {
         return Array.from(this.groups.values());
     }
 
-    private shouldConfirmClose(resource: URI): boolean {
-        return (
-            this.fileService.isDirty(resource) &&
-            this.findGroups(group => {
-                return group.contains(resource);
-            }).length === 1
-        );
-    }
 }

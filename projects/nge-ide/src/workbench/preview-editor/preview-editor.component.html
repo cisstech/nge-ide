@@ -1,3 +1,19 @@
-<p>
-  preview-editor works!
-</p>
+<ng-container *ngIf="preview; else: noPreview">
+  <ng-container [ngSwitch]="preview!.type">
+    <div class="preview-editor" *ngSwitchCase="'URL'">
+      <iframe [src]="preview!.data|safe:'url'" frameborder="0"></iframe>
+    </div>
+    <div class="preview-editor" *ngSwitchCase="'HTML'">
+      <iframe [srcdoc]="preview!.data|safe:'html'" frameborder="0"></iframe>
+    </div>
+    <div class="preview-editor" *ngSwitchCase="'MARKDOWN'">
+      <nge-markdown [data]="preview!.data"></nge-markdown>
+    </div>
+    <div class="preview-editor" *ngSwitchDefault>
+      <div class="center">NO PREVIEW</div>
+    </div>
+  </ng-container>
+</ng-container>
+<ng-template #noPreview>
+  <div class="center">NO PREVIEW</div>
+</ng-template>

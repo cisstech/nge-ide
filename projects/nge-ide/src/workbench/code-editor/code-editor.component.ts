@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, Input, OnDestroy, OnInit } from '@angular/core';
-import { MonacoService, Editor, OpenOptions, OpenRequest, NotificationService } from '@mcisse/nge-ide/core';
+import { MonacoService, Editor, OpenOptions, OpenRequest, NotificationService, EditorService } from '@mcisse/nge-ide/core';
 import { Subscription } from 'rxjs';
 
 import IDisposable = monaco.IDisposable;
@@ -24,6 +24,7 @@ export class CodeEditorComponent implements OnInit, OnDestroy {
 
     constructor(
         private readonly monacoService: MonacoService,
+        private readonly editorService: EditorService,
         private readonly notificationService: NotificationService
     ) { }
 
@@ -34,6 +35,12 @@ export class CodeEditorComponent implements OnInit, OnDestroy {
                 this.handleRequest();
             })
         );
+
+        this.subscriptions.push(
+            this.editorService.state.subscribe(_ => {
+                this.codeEditor?.layout();
+            }
+        ));
     }
 
     ngOnDestroy(): void {
@@ -43,7 +50,6 @@ export class CodeEditorComponent implements OnInit, OnDestroy {
             this.monacoService.onDisposeEditor(this.codeEditor);
         }
     }
-
 
     onCreateEditor(editor: IStandaloneCodeEditor): void {
         this.monacoService.onCreateEditor(this.codeEditor = editor);

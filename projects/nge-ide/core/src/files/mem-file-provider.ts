@@ -55,6 +55,8 @@ export class MemFileProvider extends FileSystemProvider {
             this.entries.set(`/folder-${i}/file.ts`, new MemFile('file', `/folder-${i}/file.ts`));
             this.entries.set(`/folder-${i}/file.scss`, new MemFile('file', `/folder-${i}/file.scss`));
             this.entries.set(`/folder-${i}/file.html`, new MemFile('file', `/folder-${i}/file.html`));
+            this.entries.set(`/folder-${i}/file.md`, new MemFile('file', `/folder-${i}/file.md`));
+            this.entries.set(`/folder-${i}/file.svg`, new MemFile('file', `/folder-${i}/file.svg`));
         }
     }
 
@@ -149,7 +151,7 @@ export class MemFileProvider extends FileSystemProvider {
         const oldPrefixDir = Paths.dirname(oldPrefix);
         const entriesKeys = Array.from(this.entries.keys());
         for (const oldPath of entriesKeys) {
-            if (oldPath.startsWith(oldPrefix + '/')  || oldPath === oldPrefix) {
+            if (oldPath.startsWith(oldPrefix + '/') || oldPath === oldPrefix) {
                 const newPath = Paths.join([
                     destination.path,
                     oldPath.substring(oldPrefixDir.length)
@@ -214,13 +216,13 @@ export class MemFileProvider extends FileSystemProvider {
             query = `\\b${query}\\b`;
         }
 
-        const pattern  = new RegExp(query, options.join(''));
+        const pattern = new RegExp(query, options.join(''));
         const results: SearchResult<IFile>[] = [];
         for (const f of this.entries.values()) {
             if (f.uri.path !== entry.uri.path && f.uri.path.startsWith(entry.uri.path)) {
                 if (f.content) {
                     const r: SearchResult<IFile> = { entry: f, matches: [] };
-                    const lines  = f.content.split('\n');
+                    const lines = f.content.split('\n');
                     for (let i = 0; i < lines.length; i++) {
                         const line = lines[i];
                         const matches = pattern.exec(line);

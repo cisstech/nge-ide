@@ -1,10 +1,11 @@
-import { ChangeDetectionStrategy, Component, OnDestroy, OnInit } from '@angular/core';
-import { CommandScopes, CommandService, EditorGroup, EditorService, FileChangeType, FileService, ICommand } from '@mcisse/nge-ide/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
+import { CommandScopes, CommandService, EditorGroup, EditorService, FileService, ICommand } from '@mcisse/nge-ide/core';
 import { Observable, of, Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { URI } from 'vscode-uri';
 import { CodeEditor } from './code-editor/code-editor';
 import { MediaEditor } from './media-editor/media-editor';
+import { PreviewEditor } from './preview-editor/preview-editor';
 
 @Component({
     selector: 'ide-workbench',
@@ -21,13 +22,15 @@ export class WorkbenchComponent implements OnInit, OnDestroy {
     constructor(
         private readonly fileService: FileService,
         private readonly editorService: EditorService,
-        private readonly commandService: CommandService
+        private readonly commandService: CommandService,
+        private readonly changeDetectorRef: ChangeDetectorRef,
     ) { }
 
     ngOnInit(): void {
         this.editorService.registerEditors(
             new CodeEditor(),
             new MediaEditor(),
+            new PreviewEditor(),
         );
 
         this.subscriptions.push(
@@ -42,16 +45,7 @@ export class WorkbenchComponent implements OnInit, OnDestroy {
                 } else {
                     this.commands = of([]);
                 }
-            })
-        );
-
-        this.subscriptions.push(
-            this.fileService.onDidChangeFile.subscribe(changes => {
-                changes.forEach(change => {
-                    if (change.type === FileChangeType.Deleted) {
-                        this.editorService.close(change.uri);
-                    }
-                })
+                this.changeDetectorRef.detectChanges();
             })
         );
     }

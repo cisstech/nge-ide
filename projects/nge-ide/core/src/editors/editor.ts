@@ -12,8 +12,8 @@ declare type OpenHandler = (
 
 declare type CloseHandler = (
     group: EditorGroup,
-    toClose: URI,
-    toFocus?: URI
+    resource: URI,
+    isPreview?: boolean,
 ) => void;
 
 declare type CloseGuard = (
@@ -21,9 +21,9 @@ declare type CloseGuard = (
     resource: URI
 ) => Promise<boolean>;
 
-interface GroupTab {
+interface EditorTab {
+    readonly options: OpenOptions;
     readonly resource: URI;
-    readonly title: string;
 }
 
 /**
@@ -65,7 +65,6 @@ export abstract class Editor {
         return this.request.asObservable() as Observable<OpenRequest>;
     }
 
-
     /**
      * Checks whether this editor can handle the given `request`.
      * @param request the request to handle.
@@ -89,13 +88,20 @@ export abstract class Editor {
 }
 
 
+/**
+ * Represents an editor group.
+ *
+ * An editor group is a container for editors. It is responsible for opening and closing editors.
+ * A group can contains only one active editor at a time and on instance of a resource.
+ */
 export class EditorGroup {
     private static NEXT_ID = 0;
 
-    private _tabs: GroupTab[] = [];
+    private _tabs: EditorTab[] = [];
     private _request?: OpenRequest;
-    private _activeEditor?: Editor;
+    private _history: EditorTab[] = [];
     private _activeIndex = 0;
+    private _activeEditor?: Editor;
 
     /** Unique identifier of this group. */
     readonly id: string = 'editor-group#' + ++EditorGroup.NEXT_ID;
@@ -104,32 +110,46 @@ export class EditorGroup {
         return this._tabs.length === 0;
     }
 
-    get tabs(): GroupTab[] {
+    /** Tabs of the group. */
+    get tabs(): EditorTab[] {
         return this._tabs;
     }
 
-    get activeEditor(): Editor | undefined {
-        return this._activeEditor;
-    }
-
-    get activeResource(): URI | undefined {
-        return this._request ? this._request.uri : undefined;
-    }
-
+    /** Gets the index of the current active editor. */
     get activeIndex(): number {
         return this._activeIndex;;
     }
 
+    /** Sets the index of the current active editor. */
     set activeIndex(index: number) {
-        if (this._activeIndex === index) {
-            this.opened(this, this._activeEditor!, this.activeResource!);
+        console.log(index);
+        if (index === this._activeIndex) {
+            console.log('activeIndex is already set to ' + index);
             return;
         }
 
-        this._activeIndex = index;
         if (this._tabs[index]) {
-            this.open(this._tabs[index], {});
+            this._activeIndex = index;
+            const { resource, options } = this._tabs[index];
+            this.open(resource, options);
         }
+    }
+
+    /** Current active editor. */
+    get activeEditor(): Editor | undefined {
+        return this._activeEditor;
+    }
+
+    /** Current active resource. */
+    get activeResource(): URI | undefined {
+        return this._request ? this._request.uri : undefined;
+    }
+
+    /**
+     * Gets a value indicating whether the current active resource is in a preview mode.
+     */
+    get isInPreviewMode(): boolean {
+        return !!this._request && !!this._request.options.preview;
     }
 
     constructor(
@@ -162,15 +182,29 @@ export class EditorGroup {
 
         /** the registered editor. */
         private readonly editors: ReadonlyArray<Editor>,
-    ) {}
+    ) { }
 
     /**
      * Checks whether the resource is opened in the group.
      * @param resource the resource.
+     * @param isPreview if `true`, check if the resource is opened as a preview.
      * @throws {ReferenceError} if any of the arguments is null.
      */
     contains(resource: URI): boolean {
-        return this._tabs.some(e => compareURI(e.resource, resource));
+        return this._tabs.some(e => {
+            return compareURI(e.resource, resource);
+        });
+    }
+
+    /**
+     * Checks whether the resource is opened in the group as a preview.
+     * @param resource the resource.
+     * @throws {ReferenceError} if any of the arguments is null.
+     */
+    containsPreview(resource: URI): boolean {
+        return this._tabs.some(e => {
+            return compareURI(e.resource, resource) && !!e.options.preview;
+        });
     }
 
     /**
@@ -179,52 +213,58 @@ export class EditorGroup {
      * @throws {ReferenceError} if any of the arguments is null.
      */
     isActive(resource: URI): boolean {
-        if (!this._request) {
-            return false;
-        }
-
-        return compareURI(resource, this._request.uri);
+        return !!this.activeResource && compareURI(resource, this.activeResource);
     }
 
     /**
-     * Opens a resoucr inside the group.
+     * Gets th index of the given resource inside the group.
+     * @param resource the resource to check the index for.
+     * @returns The index of the resource or `-1` if the resource is not opened.
+     */
+    findIndex(resource: URI): number {
+        return this._tabs.findIndex(e => {
+            return compareURI(e.resource, resource);
+        });
+    }
+
+    /**
+     * Add an editor tab for the given resource inside the group.
      *
-     * Note: this method will creates a new instance of a component able
-     * to open the resource only if needed otherwise it will reuse an existing one.
-     * @param tab the resource to open.
+     * Note :
+     * A new tab will be created only if the resource is not opened in the group, otherwise the existing tab will be reused.
+     *
+     * @param resource the resource to open.
      * @param options options to pass to the editor that will open the resource.
      * @throws {ReferenceError} if any of the arguments is null.
      * @returns An promise that resolve once the resource is opened.
      */
-    async open(tab: GroupTab, options: OpenOptions): Promise<void> {
-        const resource = tab.resource;
-        const request = new OpenRequest(resource, this.injector, options);
+    async open(resource: URI, options: OpenOptions): Promise<void> {
+        if (this.isActive(resource) && !options.preview)
+            return;
 
         return new Promise<void>((resolve, reject) => {
-            let editor = this.editors.find(o => o.canHandle(request));
+            const request = new OpenRequest(resource, this.injector, options);
+
+            let editor = this._activeEditor;
+            if (!editor?.canHandle(request)) {
+                editor = this.editors.find(e => e.canHandle(request));
+            }
+
             if (!editor) {
-                reject(
-                    `EditorNotFound: There is no registered editor to open "${request.uri.path}"`
-                );
+                reject(`There is no registered editor to open "${request.uri.path}"`);
                 return;
             }
-
-            if (editor.name === this._activeEditor?.name) { // open with active editor if possible
-                editor = this._activeEditor;
-            }
-
-            this._request = request;
-            this._activeEditor = editor;
 
             editor.handle(request);
 
             if (!this.contains(resource)) {
-                this._tabs.push(tab);
+                this._tabs.push({ options, resource });
             }
 
-            this._activeIndex = this._tabs.findIndex(e => {
-                return compareURI(e.resource, resource);
-            }) || 0;
+            this._request = request;
+            this._activeIndex = this.findIndex(resource);
+            this._activeEditor = editor;
+            this._history.push(this._tabs[this._activeIndex]);
 
             this.opened(this, editor, resource);
 
@@ -233,38 +273,43 @@ export class EditorGroup {
     }
 
     /**
-     * Removes a resource from the group.
+     * Removes a resource from the group if it has not changed
+     * otherwise ask the user to confirme the closing.
+     *
+     * Note :
+     * The resource will be alwayes removed if it is opened as a preview.
+     *
      * @param resource the resource to close.
      * @param force When `true`, force close the resource without asking to save dirty files.
      * @throws {ReferenceError} if any of the arguments is null.
      * @returns A promise that resolve with `true` if the resource is removed `false` otherwise.
      */
     async close(resource: URI, force?: boolean): Promise<boolean> {
-        const index = this._tabs.findIndex(e => compareURI(e.resource, resource));
-        if (index !== -1) {
-            const canClose =  force || await this.closeGuard(this, this._tabs[index].resource);
-            if (!canClose) {
-                return false;
-            }
+        const index = this.findIndex(resource);
+        if (index === -1)
+            return false;
 
-            const toClose = this._tabs.splice(index, 1).pop()?.resource as URI;
-            if (this.isActive(resource) || this.isEmpty) {
-                this._request = undefined;
-                this._activeEditor = undefined;
-            }
+        let tab = this._tabs[index];
+        const closeable = force || // close if forced
+            tab.options.preview || // preview resource is always closeable
+            await this.closeGuard(this, tab.resource); // check if dirty
 
-            const newIndex = Math.max(0, index - 1);
-            let toFocus: URI | undefined;
-            if (!this.activeResource && newIndex < this._tabs.length) {
-                toFocus = this._tabs[newIndex].resource;
-            }
+        if (!closeable)
+            return false;
 
-            this.closed(this, toClose, toFocus);
-            return true;
+        this._tabs.splice(index, 1);
+
+        if (this.isEmpty || this.isActive(resource)) {
+            this._request = undefined;
+            this._activeIndex = -1;
+            this._activeEditor = undefined;
         }
 
-        return false;
+        this.closed(this, tab.resource, !!tab.options.preview);
+
+        return true;
     }
+
 
     /**
      * Closes all the resources of the group.

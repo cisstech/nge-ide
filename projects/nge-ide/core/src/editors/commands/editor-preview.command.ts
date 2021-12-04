@@ -1,26 +1,45 @@
 import { Injectable } from "@angular/core";
 import { CodIcon } from "@mcisse/nge/ui/icon";
 import { CommandScopes, ICommand } from "../../commands";
-import { EditorService } from '../editor.service';
+import { EditorService } from "../editor.service";
+import { PreviewService } from "../preview.service";
+
 
 export const EDITOR_PREVIEW_COMMAND = 'editor.commands.preview';
 
 @Injectable()
-export class EditorPreviewommand implements ICommand {
+export class EditorPreviewCommand implements ICommand {
     readonly id = EDITOR_PREVIEW_COMMAND;
-    readonly icon = new CodIcon('preview');
+    readonly icon = new CodIcon('open-preview');
     readonly label = 'Prévisualiser';
     readonly scope = [CommandScopes.EDITOR_GROUP];
 
     get enabled(): boolean {
-        return true;;
+        const { activeGroup } = this.editorService;
+        if (!activeGroup) {
+            return false;
+        }
+        const activeResource = activeGroup.activeResource;
+        if (!activeResource) {
+            return false;
+        }
+
+        return !activeGroup.isInPreviewMode && this.previewService.canHandle(activeResource);
     }
 
     constructor(
-        private readonly editorService: EditorService
+        private readonly editorService: EditorService,
+        private readonly previewService: PreviewService,
     ) { }
 
-    execute() {
+    async execute(): Promise<void> {
+        const { activeResource } = this.editorService;
+        if (!activeResource) {
+            return;
+        }
 
+        await this.editorService.open(activeResource, {
+            preview: await this.previewService.handle(activeResource),
+        })
     }
 }

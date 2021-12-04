@@ -1,8 +1,8 @@
-import { Editor, OpenRequest } from "@mcisse/nge-ide/core";
+import { Editor, OpenRequest, SETTINGS_URI } from "@mcisse/nge-ide/core";
 
 export class SettingsEditor extends Editor {
     component = () => import('./settings-editor.module').then(m => m.SettingsEditorModule);
     canHandle(request: OpenRequest): boolean {
-        return request.uri.toString() === 'editor://settings';
+        return request.uri.toString() === SETTINGS_URI.toString();
     }
 }

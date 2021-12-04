@@ -1,3 +1,7 @@
+import { URI } from "vscode-uri";
+
+export const SETTINGS_URI = URI.parse('editor://settings');
+
 export namespace Settings {
     export enum Types {
         Input = 'Input',
