@@ -1,0 +1,32 @@
+# Changelog
+
+All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
+
+### 0.0.1 (2021-12-04)
+
+
+### Features
+
+* add .mov files to media editor ([9c9442f](https://github.com/mciissee/nge-ide/commit/9c9442f6566c05e35f064e8eab20cf027dc506fd))
+* add core lib ([93f1474](https://github.com/mciissee/nge-ide/commit/93f147457970a7ceaa782bb5a744201096b8b728))
+* add demo app ([1ebabb9](https://github.com/mciissee/nge-ide/commit/1ebabb956ce02ea57fa8aada2fad5f01b2f8b844))
+* add drag and drop action to explorer ([f094257](https://github.com/mciissee/nge-ide/commit/f094257d2e8156c41cd712a287261a1689eefe0d))
+* add editor actions to toolbar ([79206ef](https://github.com/mciissee/nge-ide/commit/79206ef7d03c48e485a1eb98cf3c71d9e0ec760a))
+* add explorer lib ([140511d](https://github.com/mciissee/nge-ide/commit/140511d8fe773009ab09c5989aab137e20d31dbf))
+* add GO menu to toolbar ([c5e0123](https://github.com/mciissee/nge-ide/commit/c5e01237a758a3d00fcd7bd9fe18e7728289ed9f))
+* add ide main ui lib ([0c2c6ef](https://github.com/mciissee/nge-ide/commit/0c2c6ef9ffb878484c07262039dadfee6db9c6b0))
+* add notifications lib ([8c1e034](https://github.com/mciissee/nge-ide/commit/8c1e034ca03f4dc68ba9d7e2a94414493bb9026f))
+* add preview editor ([d37f789](https://github.com/mciissee/nge-ide/commit/d37f789b6da96962da6d343ad759ee54c2f4fa81))
+* add problems lib ([aba34a5](https://github.com/mciissee/nge-ide/commit/aba34a5e7d7b54798964a202c0b24b302b2bcda4))
+* add quick-open ([0898f8d](https://github.com/mciissee/nge-ide/commit/0898f8df73eb62da671691b55ab6290e4469e5ab))
+* add search lib ([3c4d192](https://github.com/mciissee/nge-ide/commit/3c4d1926761883434bcd4bc4f99a97d001877c30))
+* add settings editor ([a5a302d](https://github.com/mciissee/nge-ide/commit/a5a302d53b42eb75fb6eeb392d13f372a5201dd9))
+* add settings lib ([b125dc2](https://github.com/mciissee/nge-ide/commit/b125dc2cf7a6f0a82b4060176ad5e7db8da86cce))
+* add task module ([5c73382](https://github.com/mciissee/nge-ide/commit/5c73382d18d9a62174e42b0c70d90fc3685c5240))
+* add toolbar api ([902afed](https://github.com/mciissee/nge-ide/commit/902afed2a430cebc664f4912cad2286c29dfa77f))
+* override mmonaco editor open editor api ([d892185](https://github.com/mciissee/nge-ide/commit/d892185fd104089e9cbb1efc513ed7601a0b79e5))
+
+
+### Bug Fixes
+
+* bugs with tree component ([e047663](https://github.com/mciissee/nge-ide/commit/e047663fa7b51899068c50e54d896a21ed37911b))
