@@ -1,9 +1,10 @@
-import { ChangeDetectionStrategy, Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { MonacoService, Editor, OpenOptions, OpenRequest, NotificationService, EditorService } from '@mcisse/nge-ide/core';
 import { Subscription } from 'rxjs';
 
 import IDisposable = monaco.IDisposable;
 import IStandaloneCodeEditor = monaco.editor.IStandaloneCodeEditor;
+import IStandaloneDiffEditor = monaco.editor.IStandaloneDiffEditor;
 
 
 @Component({
@@ -18,13 +19,29 @@ export class CodeEditorComponent implements OnInit, OnDestroy {
 
     private request?: OpenRequest;
     private codeEditor!: IStandaloneCodeEditor;
+    private diffEditor!: IStandaloneDiffEditor;
+
+    opening = true;
 
     @Input()
     editor!: Editor;
 
+    get showCodeEditor(): boolean {
+        return !this.opening && !this.isDiffMode;
+    }
+
+    get showDiffEditor(): boolean {
+        return !this.opening && this.isDiffMode;
+    }
+
+    private get isDiffMode(): boolean {
+        return !!this.request?.options?.diff;
+    }
+
     constructor(
         private readonly monacoService: MonacoService,
         private readonly editorService: EditorService,
+        private readonly changeDetectorRef: ChangeDetectorRef,
         private readonly notificationService: NotificationService
     ) { }
 
@@ -32,6 +49,8 @@ export class CodeEditorComponent implements OnInit, OnDestroy {
         this.subscriptions.push(
             this.editor.onChangeRequest.subscribe(request => {
                 this.request = request;
+                this.opening = true;
+                this.changeDetectorRef.detectChanges();
                 this.handleRequest();
             })
         );
@@ -56,8 +75,14 @@ export class CodeEditorComponent implements OnInit, OnDestroy {
         this.handleRequest();
     }
 
+    onCreateDiffEditor(editor: IStandaloneDiffEditor): void {
+        this.diffEditor = editor;
+        this.monacoService.onCreateEditor(editor.getModifiedEditor());
+        this.handleRequest();
+    }
+
     private async handleRequest(): Promise<void> {
-        if (!this.codeEditor || !this.request) {
+        if (!this.codeEditor || !this.diffEditor || !this.request) {
             return;
         }
 
@@ -71,12 +96,27 @@ export class CodeEditorComponent implements OnInit, OnDestroy {
             });
         } catch(error) {
             this.notificationService.publishError(error);
+        } finally {
+            this.opening = false;
+            this.changeDetectorRef.detectChanges();
         }
 
         this.handleDiffOptions(options);
     }
 
     private handleDiffOptions(options: OpenOptions): void {
-        // TODO
+        if (options.diff) {
+            const model = this.codeEditor.getModel()!;
+            this.diffEditor.setModel({
+                original: monaco.editor.createModel(options.diff, model.getLanguageId()),
+                modified: monaco.editor.createModel(model.getValue(), model.getLanguageId())
+            });
+
+            this.diffEditor.updateOptions({
+                readOnly: this.codeEditor.getRawOptions().readOnly,
+            });
+
+            this.diffEditor.getModifiedEditor().focus();
+        }
     }
 }

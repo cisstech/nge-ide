@@ -33,9 +33,7 @@ export interface OpenOptions {
     };
 
     /** open the resource with diff editor */
-    readonly diff?: {
-        content: string
-    };
+    readonly diff?: string;
 }
 
 /**

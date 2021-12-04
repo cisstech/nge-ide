@@ -1,1 +1,11 @@
-<nge-monaco-editor (ready)="onCreateEditor($any($event))"></nge-monaco-editor>
+<nge-monaco-editor
+  [hidden]="!showCodeEditor"
+  (ready)="onCreateEditor($any($event))">
+</nge-monaco-editor>
+<nge-monaco-diff-editor
+  [hidden]="!showDiffEditor"
+  (ready)="onCreateDiffEditor($any($event))"
+  [options]="{ renderSideBySide: false }">
+</nge-monaco-diff-editor>
+
+<nz-spin *ngIf="opening" class="center" nzSize="large"></nz-spin>

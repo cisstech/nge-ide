@@ -181,6 +181,8 @@ export class CommandService implements IContribution {
         if (command.keybinding && typeof command.keybinding !== 'string') {
             const { key, modifiers } = command.keybinding;
             this.subscriptions.push(this.keybindingService.match(key, modifiers).subscribe((e) => {
+                e.preventDefault();
+                e.stopPropagation();
                 if (command.enabled) {
                     command.execute();
                 }
