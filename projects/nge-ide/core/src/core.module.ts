@@ -10,6 +10,7 @@ import { NotificationService } from './notification';
 import { SettingsService } from './settings';
 import { StatusBarService } from './status-bar';
 import { StorageService } from './storage';
+import { TaskService } from './tasks';
 import { ToolbarSevice } from './toolbar';
 import { ViewContainerService, ViewService } from './views';
 
@@ -19,6 +20,7 @@ import { ViewContainerService, ViewService } from './views';
         NgEventBus,
         FileService,
         ViewService,
+        TaskService,
         EditorService,
         MonacoService,
         ToolbarSevice,
@@ -33,6 +35,7 @@ import { ViewContainerService, ViewService } from './views';
 
         { provide: CONTRIBUTION, multi: true, useExisting: FileService },
         { provide: CONTRIBUTION, multi: true, useExisting: ViewService },
+        { provide: CONTRIBUTION, multi: true, useExisting: TaskService },
         { provide: CONTRIBUTION, multi: true, useExisting: EditorService },
         { provide: CONTRIBUTION, multi: true, useExisting: MonacoService },
         { provide: CONTRIBUTION, multi: true, useExisting: ToolbarSevice },

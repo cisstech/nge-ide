@@ -6,6 +6,7 @@ import { CommandEvent } from './command-event';
 import { BehaviorSubject, Observable, Subscription } from 'rxjs';
 import { IContribution } from '../contributions';
 import { KeyBindService } from '../keybinding';
+import { TaskService } from '../tasks';
 
 @Injectable()
 export class CommandService implements IContribution {
@@ -17,6 +18,7 @@ export class CommandService implements IContribution {
     constructor(
         private readonly injector: Injector,
         private readonly eventBus: NgEventBus,
+        private readonly taskService: TaskService,
         private readonly keybindingService: KeyBindService,
     ) { }
 
@@ -165,10 +167,13 @@ export class CommandService implements IContribution {
                 args
             );
 
+
             events.cast(CommandEvent.CHANNEL, event);
+            const task = this.taskService.run(`Exécution de la commande : ${command.label}`);
             try {
                 await run.apply(command, args);
             } finally {
+                task.end();
                 setTimeout(() => {
                     event.end();
                     events.cast(CommandEvent.CHANNEL, event);

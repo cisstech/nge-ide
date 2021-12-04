@@ -1,0 +1,41 @@
+:host {
+  z-index: 100000;
+  left: 0;
+  right: 0;
+  width: 20%;
+  margin: auto;
+  position: absolute;
+  bottom: 20px;
+  padding: 0 4px;
+  position: absolute;
+  display: flex;
+  align-content: center;
+  align-items: center;
+  justify-content: center;
+  height: 40px;
+  font-size: 12px;
+  padding: 0 8px;
+  background-color: rgb(59, 66, 82);
+  color: rgb(216, 222, 233);
+  border-bottom: 1px solid var(--tab-border);
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+  animation-duration: 0.3s;
+  animation-name: slidein;
+  animation-direction: alternate;
+}
+
+@keyframes slidein {
+  from {
+    bottom: -20px;
+  }
+
+  to {
+    bottom: 20px;
+  }
+}
+
+
+div {
+  margin: 0 16px;
+}

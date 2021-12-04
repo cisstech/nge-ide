@@ -12,7 +12,7 @@ export * from './src/pipes';
 export * from './src/settings';
 export * from './src/status-bar';
 export * from './src/storage';
+export * from './src/tasks';
 export * from './src/toolbar';
 export * from './src/utils';
 export * from './src/views';
-

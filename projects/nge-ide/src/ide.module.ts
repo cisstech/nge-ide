@@ -12,6 +12,7 @@ import { StatusbarModule } from './statusbar/statusbar.module';
 import { WorkbenchModule } from './workbench/workbench.module';
 import { ToolbarModule } from './toolbar/toolbar.module';
 import { QuickOpenModule } from './quick-open/quick-open.module';
+import { TaskbarModule } from './taskbar/taskbar.module';
 
 @NgModule({
     imports: [
@@ -28,6 +29,7 @@ import { QuickOpenModule } from './quick-open/quick-open.module';
         StatusbarModule,
         WorkbenchModule,
         QuickOpenModule,
+        TaskbarModule,
     ],
     exports: [IdeComponent],
     declarations: [IdeComponent]
