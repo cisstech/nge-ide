@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { IContribution } from '../contributions';
-import { IStatusBarItem } from './status-bar';
+import { IContribution } from '../contributions/index';
+import { IStatusBarItem } from './status-bar.model';
 
 @Injectable()
 export class StatusBarService implements IContribution {

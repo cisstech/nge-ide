@@ -1,18 +1,18 @@
 import { NgModule } from '@angular/core';
 import { NgEventBus } from 'ng-event-bus';
-import { CommandService } from './commands';
-import { CONTRIBUTION } from './contributions';
-import { DiagnosticService } from './diagnostics';
-import { EditorService, MonacoService, PreviewService } from './editors';
-import { FileService } from './files';
+import { CommandService } from './commands/index';
+import { CONTRIBUTION } from './contributions/index';
+import { DiagnosticService } from './diagnostics/index';
+import { EditorService, MonacoService, PreviewService } from './editors/index';
+import { FileService } from './files/index';
 import { IdeService } from './ide.service';
-import { NotificationService } from './notification';
-import { SettingsService } from './settings';
-import { StatusBarService } from './status-bar';
-import { StorageService } from './storage';
-import { TaskService } from './tasks';
-import { ToolbarSevice } from './toolbar';
-import { ViewContainerService, ViewService } from './views';
+import { NotificationService } from './notifications/index';
+import { SettingsService } from './settings/index';
+import { StatusBarService } from './status-bar/index';
+import { StorageService } from './storage/index';
+import { TaskService } from './tasks/index';
+import { ToolbarSevice } from './toolbar/index';
+import { ViewContainerService, ViewService } from './views/index';
 
 @NgModule({
     providers: [

@@ -1,5 +1,5 @@
 import { URI } from 'vscode-uri';
-import { Paths } from '../utils';
+import { Paths } from '../utils/index';
 
 export interface IFile {
     /**

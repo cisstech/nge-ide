@@ -5,10 +5,7 @@ import { MatBadgeModule } from '@angular/material/badge';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 
-import {
-    CommandModule,
-    ViewModule
-} from '@mcisse/nge-ide/core';
+import { CommandModule, ViewModule } from '@mcisse/nge-ide/core';
 
 import { NzBadgeModule } from 'ng-zorro-antd/badge';
 import { NzSelectModule } from 'ng-zorro-antd/select';

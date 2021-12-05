@@ -30,9 +30,7 @@ import { ExplorerComponent } from './explorer.component';
         NgeUiTreeModule,
         DirectivesModule,
     ],
-    declarations: [
-        ExplorerComponent,
-    ],
+    declarations: [ExplorerComponent],
 })
 export class ExplorerModule implements IDynamicModule {
     component = ExplorerComponent

@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { filter, map } from 'rxjs/operators';
 import { URI } from 'vscode-uri';
-import { IContribution } from '../contributions';
-import { resourceId } from '../files';
+import { IContribution } from '../contributions/index';
+import { resourceId } from '../files/index';
 import { Diagnostic, DiagnosticSeverity, DiagnosticGroup } from './diagnostic';
 
 @Injectable()

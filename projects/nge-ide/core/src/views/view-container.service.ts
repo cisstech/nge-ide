@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { filter, map } from 'rxjs/operators';
-import { IContribution } from '../contributions';
+import { IContribution } from '../contributions/index';
 import { IViewContainer, ViewContainerScopes } from './view-container';
 
 @Injectable()

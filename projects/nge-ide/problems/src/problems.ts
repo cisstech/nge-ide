@@ -21,7 +21,7 @@ export const PROBLEMS_VIEW_ID = 'workbench.view.problems';
  */
 export const PROBLEMS_CONTAINER_ID = 'workbench.container.problems';
 
-class Contribution implements IContribution {
+export class Contribution implements IContribution {
     readonly id = 'workbench.contrib.problems';
 
     activate(injector: Injector) {
@@ -35,11 +35,7 @@ class Contribution implements IContribution {
             title: 'PROBLÈMES',
             commands: of(),
             viewContainerId: PROBLEMS_CONTAINER_ID,
-            component: () =>
-                import(
-                    /* webpackChunkName: "ide-infobar-problems" */
-                    './problems.module'
-                ).then((m) => m.ProblemsModule)
+            component: () => import('./problems.module').then((m) => m.ProblemsModule)
         });
 
         viewContainerService.register(

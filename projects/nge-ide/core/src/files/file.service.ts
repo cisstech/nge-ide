@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { URI } from 'vscode-uri';
-import { IContribution } from '../contributions';
-import { Paths } from '../utils/paths';
+import { IContribution } from '../contributions/index';
+import { Paths } from '../utils//index';
 import { IFile, IFolder, isResourceAncestor, isSameResource, resourceId } from './file';
 import { FileSystemError } from './file-system-error';
 import {

@@ -39,7 +39,7 @@ export const EXPLORER_VIEW_ID = 'workbench.view.explorer';
  */
 export const EXPLORER_CONTAINER_ID = 'workbench.container.explorer';
 
-class ExplorerContribution implements IContribution {
+export class ExplorerContribution implements IContribution {
     readonly id = 'workbench.contrib.explorer';
 
     activate(injector: Injector) {
@@ -93,11 +93,7 @@ class ExplorerContribution implements IContribution {
                 commandService.find(ExplorerCommandCollapse),
             ]),
             viewContainerId: EXPLORER_CONTAINER_ID,
-            component: () =>
-                import(
-                    /* webpackChunkName: "ide-sidebar-explorer" */
-                    './explorer.module'
-                ).then((m) => m.ExplorerModule),
+            component: () => import('./explorer.module').then((m) => m.ExplorerModule),
         });
     }
 }

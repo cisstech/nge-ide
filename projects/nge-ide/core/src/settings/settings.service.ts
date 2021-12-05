@@ -2,8 +2,8 @@
 
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { IContribution } from '../contributions';
-import { Settings } from './settings';
+import { IContribution } from '../contributions/index';
+import { Settings } from './settings.model';
 
 
 @Injectable()

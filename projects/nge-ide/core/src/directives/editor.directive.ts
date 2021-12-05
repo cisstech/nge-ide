@@ -1,6 +1,6 @@
 import { ComponentRef, Directive, Input, OnChanges, OnDestroy, ViewContainerRef } from '@angular/core';
 import { CompilerService } from '@mcisse/nge/services';
-import { Editor } from '../editors';
+import { Editor } from '../editors/index';
 
 @Directive({ selector: '[editor]' })
 export class EditorDirective implements OnChanges, OnDestroy {

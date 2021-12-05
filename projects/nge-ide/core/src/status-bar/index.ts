@@ -1,2 +1,2 @@
-export * from './status-bar';
+export * from './status-bar.model';
 export * from './status-bar.service';

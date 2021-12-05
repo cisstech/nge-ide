@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { IContribution } from '../contributions';
+import { IContribution } from '../contributions/index';
 import { ITask } from './task';
 
 @Injectable()

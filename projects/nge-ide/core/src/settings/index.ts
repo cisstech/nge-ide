@@ -1,2 +1,2 @@
-export * from './settings';
+export * from './settings.model';
 export * from './settings.service';

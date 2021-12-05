@@ -1,3 +1,3 @@
-export * from './toolbar';
+export * from './toolbar.model';
 export * from './toolbar.service';
 

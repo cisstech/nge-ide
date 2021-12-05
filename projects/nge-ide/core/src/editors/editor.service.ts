@@ -1,11 +1,11 @@
 import { Injectable, Injector, Predicate } from '@angular/core';
 import { ConfirmOptions, DialogService } from '@mcisse/nge/ui/dialog';
-import { CodIcon, FileIcon } from '@mcisse/nge/ui/icon';
+import { CodIcon } from '@mcisse/nge/ui/icon';
 import { BehaviorSubject, Subject, Subscription } from 'rxjs';
 import { URI } from 'vscode-uri';
-import { IContribution } from '../contributions';
-import { FileChangeType, FileService } from '../files';
-import { Paths } from '../utils';
+import { IContribution } from '../contributions/index';
+import { FileChangeType, FileService } from '../files/index';
+import { Paths } from '../utils/index';
 import { Editor, EditorGroup, EditorState } from './editor';
 import { OpenOptions } from './opener';
 

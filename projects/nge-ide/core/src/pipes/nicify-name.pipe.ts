@@ -1,4 +1,4 @@
-import { Pipe, PipeTransform, Input } from '@angular/core';
+import { Pipe, PipeTransform } from '@angular/core';
 
 @Pipe({name: 'nicifyName'})
 export class NicifyNamePipe implements PipeTransform {

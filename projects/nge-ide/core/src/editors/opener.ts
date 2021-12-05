@@ -1,7 +1,7 @@
 import { Injector } from '@angular/core';
 import { Icon } from '@mcisse/nge/ui/icon';
 import { URI } from 'vscode-uri';
-import { compareURI } from '../files';
+import { compareURI } from '../files/index';
 import { EditorGroup } from './editor';
 import { Preview } from './preview';
 

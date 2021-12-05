@@ -9,7 +9,7 @@ import { SettingsEditor } from './settings-editor/settings-editor';
 export const SETTINGS_CONTAINER_ID = 'workbench.container.settings';
 
 
-class Contribution implements IContribution {
+export class Contribution implements IContribution {
     readonly id = 'workbench.contrib.settings';
 
     activate(injector: Injector) {

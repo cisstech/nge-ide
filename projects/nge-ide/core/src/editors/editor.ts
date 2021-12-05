@@ -1,7 +1,7 @@
 import { Injector, Type } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { URI } from 'vscode-uri';
-import { compareURI } from '../files';
+import { compareURI } from '../files/index';
 import { OpenOptions, OpenRequest } from './opener';
 
 declare type OpenHandler = (

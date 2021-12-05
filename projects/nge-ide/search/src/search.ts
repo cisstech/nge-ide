@@ -20,7 +20,7 @@ export const SEARCH_VIEW_ID = 'workbench.view.search';
  */
 export const SEARCH_CONTAINER_ID = 'workbench.container.search';
 
-class Contribution implements IContribution {
+export class Contribution implements IContribution {
     readonly id = 'workbench.contrib.search';
 
     activate(injector: Injector) {
@@ -33,11 +33,7 @@ class Contribution implements IContribution {
             title: 'Recherche',
             commands: of([]),
             viewContainerId: SEARCH_CONTAINER_ID,
-            component: () =>
-                import(
-                    /* webpackChunkName: "ide-sidebar-search" */
-                    './search.module'
-                ).then((m) => m.SearchModule),
+            component: () => import('./search.module').then((m) => m.SearchModule),
         });
 
         viewContainerService.register(

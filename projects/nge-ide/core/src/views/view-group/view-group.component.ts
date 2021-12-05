@@ -4,7 +4,7 @@ import {
     Component,
     Input
 } from '@angular/core';
-import { StorageService } from '../../storage';
+import { StorageService } from '../../storage/index';
 import { IOutputData } from 'angular-split';
 import { take } from 'rxjs/operators';
 import { IView } from '../view';

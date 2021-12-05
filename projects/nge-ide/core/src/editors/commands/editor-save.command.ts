@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 import { CodIcon } from "@mcisse/nge/ui/icon";
-import { CommandScopes, ICommand, Keybinding } from "../../commands";
-import { KeyCodes, KeyModifiers } from '../../keybinding';
+import { ICommand, Keybinding } from "../../commands";
+import { KeyCodes, KeyModifiers } from '../../keybinding/index';
 import { EditorService } from '../editor.service';
 
 export const EDITOR_SAVE_COMMAND = 'editor.commands.save';

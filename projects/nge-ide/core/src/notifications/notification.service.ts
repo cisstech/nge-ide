@@ -1,15 +1,10 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { NgEventBus } from 'ng-event-bus';
-import {
-    BehaviorSubject,
-    Observable, Subscription
-} from 'rxjs';
+import { BehaviorSubject, Observable, Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { IContribution } from '../contributions';
-import {
-    ErrorNotification, Notification, NOTIFICATION_EVENT_CHANNEL
-} from './notification';
+import { IContribution } from '../contributions/index';
+import { ErrorNotification, Notification, NOTIFICATION_EVENT_CHANNEL } from './notification';
 
 @Injectable()
 export class NotificationService implements IContribution {

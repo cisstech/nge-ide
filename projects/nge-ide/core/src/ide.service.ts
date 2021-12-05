@@ -1,8 +1,8 @@
 import { Injectable, Injector } from '@angular/core';
 import { NgeMonacoLoaderService } from '@mcisse/nge/monaco';
 import { fromEvent, PartialObserver, Subject, Subscription } from 'rxjs';
-import { CONTRIBUTION, IContribution } from './contributions';
-import { FileService } from './files';
+import { CONTRIBUTION, IContribution } from './contributions/index';
+import { FileService } from './files/index';
 
 declare type Observer<T> = () => (T | Promise<T>) | PartialObserver<T | Promise<T>>;
 
@@ -13,9 +13,7 @@ export class IdeService {
 
     constructor(
         private readonly injector: Injector,
-        private readonly fileService: FileService,
-        private readonly monacoLoaderService: NgeMonacoLoaderService,
-    ) {}
+    ) { }
 
     /**
      * Start the ide application.
@@ -25,12 +23,14 @@ export class IdeService {
      * - attach an listener to window object handle beforeunload event.
      */
     async start() {
-        await this.monacoLoaderService.loadAsync();
+        const monacoLoaderService = this.injector.get(NgeMonacoLoaderService);
+        await monacoLoaderService.loadAsync();
         await this.startContributions();
 
+        const fileService = this.injector.get(FileService);
         this.subscriptions.push(
             fromEvent(window, 'beforeunload').subscribe(e => {
-                if (this.fileService.isDirty()) {
+                if (fileService.isDirty()) {
                     // IMPORTANT THE IF IS REQUIRED
                     e.preventDefault();
                     e.returnValue = true;
@@ -38,7 +38,7 @@ export class IdeService {
                     this.onDidBeforeStop.next();
                 }
             })
-        )
+        );
     }
 
     /**
@@ -74,7 +74,7 @@ export class IdeService {
                         await contrib.activate(this.injector);
                     }
                 } catch (error) {
-                     console.error(`Could not start contribution "${contrib.id}"`, error);
+                    console.error(`Could not start contribution "${contrib.id}"`, error);
                 }
             })
         );
@@ -91,7 +91,7 @@ export class IdeService {
                         await contrib.deactivate();
                     }
                 } catch (error) {
-                     console.error(`Could not stop contribution "${contrib.id}"`, error);
+                    console.error(`Could not stop contribution "${contrib.id}"`, error);
                 }
             })
         );

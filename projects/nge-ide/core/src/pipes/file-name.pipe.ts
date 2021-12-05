@@ -1,6 +1,6 @@
 import { Pipe, PipeTransform } from '@angular/core';
 import { URI } from 'vscode-uri';
-import { Paths } from '../utils';
+import { Paths } from '../utils/index';
 
 @Pipe({
     name: 'fileName'

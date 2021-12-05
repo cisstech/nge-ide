@@ -21,7 +21,7 @@ export const NOTIFICATIONS_VIEW_ID = 'workbench.view.notifications';
  */
 export const NOTIFICATIONS_CONTAINER_ID = 'workbench.container.notifications';
 
-class Contribution implements IContribution {
+export class Contribution implements IContribution {
     readonly id = 'workbench.contrib.notifications';
 
     activate(injector: Injector) {
@@ -41,11 +41,7 @@ class Contribution implements IContribution {
                 commandService.find(NotificationCommandClear)
             ]),
             viewContainerId: NOTIFICATIONS_CONTAINER_ID,
-            component: () =>
-                import(
-                    /* webpackChunkName: "ide-infobar-notifications" */
-                    './notifications.module'
-                ).then((m) => m.NotificationsModule)
+            component: () => import('./notifications.module').then((m) => m.NotificationsModule)
         });
 
         viewContainerService.register(

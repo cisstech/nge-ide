@@ -2,7 +2,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { URI } from 'vscode-uri';
-import { FileService } from '../files';
+import { FileService } from '../files/index';
 
 
 @Pipe({

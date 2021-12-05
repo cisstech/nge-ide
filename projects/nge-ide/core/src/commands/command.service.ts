@@ -1,12 +1,12 @@
 import { Injectable, Injector, Type } from '@angular/core';
-import { ICommand, CommandScopes } from './command';
-import { filter, map } from 'rxjs/operators';
 import { NgEventBus } from 'ng-event-bus';
-import { CommandEvent } from './command-event';
 import { BehaviorSubject, Observable, Subscription } from 'rxjs';
-import { IContribution } from '../contributions';
-import { KeyBindService } from '../keybinding';
-import { TaskService } from '../tasks';
+import { filter, map } from 'rxjs/operators';
+import { IContribution } from '../contributions/index';
+import { KeyBindService } from '../keybinding/index';
+import { TaskService } from '../tasks/index';
+import { CommandScopes, ICommand } from './command';
+import { CommandEvent } from './command-event';
 
 @Injectable()
 export class CommandService implements IContribution {

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { IContribution } from '../contributions';
+import { IContribution } from '../contributions/index';
 import { IView } from './view';
 
 @Injectable()

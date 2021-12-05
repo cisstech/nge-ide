@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { IToolbarItem, ToolbarGroups } from '.';
-import { IContribution } from '../contributions';
+import { IToolbarItem, ToolbarGroups } from './toolbar.model';
+import { IContribution } from '../contributions/index';
 
 @Injectable()
 export class ToolbarSevice implements IContribution {

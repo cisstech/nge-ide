@@ -1,7 +1,6 @@
 import { Injectable } from "@angular/core";
 import { CodIcon } from "@mcisse/nge/ui/icon";
-import { CommandScopes, ICommand, Keybinding } from "../../commands";
-import { KeyCodes, KeyModifiers } from '../../keybinding';
+import { CommandScopes, ICommand } from "../../commands";
 import { EditorService } from '../editor.service';
 
 export const EDITOR_SPLIT_COMMAND = 'editor.commands.split';

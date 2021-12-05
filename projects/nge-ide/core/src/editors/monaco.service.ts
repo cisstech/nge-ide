@@ -4,14 +4,14 @@ import { BehaviorSubject, Subject, Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { URI } from 'vscode-uri';
 import { EditorService } from './editor.service';
-import { ICommand } from '../commands';
-import { IContribution } from '../contributions';
-import { Diagnostic, DiagnosticService, DiagnosticSeverity } from '../diagnostics';
-import { compareURI, FileChangeType, FileService, resourceId } from '../files';
-import { SettingsService } from '../settings';
-import { StatusBarService } from '../status-bar';
-import { ToolbarButton, ToolbarGroups, ToolbarSeparator, ToolbarSevice } from '../toolbar';
-import { Paths } from '../utils';
+import { ICommand } from '../commands/index';
+import { IContribution } from '../contributions/index';
+import { Diagnostic, DiagnosticService, DiagnosticSeverity } from '../diagnostics/index';
+import { compareURI, FileChangeType, FileService, resourceId } from '../files/index';
+import { SettingsService } from '../settings/index';
+import { StatusBarService } from '../status-bar/index';
+import { ToolbarButton, ToolbarGroups, ToolbarSeparator, ToolbarSevice } from '../toolbar/index';
+import { Paths } from '../utils/index';
 
 // @ts-ignore
 // import { MenuRegistry } from 'monaco-editor/esm/vs/platform/actions/common/actions';

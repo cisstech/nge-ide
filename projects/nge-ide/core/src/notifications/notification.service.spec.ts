@@ -1,4 +1,4 @@
-import { inject, TestBed, waitForAsync } from '@angular/core/testing';
+import { inject, TestBed, async } from '@angular/core/testing';
 import { NgEventBus } from 'ng-event-bus';
 import { ErrorNotification } from './notification';
 import { NotificationService } from './notification.service';
@@ -17,7 +17,7 @@ describe('NotificationService', () => {
         expect(service).toBeTruthy();
     }));
 
-    it('should count', waitForAsync(
+    it('should count', async(
         inject([NotificationService], (service: NotificationService) => {
             service.publish(new ErrorNotification('message', 'error'));
             service.count.toPromise().then((count) => {
@@ -26,12 +26,7 @@ describe('NotificationService', () => {
         })
     ));
 
-    it('should be destroyed', inject([NotificationService], (service: NotificationService) => {
-        service.ngOnDestroy();
-        expect().nothing();
-    }));
-
-    it('should clear', waitForAsync(inject([NotificationService], async (service: NotificationService) => {
+    it('should clear', async(inject([NotificationService], async (service: NotificationService) => {
         service.clear();
         service.count.toPromise().then((count) => {
             expect(count).toBe(0);

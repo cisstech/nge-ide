@@ -27,7 +27,6 @@ import { NotificationsComponent } from './notifications.component';
 
         ViewModule,
   ],
-  exports: [NotificationsComponent],
   declarations: [NotificationsComponent],
 })
 export class NotificationsModule implements IDynamicModule {

@@ -16,7 +16,6 @@ import { ProblemsComponent } from './problems.component';
     NgeUiTreeModule,
     NgeUiIconModule,
   ],
-  exports: [ProblemsComponent],
   declarations: [ProblemsComponent],
 })
 export class ProblemsModule implements IDynamicModule {
