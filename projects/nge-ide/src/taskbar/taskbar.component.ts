@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { ITask } from 'projects/nge-ide/core/src/tasks/task';
+import { ITask } from '@mcisse/nge-ide/core';
 
 @Component({
   selector: 'ide-taskbar',
