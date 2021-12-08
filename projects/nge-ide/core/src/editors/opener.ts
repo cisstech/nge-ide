@@ -9,7 +9,7 @@ import { Preview } from './preview';
  * Represents file open options.
  */
 export interface OpenOptions {
-    /**  Icon to show in the tabbar (default to `FileIcon(title)`). */
+    /**  Icon to show in the tabbar (default to a file icon). */
     readonly icon?: Icon;
     /**  Title to show in the tabbar. */
     readonly title: string;

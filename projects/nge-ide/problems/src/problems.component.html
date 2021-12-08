@@ -4,7 +4,7 @@
     <ng-container *ngIf="node.expandable; else leafTemplate">
       <div class="tree-label">
         <div class="codicon codicon-{{treeRef.isExpanded(node) ? 'chevron-down' : 'chevron-right' }}"></div>&nbsp;
-        <ui-icon [icon]="node.name | fileIcon"></ui-icon>&nbsp;
+        <ui-icon [icon]="node.name | iconFile"></ui-icon>&nbsp;
         <div>{{ node.name }}</div>
       </div>
     </ng-container>

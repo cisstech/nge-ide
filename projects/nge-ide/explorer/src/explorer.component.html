@@ -1,6 +1,6 @@
 <ui-tree #treeRef [adapter]="adapter" [nodes]="(root|async)||[]">
   <ng-container *treeNode="let node">
-    <ui-icon [icon]="node.name | fileIcon: _iconOptions(node)"></ui-icon>
+    <ui-icon [icon]="node.name | iconFile: _iconOptions(node)"></ui-icon>
     <div class="tree-label"
       [title]="node.data.uri.path"
       [highlight]="node.name"

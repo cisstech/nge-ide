@@ -13,11 +13,11 @@
         <ng-container *ngFor="let tab of group.tabs; trackByUri">
           <nz-tab [nzTitle]="title">
             <ng-template #title>
-              <ng-container *ngIf="tab.options.icon; else: fileIcon">
+              <ng-container *ngIf="tab.options.icon; else: iconFile">
                 <ui-icon class="tab-icon" [icon]="tab.options.icon"></ui-icon>
               </ng-container>
-              <ng-template #fileIcon>
-                <ui-icon class="tab-icon" [icon]="tab.options.title|fileIcon"></ui-icon>
+              <ng-template #iconFile>
+                <ui-icon class="tab-icon" [icon]="tab.options.title|iconFile"></ui-icon>
               </ng-template>
               <span class="tab-title" [matTooltip]="tab.options.tooltip">{{tab.options.title}}</span>
               <ng-container *ngIf="tab.resource|fileChanged|async; else: closeable">

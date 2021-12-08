@@ -19,8 +19,15 @@
   },
   "license": "MIT",
   "peerDependencies": {
-    "@angular/common": "^9.1.12",
-    "@angular/core": "^9.1.12"
+    "@angular/common": "^13.0.3",
+    "@angular/core": "^13.0.3",
+    "@angular/cdk": "^13.0.3",
+    "@angular/material": "^13.0.3",
+    "@mcisse/nge": "^13.0.0",
+    "@ngx-pwa/local-storage": "^13.0.2",
+    "angular-split": "^5.0.0",
+    "ng-event-bus": "^2.0.0",
+    "ng-zorro-antd": "^12.1.0"
   },
   "dependencies": {
     "tslib": "^2.0.0"
