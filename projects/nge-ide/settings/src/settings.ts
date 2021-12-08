@@ -1,4 +1,4 @@
-import { Injector, NgModule } from '@angular/core';
+import { Injector, NgModule, Injectable } from '@angular/core';
 import { CONTRIBUTION, EditorService, IContribution, SETTINGS_URI, SidebarContainer, ViewContainerService } from '@mcisse/nge-ide/core';
 import { CodIcon } from '@mcisse/nge/ui/icon';
 import { SettingsEditor } from './settings-editor/settings-editor';
@@ -9,6 +9,7 @@ import { SettingsEditor } from './settings-editor/settings-editor';
 export const SETTINGS_CONTAINER_ID = 'workbench.container.settings';
 
 
+@Injectable()
 export class Contribution implements IContribution {
     readonly id = 'workbench.contrib.settings';
 

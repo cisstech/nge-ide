@@ -1,4 +1,4 @@
-import { Injector, NgModule } from '@angular/core';
+import { Injector, NgModule, Injectable } from '@angular/core';
 import {
     CommandService,
     CONTRIBUTION,
@@ -21,6 +21,7 @@ export const NOTIFICATIONS_VIEW_ID = 'workbench.view.notifications';
  */
 export const NOTIFICATIONS_CONTAINER_ID = 'workbench.container.notifications';
 
+@Injectable()
 export class Contribution implements IContribution {
     readonly id = 'workbench.contrib.notifications';
 

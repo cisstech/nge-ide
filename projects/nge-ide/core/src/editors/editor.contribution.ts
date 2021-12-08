@@ -1,4 +1,4 @@
-import { Injector } from "@angular/core";
+import { Injector, Injectable } from "@angular/core";
 import { CommandService } from '../commands/index';
 import { IContribution } from "../contributions";
 import { ToolbarButton, ToolbarGroups, ToolbarSeparator, ToolbarSevice } from "../toolbar";
@@ -12,6 +12,7 @@ import { HtmlPreviewHandler, MarkdownPreviewHandler, SvgPreviewHandler } from ".
 import { PreviewService } from "./preview.service";
 
 
+@Injectable()
 export class EditorContribution implements IContribution {
     readonly id = 'workbench.contrib.editor';
 

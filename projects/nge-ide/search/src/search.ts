@@ -1,4 +1,4 @@
-import { Injector, NgModule, Provider } from '@angular/core';
+import { Injector, NgModule, Provider, Injectable } from '@angular/core';
 import {
     CommandService,
     CONTRIBUTION,
@@ -20,6 +20,7 @@ export const SEARCH_VIEW_ID = 'workbench.view.search';
  */
 export const SEARCH_CONTAINER_ID = 'workbench.container.search';
 
+@Injectable()
 export class Contribution implements IContribution {
     readonly id = 'workbench.contrib.search';
 

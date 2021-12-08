@@ -1,4 +1,4 @@
-import { Injector, NgModule } from '@angular/core';
+import { Injector, NgModule, Injectable } from '@angular/core';
 import {
     CONTRIBUTION,
     DiagnosticService,
@@ -21,6 +21,7 @@ export const PROBLEMS_VIEW_ID = 'workbench.view.problems';
  */
 export const PROBLEMS_CONTAINER_ID = 'workbench.container.problems';
 
+@Injectable()
 export class Contribution implements IContribution {
     readonly id = 'workbench.contrib.problems';
 
