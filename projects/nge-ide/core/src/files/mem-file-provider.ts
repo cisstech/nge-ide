@@ -184,7 +184,11 @@ export class MemFileProvider extends FileSystemProvider {
         file: File,
         destination: URI,
     ): Promise<void> {
-        this._lookupParentDirectory(destination);
+        this._lookupAsDirectory(destination, false);
+
+        destination = destination.with({
+            path: Paths.normalize(Paths.join([destination.path, file.name])),
+        });
 
         let entry = this._lookup(destination, true);
         if (entry) {

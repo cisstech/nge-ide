@@ -3,6 +3,9 @@
   display: block;
   height: 100%;
   padding: 8px;
+  cdk-virtual-scroll-viewport {
+    overflow-x: hidden;
+  }
 }
 
 :host::ng-deep {

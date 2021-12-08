@@ -1,4 +1,4 @@
-import { URI } from 'vscode-uri';
+import { URI, Utils } from 'vscode-uri';
 import { Paths } from '../utils/index';
 
 export interface IFile {
@@ -41,6 +41,9 @@ export function resourceId(o: monaco.Uri | URI | IFile): string {
     return asUri(o).toString();
 }
 
+export function resourceParent(o: monaco.Uri | URI | IFile): URI {
+    return Utils.dirname(asUri(o));
+}
 
 export function isResourceParent(
     resource: monaco.Uri | URI | IFile,
@@ -48,10 +51,12 @@ export function isResourceParent(
 ): boolean {
     const a = asUri(resource);
     const b = asUri(parentCandidate);
-    if (resourceId(a) === resourceId(b)) {
+    const aId = resourceId(a)
+    const bId = resourceId(b);
+    if (aId === bId) {
         return false;
     }
-    return b.fsPath === Paths.dirname(a.fsPath);
+    return aId === resourceId(Utils.dirname(a));
 }
 
 export function isResourceAncestor(
@@ -63,6 +68,7 @@ export function isResourceAncestor(
     if (resourceId(a) === resourceId(b)) {
         return false;
     }
+    // TODO check if this is correct with paths like /home/folder1111
     return a.fsPath.startsWith(b.fsPath);
 }
 
@@ -72,8 +78,6 @@ export function isSameResource(
 ): boolean {
     return resourceId(a) === resourceId(b);
 }
-
-
 
 export function asUri(o: monaco.Uri | URI | IFile | string): URI {
     let uri: URI;

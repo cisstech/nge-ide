@@ -4,7 +4,7 @@ import { map } from 'rxjs/operators';
 import { URI } from 'vscode-uri';
 import { IContribution } from '../contributions/index';
 import { Paths } from '../utils//index';
-import { IFile, IFolder, isResourceAncestor, isSameResource, resourceId } from './file';
+import { IFile, IFolder, isResourceAncestor, isSameResource, resourceId, resourceParent } from './file';
 import { FileSystemError } from './file-system-error';
 import {
     FileChangeType,
@@ -345,18 +345,18 @@ export class FileService implements IContribution {
     ) {
         const provider = await this.withProvider(destination.uri, FileSystemProviderCapabilities.FileUpload);
 
-        const uri = destination.uri.with({
+        const newUri = destination.uri.with({
             path: Paths.normalize(Paths.join([destination.uri.path, file.name])),
         });
 
         this.willChangeFile.next([
-            { type: FileChangeType.Created, uri }
+            { type: FileChangeType.Created, uri: newUri },
         ]);
 
-        await provider.upload(file, uri);
+        await provider.upload(file, destination.uri);
 
         this.didChangeFile.next([
-            { type: FileChangeType.Created, uri }
+            { type: FileChangeType.Created, uri: newUri }
         ]);
 
         await this.refresh();
@@ -533,16 +533,15 @@ export class FileService implements IContribution {
                 const id = resourceId(file);
                 this.entries.set(id, file);
 
-                const parent = Paths.dirname(id);
+                const parent = resourceId(resourceParent(file));
                 const children = this.children.get(parent) || [];
                 children.push(file);
                 this.sortFiles(children);
+
                 this.children.set(parent, children);
-                if (parent.endsWith(':')) {
+                if (file.isFolder) { // allow loopkup for folders with or without ending slash
                     this.children.set(parent + '/', children);
                 }
-
-                // this.children.set(id, files.filter(other => isResourceParent(other, file)));
             });
         }
     }
