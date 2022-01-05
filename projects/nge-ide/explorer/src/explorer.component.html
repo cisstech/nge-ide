@@ -1,15 +1,13 @@
 <ui-tree #treeRef [adapter]="adapter" [nodes]="(root|async)||[]">
   <ng-container *treeNode="let node">
-    <ui-icon [icon]="node.name | iconFile: _iconOptions(node)"></ui-icon>
+    <ui-icon [icon]="node.name | iconFile: _iconOptions(node)"></ui-icon>
     <div class="tree-label"
       [title]="node.data.uri.path"
       [highlight]="node.name"
       [highlightPattern]="treeRef.filter.term"
       dnd
       (dropped)="_onDropped($event)"
-      [dndData]="node.id"
-      [draggable]="_draggable(node)"
-      [droppable]="_droppable(node)">
+      [dndData]="node.id">
     </div>
     <div class="tree-commands">
       <div class="tree-command" *ngIf="node.data.readOnly">
@@ -19,18 +17,14 @@
   </ng-container>
 </ui-tree>
 <nz-dropdown-menu #menu="nzDropdownMenu">
-  <ul nz-menu role="menu">
-    <ng-container *ngFor="let group of _commands()|async; let isLastGroup = last;">
+  <ul nz-menu role="menu" #m="nzMenu">
+    <ng-container *ngFor="let group of commands|async; let isLastGroup = last;">
       <ng-container *ngFor="let command of group; trackBy: _trackById; let isLastCommand = last;">
-        <ng-container *ngIf="command.enabled">
-          <ng-container>
-            <li role="menuitem" nz-menu-item (click)="_executeCommand(command)">
-              {{command.label}}
-            </li>
-          </ng-container>
-        </ng-container>
+        <li role="menuitem" nz-menu-item (click)="command.execute()">
+          {{command.label}}
+        </li>
       </ng-container>
-      <mat-divider *ngIf="!isLastGroup"></mat-divider>
+      <li nz-menu-divider *ngIf="!isLastGroup"></li>
     </ng-container>
   </ul>
 </nz-dropdown-menu>

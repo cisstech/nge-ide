@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { CodIcon } from "@mcisse/nge/ui/icon";
-import { CommandScopes, ICommand } from "../../commands";
+import { ICommand } from "../../commands";
 import { EditorService } from "../editor.service";
 import { PreviewService } from "../preview.service";
 
@@ -12,7 +12,6 @@ export class EditorPreviewCommand implements ICommand {
     readonly id = EDITOR_PREVIEW_COMMAND;
     readonly icon = new CodIcon('open-preview');
     readonly label = 'Prévisualiser';
-    readonly scope = [CommandScopes.EDITOR_GROUP];
 
     get enabled(): boolean {
         const { activeGroup } = this.editorService;

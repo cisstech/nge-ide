@@ -8,6 +8,7 @@ import { EditorPreviewCommand } from "./commands/editor-preview.command";
 import { EditorSaveAllCommand } from "./commands/editor-save-all.command";
 import { EditorSaveCommand } from "./commands/editor-save.command";
 import { EditorSplitCommand } from "./commands/editor-split.command";
+import { EditorService } from "./editor.service";
 import { HtmlPreviewHandler, MarkdownPreviewHandler, SvgPreviewHandler } from "./preview";
 import { PreviewService } from "./preview.service";
 
@@ -20,7 +21,7 @@ export class EditorContribution implements IContribution {
         const commandService = injector.get(CommandService);
         const toolbarService = injector.get(ToolbarSevice);
         const previewService = injector.get(PreviewService);
-
+        const editorService = injector.get(EditorService);
 
         commandService.register(
             EditorCloseAllCommand,
@@ -28,6 +29,12 @@ export class EditorContribution implements IContribution {
             EditorSaveCommand,
             EditorSaveAllCommand,
             EditorCloseCommand,
+            EditorPreviewCommand,
+        );
+
+        editorService.registerCommands(
+            EditorCloseAllCommand,
+            EditorSplitCommand,
             EditorPreviewCommand,
         );
 

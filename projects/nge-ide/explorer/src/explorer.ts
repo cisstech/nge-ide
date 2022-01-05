@@ -14,7 +14,7 @@ import {
 import { CodIcon } from '@mcisse/nge/ui/icon';
 import { of } from 'rxjs';
 import {
-    ExplorerCommandCollapse,
+    ExplorerCommandCollapseAll,
     ExplorerCommandCopy,
     ExplorerCommandCopyPath,
     ExplorerCommandCreateFile,
@@ -47,11 +47,13 @@ export class ExplorerContribution implements IContribution {
         const viewService = injector.get(ViewService);
         const commandService = injector.get(CommandService);
         const toolbarService = injector.get(ToolbarSevice);
+        const explorerService = injector.get(ExplorerService);
         const viewContainerService = injector.get(ViewContainerService);
 
         commandService.register(
             ExplorerCommandToggleFiltering,
-            ExplorerCommandCollapse,
+            ExplorerCommandCollapseAll,
+            ExplorerCommandRefresh,
             ExplorerCommandCopy,
             ExplorerCommandCopyPath,
             ExplorerCommandCreateFile,
@@ -60,7 +62,18 @@ export class ExplorerContribution implements IContribution {
             ExplorerCommandFileExport,
             ExplorerCommandFileUpload,
             ExplorerCommandPaste,
-            ExplorerCommandRefresh,
+            ExplorerCommandRename,
+        );
+
+        explorerService.registerCommands(
+            ExplorerCommandCopy,
+            ExplorerCommandCopyPath,
+            ExplorerCommandCreateFile,
+            ExplorerCommandCreateFolder,
+            ExplorerCommandDelete,
+            ExplorerCommandFileExport,
+            ExplorerCommandFileUpload,
+            ExplorerCommandPaste,
             ExplorerCommandRename,
         );
 
@@ -91,7 +104,7 @@ export class ExplorerContribution implements IContribution {
             commands: of([
                 commandService.find(ExplorerCommandToggleFiltering),
                 commandService.find(ExplorerCommandRefresh),
-                commandService.find(ExplorerCommandCollapse),
+                commandService.find(ExplorerCommandCollapseAll),
             ]),
             viewContainerId: EXPLORER_CONTAINER_ID,
             component: () => import('./explorer.module').then((m) => m.ExplorerModule),
@@ -102,7 +115,7 @@ export class ExplorerContribution implements IContribution {
 
 @NgModule({
     providers: [
-        ExplorerCommandCollapse,
+        ExplorerCommandCollapseAll,
         ExplorerCommandCopy,
         ExplorerCommandCopyPath,
         ExplorerCommandCreateFile,
@@ -116,11 +129,8 @@ export class ExplorerContribution implements IContribution {
         ExplorerCommandToggleFiltering,
 
         ExplorerService,
-        {
-            provide: CONTRIBUTION,
-            multi: true,
-            useClass: ExplorerContribution
-        }
+        { provide: CONTRIBUTION,  multi: true, useExisting: ExplorerService },
+        { provide: CONTRIBUTION,  multi: true, useClass: ExplorerContribution }
     ]
 })
 export class NgeIdeExplorerModule { }

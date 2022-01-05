@@ -17,7 +17,6 @@ export class QuickOpenComponent implements OnInit {
         readonly id = 'editor.commands.quick-open';
         readonly label = 'Aller au fichier..';
         readonly enabled = true;
-        readonly scope = [];
         readonly keybinding = new Keybinding({ key: KeyCodes.O, label: '⌘ O', modifiers: [KeyModifiers.CTRL_CMD] });
 
         constructor(

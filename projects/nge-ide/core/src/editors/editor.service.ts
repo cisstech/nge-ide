@@ -1,7 +1,8 @@
-import { Injectable, Injector, Predicate } from '@angular/core';
+import { Injectable, Injector, Predicate, Type } from '@angular/core';
 import { ConfirmOptions, DialogService } from '@mcisse/nge/ui/dialog';
 import { CodIcon } from '@mcisse/nge/ui/icon';
 import { BehaviorSubject, Subject, Subscription } from 'rxjs';
+import { CommandService, ICommand } from '../commands';
 import { IContribution } from '../contributions/index';
 import { FileChangeType, FileService } from '../files/index';
 import { Paths } from '../utils/index';
@@ -19,9 +20,10 @@ export class EditorService implements IContribution {
     private readonly willOpen = new Subject<monaco.Uri>();
 
     private readonly state$ = new BehaviorSubject<EditorState>({ visibleEditors: [] });
+    private readonly commands$ = new BehaviorSubject<ICommand[]>([]);
     private readonly editorGroups$ = new BehaviorSubject<EditorGroup[]>([]);
 
-    private editors: Editor[] = [];
+    private readonly editors: Editor[] = [];
 
     /** State of the editor. */
     readonly state = this.state$.asObservable();
@@ -58,6 +60,7 @@ export class EditorService implements IContribution {
         private readonly injector: Injector,
         private readonly fileService: FileService,
         private readonly dialogService: DialogService,
+        private readonly commandService: CommandService,
     ) { }
 
     activate(): void {
@@ -73,10 +76,13 @@ export class EditorService implements IContribution {
     }
 
     deactivate(): void {
-        this.editors = [];
+        this.editors.splice(0, this.editors.length);
         this.subscriptions.forEach(s => s.unsubscribe());
         this.subscriptions.splice(0, this.subscriptions.length);
         this.groups.clear();
+        this.commands$.next([]);
+        this.editorGroups$.next([]);
+        this.state$.next({ visibleEditors: [] });
     }
 
     /**
@@ -95,6 +101,29 @@ export class EditorService implements IContribution {
             }
             this.editors.unshift(editor);
         });
+    }
+
+    /**
+     * Register commands to use inside the editor group area.
+     * @param commands the commands to register.
+     */
+    registerCommands(...commands: (ICommand | Type<ICommand>)[]): void {
+        this.commands$.next([
+            ...this.commands$.value,
+            ...commands.map(c => {
+                if (typeof c === 'function') {
+                    return this.commandService.find<ICommand>(c);
+                }
+                return c;
+            }),
+        ]);
+    }
+
+    /**
+     * Gets all the commands usable in the editor group area.
+     */
+    listCommands(): ICommand[] {
+        return this.commands$.value;
     }
 
     /**

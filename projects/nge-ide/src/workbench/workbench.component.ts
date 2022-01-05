@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
-import { CommandScopes, CommandService, EditorGroup, EditorService, FileService, ICommand } from '@mcisse/nge-ide/core';
+import { CommandService, EditorGroup, EditorService, EditorTab, FileService, ICommand } from '@mcisse/nge-ide/core';
 import { Observable, of, Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { CodeEditor } from './code-editor/code-editor';
@@ -19,9 +19,7 @@ export class WorkbenchComponent implements OnInit, OnDestroy {
     commands: Observable<ICommand[]> = of([]);
 
     constructor(
-        private readonly fileService: FileService,
         private readonly editorService: EditorService,
-        private readonly commandService: CommandService,
         private readonly changeDetectorRef: ChangeDetectorRef,
     ) { }
 
@@ -37,10 +35,7 @@ export class WorkbenchComponent implements OnInit, OnDestroy {
                 map(e => e.activeResource)
             ).subscribe(resource => {
                 if (resource) {
-                    this.commands = this.commandService
-                        .findAllByScope(CommandScopes.EDITOR_GROUP)
-                        .pipe(map(commands => commands.filter(c => c.enabled)));
-
+                    this.commands = of(this.editorService.listCommands());
                 } else {
                     this.commands = of([]);
                 }
@@ -61,11 +56,11 @@ export class WorkbenchComponent implements OnInit, OnDestroy {
         this.editorService.setActiveGroup(group);
     }
 
-    trackById(_: number, item: any) {
-        return item.id;
+    trackTab(_: number, item: EditorTab) {
+        return item.resource.toString();
     }
 
-    trackByUri(_: number, item: monaco.Uri) {
-        return item.toString();
+    trackGroup(_: number, item: EditorGroup) {
+        return item.id;
     }
 }

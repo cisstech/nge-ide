@@ -114,7 +114,6 @@ export class FileService implements IContribution {
                 }
             });
         }
-        console.log(this.parents);
         this.rebuildIndex();
     }
 

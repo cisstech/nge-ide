@@ -19,7 +19,7 @@ declare type CloseGuard = (
     resource: monaco.Uri
 ) => Promise<boolean>;
 
-interface EditorTab {
+export interface EditorTab {
     readonly options: OpenOptions;
     readonly resource: monaco.Uri;
 }

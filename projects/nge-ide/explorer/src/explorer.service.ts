@@ -1,7 +1,6 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Type } from '@angular/core';
 import {
-    CommandScopes,
-    CommandService, EditorService, FileService, FileSystemProviderCapabilities, IFile, NotificationService
+    CommandService, EditorService, FileService, FileSystemProviderCapabilities, IContribution, IFile, NotificationService
 } from '@mcisse/nge-ide/core';
 import {
     ITree,
@@ -11,7 +10,7 @@ import {
     ITreeMouseAction,
     TreeService
 } from '@mcisse/nge/ui/tree';
-import { Observable, Subject } from 'rxjs';
+import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { IExplorerCommand } from './commands';
 
@@ -20,8 +19,12 @@ import { IExplorerCommand } from './commands';
  * Provides an API to interact with the explorer view tree.
  */
 @Injectable()
-export class ExplorerService {
-    private readonly didContextMenu = new Subject<ITreeMouseAction<IFile>>();
+export class ExplorerService implements IContribution {
+    readonly id = 'workbench.contrib.explorer-service';
+
+    private readonly contextMenu = new Subject<ITreeMouseAction<IFile>>();
+    private readonly commandRegistry = new BehaviorSubject<IExplorerCommand[]>([]);
+
     private clipboardData: IFile[] = [];
     private newFileType: 'file' | 'folder' | undefined;
 
@@ -57,7 +60,7 @@ export class ExplorerService {
     }
 
     get onDidContextMenu(): Observable<ITreeMouseAction<IFile>> {
-        return this.didContextMenu.asObservable();
+        return this.contextMenu.asObservable();
     }
 
     constructor(
@@ -68,29 +71,36 @@ export class ExplorerService {
         private readonly notificationService: NotificationService
     ) { }
 
-    findTreeCommands(): Observable<IExplorerCommand[][]> {
-        return this.commandService.findAllByScope<IExplorerCommand>(
-            CommandScopes.EXPLORER_TREE
-        ).pipe(
-            map(commands => {
-                const groups = commands.reduce((rec, next) => {
-                    rec[next.group] = (rec[next.group] || []);
-                    rec[next.group].push(next);
-                    return rec;
-                }, {} as Record<string, IExplorerCommand[]>);
-                return Object
-                    .keys(groups)
-                    .sort()
-                    .map(k => groups[k])
-                    .filter(e => e.length);
-            })
-        );
+    deactivate() {
+        this.commandRegistry.next([]);
     }
 
-    findTreeHoverCommands(): Observable<IExplorerCommand[]> {
-        return this.commandService.findAllByScope<IExplorerCommand>(
-            CommandScopes.EXPLORER_TREE_HOVER
-        );
+    registerCommands(...commands: (IExplorerCommand | Type<IExplorerCommand>)[]): void {
+        this.commandRegistry.next([
+            ...this.commandRegistry.value,
+            ...commands.map(c => {
+                if (typeof c === 'function') {
+                    return this.commandService.find<IExplorerCommand>(c);
+                }
+                return c;
+            }),
+        ]);
+    }
+
+    listCommands(): IExplorerCommand[][] {
+        const commands = this.commandRegistry.value;
+        const groups = commands.reduce((rec, next) => {
+            rec[next.group] = (rec[next.group] || []);
+            if (next.enabled) {
+                rec[next.group].push(next);
+            }
+            return rec;
+        }, {} as Record<string, IExplorerCommand[]>);
+        return Object
+            .keys(groups)
+            .sort()
+            .map(k => groups[k])
+            .filter(e => e.length);
     }
 
     selections(): IFile[] {
@@ -117,10 +127,6 @@ export class ExplorerService {
 
     collapseAll(): void {
         this.tree?.collapseAll();
-    }
-
-    isRoot(file: IFile): boolean {
-        return this.fileService.isRoot(file.uri);
     }
 
     hasSelection(): boolean {
@@ -283,20 +289,6 @@ export class ExplorerService {
         );
     }
 
-    canSearchIn(): boolean {
-        const focus = this.focusedNode();
-        if (!focus) {
-            return false;
-        }
-
-        if (!this.fileService.hasCapability(focus.uri, FileSystemProviderCapabilities.FileSearch)) {
-            return false;
-        }
-
-        return focus.isFolder;
-    }
-
-
     private onCopy(e: ITreeKeyAction<IFile>) {
         const { event } = e;
         if (event.metaKey || event.ctrlKey) {
@@ -325,7 +317,7 @@ export class ExplorerService {
     }
 
     private onContextMenu(e: ITreeMouseAction<IFile>) {
-        this.didContextMenu.next(e);
+        this.contextMenu.next(e);
     }
 
     private async onEditNode(e: ITreeEdition<IFile>): Promise<void> {

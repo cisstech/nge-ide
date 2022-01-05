@@ -1,19 +1,5 @@
 import { Icon } from '@mcisse/nge/ui/icon';
 
-/**
- * Areas of the editor where commands can be executed.
- */
-export enum CommandScopes {
-    INFOBAR = 'INFOBAR',
-
-    EDITOR_GROUP = 'EDITOR_GROUP',
-
-    EXPLORER_TREE = 'EXPLORER_TREE',
-    EXPLORER_TITLE_BAR = 'EXPLORER_TITLE_BAR',
-    EXPLORER_TREE_HOVER = 'EXPLORER_TREE_HOVER',
-}
-
-declare type Scope = string | CommandScopes;
 
 export class Keybinding {
     readonly key: number;
@@ -37,9 +23,6 @@ export interface ICommand {
 
     /** Optional icon describing the command. */
     readonly icon?: Icon
-
-    /** Area of the editor where the command belongs to */
-    readonly scope: Scope[];
 
     /** Human readable text describing the command. */
     readonly label: string;

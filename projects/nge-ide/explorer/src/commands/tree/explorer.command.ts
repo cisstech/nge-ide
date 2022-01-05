@@ -16,6 +16,7 @@ export enum CommandGroups {
     /**  Commands related to the modification of file. */
     GROUP_MODIFICATION = '7_modification',
 
+
 }
 /** Commands available inside the explorer container. */
 export interface IExplorerCommand extends ICommand {

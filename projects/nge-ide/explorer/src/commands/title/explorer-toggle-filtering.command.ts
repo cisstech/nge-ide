@@ -1,16 +1,13 @@
 import { Injectable } from "@angular/core";
-import { CommandScopes } from "@mcisse/nge-ide/core";
+import { ICommand } from "@mcisse/nge-ide/core";
 import { CodIcon, Icon } from "@mcisse/nge/ui/icon";
-import { ExplorerService } from "../explorer.service";
-import { CommandGroups, IExplorerCommand } from "./explorer.command";
+import { ExplorerService } from "../../explorer.service";
 
 export const EXPLORER_COMMAND_TOGGLE_FILTERING = 'explorer.commands.toggle-filtering';
 
 @Injectable()
-export class ExplorerCommandToggleFiltering implements IExplorerCommand {
+export class ExplorerCommandToggleFiltering implements ICommand {
     readonly id = EXPLORER_COMMAND_TOGGLE_FILTERING;
-    readonly group = CommandGroups.GROUP_MODIFICATION;
-    readonly scope = [CommandScopes.EXPLORER_TITLE_BAR];
     readonly enabled = true;
 
     get icon(): Icon {

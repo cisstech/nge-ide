@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
-import { CommandScopes, EditorService, FileService, ICommand, NotificationService } from '@mcisse/nge-ide/core';
+import { EditorService, FileService, ICommand, NotificationService } from '@mcisse/nge-ide/core';
 import { CodIcon } from '@mcisse/nge/ui/icon';
 import { DialogService } from '@mcisse/nge/ui/dialog';
-import { ExplorerService } from '../explorer.service';
+import { ExplorerService } from '../../explorer.service';
 
 
 export const EXPLORER_COMMAND_REFRESH = 'explorer.commands.refresh';
@@ -15,7 +15,6 @@ export class ExplorerCommandRefresh implements ICommand {
     readonly id = EXPLORER_COMMAND_REFRESH;
     readonly icon = new CodIcon('refresh');
     readonly label = 'Actualiser';
-    readonly scope = [CommandScopes.EXPLORER_TITLE_BAR];
 
     readonly enabled = true;
 

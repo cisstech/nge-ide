@@ -1,9 +1,8 @@
-import { CommandScopes, ICommand } from "../../commands";
+import { ICommand } from "../../commands";
 import { MonacoService } from "../monaco.service";
 
 
 export class EditorActionCommand implements ICommand {
-    readonly scope = [CommandScopes.EDITOR_GROUP];
 
     constructor(
         readonly id: string,

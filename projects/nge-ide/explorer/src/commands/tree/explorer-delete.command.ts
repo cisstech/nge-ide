@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
-import { CommandScopes, FileService, NotificationService, Paths } from '@mcisse/nge-ide/core';
+import { FileService, NotificationService, Paths } from '@mcisse/nge-ide/core';
 import { DialogService } from '@mcisse/nge/ui/dialog';
 import { CodIcon } from '@mcisse/nge/ui/icon';
-import { ExplorerService } from '../explorer.service';
+import { ExplorerService } from '../../explorer.service';
 import { CommandGroups, IExplorerCommand } from './explorer.command';
 
 export const EXPLORER_COMMAND_DELETE = 'explorer.commands.delete';
@@ -13,7 +13,6 @@ export class ExplorerCommandDelete implements IExplorerCommand {
     readonly icon = new CodIcon('trash');
     readonly group = CommandGroups.GROUP_MODIFICATION;
     readonly label = 'Supprimer';
-    readonly scope = [CommandScopes.EXPLORER_TREE, CommandScopes.EXPLORER_TREE_HOVER];
 
     get enabled(): boolean {
         return this.explorerService.canDelete();

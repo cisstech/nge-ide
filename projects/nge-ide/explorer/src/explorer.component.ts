@@ -3,6 +3,7 @@ import {
     ChangeDetectionStrategy,
     Component,
     ElementRef,
+    HostListener,
     OnDestroy,
     OnInit,
     ViewChild
@@ -23,7 +24,7 @@ import {
     NzContextMenuService,
     NzDropdownMenuComponent
 } from 'ng-zorro-antd/dropdown';
-import { Observable, Subscription } from 'rxjs';
+import { BehaviorSubject, Subscription } from 'rxjs';
 import { IExplorerCommand } from './commands';
 import { ExplorerService } from './explorer.service';
 
@@ -38,12 +39,15 @@ export class ExplorerComponent implements OnInit, OnDestroy, AfterViewChecked {
 
     readonly root = this.explorerService.root;
     readonly adapter = this.explorerService.adapter;
+    readonly commands = new BehaviorSubject<IExplorerCommand[][]>([]);
+
 
     @ViewChild(TreeComponent, { static: true })
     tree!: TreeComponent<IFile>;
 
     @ViewChild(NzDropdownMenuComponent, { static: true })
     dropdown!: NzDropdownMenuComponent;
+
 
     constructor(
         private readonly ideService: IdeService,
@@ -55,7 +59,7 @@ export class ExplorerComponent implements OnInit, OnDestroy, AfterViewChecked {
         private readonly explorerService: ExplorerService,
         private readonly contextMenuService: NzContextMenuService,
         private readonly notificationService: NotificationService,
-    ) {}
+    ) { }
 
     ngOnInit(): void {
         this.restoreState();
@@ -68,7 +72,7 @@ export class ExplorerComponent implements OnInit, OnDestroy, AfterViewChecked {
 
         this.subscriptions.push(
             this.editorService.state.subscribe((state) => {
-                const { activeResource } = state;
+                const { activeResource } = state;
                 if (activeResource) {
                     const nodeId = activeResource.toString();
                     this.tree.expand(nodeId)
@@ -79,6 +83,7 @@ export class ExplorerComponent implements OnInit, OnDestroy, AfterViewChecked {
 
         this.subscriptions.push(
             this.explorerService.onDidContextMenu.subscribe((e) => {
+                this.commands.next(this.explorerService.listCommands());
                 this.contextMenuService.create(e.event, this.dropdown);
             })
         );
@@ -92,18 +97,19 @@ export class ExplorerComponent implements OnInit, OnDestroy, AfterViewChecked {
     ngAfterViewChecked(): void {
         const height = this.elementRef.nativeElement.offsetHeight + 'px';
         if (height !== this.adapter.treeHeight) {
-           this.adapter.treeHeight = height;
+            this.adapter.treeHeight = height;
         }
+    }
+
+    @HostListener('window:click')
+    _closeContextMenu() {
+        this.commands.next([]);
     }
 
     //#region CALLED FROM TEMPLATE
 
     _trackById(_: number, e: any): string {
         return e.id;
-    }
-
-    _commands(): Observable<IExplorerCommand[][]> {
-        return this.explorerService.findTreeCommands();
     }
 
     _iconOptions(node: ITreeNodeHolder<IFile>): FileIconOptions {
@@ -115,14 +121,6 @@ export class ExplorerComponent implements OnInit, OnDestroy, AfterViewChecked {
         };
     }
 
-    _draggable(node: ITreeNodeHolder<IFile>) {
-        return !this.fileService.isRoot(node.data.uri);
-    }
-
-    _droppable(node: ITreeNodeHolder<IFile>) {
-        return node.data.isFolder && !node.data.readOnly;
-    }
-
     /**
      * Handles drag and drop event by asking a confirmation to the user then :
      * - If 'data.file' exists, the function will save the file on the server to the directory 'data.dst'.
@@ -130,36 +128,44 @@ export class ExplorerComponent implements OnInit, OnDestroy, AfterViewChecked {
      * @param e the dropped data.
      */
     async _onDropped(e: DndData) {
-        const srcPath =  e.src || e.file?.name || '';
+        const srcPath = e.src || e.file?.name || '';
         const dstPath = e.dst;
+
         if (srcPath === dstPath) {
             return;
         }
 
-        if (!srcPath)
+        if (!srcPath) {
             return;
+        }
 
-        if (!dstPath)
+        if (!dstPath) {
             return;
+        }
 
         const srcName = Paths.basename(srcPath);
         const src = this.fileService.find(monaco.Uri.parse(srcPath));
         const dst = this.fileService.find(monaco.Uri.parse(dstPath));
 
-        if (!src)
+        if (!src || this.fileService.isRoot(src.uri)) {
             return;
+        }
 
-        if (!dst)
+        if (!dst || !dst.isFolder || dst.readOnly) {
             return;
+        }
 
-        if (e.file && !this.fileService.hasCapability(dst.uri, FileSystemProviderCapabilities.FileUpload))
+        if (e.file && !this.fileService.hasCapability(dst.uri, FileSystemProviderCapabilities.FileUpload)) {
             return;
+        }
 
-        if (this.fileService.isParent(src.uri, dst.uri))
+        if (this.fileService.isParent(src.uri, dst.uri)) {
             return;
+        }
 
-        if (this.fileService.isAncestor(dst.uri, src.uri))
+        if (this.fileService.isAncestor(dst.uri, src.uri)) {
             return;
+        }
 
         const options = {
             title: `Vous êtes sûr de vouloir déplacer '${srcName}' dans '${Paths.basename(dst.uri.path)}'?`,
@@ -170,17 +176,9 @@ export class ExplorerComponent implements OnInit, OnDestroy, AfterViewChecked {
         try {
             const confirmed = await this.dialogService.confirmAsync(options);
             if (confirmed) {
-                await this.fileService.move(src || e.file , dst);
+                await this.fileService.move(src || e.file, dst);
                 this.tree.expand(dst);
             }
-        } catch (error) {
-            this.notificationService.publishError(error);
-        }
-    }
-
-    async _executeCommand(command: IExplorerCommand) {
-        try {
-            await command.execute();
         } catch (error) {
             this.notificationService.publishError(error);
         }

@@ -3,7 +3,6 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
 import { MatTooltipModule } from '@angular/material/tooltip';
-import { MatDividerModule } from '@angular/material/divider';
 
 import { NzDropDownModule } from 'ng-zorro-antd/dropdown';
 
@@ -21,7 +20,7 @@ import { ExplorerComponent } from './explorer.component';
         FormsModule,
 
         MatTooltipModule,
-        MatDividerModule,
+
         NzDropDownModule,
 
         CommandModule,

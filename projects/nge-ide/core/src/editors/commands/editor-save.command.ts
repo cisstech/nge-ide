@@ -11,7 +11,6 @@ export class EditorSaveCommand implements ICommand {
     readonly id = EDITOR_SAVE_COMMAND;
     readonly icon = new CodIcon('save');
     readonly label = 'Enregistrer';
-    readonly scope = [];
     readonly keybinding = new Keybinding({ key: KeyCodes.S, label: '⌘ S', modifiers: [KeyModifiers.CTRL_CMD] });
 
     get enabled(): boolean {

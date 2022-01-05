@@ -448,7 +448,6 @@ export class MonacoService implements IContribution {
                 isSeparator: false,
                 command: new class implements ICommand {
                     readonly id = action;
-                    readonly scope = [];
                     readonly label = e.getAction(action).label;
                     readonly keybinding = lookup.get(action)?.[0]?.resolvedKeybinding?.getLabel();
 
@@ -477,7 +476,6 @@ export class MonacoService implements IContribution {
                 priority: 100,
                 command: new class implements ICommand {
                     readonly id = id;
-                    readonly scope = [];
                     readonly label = label;
                     readonly enabled = true;
                     execute() {

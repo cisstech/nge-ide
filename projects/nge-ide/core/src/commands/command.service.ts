@@ -4,8 +4,9 @@ import { BehaviorSubject, Observable, Subscription } from 'rxjs';
 import { filter, map } from 'rxjs/operators';
 import { IContribution } from '../contributions/index';
 import { KeyBindService } from '../keybinding/index';
+import { NotificationService } from '../notifications/index';
 import { TaskService } from '../tasks/index';
-import { CommandScopes, ICommand } from './command';
+import { ICommand } from './command';
 import { CommandEvent } from './command-event';
 
 @Injectable()
@@ -19,6 +20,7 @@ export class CommandService implements IContribution {
         private readonly injector: Injector,
         private readonly eventBus: NgEventBus,
         private readonly taskService: TaskService,
+        private readonly notificationService: NotificationService,
         private readonly keybindingService: KeyBindService,
     ) { }
 
@@ -92,6 +94,11 @@ export class CommandService implements IContribution {
         }) as T;
     }
 
+    /**
+     * Gets an observable that emit with all commands matching the given `predicate`.
+     * @param predicate A predicate function that returns true if the command should be returned.
+     * @returns An Observable.
+     */
     findAll<T extends ICommand>(
         predicate: (command: ICommand) => boolean
     ): Observable<T[]> {
@@ -102,6 +109,11 @@ export class CommandService implements IContribution {
         ) as Observable<T[]>;
     }
 
+    /**
+     * Gets an observable that emit with all commands with an id starting with the given `prefix`.
+     * @param prefix Prefix to search for.
+     * @returns An Observable.
+     */
     findAllByPrefix<T extends ICommand>(
         prefix: string
     ): Observable<T[]> {
@@ -112,27 +124,11 @@ export class CommandService implements IContribution {
         ) as Observable<T[]>;
     }
 
-    findAllByScope<T extends ICommand>(
-        scope: CommandScopes
-    ): Observable<T[]> {
-        return this.registry.pipe(
-            map(commands => {
-                return commands.filter(e => e.scope.includes(scope))
-            })
-        ) as Observable<T[]>;
-    }
-
-    forEachCommandInScope<T extends ICommand>(
-        scope: CommandScopes,
-        consumer: (command: T) => void
-    ): void {
-        this.registry.value.forEach(e => {
-            if (e.scope.includes(scope)) {
-                consumer(e as T);
-            }
-        });
-    }
-
+    /**
+     * Gets a observable that emit after each execution of the command identified by `commandId`.
+     * @param commandId Identifier of the command to listen to.
+     * @returns An Observable
+     */
     onAfterExecute(commandId?: string): Observable<CommandEvent> {
         return this.eventBus.on<any>(CommandEvent.CHANNEL).pipe(
             map(e => e.data as CommandEvent),
@@ -142,6 +138,12 @@ export class CommandService implements IContribution {
         );
     }
 
+
+    /**
+     * Gets a observable that emit before each execution of the command identified by `commandId`.
+     * @param commandId Identifier of the command to listen to.
+     * @returns An Observable
+     */
     onBeforeExecute(commandId?: string): Observable<CommandEvent> {
         return this.eventBus.on<any>(CommandEvent.CHANNEL).pipe(
             map(e => e.data as CommandEvent),
@@ -152,7 +154,7 @@ export class CommandService implements IContribution {
     }
 
     private decorate(command: ICommand) {
-        const run = command.execute;
+        const execute = command.execute;
         const events = this.eventBus;
         command.execute = async (...args) => {
             if (!command.enabled) {
@@ -171,7 +173,10 @@ export class CommandService implements IContribution {
             events.cast(CommandEvent.CHANNEL, event);
             const task = this.taskService.run(`Exécution de la commande : ${command.label}`);
             try {
-                await run.apply(command, args);
+                await execute.apply(command, args);
+            } catch(error) {
+                this.notificationService.publishError(error);
+                throw error;
             } finally {
                 task.end();
                 setTimeout(() => {

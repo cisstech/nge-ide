@@ -3,14 +3,14 @@
   [gutterSize]="2"
   [useTransition]="true"
   cdkDropListGroup>
-  <ng-container *ngFor="let group of groups | async; trackBy: trackById">
+  <ng-container *ngFor="let group of groups | async; trackBy: trackGroup">
     <as-split-area class="editor-group" [class.editor-group--active]="isActiveGroup(group)">
       <nz-tabset
         nzType="card"
         (click)="setActiveGroup(group)"
         [(nzSelectedIndex)]="group.activeIndex"
         [nzTabBarExtraContent]="buttons">
-        <ng-container *ngFor="let tab of group.tabs; trackByUri">
+        <ng-container *ngFor="let tab of group.tabs; trackBy: trackTab">
           <nz-tab [nzTitle]="title">
             <ng-template #title>
               <ng-container *ngIf="tab.options.icon; else: iconFile">

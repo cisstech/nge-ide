@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
-import { CommandScopes } from '@mcisse/nge-ide/core';
-import { FaIcon } from '@mcisse/nge/ui/icon';
 import { ClipboardService } from '@mcisse/nge/services';
-import { ExplorerService } from '../explorer.service';
+import { FaIcon } from '@mcisse/nge/ui/icon';
+import { ExplorerService } from '../../explorer.service';
 import { CommandGroups, IExplorerCommand } from './explorer.command';
 
 export const EXPLORER_COMMAND_COPY_PATH = 'explorer.commands.copy-path';
@@ -13,7 +12,6 @@ export class ExplorerCommandCopyPath implements IExplorerCommand {
     readonly icon = new FaIcon('fas fa-link');
     readonly group = CommandGroups.GROUP_COPY_PASTE;
     readonly label = 'Copier le chemin';
-    readonly scope = [CommandScopes.EXPLORER_TREE];
 
     get enabled(): boolean {
         return this.explorerService.hasSelection();
@@ -29,7 +27,7 @@ export class ExplorerCommandCopyPath implements IExplorerCommand {
         const length = selections.length;
         if (length) {
             this.clipboardService.copy(
-                selections.map((e) => e.uri.path).join('\n')
+                selections.map((e) => e.uri.fsPath).join('\n')
             );
         }
     }
