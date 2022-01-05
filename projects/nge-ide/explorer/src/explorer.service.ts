@@ -1,15 +1,8 @@
 import { Injectable } from '@angular/core';
 import {
     CommandScopes,
-    CommandService,
-    IFile,
-    FileService,
-    NotificationService,
-    EditorService,
-    FileSystemProviderCapabilities,
-    resourceId
+    CommandService, EditorService, FileService, FileSystemProviderCapabilities, IFile, NotificationService
 } from '@mcisse/nge-ide/core';
-import { DialogService } from '@mcisse/nge/ui/dialog';
 import {
     ITree,
     ITreeAdapter,
@@ -21,6 +14,7 @@ import {
 import { Observable, Subject } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { IExplorerCommand } from './commands';
+
 
 /**
  * Provides an API to interact with the explorer view tree.
@@ -34,7 +28,7 @@ export class ExplorerService {
     readonly root = this.fileService.treeChange;
     readonly adapter: ITreeAdapter<IFile> = {
         id: 'explorer.tree',
-        idProvider: (node) => resourceId(node.uri),
+        idProvider: (node) => node.uri.toString(),
         nameProvider: (node) => this.fileService.entryName(node),
         childrenProvider: (node) => this.fileService.findChildren(node),
         isExpandable: (node) => node.isFolder,
@@ -228,7 +222,7 @@ export class ExplorerService {
     }
 
     canDownload(): boolean {
-        return !!this.focusedNode()?.downloadUrl;
+        return !!this.focusedNode()?.url;
     }
 
     download(): void {
@@ -237,7 +231,7 @@ export class ExplorerService {
         }
 
         // TODO support angular universal
-        window.open(this.focusedNode()!.downloadUrl!, '_blank');
+        window.open(this.focusedNode()!.url!, '_blank');
     }
 
     canUpload(): boolean {

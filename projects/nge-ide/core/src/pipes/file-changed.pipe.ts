@@ -1,7 +1,6 @@
 import { Pipe, PipeTransform } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { URI } from 'vscode-uri';
 import { FileService } from '../files/index';
 
 
@@ -13,7 +12,7 @@ export class FileChangedPipe implements PipeTransform {
         private readonly fileService: FileService
     ) {}
 
-    transform(value: URI): Observable<boolean> {
+    transform(value: monaco.Uri): Observable<boolean> {
         return this.fileService.contentChange(value).pipe(
             map(content => !!content?.changed)
         );

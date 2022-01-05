@@ -1,29 +1,27 @@
 import { Injector, Type } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { URI } from 'vscode-uri';
-import { compareURI } from '../files/index';
 import { OpenOptions, OpenRequest } from './opener';
 
 declare type OpenHandler = (
     group: EditorGroup,
     editor: Editor,
-    resource: URI,
+    resource: monaco.Uri,
 ) => void;
 
 declare type CloseHandler = (
     group: EditorGroup,
-    resource: URI,
+    resource: monaco.Uri,
     isPreview?: boolean,
 ) => void;
 
 declare type CloseGuard = (
     group: EditorGroup,
-    resource: URI
+    resource: monaco.Uri
 ) => Promise<boolean>;
 
 interface EditorTab {
     readonly options: OpenOptions;
-    readonly resource: URI;
+    readonly resource: monaco.Uri;
 }
 
 /**
@@ -37,7 +35,7 @@ export interface EditorState {
     readonly activeEditor?: Editor;
 
     /** Current active resource (the one focused in explorer tree could be `null`). */
-    readonly activeResource?: URI;
+    readonly activeResource?: monaco.Uri;
 
     /** Current visible editors */
     readonly visibleEditors: ReadonlyArray<Editor>;
@@ -141,7 +139,7 @@ export class EditorGroup {
     }
 
     /** Current active resource. */
-    get activeResource(): URI | undefined {
+    get activeResource(): monaco.Uri | undefined {
         return this._request ? this._request.uri : undefined;
     }
 
@@ -190,9 +188,9 @@ export class EditorGroup {
      * @param isPreview if `true`, check if the resource is opened as a preview.
      * @throws {ReferenceError} if any of the arguments is null.
      */
-    contains(resource: URI): boolean {
+    contains(resource: monaco.Uri): boolean {
         return this._tabs.some(e => {
-            return compareURI(e.resource, resource);
+            return e.resource.toString() === resource.toString();
         });
     }
 
@@ -201,9 +199,9 @@ export class EditorGroup {
      * @param resource the resource.
      * @throws {ReferenceError} if any of the arguments is null.
      */
-    containsPreview(resource: URI): boolean {
+    containsPreview(resource: monaco.Uri): boolean {
         return this._tabs.some(e => {
-            return compareURI(e.resource, resource) && !!e.options.preview;
+            return e.resource.toString() === resource.toString() && !!e.options.preview;
         });
     }
 
@@ -212,8 +210,8 @@ export class EditorGroup {
      * @param resource the resource.
      * @throws {ReferenceError} if any of the arguments is null.
      */
-    isActive(resource: URI): boolean {
-        return !!this.activeResource && compareURI(resource, this.activeResource);
+    isActive(resource: monaco.Uri): boolean {
+        return this.activeResource?.toString() === resource.toString();
     }
 
     /**
@@ -221,9 +219,9 @@ export class EditorGroup {
      * @param resource the resource to check the index for.
      * @returns The index of the resource or `-1` if the resource is not opened.
      */
-    findIndex(resource: URI): number {
+    findIndex(resource: monaco.Uri): number {
         return this._tabs.findIndex(e => {
-            return compareURI(e.resource, resource);
+            return e.resource.toString() === resource.toString();
         });
     }
 
@@ -238,7 +236,7 @@ export class EditorGroup {
      * @throws {ReferenceError} if any of the arguments is null.
      * @returns An promise that resolve once the resource is opened.
      */
-    async open(resource: URI, options: OpenOptions): Promise<void> {
+    async open(resource: monaco.Uri, options: OpenOptions): Promise<void> {
         if (this.isActive(resource) && !options.preview)
             return;
 
@@ -284,7 +282,7 @@ export class EditorGroup {
      * @throws {ReferenceError} if any of the arguments is null.
      * @returns A promise that resolve with `true` if the resource is removed `false` otherwise.
      */
-    async close(resource: URI, force?: boolean): Promise<boolean> {
+    async close(resource: monaco.Uri, force?: boolean): Promise<boolean> {
         const index = this.findIndex(resource);
         if (index === -1)
             return false;

@@ -1,107 +1,26 @@
-import { URI, Utils } from 'vscode-uri';
-import { Paths } from '../utils/index';
-
+/**
+ * Representation of a file/directory.
+ */
 export interface IFile {
     /**
-     * The associated uri for this file | folder.
+     * The associated uri for this file/directory.
      *
-     * Note that most documents use the `file`-scheme, which means they are files on disk.
-     * However, not all files are saved on disk and therefore the `scheme`  must
-     * be checked before trying to access the underlying file or siblings on disk.
+     * Notes: the uri must not end with a slash except for a root uri.
      */
-    uri: URI;
+    readonly uri: monaco.Uri;
 
     /**
-     * The version of this entry.
+     * Is the file a directory?
      */
-    version: any;
+    readonly isFolder: boolean;
 
     /**
-     * Is the entry a directory?
+     * Is the file readonly?
      */
-    isFolder: boolean;
+    readonly readOnly: boolean;
 
     /**
-     * Is the entry readonly?
+     * Optional download url of the file.
      */
-    readOnly: boolean;
-
-    /**
-     * Optional download url of the file/folder.
-     */
-    downloadUrl?: string;
-}
-
-export interface IFolder {
-    name: string;
-    uri: URI;
-}
-
-export function resourceId(o: monaco.Uri | URI | IFile): string {
-    return asUri(o).toString();
-}
-
-export function resourceParent(o: monaco.Uri | URI | IFile): URI {
-    return Utils.dirname(asUri(o));
-}
-
-export function isResourceParent(
-    resource: monaco.Uri | URI | IFile,
-    parentCandidate: monaco.Uri | URI | IFile
-): boolean {
-    const a = asUri(resource);
-    const b = asUri(parentCandidate);
-    const aId = resourceId(a)
-    const bId = resourceId(b);
-    if (aId === bId) {
-        return false;
-    }
-    return aId === resourceId(Utils.dirname(a));
-}
-
-export function isResourceAncestor(
-    resource: monaco.Uri | URI | IFile,
-    ancestorCandidate: monaco.Uri | URI | IFile
-): boolean {
-    const a = asUri(resource);
-    const b = asUri(ancestorCandidate);
-    if (resourceId(a) === resourceId(b)) {
-        return false;
-    }
-    // TODO check if this is correct with paths like /home/folder1111
-    return a.fsPath.startsWith(b.fsPath);
-}
-
-export function isSameResource(
-    a: monaco.Uri | URI | IFile,
-    b: monaco.Uri | URI | IFile
-): boolean {
-    return resourceId(a) === resourceId(b);
-}
-
-export function asUri(o: monaco.Uri | URI | IFile | string): URI {
-    let uri: URI;
-    if (typeof o === 'string') {
-        uri = URI.parse(o);
-    } else {
-        uri = 'uri' in o ? o.uri : o;
-    }
-    return uri.with({
-        fragment: '',
-        query: ''
-    })
-}
-
-export function compareURI(a: URI, b: URI) {
-    const s1 = a.with({
-        fragment: '',
-        query: ''
-    }).toString();
-
-    const s2 = b.with({
-        fragment: '',
-        query: '',
-    }).toString();
-
-    return s1 === s2;
+    readonly url?: string;
 }

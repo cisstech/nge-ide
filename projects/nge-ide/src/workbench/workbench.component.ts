@@ -2,7 +2,6 @@ import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnIni
 import { CommandScopes, CommandService, EditorGroup, EditorService, FileService, ICommand } from '@mcisse/nge-ide/core';
 import { Observable, of, Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { URI } from 'vscode-uri';
 import { CodeEditor } from './code-editor/code-editor';
 import { MediaEditor } from './media-editor/media-editor';
 import { PreviewEditor } from './preview-editor/preview-editor';
@@ -66,7 +65,7 @@ export class WorkbenchComponent implements OnInit, OnDestroy {
         return item.id;
     }
 
-    trackByUri(_: number, item: URI) {
+    trackByUri(_: number, item: monaco.Uri) {
         return item.toString();
     }
 }

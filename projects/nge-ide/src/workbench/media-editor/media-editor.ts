@@ -12,6 +12,6 @@ export class MediaEditor extends Editor {
         const fileService = request.injector.get(FileService);
         const file = fileService.find(request.uri);
         const extension = Paths.extname(request.uri.path);
-        return !!file?.downloadUrl && extensions.includes(extension)
+        return !!file?.url && extensions.includes(extension)
     }
 }

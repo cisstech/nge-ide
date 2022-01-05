@@ -1,7 +1,6 @@
 // inspired from vscode api https://code.visualstudio.com/api/references/vscode-api#FileSystem
 // tslint:disable: no-bitwise
 
-import { URI } from 'vscode-uri';
 import { IFile } from './file';
 import { SearchForm, SearchResult } from './file-system-search';
 
@@ -46,7 +45,7 @@ export interface IFileChange {
     /**
      * The unified resource identifier of the file that changed.
      */
-    readonly uri: URI;
+    readonly uri: monaco.Uri;
 }
 
 /**
@@ -54,7 +53,7 @@ export interface IFileChange {
  * and to manage files and folders. It allows extensions to serve files from remote places,
  * like ftp-servers, and to seamlessly integrate those into the editor.
  *
- * * *Note 1:* The filesystem provider API works with [uris](#URI) and assumes hierarchical
+ * * *Note 1:* The filesystem provider API works with [uris](#monaco.Uri) and assumes hierarchical
  * paths, e.g. `foo:/my/path` is a child of `foo:/my/` and a parent of `foo:/my/path/deeper`.
  * * *Note 2:* The word 'file' is often used to denote all kinds of files, e.g.
  * folders, regular files.
@@ -70,11 +69,12 @@ export interface IFileSystemProvider {
     /**
      * Retrieves recursivly all entries of a directory.
      *
+     * Note: This method should include the directory itself.
      * @param uri? The uri of the directory.
      * @return  A promise that resolves with a list of {@link IFile}.
      * @throws {@link FileSystemError.FileNotFound} when `uri` doesn't exist.
      */
-    readDirectory(uri: URI): IFile[]  | Promise<IFile[]>;
+    readDirectory(uri: monaco.Uri): IFile[]  | Promise<IFile[]>;
 
     /**
      * Create a new directory.
@@ -84,7 +84,7 @@ export interface IFileSystemProvider {
      * @throws {@link FileSystemError.FileExists} when `uri` already exists.
      * @throws {@link FileSystemError.NoPermissions} when permissions aren't sufficient.
      */
-    createDirectory(uri: URI): void | Promise<void>;
+    createDirectory(uri: monaco.Uri): void | Promise<void>;
 
     /**
      * Read the entire contents of a file.
@@ -93,7 +93,7 @@ export interface IFileSystemProvider {
      * @return A promise that resolves with a file content.
      * @throws {@link FileSystemError.FileNotFound} when `uri` doesn't exist.
      */
-    read(uri: URI): string | Promise<string>;
+    read(uri: monaco.Uri): string | Promise<string>;
 
     /**
      * Write data to a file, replacing its entire contents.
@@ -107,7 +107,7 @@ export interface IFileSystemProvider {
      * @throws {@link FileSystemError.NoPermissions} when permissions aren't sufficient.
      */
     write(
-        uri: URI,
+        uri: monaco.Uri,
         content: string,
         update: boolean
     ): void | Promise<void>;
@@ -119,7 +119,7 @@ export interface IFileSystemProvider {
      * @throws {@link FileSystemError.FileNotFound} when `uri` doesn't exist.
      * @throws {@link FileSystemError.NoPermissions} when permissions aren't sufficient.
      */
-    delete(uri: URI): void | Promise<void>;
+    delete(uri: monaco.Uri): void | Promise<void>;
 
     /**
      * Rename a file or folder.
@@ -131,7 +131,7 @@ export interface IFileSystemProvider {
      * @throws {@link FileSystemError.FileExists} when `newUri` exists and when the `overwrite` option is not `true`.
      * @throws {@link FileSystemError.NoPermissions} when permissions aren't sufficient.
      */
-    rename(uri: URI, name: string): void | Promise<void>;
+    rename(uri: monaco.Uri, name: string): void | Promise<void>;
 
     /**
      * Copy files or folders.
@@ -145,8 +145,8 @@ export interface IFileSystemProvider {
      * @throws {@link FileSystemError.NoPermissions} when permissions aren't sufficient.
      */
     move(
-        source: URI,
-        destination: URI,
+        source: monaco.Uri,
+        destination: monaco.Uri,
         options: { copy: boolean }
     ): void | Promise<void>;
 
@@ -161,7 +161,7 @@ export interface IFileSystemProvider {
      */
     upload(
         file: File,
-        destination: URI
+        destination: monaco.Uri
     ): void | Promise<void>;
 
     searchIn(
@@ -181,32 +181,32 @@ export abstract class FileSystemProvider implements IFileSystemProvider {
     }
 
     readDirectory(
-        uri: URI
+        uri: monaco.Uri
     ): IFile[] | Promise<IFile[]> {
         throw new Error('Operation not supported');
     }
 
     createDirectory(
-        uri: URI
+        uri: monaco.Uri
     ): void | Promise<void> {
         throw new Error('Operation not supported');
     }
 
     upload(
         file: File,
-        destination: URI
+        destination: monaco.Uri
     ): void | Promise<void> {
         throw new Error('Operation not supported');
     }
 
     read(
-        uri: URI
+        uri: monaco.Uri
     ): string | Promise<string> {
         throw new Error('Operation not supported');
     }
 
     write(
-        uri: URI,
+        uri: monaco.Uri,
         content: string,
         update: boolean
     ): void | Promise<void> {
@@ -214,21 +214,21 @@ export abstract class FileSystemProvider implements IFileSystemProvider {
     }
 
     delete(
-        uri: URI
+        uri: monaco.Uri
     ): void | Promise<void> {
         throw new Error('Operation not supported');
     }
 
     rename(
-        uri: URI,
+        uri: monaco.Uri,
         name: string
     ): void | Promise<void> {
         throw new Error('Operation not supported');
     }
 
     move(
-        source: URI,
-        destination: URI,
+        source: monaco.Uri,
+        destination: monaco.Uri,
         options: { copy: boolean }
     ): void | Promise<void> {
         throw new Error('Operation not supported');

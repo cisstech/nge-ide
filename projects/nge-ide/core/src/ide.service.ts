@@ -9,7 +9,8 @@ declare type Observer<T> = () => (T | Promise<T>) | PartialObserver<T | Promise<
 @Injectable()
 export class IdeService {
     private readonly subscriptions: Subscription[] = [];
-    private readonly onDidBeforeStop = new Subject<void>();
+    private readonly didAfterStart = new Subject<void>();
+    private readonly didBeforeStop = new Subject<void>();
 
     constructor(
         private readonly injector: Injector,
@@ -35,10 +36,11 @@ export class IdeService {
                     e.preventDefault();
                     e.returnValue = true;
                 } else {
-                    this.onDidBeforeStop.next();
+                    this.didBeforeStop.next();
                 }
             })
         );
+        this.didAfterStart.next();
     }
 
     /**
@@ -50,18 +52,26 @@ export class IdeService {
      * - dispose event listeners and subscriptions.
      */
     async stop() {
-        this.onDidBeforeStop.next();
+        this.didBeforeStop.next();
         await this.stopContributions();
         this.subscriptions.forEach(s => s.unsubscribe());
         this.subscriptions.splice(0, this.subscriptions.length);
     }
 
     /**
-     * Subscribe to an event emitted before the user leave the editor.
+     * Subscribe to an event emitted after the editor starts.
+     * @param observer Subcription function.
+     */
+    onAfterStart(observer: Observer<void>) {
+        return this.didAfterStart.subscribe(observer)
+    }
+
+    /**
+     * Subscribe to an event emitted before the editor stops.
      * @param observer Subcription function.
      */
     onBeforeStop(observer: Observer<void>) {
-        return this.onDidBeforeStop.subscribe(observer)
+        return this.didBeforeStop.subscribe(observer)
     }
 
     private async startContributions(): Promise<void> {

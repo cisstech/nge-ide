@@ -27,7 +27,7 @@
     "@ngx-pwa/local-storage": "^13.0.2",
     "angular-split": "^5.0.0",
     "ng-event-bus": "^2.0.0",
-    "ng-zorro-antd": "^12.1.0"
+    "ng-zorro-antd": "^13.0.0"
   },
   "dependencies": {
     "tslib": "^2.0.0"

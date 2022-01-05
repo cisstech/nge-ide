@@ -1,5 +1,3 @@
-import { URI } from 'vscode-uri';
-
 /**
  * A type that filesystem providers should use to signal errors.
  * This class has factory methods for common error-cases, like FileNotFound when a file or folder doesn't exist,
@@ -9,7 +7,7 @@ export class FileSystemError extends Error {
      * Create an error to signal that a file or folder wasn't found.
      * @param messageOrUri Message or uri.
      */
-    static FileNotFound(messageOrUri?: string | URI): FileSystemError {
+    static FileNotFound(messageOrUri?: string | monaco.Uri): FileSystemError {
         return new FileSystemError('FileNotFound: ' + messageOrUri);
     }
 
@@ -18,7 +16,7 @@ export class FileSystemError extends Error {
      * creating but not overwriting a file.
      * @param messageOrUri Message or uri.
      */
-    static FileExists(messageOrUri?: string | URI): FileSystemError {
+    static FileExists(messageOrUri?: string | monaco.Uri): FileSystemError {
         return new FileSystemError('FileExists: ' + messageOrUri);
     }
 
@@ -26,7 +24,7 @@ export class FileSystemError extends Error {
      * Create an error to signal that a file is not a folder.
      * @param messageOrUri Message or uri.
      */
-    static FileNotADirectory(messageOrUri?: string | URI): FileSystemError {
+    static FileNotADirectory(messageOrUri?: string | monaco.Uri): FileSystemError {
         return new FileSystemError('FileNotADirectory: ' + messageOrUri);
     }
 
@@ -34,7 +32,7 @@ export class FileSystemError extends Error {
      * Create an error to signal that a file is a folder.
      * @param messageOrUri Message or uri.
      */
-    static FileIsADirectory(messageOrUri?: string | URI): FileSystemError {
+    static FileIsADirectory(messageOrUri?: string | monaco.Uri): FileSystemError {
         return new FileSystemError('FileIsADirectory: ' + messageOrUri);
     }
 
@@ -42,7 +40,7 @@ export class FileSystemError extends Error {
      * Create an error to signal that an operation lacks required permissions.
      * @param messageOrUri Message or uri.
      */
-    static NoPermissions(messageOrUri?: string | URI): FileSystemError {
+    static NoPermissions(messageOrUri?: string | monaco.Uri): FileSystemError {
         return new FileSystemError('NoPermissions: ' + messageOrUri);
     }
 
@@ -51,7 +49,7 @@ export class FileSystemError extends Error {
      * complete a request.
      * @param messageOrUri Message or uri.
      */
-    static Unavailable(messageOrUri?: string | URI): FileSystemError {
+    static Unavailable(messageOrUri?: string | monaco.Uri): FileSystemError {
         return new FileSystemError('Unavailable: ' + messageOrUri);
     }
 
@@ -60,7 +58,7 @@ export class FileSystemError extends Error {
      *
      * @param messageOrUri Message or uri.
      */
-    constructor(messageOrUri?: string | URI) {
+    constructor(messageOrUri?: string | monaco.Uri) {
         super(messageOrUri?.toString());
     }
 }

@@ -2,7 +2,6 @@ import { AfterViewChecked, ChangeDetectionStrategy, ChangeDetectorRef, Component
 import { Diagnostic, DiagnosticGroup, DiagnosticService, DiagnosticSeverity, EditorService, NotificationService, Paths } from '@mcisse/nge-ide/core';
 import { ITree, ITreeAdapter, TreeComponent } from '@mcisse/nge/ui/tree';
 import { Subscription } from 'rxjs';
-import { URI } from 'vscode-uri';
 
 @Component({
     selector: 'ide-problems',
@@ -24,7 +23,7 @@ export class ProblemsComponent implements OnInit, OnDestroy, AfterViewChecked {
                 click: e => {
                     const node = e.node as TreeNode;
                     if (node.diagnostic) {
-                        this.editorService.open(URI.parse(node.uri), {
+                        this.editorService.open(monaco.Uri.parse(node.uri), {
                             position: {
                                 line: node.lineNumber || 1,
                                 column: node.column || 0

@@ -2,16 +2,15 @@ import { Injectable } from '@angular/core';
 import { ACTION_ADD_SELECTION_TO_NEXT_FIND_MATCH, ACTION_ADD_SELECTION_TO_PREVIOUS_FIND_MATCH, ACTION_BLOCK_COMMENT, ACTION_COMMENT_LINE, ACTION_COPY_LINES_DOWN, ACTION_COPY_LINES_UP, ACTION_CURSOR_REDO, ACTION_CURSOR_UNDO, ACTION_DUPLICATE_SELECTION, ACTION_EDITOR_FOLD_ALL, ACTION_EDITOR_UNFOLD_ALL, ACTION_FIND, ACTION_GOTO_LINE, ACTION_INDENT_USING_SPACES, ACTION_INSERT_CURSOR_ABOVE, ACTION_INSERT_CURSOR_AT_END_OF_EACH_LINE_SELECTED, ACTION_INSERT_CURSOR_BELOW, ACTION_JUMP_TO_BRACKET, ACTION_MARKER_NEXT, ACTION_MARKER_PREV, ACTION_MOVE_LINES_DOWN, ACTION_MOVE_LINES_UP, ACTION_QUICK_COMMAND, ACTION_SMART_SELECT_EXPAND, ACTION_SMART_SELECT_SHRINK, ACTION_START_FIND_REPLACE, LINK_DETECTOR_CONTRIB } from '@mcisse/nge/monaco';
 import { BehaviorSubject, Subject, Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { URI } from 'vscode-uri';
-import { EditorService } from './editor.service';
 import { ICommand } from '../commands/index';
 import { IContribution } from '../contributions/index';
 import { Diagnostic, DiagnosticService, DiagnosticSeverity } from '../diagnostics/index';
-import { compareURI, FileChangeType, FileService, resourceId } from '../files/index';
+import { FileChangeType, FileService } from '../files/index';
 import { SettingsService } from '../settings/index';
 import { StatusBarService } from '../status-bar/index';
 import { ToolbarButton, ToolbarGroups, ToolbarSeparator, ToolbarSevice } from '../toolbar/index';
 import { Paths } from '../utils/index';
+import { EditorService } from './editor.service';
 
 // @ts-ignore
 // import { MenuRegistry } from 'monaco-editor/esm/vs/platform/actions/common/actions';
@@ -119,7 +118,7 @@ export class MonacoService implements IContribution {
 
     async open(
         options: {
-            uri: monaco.Uri | URI;
+            uri: monaco.Uri;
             editor: IStandaloneCodeEditor;
             position?: {
                 line: number,
@@ -127,9 +126,11 @@ export class MonacoService implements IContribution {
             }
         }
     ): Promise<void> {
-        const { uri, editor, position } = options;
+        const { editor, position } = options;
+        const uri = options.uri.with({ fragment: '', query: ''});
+
         let model = editor.getModel();
-        if (model && compareURI(uri, model.uri)) {
+        if (model && uri.toString() === model.uri.toString()) {
             return; // already opened
         }
 
@@ -138,7 +139,7 @@ export class MonacoService implements IContribution {
             return;
         }
 
-        const language = this.findLanguage(options.uri);
+        const language = this.findLanguage(uri);
         const content = await this.fileService.open(uri);
 
         model = monaco.editor.getModel(uri);
@@ -154,7 +155,7 @@ export class MonacoService implements IContribution {
         editor.setModel(model);
         editor.updateOptions({ readOnly: file.readOnly });
 
-        const viewState = this.viewStates.get(resourceId(uri));
+        const viewState = this.viewStates.get(uri.toString());
         if (viewState) {
             editor.restoreViewState(viewState);
         }
@@ -177,7 +178,7 @@ export class MonacoService implements IContribution {
         this.activeLanguage$.next(language);
     }
 
-    findLanguage(uri: monaco.Uri | URI): string {
+    findLanguage(uri: monaco.Uri): string {
         const languages = monaco.languages.getLanguages();
         let extension = Paths.extname(uri.path);
         if (!extension) {
@@ -232,7 +233,7 @@ export class MonacoService implements IContribution {
                 editor.onDidBlurEditorText(() => {
                     const model = editor.getModel();
                     if (model) {
-                        this.viewStates.set(resourceId(model.uri), editor.saveViewState());
+                        this.viewStates.set(model.uri.toString(), editor.saveViewState());
                     }
                 }),
                 editor.onDidFocusEditorText(() => {
@@ -280,7 +281,7 @@ export class MonacoService implements IContribution {
         });
     }
 
-    private disposeModel(uri: URI): void {
+    private disposeModel(uri: monaco.Uri): void {
         const model = monaco.editor.getModel(uri);
         model?.dispose();
     }

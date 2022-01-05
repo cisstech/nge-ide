@@ -26,7 +26,7 @@ export class MediaEditorComponent implements OnInit, OnDestroy {
         this.subscriptions.push(
             this.editor.onChangeRequest.subscribe(request => {
                 const file = this.fileService.find(request.uri);
-                this.url = file?.downloadUrl;
+                this.url = file?.url;
                 switch (Paths.extname(request.uri.path)) {
                     case 'svg':
                     case 'png':

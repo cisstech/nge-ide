@@ -1,9 +1,52 @@
-import { URI } from "vscode-uri";
 import { Paths } from "../utils";
 import { IFile } from "./file";
 import { FileSystemError } from "./file-system-error";
 import { FileSystemProvider, FileSystemProviderCapabilities } from "./file-system-provider";
 import { SearchForm, SearchResult } from "./file-system-search";
+
+
+const HTML = `
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <h1>Hello World</h1>
+</body>
+</html>
+`;
+
+const MD = `
+# H1
+## H2
+### H3
+
+:::+ note Lorem
+Lorem ipsum dolor, sit amet consectetur adipisicing elit.
+Ex, provident! Dolor saepe in eveniet, amet cum velit, nihil unde explicabo beatae obcaecati
+laudantium quas voluptates delectus esse, mollitia quis similique!
+`;
+
+const SCSS = `
+h1 {
+    color: red;
+}
+`;
+
+const TS = `
+console.log('Hello world');
+`;
+
+const SVG = `
+<svg height="100" width="100">
+  <circle cx="50" cy="50" r="40" stroke="black" stroke-width="3" fill="red" />
+  Sorry, your browser does not support inline SVG.
+</svg>
+`;
 
 const isChildOf = (child: string, parent: string) => {
     if (child === parent) return false
@@ -12,22 +55,21 @@ const isChildOf = (child: string, parent: string) => {
     return parents.every((t, i) => childs[i] === t)
 }
 
+
+const SCHEME = 'inmemory';
 class MemFile implements IFile {
-    uri: URI;
-    version: any;
+    uri: monaco.Uri;
+    url?: string;
     content?: string;
     readOnly: boolean;
     isFolder: boolean;
-    downloadUrl?: string;
 
     constructor(
         type: 'folder' | 'file',
         path: string,
         content?: string
     ) {
-        path = Paths.normalize(path);
-        this.uri = URI.parse(`inmemory://${path}`);
-        this.version = 0;
+        this.uri = monaco.Uri.parse(`${SCHEME}://${path}`);
         this.readOnly = false;
         this.isFolder = type === 'folder';
         this.content = content;
@@ -47,7 +89,7 @@ export class MemFileProvider extends FileSystemProvider {
         ['/', new MemFile('folder', '/')],
     ]);
 
-    readonly scheme = 'inmemory';
+    readonly scheme = SCHEME;
     readonly capabilities = FileSystemProviderCapabilities.FileRead |
         FileSystemProviderCapabilities.FileWrite |
         FileSystemProviderCapabilities.FileMove |
@@ -55,19 +97,21 @@ export class MemFileProvider extends FileSystemProvider {
         FileSystemProviderCapabilities.FileSearch |
         FileSystemProviderCapabilities.FileUpload;
 
+    readonly root = monaco.Uri.parse(`${this.scheme}:///`);
+
     constructor() {
         super();
-        for (let i = 1; i <= 1000; i++) {
+        for (let i = 1; i <= 2; i++) {
             this.entries.set(`/folder-${i}`, new MemFile('folder', `/folder-${i}`));
-            this.entries.set(`/folder-${i}/file.ts`, new MemFile('file', `/folder-${i}/file.ts`));
-            this.entries.set(`/folder-${i}/file.scss`, new MemFile('file', `/folder-${i}/file.scss`));
-            this.entries.set(`/folder-${i}/file.html`, new MemFile('file', `/folder-${i}/file.html`));
-            this.entries.set(`/folder-${i}/file.md`, new MemFile('file', `/folder-${i}/file.md`));
-            this.entries.set(`/folder-${i}/file.svg`, new MemFile('file', `/folder-${i}/file.svg`));
+            this.entries.set(`/folder-${i}/file.ts`, new MemFile('file', `/folder-${i}/file.ts`, TS));
+            this.entries.set(`/folder-${i}/file.scss`, new MemFile('file', `/folder-${i}/file.scss`, SCSS));
+            this.entries.set(`/folder-${i}/file.html`, new MemFile('file', `/folder-${i}/file.html`, HTML));
+            this.entries.set(`/folder-${i}/file.md`, new MemFile('file', `/folder-${i}/file.md`, MD));
+            this.entries.set(`/folder-${i}/file.svg`, new MemFile('file', `/folder-${i}/file.svg`, SVG));
         }
     }
 
-    readDirectory(uri: URI): Promise<IFile[]> {
+    readDirectory(uri: monaco.Uri): Promise<IFile[]> {
         const entry = this._lookupAsDirectory(uri, false);
         const result: IFile[] = [entry];
         for (const f of this.entries.values()) {
@@ -78,7 +122,7 @@ export class MemFileProvider extends FileSystemProvider {
         return Promise.resolve(result);
     }
 
-    read(uri: URI): Promise<string> {
+    read(uri: monaco.Uri): Promise<string> {
         const file = this._lookupAsFile(uri);
         if (file == null) {
             throw FileSystemError.FileNotFound();
@@ -86,7 +130,7 @@ export class MemFileProvider extends FileSystemProvider {
         return Promise.resolve(file.content || '');
     }
 
-    write(uri: URI, content: string, update?: boolean) {
+    write(uri: monaco.Uri, content: string, update?: boolean) {
         this._lookupParentDirectory(uri);
 
         let entry = this._lookup(uri, true);
@@ -106,17 +150,16 @@ export class MemFileProvider extends FileSystemProvider {
         }
 
         entry.content = content;
-        entry.version++;
     }
 
-    createDirectory(uri: URI) {
+    createDirectory(uri: monaco.Uri) {
         this._lookupParentDirectory(uri);
 
         const entry = new MemFile('folder', uri.path);
         this.entries.set(uri.path, entry);
     }
 
-    delete(uri: URI) {
+    delete(uri: monaco.Uri) {
         this._lookup(uri, false);
         for (const k of this.entries.keys()) {
             if (k.startsWith(uri.path)) {
@@ -125,7 +168,7 @@ export class MemFileProvider extends FileSystemProvider {
         }
     }
 
-    rename(uri: URI, name: string) {
+    rename(uri: monaco.Uri, name: string) {
         this._lookup(uri, false);
 
         const oldPrefix = uri.path;
@@ -135,20 +178,15 @@ export class MemFileProvider extends FileSystemProvider {
         for (const oldPath of entriesKeys) {
             if (oldPath.startsWith(oldPrefix)) {
                 const newPath = newPrefix + oldPath.substring(oldPrefix.length);
-
-                this.entries.set(
-                    newPath,
-                    this.entries.get(oldPath)!.withPath(newPath)
-                );
-
+                this.entries.set(newPath, this.entries.get(oldPath)!.withPath(newPath));
                 this.entries.delete(oldPath);
             }
         }
     }
 
     move(
-        source: URI,
-        destination: URI,
+        source: monaco.Uri,
+        destination: monaco.Uri,
         options: { copy: boolean }
     ) {
         this._lookup(source, false);
@@ -159,19 +197,12 @@ export class MemFileProvider extends FileSystemProvider {
         const entriesKeys = Array.from(this.entries.keys());
         for (const oldPath of entriesKeys) {
             if (oldPath.startsWith(oldPrefix + '/') || oldPath === oldPrefix) {
-                const newPath = Paths.join([
-                    destination.path,
-                    oldPath.substring(oldPrefixDir.length)
-                ]);
-
+                const newPath = Paths.join([destination.path, oldPath.substring(oldPrefixDir.length)]);
                 if (this.entries.has(newPath)) {
                     throw FileSystemError.FileExists(newPath);
                 }
 
-                this.entries.set(
-                    newPath,
-                    this.entries.get(oldPath)!.withPath(newPath)
-                );
+                this.entries.set(newPath, this.entries.get(oldPath)!.withPath(newPath));
 
                 if (!options.copy) {
                     this.entries.delete(oldPath);
@@ -182,7 +213,7 @@ export class MemFileProvider extends FileSystemProvider {
 
     upload(
         file: File,
-        destination: URI,
+        destination: monaco.Uri,
     ): Promise<void> {
         this._lookupAsDirectory(destination, false);
 
@@ -200,7 +231,7 @@ export class MemFileProvider extends FileSystemProvider {
             reader.onload = (e) => {
                 const content = e.target?.result as string;
                 entry = new MemFile('file', destination.path, content);
-                entry.downloadUrl = URL.createObjectURL(file);
+                entry.url = URL.createObjectURL(file);
                 this.entries.set(destination.path, entry);
                 resolve();
             };
@@ -255,7 +286,7 @@ export class MemFileProvider extends FileSystemProvider {
 
     }
 
-    private _lookup(uri: URI, silent: boolean): MemFile | undefined {
+    private _lookup(uri: monaco.Uri, silent: boolean): MemFile | undefined {
         const entry = this.entries.get(uri.path);
         if (!entry && !silent) {
             throw FileSystemError.FileNotFound(uri);
@@ -263,7 +294,7 @@ export class MemFileProvider extends FileSystemProvider {
         return entry;
     }
 
-    private _lookupAsDirectory(uri: URI, silent: boolean): MemFile {
+    private _lookupAsDirectory(uri: monaco.Uri, silent: boolean): MemFile {
         const entry = this._lookup(uri, silent);
         if (entry?.isFolder) {
             return entry;
@@ -271,7 +302,7 @@ export class MemFileProvider extends FileSystemProvider {
         throw FileSystemError.FileNotADirectory(uri);
     }
 
-    private _lookupAsFile(uri: URI): MemFile {
+    private _lookupAsFile(uri: monaco.Uri): MemFile {
         const entry = this._lookup(uri, false);
         if (entry && !entry.isFolder) {
             return entry;
@@ -280,7 +311,7 @@ export class MemFileProvider extends FileSystemProvider {
         throw FileSystemError.FileIsADirectory(uri);
     }
 
-    private _lookupParentDirectory(uri: URI): MemFile {
+    private _lookupParentDirectory(uri: monaco.Uri): MemFile {
         const dirname = uri.with({ path: Paths.dirname(uri.path) });
         return this._lookupAsDirectory(dirname, false);
     }

@@ -1,5 +1,4 @@
 import { Injectable, Injector } from "@angular/core";
-import { URI } from "vscode-uri";
 import { IContribution } from "../contributions";
 import { Preview, PreviewHandler } from "./preview";
 
@@ -17,7 +16,7 @@ export class PreviewService implements IContribution {
         this.registry.splice(0, this.registry.length);
     }
 
-    async handle(uri: URI): Promise<Preview> {
+    async handle(uri: monaco.Uri): Promise<Preview> {
         for (const handler of this.registry) {
             if (handler.canHandle(uri)) {
                 return await handler.handle(this.injector, uri);
@@ -26,7 +25,7 @@ export class PreviewService implements IContribution {
         throw new Error(`No preview handler found for ${uri.toString()}`);
     }
 
-    canHandle(uri: URI): boolean {
+    canHandle(uri: monaco.Uri): boolean {
         return !!this.registry.find(handler => handler.canHandle(uri));
     }
 

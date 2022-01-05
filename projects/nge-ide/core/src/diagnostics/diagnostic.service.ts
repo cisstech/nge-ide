@@ -1,10 +1,8 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { filter, map } from 'rxjs/operators';
-import { URI } from 'vscode-uri';
 import { IContribution } from '../contributions/index';
-import { resourceId } from '../files/index';
-import { Diagnostic, DiagnosticSeverity, DiagnosticGroup } from './diagnostic';
+import { Diagnostic, DiagnosticGroup, DiagnosticSeverity } from './diagnostic';
 
 @Injectable()
 export class DiagnosticService implements IContribution {
@@ -56,16 +54,16 @@ export class DiagnosticService implements IContribution {
         this.subject.next({})
     }
 
-    setDiagnostics(uri: URI | monaco.Uri, items: Diagnostic[]) {
+    setDiagnostics(uri: monaco.Uri, items: Diagnostic[]) {
         const diagnostics = this.subject.value;
-        diagnostics[resourceId(uri)] = items;
+        diagnostics[uri.toString()] = items;
         this.subject.next(diagnostics);
     }
 
-    asObservable(uri: URI | monaco.Uri): Observable<Diagnostic[]> {
+    asObservable(uri: monaco.Uri): Observable<Diagnostic[]> {
         return this.subject.asObservable().pipe(
-            filter(diagnostics => diagnostics[resourceId(uri)] != null),
-            map(diagnostics => diagnostics[resourceId(uri)] || [])
+            filter(diagnostics => diagnostics[uri.toString()] != null),
+            map(diagnostics => diagnostics[uri.toString()] || [])
         );
     }
 

@@ -2,7 +2,6 @@ import { Injectable, Injector, Predicate } from '@angular/core';
 import { ConfirmOptions, DialogService } from '@mcisse/nge/ui/dialog';
 import { CodIcon } from '@mcisse/nge/ui/icon';
 import { BehaviorSubject, Subject, Subscription } from 'rxjs';
-import { URI } from 'vscode-uri';
 import { IContribution } from '../contributions/index';
 import { FileChangeType, FileService } from '../files/index';
 import { Paths } from '../utils/index';
@@ -16,8 +15,8 @@ export class EditorService implements IContribution {
     private readonly subscriptions: Subscription[] = [];
     private readonly groups: Map<string, EditorGroup> = new Map();
 
-    private readonly didOpen = new Subject<URI>();
-    private readonly willOpen = new Subject<URI>();
+    private readonly didOpen = new Subject<monaco.Uri>();
+    private readonly willOpen = new Subject<monaco.Uri>();
 
     private readonly state$ = new BehaviorSubject<EditorState>({ visibleEditors: [] });
     private readonly editorGroups$ = new BehaviorSubject<EditorGroup[]>([]);
@@ -46,7 +45,7 @@ export class EditorService implements IContribution {
     }
 
     /** shorcut to state.value.activeResource */
-    get activeResource(): URI | undefined {
+    get activeResource(): monaco.Uri | undefined {
         return this.state$.value.activeResource;
     }
 
@@ -103,7 +102,7 @@ export class EditorService implements IContribution {
      * @param resource The resource to test.
      * @returns `true` if the resource is opened `false` otherwises.
      */
-    isOpened(resource: URI): boolean {
+    isOpened(resource: monaco.Uri): boolean {
         return !!this.findGroups(group => group.contains(resource)).length;
     }
 
@@ -162,7 +161,7 @@ export class EditorService implements IContribution {
      * @param resource The resource to open.
      * @param options Open options.
      */
-    async open(resource: URI, options?: Partial<OpenOptions>): Promise<void> {
+    async open(resource: monaco.Uri, options?: Partial<OpenOptions>): Promise<void> {
         let group: EditorGroup;
         const editorGroups = this.listGroups();
         options = options || {};
@@ -210,7 +209,7 @@ export class EditorService implements IContribution {
      * @param resource the resource to close.
      * @param force When `true`, force close the resource without asking to save it if it is dirty.
      */
-    async close(resource: URI, force?: boolean): Promise<any> {
+    async close(resource: monaco.Uri, force?: boolean): Promise<any> {
         const groups = this.findGroups(group => group.contains(resource));
         return Promise.all(groups.map(g => g.close(resource, force)));
     }
@@ -241,7 +240,7 @@ export class EditorService implements IContribution {
      * Saves unsaved resources.
      */
     async saveAll(): Promise<any> {
-        const changes: URI[] = [];
+        const changes: monaco.Uri[] = [];
         this.listGroups().forEach(group => {
             group.tabs.forEach(tab => {
                 if (this.fileService.isDirty(tab.resource)) {
@@ -262,13 +261,13 @@ export class EditorService implements IContribution {
         }
     }
 
-    private async save(resource: URI): Promise<void> {
+    private async save(resource: monaco.Uri): Promise<void> {
         await this.fileService.save(resource);
     }
 
     private async closeGuard(
         _: EditorGroup,
-        resource: URI
+        resource: monaco.Uri
     ): Promise<boolean> {
         const shouldConfirm = (
             this.fileService.isDirty(resource) &&
@@ -295,7 +294,7 @@ export class EditorService implements IContribution {
     private openHandler(
         group: EditorGroup,
         editor: Editor,
-        resource: URI,
+        resource: monaco.Uri,
     ): void {
         this.groups.set(group.id, group);
         this.editorGroups$.next(this.listGroups());
@@ -310,7 +309,7 @@ export class EditorService implements IContribution {
 
     private closeHandler(
         group: EditorGroup,
-        resource: URI,
+        resource: monaco.Uri,
         isPreview?: boolean
     ): void {
         if (group.isEmpty) {

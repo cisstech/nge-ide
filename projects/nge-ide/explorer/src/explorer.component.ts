@@ -8,18 +8,8 @@ import {
     ViewChild
 } from '@angular/core';
 import {
-    EditorService,
-    IdeService,
-    IFile,
-    resourceId,
-    StorageService,
-    NotificationService,
-    FileService,
-    DndData,
-    Paths,
-    asUri,
-    isResourceParent,
-    FileSystemProviderCapabilities,
+    DndData, EditorService, FileService, FileSystemProviderCapabilities, IdeService,
+    IFile, NotificationService, Paths, StorageService
 } from '@mcisse/nge-ide/core';
 import { DialogService } from '@mcisse/nge/ui/dialog';
 import { FileIconOptions } from '@mcisse/nge/ui/icon';
@@ -80,8 +70,9 @@ export class ExplorerComponent implements OnInit, OnDestroy, AfterViewChecked {
             this.editorService.state.subscribe((state) => {
                 const { activeResource } = state;
                 if (activeResource) {
-                    this.tree.expand(resourceId(activeResource))
-                    this.tree.focus(resourceId(activeResource));
+                    const nodeId = activeResource.toString();
+                    this.tree.expand(nodeId)
+                    this.tree.focus(nodeId);
                 }
             })
         );
@@ -152,8 +143,8 @@ export class ExplorerComponent implements OnInit, OnDestroy, AfterViewChecked {
             return;
 
         const srcName = Paths.basename(srcPath);
-        const src = this.fileService.find(asUri(srcPath));
-        const dst = this.fileService.find(asUri(dstPath));
+        const src = this.fileService.find(monaco.Uri.parse(srcPath));
+        const dst = this.fileService.find(monaco.Uri.parse(dstPath));
 
         if (!src)
             return;
@@ -162,9 +153,12 @@ export class ExplorerComponent implements OnInit, OnDestroy, AfterViewChecked {
             return;
 
         if (e.file && !this.fileService.hasCapability(dst.uri, FileSystemProviderCapabilities.FileUpload))
-            return false;
+            return;
 
-        if (src && isResourceParent(src, dst))
+        if (this.fileService.isParent(src.uri, dst.uri))
+            return;
+
+        if (this.fileService.isAncestor(dst.uri, src.uri))
             return;
 
         const options = {

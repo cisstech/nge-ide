@@ -1,7 +1,5 @@
 import { Injector } from '@angular/core';
 import { Icon } from '@mcisse/nge/ui/icon';
-import { URI } from 'vscode-uri';
-import { compareURI } from '../files/index';
 import { EditorGroup } from './editor';
 import { Preview } from './preview';
 
@@ -41,7 +39,7 @@ export interface OpenOptions {
  */
 export class OpenRequest {
     constructor(
-        readonly uri: URI,
+        readonly uri: monaco.Uri,
         readonly injector: Injector,
         readonly options: OpenOptions,
     ) {
@@ -53,6 +51,6 @@ export class OpenRequest {
         if (!(o instanceof OpenRequest)) {
             return false;
         }
-        return compareURI(o.uri, this.uri);
+        return o.uri.toString() == this.uri.toString();
     }
 }

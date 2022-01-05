@@ -1,10 +1,9 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { URI } from 'vscode-uri';
 import { IContribution } from '../contributions/index';
 import { Paths } from '../utils//index';
-import { IFile, IFolder, isResourceAncestor, isSameResource, resourceId, resourceParent } from './file';
+import { IFile } from './file';
 import { FileSystemError } from './file-system-error';
 import {
     FileChangeType,
@@ -15,13 +14,21 @@ import {
 } from './file-system-provider';
 import { SearchForm, SearchResult } from './file-system-search';
 
+
 declare type FilePredicate = (file: IFile) => boolean;
 
-interface FileContent {
+
+interface IFolder {
+    uri: monaco.Uri;
+    name: string;
+}
+
+interface IContent {
     initial: string;
     current: string;
     changed: boolean;
 }
+
 
 @Injectable()
 export class FileService implements IContribution {
@@ -31,10 +38,11 @@ export class FileService implements IContribution {
 
     private readonly folders: IFolder[] = [];
     private readonly entries: Map<string, IFile> = new Map();
+    private readonly parents: Map<string, IFile> = new Map();
     private readonly children: Map<string, IFile[]> = new Map();
 
     private readonly tree = new BehaviorSubject<IFile[]>([]);
-    private readonly contents = new BehaviorSubject(new Map<string, FileContent>());
+    private readonly contents = new BehaviorSubject(new Map<string, IContent>());
 
     private readonly didChangeFile: Subject<IFileChange[]> = new Subject();
     private readonly willChangeFile: Subject<IFileChange[]> = new Subject();
@@ -42,10 +50,10 @@ export class FileService implements IContribution {
     private readonly didRefresh: Subject<void> = new Subject();
     private readonly willRefresh: Subject<void> = new Subject();
 
-    private readonly didSaveFile = new Subject<URI>();
-    private readonly willSaveFile = new Subject<URI>();
-    private readonly didCloseFile = new Subject<URI>();
-    private readonly willCloseFile = new Subject<URI>();
+    private readonly didSaveFile = new Subject<monaco.Uri>();
+    private readonly willSaveFile = new Subject<monaco.Uri>();
+    private readonly didCloseFile = new Subject<monaco.Uri>();
+    private readonly willCloseFile = new Subject<monaco.Uri>();
 
     readonly treeChange: Observable<IFile[]> = this.tree.asObservable();
 
@@ -71,18 +79,42 @@ export class FileService implements IContribution {
 
     deactivate(): void {
         this.entries.clear();
+        this.parents.clear();
         this.children.clear();
         this.providers.clear();
 
-        this.folders.splice(0, this.folders.length);
-
         this.tree.next([]);
         this.contents.next(new Map());
+
+        this.folders.splice(0, this.folders.length);
     }
 
+    /**
+     * Loads/Reloads the files inside all the folders registered using the {@link registerFolders} method.
+     */
     async refresh(): Promise<void> {
-        await this.readEntries();
-        this.removeMissingFileContents();
+        this.entries.clear();
+        this.parents.clear();
+        this.children.clear();
+
+        for (const folder of this.folders) {
+            const provider = await this.withProvider(folder.uri);
+            const files = await provider.readDirectory(folder.uri);
+            files.forEach((file) => {
+                const id = file.uri.toString();
+                this.entries.set(id, file);
+
+                const prefix = id.substring(0, id.length - file.uri.fsPath.length);
+                const parent = prefix + Paths.dirname(file.uri.fsPath);
+                if (parent !== id) {
+                    const children = this.children.get(parent) || [];
+                    children.push(file);
+                    this.children.set(parent, children);
+                    this.parents.set(id, this.entries.get(parent)!);
+                }
+            });
+        }
+        console.log(this.parents);
         this.rebuildIndex();
     }
 
@@ -110,22 +142,22 @@ export class FileService implements IContribution {
 
     /**
      * Checks if the service can handle the given uri.
-     * @param uri URI to test.
+     * @param uri monaco.Uri to test.
      *
      * @returns `true` if the uri can be handled `false` otherwise.
      */
-    canHandle(uri: monaco.Uri | URI): boolean {
+    canHandle(uri: monaco.Uri): boolean {
         return this.providers.has(uri.scheme);
     }
 
     /**
      * Checks if the {@link IFileSystemProvider} registered for the the given uri scheme provides the given `capability`.
-     * @param uri URI to test.
+     * @param uri monaco.Uri to test.
      * @param capability The required capability.
      *
      * @returns `true` if the uri can be handled and the required capability can be provided.
      */
-    hasCapability(uri: monaco.Uri | URI, capability: FileSystemProviderCapabilities) {
+    hasCapability(uri: monaco.Uri, capability: FileSystemProviderCapabilities) {
         const provider = this.providers.get(uri.scheme);
         if (!provider) {
             return false;
@@ -135,68 +167,64 @@ export class FileService implements IContribution {
 
     // CONTENT MANAGEMENT
 
-    contentChange(uri: monaco.Uri | URI): Observable<FileContent | undefined> {
+    /**
+     * Gets a value indicating whether the content of the file `uri` has changed.
+     *
+     * Note : Checks all files if the method is not called with the `uri` argument.
+     *
+     * @param uri An optional uri to test.
+     */
+    isDirty(uri?: monaco.Uri): boolean {
+        const contents = this.contents.value;
+        if (uri) {
+            return !!contents.get(uri.toString())?.changed;
+        }
+        return Array.from(contents.values()).some((content) => content.changed);
+    }
+
+    contentChange(uri: monaco.Uri): Observable<IContent | undefined> {
         return this.contents.pipe(
-            map(value => value.get(resourceId(uri)))
+            map(value => value.get(uri.toString()))
         );
     }
 
-    isDirty(uri?: monaco.Uri | URI): boolean {
-        const map = this.contents.value;
-        if (uri) {
-            return !!map.get(resourceId(uri))?.changed;
-        }
-
-        for (const content of map.values()) {
-            if (content.changed) {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-    update(uri: monaco.Uri | URI, content: string): void {
-        const map = this.contents.value;
-
-        const id = resourceId(uri);
-        const fileContent = map.get(id);
-        if (!fileContent) {
+    update(uri: monaco.Uri, content: string): void {
+        const contents = this.contents.value;
+        const match = contents.get(uri.toString());
+        if (!match) {
             throw FileSystemError.FileNotFound(uri);
         }
 
-        map.set(id, {
-            ...fileContent,
+        contents.set(uri.toString(), {
+            ...match,
             current: content,
-            changed: fileContent.initial !== content
+            changed: match.initial !== content
         });
 
-        this.contents.next(map);
+        this.contents.next(contents);
     }
 
-    async open(uri: monaco.Uri | URI): Promise<FileContent> {
-        const id = resourceId(uri);
-        const map = this.contents.value;
-
-        const content = map.get(id);
+    async open(uri: monaco.Uri): Promise<IContent> {
+        const contents = this.contents.value;
+        const content = contents.get(uri.toString());
         if (content) {
             return content;
         }
 
         const value = await this.readFile(uri);
         const newContent = { initial: value, current: value, changed: false };
-        this.contents.next(map.set(id, newContent));
+        this.contents.next(contents.set(uri.toString(), newContent));
 
         return newContent;
     }
 
     /**
      * Saves the file of the given uri if it's not a readonly file.
-     * @param uri URI to save.
+     * @param uri monaco.Uri to save.
      * @returns A promises that resolves once the operation done.
      * @throws {@link FileSystemError.FileNotFound} when `uri` doesn't exist.
      */
-    async save(uri: monaco.Uri | URI): Promise<void> {
+    async save(uri: monaco.Uri): Promise<void> {
         const file = this.find(uri);
         if (!file) {
             throw FileSystemError.FileNotFound(uri);
@@ -206,8 +234,7 @@ export class FileService implements IContribution {
             return;
         }
 
-        const id = resourceId(uri);
-        const content = this.contents.value.get(id);
+        const content = this.contents.value.get(uri.toString());
         if (!content) {
             throw FileSystemError.FileNotFound(uri);
         }
@@ -219,16 +246,16 @@ export class FileService implements IContribution {
 
             content.changed = false;
 
-            this.contents.value.set(id, content);
+            this.contents.value.set(uri.toString(), content);
             this.contents.next(this.contents.value);
 
             this.didSaveFile.next(uri);
         }
     }
 
-    async close(uri: monaco.Uri | URI): Promise<void> {
+    async close(uri: monaco.Uri): Promise<void> {
         this.willCloseFile.next(uri);
-        this.contents.value.delete(resourceId(uri));
+        this.contents.value.delete(uri.toString());
         this.contents.next(this.contents.value);
         this.didCloseFile.next(uri);
     }
@@ -246,15 +273,15 @@ export class FileService implements IContribution {
     normalize(entries: IFile[]): IFile[] {
         const nodes: IFile[] = [];
         entries.forEach((r1) => {
-            if (!entries.some(r2 => isResourceAncestor(r1, r2))) {
+            if (!entries.some(r2 => this.isAncestor(r1.uri, r2.uri))) {
                 nodes.push(r1);
             }
         });
         return nodes;
     }
 
-    find(uri: URI): IFile | undefined {
-        return this.entries.get(resourceId(uri));
+    find(uri: monaco.Uri): IFile | undefined {
+        return this.entries.get(uri.toString());
     }
 
     findAll(predicate: FilePredicate): IFile[] {
@@ -268,16 +295,7 @@ export class FileService implements IContribution {
     }
 
     findChildren(entry: IFile): IFile[] {
-        return this.children.get(resourceId(entry)) || [];
-    }
-
-    findPredicate(predicate: FilePredicate): IFile | undefined {
-        for (const pair of this.entries) {
-            if (predicate(pair[1])) {
-                return pair[1];
-            }
-        }
-        return undefined;
+        return this.children.get(entry.uri.toString()) || [];
     }
 
     async search(form: SearchForm): Promise<SearchResult<IFile>[]> {
@@ -297,26 +315,40 @@ export class FileService implements IContribution {
 
     // UTILS
 
-    isRoot(uri: monaco.Uri | URI): boolean {
-        return this.folders.some(f => resourceId(uri) === resourceId(f.uri));
+    isRoot(uri: monaco.Uri): boolean {
+        return this.folders.some(f => f.uri.toString() === uri.toString());
+    }
+
+
+    isParent(uri: monaco.Uri, candidate: monaco.Uri): boolean {
+        const parent = this.parents.get(uri.toString());
+        return parent?.uri.toString() === candidate.toString();
+    }
+
+
+    isAncestor(uri: monaco.Uri, candidate: monaco.Uri): boolean {
+        if (uri.toString() === candidate.toString()) {
+            return false;
+        }
+        return uri.toString().startsWith(candidate.toString());
     }
 
     entryName(entry: IFile): string {
-        const folder = this.folders.find(f => resourceId(entry) === resourceId(f.uri));
+        const folder = this.folders.find(f => entry.uri.toString() === f.uri.toString());
         return folder?.name || Paths.basename(entry.uri.path);
     }
 
     // OPERATIONS
 
     async readFile(
-        uri: URI
+        uri: monaco.Uri
     ): Promise<string> {
         const provider = await this.withProvider(uri, FileSystemProviderCapabilities.FileRead);
         return provider.read(uri);
     }
 
     async writeFile(
-        uri: URI,
+        uri: monaco.Uri,
         content: string
     ): Promise<void> {
         const provider = await this.withProvider(uri, FileSystemProviderCapabilities.FileWrite);
@@ -436,7 +468,7 @@ export class FileService implements IContribution {
         copy?: boolean
     ): Promise<void> {
         if (this.isRoot(source.uri)) {
-            throw FileSystemError.NoPermissions('Cannot move root file.');
+            throw FileSystemError.NoPermissions('Cannot move root folder.');
         }
 
         const sourceProvider = await this.withProvider(source.uri, FileSystemProviderCapabilities.FileMove);
@@ -445,22 +477,21 @@ export class FileService implements IContribution {
             throw FileSystemError.NoPermissions(`The scheme of the destination should be the same as the source file to move.`);
         }
 
-        if (isSameResource(source, destination)) {
+        if (source.uri.toString() === destination.uri.toString()) {
             return;
         }
 
-        if (isResourceAncestor(destination, source)) {
+        if (this.isAncestor(destination.uri, source.uri)) {
             return;
         }
 
-        // TODO emit change events
         await sourceProvider.move(source.uri, destination.uri, { copy: !!copy });
     }
 
     private async doCreate(
         parent: IFile,
         name: string,
-        isFolder: boolean
+        asFolder: boolean
     ): Promise<void> {
         const provider = await this.withProvider(parent.uri, FileSystemProviderCapabilities.FileWrite);
         if (parent.readOnly) {
@@ -475,7 +506,7 @@ export class FileService implements IContribution {
             { type: FileChangeType.Created, uri }
         ]);
 
-        if (isFolder) {
+        if (asFolder) {
             await provider.createDirectory(uri);
         } else {
             await provider.write(uri, '', false);
@@ -500,7 +531,7 @@ export class FileService implements IContribution {
     }
 
     private async withProvider(
-        uri: URI,
+        uri: monaco.Uri,
         ...capabilities: FileSystemProviderCapabilities[]
     ): Promise<IFileSystemProvider> {
         if (!Paths.isAbsolutePath(uri.path)) {
@@ -522,39 +553,7 @@ export class FileService implements IContribution {
         return provider;
     }
 
-    private async readEntries() {
-        this.entries.clear();
-        this.children.clear();
-
-        for (const folder of this.folders) {
-            const provider = await this.withProvider(folder.uri);
-            const files = await provider.readDirectory(folder.uri);
-            files.forEach((file) => {
-                const id = resourceId(file);
-                this.entries.set(id, file);
-
-                const parent = resourceId(resourceParent(file));
-                const children = this.children.get(parent) || [];
-                children.push(file);
-                this.sortFiles(children);
-
-                this.children.set(parent, children);
-                if (file.isFolder) { // allow loopkup for folders with or without ending slash
-                    this.children.set(parent + '/', children);
-                }
-            });
-        }
-    }
-
     private rebuildIndex(): void {
-        const tree: IFile[] = [];
-        this.folders.forEach(folder => {
-            tree.push(this.find(folder.uri)!);
-        });
-        this.tree.next(this.sortFiles(tree));
-    }
-
-    private removeMissingFileContents() {
         const contents = this.contents.value;
         contents.forEach((_, k) => {
             if (!this.entries.has(k)) {
@@ -562,6 +561,14 @@ export class FileService implements IContribution {
             }
         });
         this.contents.next(contents);
+
+        const tree: IFile[] = [];
+        this.folders.forEach(folder => {
+            tree.push(this.find(folder.uri)!);
+        });
+
+        this.children.forEach((v, _) => this.sortFiles(v));
+        this.tree.next(this.sortFiles(tree));
     }
 
     private sortFiles(files: IFile[]): IFile[] {

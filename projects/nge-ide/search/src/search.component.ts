@@ -1,8 +1,7 @@
 import { AfterViewChecked, ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { EditorService, emptySearchForm, FileService, IdeService, IFile, NotificationService, resourceId, SearchForm, SearchResult, StorageService } from '@mcisse/nge-ide/core';
+import { EditorService, emptySearchForm, FileService, IdeService, IFile, NotificationService, SearchForm, SearchResult, StorageService } from '@mcisse/nge-ide/core';
 import { ITree, ITreeAdapter, TreeComponent } from '@mcisse/nge/ui/tree';
 import { Subscription } from 'rxjs';
-import { URI } from 'vscode-uri';
 
 @Component({
     selector: 'ide-sidebar-search',
@@ -115,7 +114,7 @@ export class SearchComponent implements OnInit, OnDestroy, AfterViewChecked {
     }
 
     private createNode(item: SearchResult<IFile>) {
-        const id = resourceId(item.entry);
+        const id = item.entry.uri.toString();
         return {
             id,
             label: this.fileService.entryName(item.entry),
@@ -147,6 +146,6 @@ interface Node {
     id: string;
     label: string;
     lineno?: number;
-    resource: URI;
+    resource: monaco.Uri;
     children?: Node[];
 }
