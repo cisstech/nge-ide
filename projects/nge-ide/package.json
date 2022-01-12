@@ -25,8 +25,8 @@
     "@angular/material": "^13.0.3",
     "@mcisse/nge": "^13.0.0",
     "@ngx-pwa/local-storage": "^13.0.2",
-    "angular-split": "^5.0.0",
-    "ng-event-bus": "^2.0.0",
+    "angular-split": "^13.1.0",
+    "ng-event-bus": "^4.0.0",
     "ng-zorro-antd": "^13.0.0"
   },
   "dependencies": {
