@@ -249,7 +249,7 @@ export class EditorGroup {
             }
 
             if (!editor) {
-                reject(`There is no registered editor to open "${request.uri.path}"`);
+                reject(`There is no registered editor to open "${request.uri}"`);
                 return;
             }
 

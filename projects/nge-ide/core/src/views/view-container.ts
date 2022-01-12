@@ -59,5 +59,5 @@ export abstract class SidebarContainer implements IViewContainer {
     abstract readonly align: 'top' | 'bottom';
 
     /** An action to call for non visual container. */
-    onClickHandler?(): Promise<void>;
+    onClickHandler?(): Promise<any>;
 }

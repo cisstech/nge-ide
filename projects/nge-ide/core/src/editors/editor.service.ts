@@ -5,6 +5,7 @@ import { BehaviorSubject, Subject, Subscription } from 'rxjs';
 import { CommandService, ICommand } from '../commands';
 import { IContribution } from '../contributions/index';
 import { FileChangeType, FileService } from '../files/index';
+import { NotificationService } from '../notifications';
 import { Paths } from '../utils/index';
 import { Editor, EditorGroup, EditorState } from './editor';
 import { OpenOptions } from './opener';
@@ -64,6 +65,7 @@ export class EditorService implements IContribution {
         private readonly fileService: FileService,
         private readonly dialogService: DialogService,
         private readonly commandService: CommandService,
+        private readonly notificationService: NotificationService,
     ) { }
 
     activate(): void {
@@ -186,7 +188,7 @@ export class EditorService implements IContribution {
      * @param resource The resource to open.
      * @param options Open options.
      */
-    async open(resource: monaco.Uri, options?: Partial<OpenOptions>): Promise<void> {
+    async open(resource: monaco.Uri, options?: Partial<OpenOptions>): Promise<boolean> {
         let group: EditorGroup;
         const editorGroups = this.listGroups();
         options = options || {};
@@ -221,12 +223,18 @@ export class EditorService implements IContribution {
             icon = new CodIcon('preview');
         }
 
-        return group.open(resource, {
-            ...options,
-            icon,
-            title,
-            tooltip: resource.path,
-        });
+        try {
+            await group.open(resource, {
+                ...options,
+                icon,
+                title,
+                tooltip: resource.path,
+            });
+            return true;
+        } catch (error) {
+            this.notificationService.publishError(error);
+            return false;
+        }
     }
 
     /**
@@ -324,6 +332,7 @@ export class EditorService implements IContribution {
             activeResource: resource,
             visibleEditors: this.editorGroups$.value.map(g => g.activeEditor as any).filter(e => !!e),
         });
+        
         this.didOpen.next(resource);
     }
 

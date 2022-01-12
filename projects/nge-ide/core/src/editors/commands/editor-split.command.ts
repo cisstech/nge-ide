@@ -19,9 +19,11 @@ export class EditorSplitCommand implements ICommand {
     ) { }
 
     execute() {
-        if (this.editorService.activeResource) {
-            this.editorService.open(this.editorService.activeResource, {
-                openToSide: true
+        const { activeEditor, activeResource } = this.editorService;
+        if (activeResource) {
+            this.editorService.open(activeResource, {
+                ...(activeEditor?.options || {}),
+                openToSide: true,
             });
         }
     }
