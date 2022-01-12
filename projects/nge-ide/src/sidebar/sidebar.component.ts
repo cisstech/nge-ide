@@ -15,7 +15,7 @@ import {
     ViewContainerScopes,
     ViewContainerService,
 } from '@mcisse/nge-ide/core';
-import { Subscription } from 'rxjs';
+import { lastValueFrom, Subscription } from 'rxjs';
 import { map, take } from 'rxjs/operators';
 
 const CLOSED_SIZE = 48;
@@ -175,14 +175,14 @@ export class SidebarComponent implements OnInit, OnDestroy {
     }
 
     private async restoreState(): Promise<void> {
-        this.state = await this.storageService
+        this.state = await lastValueFrom(this.storageService
             .get<State>(this.storageId, {
                 size: OPENED_SIZE,
                 order: [],
                 active: '',
             })
             .pipe(take(1))
-            .toPromise();
+        );
     }
 
     private onChangeContainers(containers: SidebarContainer[]): void {

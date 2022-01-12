@@ -1,5 +1,6 @@
 import { inject, TestBed, async } from '@angular/core/testing';
 import { NgEventBus } from 'ng-event-bus';
+import { lastValueFrom } from 'rxjs';
 import { ErrorNotification } from './notification';
 import { NotificationService } from './notification.service';
 
@@ -20,7 +21,7 @@ describe('NotificationService', () => {
     it('should count', async(
         inject([NotificationService], (service: NotificationService) => {
             service.publish(new ErrorNotification('message', 'error'));
-            service.count.toPromise().then((count) => {
+            lastValueFrom(service.count).then((count) => {
                 expect(count).toBe(1);
             });
         })
@@ -28,7 +29,7 @@ describe('NotificationService', () => {
 
     it('should clear', async(inject([NotificationService], async (service: NotificationService) => {
         service.clear();
-        service.count.toPromise().then((count) => {
+        lastValueFrom(service.count).then((count) => {
             expect(count).toBe(0);
         });
     })));

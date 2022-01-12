@@ -24,6 +24,7 @@
     "@angular/cdk": "^13.0.3",
     "@angular/material": "^13.0.3",
     "@mcisse/nge": "^13.0.0",
+    "rxjs": "^7.5.0",
     "@ngx-pwa/local-storage": "^13.0.2",
     "angular-split": "^13.1.0",
     "ng-event-bus": "^4.0.0",
