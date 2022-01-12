@@ -32,7 +32,7 @@ export class ExplorerService implements IContribution {
     readonly adapter: ITreeAdapter<IFile> = {
         id: 'explorer.tree',
         idProvider: (node) => node.uri.toString(),
-        nameProvider: (node) => this.fileService.entryName(node),
+        nameProvider: (node) => this.fileService.entryName(node.uri),
         childrenProvider: (node) => this.fileService.findChildren(node),
         isExpandable: (node) => node.isFolder,
         onDidEditName: this.onEditNode.bind(this),

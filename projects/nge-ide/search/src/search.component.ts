@@ -113,18 +113,18 @@ export class SearchComponent implements OnInit, OnDestroy, AfterViewChecked {
         }
     }
 
-    private createNode(item: SearchResult<IFile>) {
-        const id = item.entry.uri.toString();
+    private createNode(result: SearchResult<monaco.Uri>) {
+        const id = result.entry.toString();
         return {
             id,
-            label: this.fileService.entryName(item.entry),
-            resource: item.entry.uri,
-            children: item.matches.map((match, index) => {
+            label: this.fileService.entryName(result.entry),
+            resource: result.entry,
+            children: result.matches.map((match, index) => {
                 return {
                     id: id + '#' + index,
                     label: match.match,
                     lineno: match.lineno,
-                    resource: item.entry.uri
+                    resource: result.entry
                 } as Node;
             })
         } as Node;

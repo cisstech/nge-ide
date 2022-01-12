@@ -74,7 +74,7 @@ export interface IFileSystemProvider {
      * @return  A promise that resolves with a list of {@link IFile}.
      * @throws {@link FileSystemError.FileNotFound} when `uri` doesn't exist.
      */
-    readDirectory(uri: monaco.Uri): IFile[]  | Promise<IFile[]>;
+    readDirectory(uri: monaco.Uri): IFile[] | Promise<IFile[]>;
 
     /**
      * Create a new directory.
@@ -106,11 +106,7 @@ export interface IFileSystemProvider {
      * @throws {@link FileSystemError.FileExists} when `uri` already exists, `create` is set but `overwrite` is not set.
      * @throws {@link FileSystemError.NoPermissions} when permissions aren't sufficient.
      */
-    write(
-        uri: monaco.Uri,
-        content: string,
-        update: boolean
-    ): void | Promise<void>;
+    write(uri: monaco.Uri, content: string, update: boolean): void | Promise<void>;
 
     /**
      * Delete a file.
@@ -144,11 +140,7 @@ export interface IFileSystemProvider {
      * @throws {@link FileSystemError.FileExists} when `destination` exists.
      * @throws {@link FileSystemError.NoPermissions} when permissions aren't sufficient.
      */
-    move(
-        source: monaco.Uri,
-        destination: monaco.Uri,
-        options: { copy: boolean }
-    ): void | Promise<void>;
+    move(source: monaco.Uri, destination: monaco.Uri, options: { copy: boolean }): void | Promise<void>;
 
     /**
      * Uploads `file` to the directory `destination`.
@@ -159,85 +151,52 @@ export interface IFileSystemProvider {
      * @throws {@link FileSystemError.FileExists} when `destination` already exists.
      * @throws {@link FileSystemError.NoPermissions} when permissions aren't sufficient.
      */
-    upload(
-        file: File,
-        destination: monaco.Uri
-    ): void | Promise<void>;
+    upload(file: File, destination: monaco.Uri): void | Promise<void>;
 
-    searchIn(
-        entry: IFile,
-        search: SearchForm
-    ): Promise<SearchResult<IFile>[]>;
+    search(uri: monaco.Uri, form: SearchForm): Promise<SearchResult<monaco.Uri>[]>;
 }
 
 export abstract class FileSystemProvider implements IFileSystemProvider {
     abstract readonly scheme: string;
     abstract readonly capabilities: FileSystemProviderCapabilities;
 
-    hasCapability(
-        capability: FileSystemProviderCapabilities
-    ): boolean {
+    hasCapability(capability: FileSystemProviderCapabilities): boolean {
         return !!(this.capabilities & capability);
     }
 
-    readDirectory(
-        uri: monaco.Uri
-    ): IFile[] | Promise<IFile[]> {
+    readDirectory(uri: monaco.Uri): IFile[] | Promise<IFile[]> {
         throw new Error('Operation not supported');
     }
 
-    createDirectory(
-        uri: monaco.Uri
-    ): void | Promise<void> {
+    createDirectory(uri: monaco.Uri): void | Promise<void> {
         throw new Error('Operation not supported');
     }
 
-    upload(
-        file: File,
-        destination: monaco.Uri
-    ): void | Promise<void> {
+    upload(file: File, destination: monaco.Uri): void | Promise<void> {
         throw new Error('Operation not supported');
     }
 
-    read(
-        uri: monaco.Uri
-    ): string | Promise<string> {
+    read(uri: monaco.Uri): string | Promise<string> {
         throw new Error('Operation not supported');
     }
 
-    write(
-        uri: monaco.Uri,
-        content: string,
-        update: boolean
-    ): void | Promise<void> {
+    write(uri: monaco.Uri, content: string, update: boolean): void | Promise<void> {
         throw new Error('Operation not supported');
     }
 
-    delete(
-        uri: monaco.Uri
-    ): void | Promise<void> {
+    delete(uri: monaco.Uri): void | Promise<void> {
         throw new Error('Operation not supported');
     }
 
-    rename(
-        uri: monaco.Uri,
-        name: string
-    ): void | Promise<void> {
+    rename(uri: monaco.Uri, name: string): void | Promise<void> {
         throw new Error('Operation not supported');
     }
 
-    move(
-        source: monaco.Uri,
-        destination: monaco.Uri,
-        options: { copy: boolean }
-    ): void | Promise<void> {
+    move(source: monaco.Uri, destination: monaco.Uri, options: { copy: boolean }): void | Promise<void> {
         throw new Error('Operation not supported');
     }
 
-    searchIn(
-        entry: IFile,
-        query: SearchForm
-    ): Promise<SearchResult<IFile>[]> {
+    search(uri: monaco.Uri, form: SearchForm): Promise<SearchResult<monaco.Uri>[]> {
         throw new Error('Operation not supported');
     }
 }

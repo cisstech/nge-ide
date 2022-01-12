@@ -1,3 +1,4 @@
+import { SearchMatch } from ".";
 import { Paths } from "../utils";
 import { IFile } from "./file";
 import { FileSystemError } from "./file-system-error";
@@ -240,43 +241,43 @@ export class MemFileProvider extends FileSystemProvider {
         });
     }
 
-    searchIn(
-        entry: IFile,
-        search: SearchForm
-    ): Promise<SearchResult<IFile>[]> {
-        this._lookupAsDirectory(entry.uri, false);
+    search(uri: monaco.Uri, form: SearchForm ): Promise<SearchResult<monaco.Uri>[]> {
+        this._lookupAsDirectory(uri, false);
         const options: string[] = ['g'];
-        if (!search.matchCase) {
+        if (!form.matchCase) {
             options.push('i');
         }
 
-        let query = search.useRegex
-            ? search.query
-            : search.query.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
-        if (search.matchWord) {
+        let query = form.useRegex
+            ? form.query
+            : form.query.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
+        if (form.matchWord) {
             query = `\\b${query}\\b`;
         }
 
         const pattern = new RegExp(query, options.join(''));
-        const results: SearchResult<IFile>[] = [];
-        for (const f of this.entries.values()) {
-            if (f.uri.path !== entry.uri.path && f.uri.path.startsWith(entry.uri.path)) {
-                if (f.content) {
-                    const r: SearchResult<IFile> = { entry: f, matches: [] };
-                    const lines = f.content.split('\n');
+        const results: SearchResult<monaco.Uri>[] = [];
+
+        for (const entry of this.entries.values()) {
+            if (entry.uri.path !== uri.path && entry.uri.path.startsWith(uri.path)) {
+                if (entry.content) {
+                    const matches: SearchMatch[] = [];
+                    const lines = entry.content.split('\n');
                     for (let i = 0; i < lines.length; i++) {
                         const line = lines[i];
-                        const matches = pattern.exec(line);
-                        if (matches) {
-                            r.matches.push({
+                        if (pattern.exec(line)) {
+                            matches.push({
                                 match: line,
                                 lineno: i + 1,
                             });
                         }
                     }
 
-                    if (r.matches.length > 0) {
-                        results.push(r);
+                    if (matches.length > 0) {
+                        results.push({
+                            entry: entry.uri,
+                            matches,
+                        });
                     }
                 }
             }

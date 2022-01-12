@@ -297,18 +297,19 @@ export class FileService implements IContribution {
         return this.children.get(entry.uri.toString()) || [];
     }
 
-    async search(form: SearchForm): Promise<SearchResult<IFile>[]> {
+    async search(form: SearchForm): Promise<SearchResult<monaco.Uri>[]> {
         const results = await Promise.all(this.folders.map(async folder => {
-            try {
-                const file = this.find(folder.uri);
-                if (!file)
-                    return [];
-                const provider = await this.withProvider(folder.uri, FileSystemProviderCapabilities.FileSearch);
-                return await provider.searchIn(file, form);
-            } catch {
+            const file = this.find(folder.uri);
+            if (!file) {
                 return [];
             }
+            if (!this.hasCapability(folder.uri, FileSystemProviderCapabilities.FileSearch)) {
+                return [];
+            }
+            const provider = await this.withProvider(folder.uri, FileSystemProviderCapabilities.FileSearch);
+            return await provider.search(file.uri, form);
         }));
+
         return results.reduce((acc, val) => acc.concat(val), []);
     }
 
@@ -332,9 +333,9 @@ export class FileService implements IContribution {
         return uri.toString().startsWith(candidate.toString());
     }
 
-    entryName(entry: IFile): string {
-        const folder = this.folders.find(f => entry.uri.toString() === f.uri.toString());
-        return folder?.name || Paths.basename(entry.uri.path);
+    entryName(uri: monaco.Uri): string {
+        const folder = this.folders.find(f => uri.toString() === f.uri.toString());
+        return folder?.name || Paths.basename(uri.path);
     }
 
     // OPERATIONS
@@ -398,9 +399,10 @@ export class FileService implements IContribution {
         newName: string
     ): Promise<void> {
         newName = newName.trim();
-        if (this.entryName(entry) === newName) {
+        if (this.entryName(entry.uri) === newName) {
             return;
         }
+
         const provider = await this.withProvider(entry.uri, FileSystemProviderCapabilities.FileWrite);
 
         const newUri = entry.uri.with({
