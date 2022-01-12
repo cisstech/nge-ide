@@ -3,7 +3,6 @@
   overflow: hidden !important;
 }
 
-
 .editor-group::ng-deep {
   .ant-tabs-bar {
     margin: 0;
@@ -14,17 +13,22 @@
     padding: 0 12px 0 0;
   }
 
+  .ant-tabs-extra-content {
+    height: 40px;
+  }
+
   .ant-tabs-tab {
+    display: inline-flex;
+    align-items: center;
+    padding: 0 !important;
+  }
+
+  .tab-content {
     display: inline-flex;
     align-items: center;
     padding: 8px 4px !important;
   }
-
-  .ant-tabs-extra-content {
-    height: 40px;
-  }
 }
-
 
 .editor-group--active::ng-deep {
   .ant-tabs-tab-active {
@@ -44,7 +48,8 @@
   margin: 0 4px;
 }
 
-.tab-dirty:hover, .tab-close:hover {
+.tab-dirty:hover,
+.tab-close:hover {
   border: 1px solid;
   border-radius: 8px;
 }

@@ -575,7 +575,7 @@ export class FileService implements IContribution {
             const isBothDir = a.isFolder && b.isFolder;
             const isBothFile = !a.isFolder && !b.isFolder;
             if (isBothDir || isBothFile) {
-                return a.uri.path.localeCompare(b.uri.path);
+                return a.uri.path.length - b.uri.path.length || a.uri.path.localeCompare(b.uri.path);
             }
             return a.isFolder ? -1 : 1;
         });

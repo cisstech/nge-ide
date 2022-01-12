@@ -99,15 +99,15 @@ export class MemFileProvider extends FileSystemProvider {
 
     readonly root = monaco.Uri.parse(`${this.scheme}:///`);
 
-    constructor() {
+    constructor(size = 10) {
         super();
-        for (let i = 1; i <= 2; i++) {
-            this.entries.set(`/folder-${i}`, new MemFile('folder', `/folder-${i}`));
-            this.entries.set(`/folder-${i}/file.ts`, new MemFile('file', `/folder-${i}/file.ts`, TS));
-            this.entries.set(`/folder-${i}/file.scss`, new MemFile('file', `/folder-${i}/file.scss`, SCSS));
-            this.entries.set(`/folder-${i}/file.html`, new MemFile('file', `/folder-${i}/file.html`, HTML));
-            this.entries.set(`/folder-${i}/file.md`, new MemFile('file', `/folder-${i}/file.md`, MD));
-            this.entries.set(`/folder-${i}/file.svg`, new MemFile('file', `/folder-${i}/file.svg`, SVG));
+        for (let i = 1; i <= size; i++) {
+            this.entries.set(`/${i}`, new MemFile('folder', `/${i}`));
+            this.entries.set(`/${i}/file.ts`, new MemFile('file', `/${i}/file.ts`, TS));
+            this.entries.set(`/${i}/file.scss`, new MemFile('file', `/${i}/file.scss`, SCSS));
+            this.entries.set(`/${i}/file.html`, new MemFile('file', `/${i}/file.html`, HTML));
+            this.entries.set(`/${i}/file.md`, new MemFile('file', `/${i}/file.md`, MD));
+            this.entries.set(`/${i}/file.svg`, new MemFile('file', `/${i}/file.svg`, SVG));
         }
     }
 

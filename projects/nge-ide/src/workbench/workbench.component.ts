@@ -1,7 +1,7 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
-import { CommandService, EditorGroup, EditorService, EditorTab, FileService, ICommand } from '@mcisse/nge-ide/core';
-import { Observable, of, Subscription } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { ChangeDetectionStrategy, Component, OnDestroy, OnInit } from '@angular/core';
+import { EditorGroup, EditorService, EditorTab } from '@mcisse/nge-ide/core';
+import { combineLatest, Observable, Subscription } from 'rxjs';
+import { map, startWith } from 'rxjs/operators';
 import { CodeEditor } from './code-editor/code-editor';
 import { MediaEditor } from './media-editor/media-editor';
 import { PreviewEditor } from './preview-editor/preview-editor';
@@ -15,32 +15,25 @@ import { PreviewEditor } from './preview-editor/preview-editor';
 export class WorkbenchComponent implements OnInit, OnDestroy {
     private readonly subscriptions: Subscription[] = [];
 
-    groups: Observable<EditorGroup[]> = this.editorService.editorGroups;
-    commands: Observable<ICommand[]> = of([]);
+    readonly groups: Observable<EditorGroup[]> = this.editorService.editorGroups;
+    readonly commands = combineLatest([
+        this.editorService.commands.pipe(startWith([])),
+        this.editorService.onDidOpen.pipe(startWith(undefined)), // reload commands every time an editor is opened
+    ]).pipe(
+        map(([commands, _])=> commands.slice()) // slice to force trigger change detection of command-group component
+    );
+
 
     constructor(
         private readonly editorService: EditorService,
-        private readonly changeDetectorRef: ChangeDetectorRef,
     ) { }
+
 
     ngOnInit(): void {
         this.editorService.registerEditors(
             new CodeEditor(),
             new MediaEditor(),
             new PreviewEditor(),
-        );
-
-        this.subscriptions.push(
-            this.editorService.state.pipe(
-                map(e => e.activeResource)
-            ).subscribe(resource => {
-                if (resource) {
-                    this.commands = of(this.editorService.listCommands());
-                } else {
-                    this.commands = of([]);
-                }
-                this.changeDetectorRef.detectChanges();
-            })
         );
     }
 

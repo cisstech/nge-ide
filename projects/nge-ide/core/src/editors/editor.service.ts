@@ -19,19 +19,21 @@ export class EditorService implements IContribution {
     private readonly didOpen = new Subject<monaco.Uri>();
     private readonly willOpen = new Subject<monaco.Uri>();
 
-    private readonly state$ = new BehaviorSubject<EditorState>({ visibleEditors: [] });
+    private readonly state$ = new BehaviorSubject<EditorState>(this.emptyEditorState());
     private readonly commands$ = new BehaviorSubject<ICommand[]>([]);
     private readonly editorGroups$ = new BehaviorSubject<EditorGroup[]>([]);
 
     private readonly editors: Editor[] = [];
 
-    /** State of the editor. */
-    readonly state = this.state$.asObservable();
 
     /** Emitted after opening a resource. */
     readonly onDidOpen = this.didOpen.asObservable();
     /** Emitted before opening a resource. */
     readonly onWillOpen = this.willOpen.asObservable();
+
+    /** State of the editor. */
+    readonly state = this.state$.asObservable();
+    readonly commands = this.commands$.asObservable();
 
     /** Opened editor groups. */
     readonly editorGroups = this.editorGroups$.asObservable();
@@ -55,6 +57,7 @@ export class EditorService implements IContribution {
     get visibleEditors(): ReadonlyArray<Editor> {
         return this.state$.value.visibleEditors;
     }
+
 
     constructor(
         private readonly injector: Injector,
@@ -80,9 +83,9 @@ export class EditorService implements IContribution {
         this.subscriptions.forEach(s => s.unsubscribe());
         this.subscriptions.splice(0, this.subscriptions.length);
         this.groups.clear();
+        this.state$.next(this.emptyEditorState());
         this.commands$.next([]);
         this.editorGroups$.next([]);
-        this.state$.next({ visibleEditors: [] });
     }
 
     /**
@@ -109,21 +112,14 @@ export class EditorService implements IContribution {
      */
     registerCommands(...commands: (ICommand | Type<ICommand>)[]): void {
         this.commands$.next([
-            ...this.commands$.value,
             ...commands.map(c => {
                 if (typeof c === 'function') {
                     return this.commandService.find<ICommand>(c);
                 }
                 return c;
-            }),
+            }).reverse(),
+            ...this.commands$.value,
         ]);
-    }
-
-    /**
-     * Gets all the commands usable in the editor group area.
-     */
-    listCommands(): ICommand[] {
-        return this.commands$.value;
     }
 
     /**
@@ -154,7 +150,7 @@ export class EditorService implements IContribution {
             activeGroup: group,
             activeEditor: group.activeEditor,
             activeResource: group.activeResource,
-            visibleEditors: this.editorGroups$.value.map(g => g.activeEditor as any).filter(e => !!e)
+            visibleEditors: this.editorGroups$.value.map(g => g.activeEditor as any).filter(e => !!e),
         });
     }
 
@@ -256,14 +252,8 @@ export class EditorService implements IContribution {
 
         this.editorGroups$.next(groups);
 
-        this.state$.next({
-            activeGroup: undefined,
-            activeEditor: undefined,
-            activeResource: undefined,
-            visibleEditors: [],
-        });
+        this.state$.next(this.emptyEditorState());
     }
-
 
     /**
      * Saves unsaved resources.
@@ -289,6 +279,7 @@ export class EditorService implements IContribution {
             this.save(this.activeResource);
         }
     }
+
 
     private async save(resource: monaco.Uri): Promise<void> {
         await this.fileService.save(resource);
@@ -331,7 +322,7 @@ export class EditorService implements IContribution {
             activeGroup: group,
             activeEditor: editor,
             activeResource: resource,
-            visibleEditors: this.editorGroups$.value.map(g => g.activeEditor as any).filter(e => !!e)
+            visibleEditors: this.editorGroups$.value.map(g => g.activeEditor as any).filter(e => !!e),
         });
         this.didOpen.next(resource);
     }
@@ -351,12 +342,7 @@ export class EditorService implements IContribution {
 
         this.editorGroups$.next(this.listGroups());
 
-        this.state$.next({
-            activeGroup: undefined,
-            activeEditor: undefined,
-            activeResource: undefined,
-            visibleEditors: []
-        });
+        this.state$.next(this.emptyEditorState());
 
         if (group.isEmpty) {
             const randomGroup = this.findGroup(g => !g.isEmpty);
@@ -381,4 +367,12 @@ export class EditorService implements IContribution {
         return Array.from(this.groups.values());
     }
 
+    private emptyEditorState(): EditorState {
+        return {
+            activeGroup: undefined,
+            activeEditor: undefined,
+            activeResource: undefined,
+            visibleEditors: [],
+        };
+    }
 }

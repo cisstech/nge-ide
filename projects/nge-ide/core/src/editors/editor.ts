@@ -1,5 +1,6 @@
 import { Injector, Type } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
+import { ICommand } from '../commands';
 import { OpenOptions, OpenRequest } from './opener';
 
 declare type OpenHandler = (
@@ -120,9 +121,7 @@ export class EditorGroup {
 
     /** Sets the index of the current active editor. */
     set activeIndex(index: number) {
-        console.log(index);
         if (index === this._activeIndex) {
-            console.log('activeIndex is already set to ' + index);
             return;
         }
 
@@ -149,6 +148,7 @@ export class EditorGroup {
     get isInPreviewMode(): boolean {
         return !!this._request && !!this._request.options.preview;
     }
+
 
     constructor(
         private readonly injector: Injector,

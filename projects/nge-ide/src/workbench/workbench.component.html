@@ -13,19 +13,21 @@
         <ng-container *ngFor="let tab of group.tabs; trackBy: trackTab">
           <nz-tab [nzTitle]="title">
             <ng-template #title>
-              <ng-container *ngIf="tab.options.icon; else: iconFile">
-                <ui-icon class="tab-icon" [icon]="tab.options.icon"></ui-icon>
-              </ng-container>
-              <ng-template #iconFile>
-                <ui-icon class="tab-icon" [icon]="tab.options.title|iconFile"></ui-icon>
-              </ng-template>
-              <span class="tab-title" [matTooltip]="tab.options.tooltip">{{tab.options.title}}</span>
-              <ng-container *ngIf="tab.resource|fileChanged|async; else: closeable">
-                <span class="tab-dirty codicon codicon-close-dirty" (click)="group.close(tab.resource)"></span>
-              </ng-container>
-              <ng-template #closeable>
-                <span class="tab-close codicon codicon-close" (click)="group.close(tab.resource)"></span>
-              </ng-template>
+              <div class="tab-content">
+                <ng-container *ngIf="tab.options.icon; else: iconFile">
+                  <ui-icon class="tab-icon" [icon]="tab.options.icon"></ui-icon>
+                </ng-container>
+                <ng-template #iconFile>
+                  <ui-icon class="tab-icon" [icon]="tab.options.title|iconFile"></ui-icon>
+                </ng-template>
+                <span class="tab-title" [matTooltip]="tab.options.tooltip">{{tab.options.title}}</span>
+                <ng-container *ngIf="tab.resource|fileChanged|async; else: closeable">
+                  <span class="tab-dirty codicon codicon-close-dirty" (click)="group.close(tab.resource)"></span>
+                </ng-container>
+                <ng-template #closeable>
+                  <span class="tab-close codicon codicon-close" (click)="group.close(tab.resource)"></span>
+                </ng-template>
+              </div>
             </ng-template>
           </nz-tab>
         </ng-container>
