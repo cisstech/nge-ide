@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [13.0.1](https://github.com/mciissee/nge-ide/compare/v0.0.1...v13.0.1) (2022-01-17)
+
+
+### Bug Fixes
+
+* build errors caused by barrel imports ([ea15bc0](https://github.com/mciissee/nge-ide/commit/ea15bc07254db16bef7579af861b73ba2d256937))
+* cannot open settings editor ([bbb25d6](https://github.com/mciissee/nge-ide/commit/bbb25d64f41a7bb7f212db32f0909f1fee0f0f68))
+* editor group commands not updated ([23d3f20](https://github.com/mciissee/nge-ide/commit/23d3f200453e792fa366581c4e3b0002ce8ec9c4))
+* uri.toString() encoding ([042256f](https://github.com/mciissee/nge-ide/commit/042256fcda323db3fd851c91fc55b69b4657c633))
+* wrong import path ([ff7b1a7](https://github.com/mciissee/nge-ide/commit/ff7b1a769959f2257b3e10446d43f652d3d8abcb))
+
 ### 0.0.1 (2021-12-04)
 
 
