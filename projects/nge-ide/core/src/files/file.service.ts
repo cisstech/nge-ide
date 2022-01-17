@@ -101,7 +101,7 @@ export class FileService implements IContribution {
             const provider = await this.withProvider(folder.uri);
             const files = await provider.readDirectory(folder.uri);
             files.forEach((file) => {
-                const id = file.uri.toString();
+                const id = file.uri.toString(true);
                 this.entries.set(id, file);
 
                 const prefix = id.substring(0, id.length - file.uri.fsPath.length);
@@ -569,7 +569,7 @@ export class FileService implements IContribution {
         });
 
         this.children.forEach((v, _) => this.sortFiles(v));
-        this.tree.next(this.sortFiles(tree));
+        this.tree.next(tree);
     }
 
     private sortFiles(files: IFile[]): IFile[] {
@@ -577,7 +577,7 @@ export class FileService implements IContribution {
             const isBothDir = a.isFolder && b.isFolder;
             const isBothFile = !a.isFolder && !b.isFolder;
             if (isBothDir || isBothFile) {
-                return a.uri.path.length - b.uri.path.length || a.uri.path.localeCompare(b.uri.path);
+                return a.uri.path.localeCompare(b.uri.path, 'en', { numeric: true });
             }
             return a.isFolder ? -1 : 1;
         });
