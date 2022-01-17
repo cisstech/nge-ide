@@ -74,7 +74,7 @@ export class ExplorerComponent implements OnInit, OnDestroy, AfterViewChecked {
             this.editorService.state.subscribe((state) => {
                 const { activeResource } = state;
                 if (activeResource) {
-                    const nodeId = activeResource.toString();
+                    const nodeId = activeResource.toString(true);
                     this.tree.expand(nodeId)
                     this.tree.focus(nodeId);
                 }

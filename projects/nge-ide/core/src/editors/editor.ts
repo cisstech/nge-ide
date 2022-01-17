@@ -190,7 +190,7 @@ export class EditorGroup {
      */
     contains(resource: monaco.Uri): boolean {
         return this._tabs.some(e => {
-            return e.resource.toString() === resource.toString();
+            return e.resource.toString(true) === resource.toString(true);
         });
     }
 
@@ -201,7 +201,7 @@ export class EditorGroup {
      */
     containsPreview(resource: monaco.Uri): boolean {
         return this._tabs.some(e => {
-            return e.resource.toString() === resource.toString() && !!e.options.preview;
+            return e.resource.toString(true) === resource.toString(true) && !!e.options.preview;
         });
     }
 
@@ -211,7 +211,7 @@ export class EditorGroup {
      * @throws {ReferenceError} if any of the arguments is null.
      */
     isActive(resource: monaco.Uri): boolean {
-        return this.activeResource?.toString() === resource.toString();
+        return this.activeResource?.toString(true) === resource.toString(true);
     }
 
     /**
@@ -221,7 +221,7 @@ export class EditorGroup {
      */
     findIndex(resource: monaco.Uri): number {
         return this._tabs.findIndex(e => {
-            return e.resource.toString() === resource.toString();
+            return e.resource.toString(true) === resource.toString(true);
         });
     }
 

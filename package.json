@@ -46,7 +46,7 @@
     "@angular/platform-browser": "~13.0.3",
     "@angular/platform-browser-dynamic": "~13.0.3",
     "@angular/router": "~13.0.3",
-    "@mcisse/nge": "^13.1.0",
+    "@mcisse/nge": "^13.1.1",
     "@ngx-pwa/local-storage": "^13.0.2",
     "angular-split": "^13.1.0",
     "marked": "^4.0.10",

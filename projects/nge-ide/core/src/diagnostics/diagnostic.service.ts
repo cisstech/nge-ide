@@ -56,14 +56,14 @@ export class DiagnosticService implements IContribution {
 
     setDiagnostics(uri: monaco.Uri, items: Diagnostic[]) {
         const diagnostics = this.subject.value;
-        diagnostics[uri.toString()] = items;
+        diagnostics[uri.toString(true)] = items;
         this.subject.next(diagnostics);
     }
 
     asObservable(uri: monaco.Uri): Observable<Diagnostic[]> {
         return this.subject.asObservable().pipe(
-            filter(diagnostics => diagnostics[uri.toString()] != null),
-            map(diagnostics => diagnostics[uri.toString()] || [])
+            filter(diagnostics => diagnostics[uri.toString(true)] != null),
+            map(diagnostics => diagnostics[uri.toString(true)] || [])
         );
     }
 

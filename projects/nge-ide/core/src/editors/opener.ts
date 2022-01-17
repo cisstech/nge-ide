@@ -51,6 +51,6 @@ export class OpenRequest {
         if (!(o instanceof OpenRequest)) {
             return false;
         }
-        return o.uri.toString() == this.uri.toString();
+        return o.uri.toString(true) == this.uri.toString(true);
     }
 }

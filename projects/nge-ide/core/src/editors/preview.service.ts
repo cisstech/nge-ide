@@ -22,7 +22,7 @@ export class PreviewService implements IContribution {
                 return await handler.handle(this.injector, uri);
             }
         }
-        throw new Error(`No preview handler found for ${uri.toString()}`);
+        throw new Error(`No preview handler found for ${uri.toString(true)}`);
     }
 
     canHandle(uri: monaco.Uri): boolean {

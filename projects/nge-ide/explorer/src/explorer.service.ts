@@ -11,7 +11,6 @@ import {
     TreeService
 } from '@mcisse/nge/ui/tree';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
-import { map } from 'rxjs/operators';
 import { IExplorerCommand } from './commands';
 
 
@@ -72,6 +71,7 @@ export class ExplorerService implements IContribution {
     ) { }
 
     deactivate() {
+        this.clipboardData = [];
         this.commandRegistry.next([]);
     }
 
@@ -150,6 +150,7 @@ export class ExplorerService implements IContribution {
     }
 
     copy(): void {
+        this.clipboardData = [];
         if (!this.canCopy()) {
             return;
         }
@@ -182,9 +183,7 @@ export class ExplorerService implements IContribution {
         this.fileService.copy(
             this.clipboardData,
             this.focusedNode() as IFile
-        ).then(() => {
-            this.clipboardData = [];
-        }).catch(error => {
+        ).catch(error => {
             this.notificationService.publishError(error);
         });
     }

@@ -59,6 +59,6 @@ export class FileSystemError extends Error {
      * @param messageOrUri Message or uri.
      */
     constructor(messageOrUri?: string | monaco.Uri) {
-        super(messageOrUri?.toString());
+        super(messageOrUri?.toString(true));
     }
 }
