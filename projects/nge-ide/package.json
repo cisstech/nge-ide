@@ -1,6 +1,6 @@
 {
   "name": "@mcisse/nge-ide",
-  "version": "13.0.0",
+  "version": "13.0.1",
   "description": "An extensible and flexible open source ide written in Angular.",
   "keywords": [
     "angular"
