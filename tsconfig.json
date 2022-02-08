@@ -19,13 +19,13 @@
       "dom"
     ],
     "paths": {
-      "@mcisse/nge-ide": ["projects/nge-ide"],
-      "@mcisse/nge-ide/core": ["projects/nge-ide/core"],
-      "@mcisse/nge-ide/explorer": ["projects/nge-ide/explorer"],
-      "@mcisse/nge-ide/search": ["projects/nge-ide/search"],
-      "@mcisse/nge-ide/settings": ["projects/nge-ide/settings"],
-      "@mcisse/nge-ide/problems": ["projects/nge-ide/problems"],
-      "@mcisse/nge-ide/notifications": ["projects/nge-ide/notifications"]
+      "@cisstech/nge-ide": ["projects/nge-ide"],
+      "@cisstech/nge-ide/core": ["projects/nge-ide/core"],
+      "@cisstech/nge-ide/explorer": ["projects/nge-ide/explorer"],
+      "@cisstech/nge-ide/search": ["projects/nge-ide/search"],
+      "@cisstech/nge-ide/settings": ["projects/nge-ide/settings"],
+      "@cisstech/nge-ide/problems": ["projects/nge-ide/problems"],
+      "@cisstech/nge-ide/notifications": ["projects/nge-ide/notifications"]
     }
   },
   "angularCompilerOptions": {

@@ -1,18 +1,18 @@
 {
-  "name": "@mcisse/nge-ide",
-  "version": "13.0.1",
+  "name": "@cisstech/nge-ide",
+  "version": "13.0.2",
   "description": "An extensible and flexible open source ide written in Angular.",
   "keywords": [
     "angular"
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/mciissee/nge-ide"
+    "url": "https://github.com/cisstech/nge-ide"
   },
   "bugs": {
-    "url": "https://github.com/mciissee/nge-ide/issues"
+    "url": "https://github.com/cisstech/nge-ide/issues"
   },
-  "homepage": "https://github.com/mciissee-ide/nge",
+  "homepage": "https://github.com/cisstech-ide/nge",
   "author": {
     "name": "Mamadou Cisse",
     "email": "mciissee@gmail.com"
@@ -24,7 +24,7 @@
     "build": "npm run build:lib && npm run build:demo",
     "build:lib": "ng build nge-ide --configuration production",
     "postbuild:lib": "./scripts/postbuild.sh",
-    "build:demo": "ng build demo --configuration production --base-href='https://mciissee.github.io/nge-ide/'",
+    "build:demo": "ng build demo --configuration production --base-href='https://cisstech.github.io/nge-ide/'",
     "test": "ng test --code-coverage --watch=false --browsers=ChromeHeadless && node coverage-merger.js",
     "lint": "ng lint",
     "e2e": "ng e2e",
@@ -46,7 +46,7 @@
     "@angular/platform-browser": "~13.0.3",
     "@angular/platform-browser-dynamic": "~13.0.3",
     "@angular/router": "~13.0.3",
-    "@mcisse/nge": "^13.1.1",
+    "@cisstech/nge": "^13.1.4",
     "@ngx-pwa/local-storage": "^13.0.2",
     "angular-split": "^13.1.0",
     "marked": "^4.0.10",

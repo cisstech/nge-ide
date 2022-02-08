@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { SafePipeModule } from '@mcisse/nge/pipes';
-import { IDynamicModule } from '@mcisse/nge/services';
+import { SafePipeModule } from '@cisstech/nge/pipes';
+import { IDynamicModule } from '@cisstech/nge/services';
 
 import { MediaEditorComponent } from './media-editor.component';
 

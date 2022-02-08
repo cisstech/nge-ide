@@ -1,5 +1,5 @@
 import { ComponentRef, Directive, Input, OnChanges, OnDestroy, ViewContainerRef } from '@angular/core';
-import { CompilerService } from '@mcisse/nge/services';
+import { CompilerService } from '@cisstech/nge/services';
 import { Editor } from '../editors/index';
 
 @Directive({ selector: '[editor]' })

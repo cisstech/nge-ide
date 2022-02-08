@@ -10,8 +10,8 @@ import { NzTabsModule } from 'ng-zorro-antd/tabs';
 import { NzBadgeModule } from 'ng-zorro-antd/badge';
 import { NzSelectModule } from 'ng-zorro-antd/select';
 
-import { ViewModule } from '@mcisse/nge-ide/core';
-import { IDynamicModule } from '@mcisse/nge/services';
+import { ViewModule } from '@cisstech/nge-ide/core';
+import { IDynamicModule } from '@cisstech/nge/services';
 import { NotificationsComponent } from './notifications.component';
 
 @NgModule({

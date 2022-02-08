@@ -6,8 +6,8 @@ import {
     SidebarContainer,
     ViewContainerService,
     ViewService
-} from '@mcisse/nge-ide/core';
-import { CodIcon } from '@mcisse/nge/ui/icon';
+} from '@cisstech/nge-ide/core';
+import { CodIcon } from '@cisstech/nge/ui/icon';
 import { of } from 'rxjs';
 
 /**

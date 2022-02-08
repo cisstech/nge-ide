@@ -1,4 +1,4 @@
-import { ICommand } from "@mcisse/nge-ide/core";
+import { ICommand } from "@cisstech/nge-ide/core";
 
 export enum CommandGroups {
     /** Commands related to navigation accross the ide. */

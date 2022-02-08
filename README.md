@@ -10,25 +10,25 @@
 
 An extensible and flexible open source ide written in Angular.
 
-[![Tests](https://github.com/mciissee/nge-ide/workflows/Tests/badge.svg)](https://github.com/mciissee/nge-ide/actions/)
-<!-- [![codecov](https://codecov.io/gh/mciissee/nge-ide/branch/main/graph/badge.svg)](https://codecov.io/gh/mciissee/nge-ide) -->
-[![codefactor](https://www.codefactor.io/repository/github/mciissee/nge-ide/badge/main)](https://www.codefactor.io/repository/github/mciissee/nge-ide/overview/main)
-[![GitHub Release Date](https://img.shields.io/github/release-date/mciissee/nge-ide.svg)](https://github.com/mciissee/nge-ide/releases)
-[![npm package](https://img.shields.io/npm/v/@mcisse/nge-ide.svg)](https://www.npmjs.org/package/@mcisse/nge-ide)
-[![NPM downloads](http://img.shields.io/npm/dm/@mcisse/nge-ide.svg)](https://npmjs.org/package/@mcisse/nge-ide)
-[![licence](https://img.shields.io/github/license/mciissee/nge-ide)](https://github.com/mciissee/nge-ide/blob/main/LICENSE)
+[![Tests](https://github.com/cisstech/nge-ide/workflows/Tests/badge.svg)](https://github.com/cisstech/nge-ide/actions/)
+<!-- [![codecov](https://codecov.io/gh/cisstech/nge-ide/branch/main/graph/badge.svg)](https://codecov.io/gh/cisstech/nge-ide) -->
+[![codefactor](https://www.codefactor.io/repository/github/cisstech/nge-ide/badge/main)](https://www.codefactor.io/repository/github/cisstech/nge-ide/overview/main)
+[![GitHub Release Date](https://img.shields.io/github/release-date/cisstech/nge-ide.svg)](https://github.com/cisstech/nge-ide/releases)
+[![npm package](https://img.shields.io/npm/v/@cisstech/nge-ide.svg)](https://www.npmjs.org/package/@cisstech/nge-ide)
+[![NPM downloads](http://img.shields.io/npm/dm/@cisstech/nge-ide.svg)](https://npmjs.org/package/@cisstech/nge-ide)
+[![licence](https://img.shields.io/github/license/cisstech/nge-ide)](https://github.com/cisstech/nge-ide/blob/main/LICENSE)
 [![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg)](https://github.com/prettier/prettier)
 
 </div>
 
 ## 📄 Docs
 
-Documentation available at [https://mciissee.github.io/nge-ide/](https://mciissee.github.io/nge-ide/)
+Documentation available at [https://cisstech.github.io/nge-ide/](https://cisstech.github.io/nge-ide/)
 
 ## 📦 Installation
 
 ```bash
-npm install @mcisse/nge @mcisse/nge-ide monaco-editor marked
+npm install @cisstech/nge @cisstech/nge-ide monaco-editor marked
 ```
 
 ## ⌨️ Development
@@ -36,7 +36,7 @@ npm install @mcisse/nge @mcisse/nge-ide monaco-editor marked
 * Clone and install
 
 ```bash
-git clone https://github.com/mciissee/nge-ide
+git clone https://github.com/cisstech/nge-ide
 cd nge-ide
 npm install
 ```
@@ -53,7 +53,7 @@ Browser would open automatically at <http://localhost:4200/>.
 
 Contributions are always welcome. <br/>
 
-Please read our [CONTRIBUTING.md](https://github.com/mciissee/nge-ide/blob/main/CONTRIBUTING.md) first. You can submit any ideas as [pull requests](https://github.com/mciissee/nge-ide/pulls) or as [GitHub issues](https://github.com/mciissee/nge-ide/issues).
+Please read our [CONTRIBUTING.md](https://github.com/cisstech/nge-ide/blob/main/CONTRIBUTING.md) first. You can submit any ideas as [pull requests](https://github.com/cisstech/nge-ide/pulls) or as [GitHub issues](https://github.com/cisstech/nge-ide/issues).
 
 Please just make sure that ...
 
@@ -73,4 +73,4 @@ If this project has been useful, that it helped you or your business to save pre
 
 ## ✨ License
 
-MIT © [Mamadou Cisse](https://github.com/mciissee)
+MIT © [Mamadou Cisse](https://github.com/cisstech)

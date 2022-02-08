@@ -6,8 +6,8 @@ import { MatBadgeModule } from '@angular/material/badge';
 import { MatTooltipModule } from '@angular/material/tooltip';
 
 import { AngularSplitModule } from 'angular-split';
-import { NgeUiIconModule } from '@mcisse/nge/ui/icon';
-import { ViewModule } from '@mcisse/nge-ide/core';
+import { NgeUiIconModule } from '@cisstech/nge/ui/icon';
+import { ViewModule } from '@cisstech/nge-ide/core';
 
 import { SidebarComponent } from './sidebar.component';
 

@@ -5,7 +5,7 @@ import {
     OnDestroy,
     OnInit
 } from '@angular/core';
-import { IdeService, ITask, TaskService } from '@mcisse/nge-ide/core';
+import { IdeService, ITask, TaskService } from '@cisstech/nge-ide/core';
 import { Subscription } from 'rxjs';
 
 @Component({

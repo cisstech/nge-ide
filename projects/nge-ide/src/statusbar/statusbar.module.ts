@@ -4,7 +4,7 @@ import { CommonModule } from '@angular/common';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
-import { SafePipeModule } from '@mcisse/nge/pipes';
+import { SafePipeModule } from '@cisstech/nge/pipes';
 
 import { StatusbarComponent } from './statusbar.component';
 

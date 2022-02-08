@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnDestroy, OnInit } from '@angular/core';
-import { Editor, FileService, Paths } from '@mcisse/nge-ide/core';
+import { Editor, FileService, Paths } from '@cisstech/nge-ide/core';
 import { Subscription } from 'rxjs';
 
 @Component({

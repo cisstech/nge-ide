@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Settings, SettingsService } from '@mcisse/nge-ide/core';
+import { Settings, SettingsService } from '@cisstech/nge-ide/core';
 
 
 @Component({

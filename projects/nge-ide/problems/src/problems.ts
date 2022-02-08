@@ -7,7 +7,7 @@ import {
     StatusBarService,
     ViewContainerService,
     ViewService
-} from '@mcisse/nge-ide/core';
+} from '@cisstech/nge-ide/core';
 import { combineLatest, of } from 'rxjs';
 import { map } from 'rxjs/operators';
 

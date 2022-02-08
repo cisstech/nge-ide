@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { PickerBrowserService } from '@mcisse/nge/services';
-import { FaIcon } from '@mcisse/nge/ui/icon';
+import { PickerBrowserService } from '@cisstech/nge/services';
+import { FaIcon } from '@cisstech/nge/ui/icon';
 import { ExplorerService } from '../../explorer.service';
 import { CommandGroups, IExplorerCommand } from './explorer.command';
 export const EXPLORER_COMMAND_FILE_UPLOAD = 'explorer.commands.file-upload';

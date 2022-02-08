@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
-import { CommandService, EditorService, FileService, ICommand, IFile, Keybinding, KeyCodes, KeyModifiers, Paths, ToolbarButton, ToolbarGroups, ToolbarSevice } from '@mcisse/nge-ide/core';
+import { CommandService, EditorService, FileService, ICommand, IFile, Keybinding, KeyCodes, KeyModifiers, Paths, ToolbarButton, ToolbarGroups, ToolbarSevice } from '@cisstech/nge-ide/core';
 import { Observable } from 'rxjs';
 import { debounceTime, map, startWith } from 'rxjs/operators';
 

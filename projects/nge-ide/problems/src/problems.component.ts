@@ -1,6 +1,6 @@
 import { AfterViewChecked, ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { Diagnostic, DiagnosticGroup, DiagnosticService, DiagnosticSeverity, EditorService, NotificationService, Paths } from '@mcisse/nge-ide/core';
-import { ITree, ITreeAdapter, TreeComponent } from '@mcisse/nge/ui/tree';
+import { Diagnostic, DiagnosticGroup, DiagnosticService, DiagnosticSeverity, EditorService, NotificationService, Paths } from '@cisstech/nge-ide/core';
+import { ITree, ITreeAdapter, TreeComponent } from '@cisstech/nge/ui/tree';
 import { Subscription } from 'rxjs';
 
 @Component({

@@ -3,9 +3,9 @@ import { CommonModule } from '@angular/common';
 
 import { MatTooltipModule } from '@angular/material/tooltip';
 
-import { IDynamicModule } from '@mcisse/nge/services';
-import { NgeUiTreeModule } from '@mcisse/nge/ui/tree';
-import { NgeUiIconModule } from '@mcisse/nge/ui/icon';
+import { IDynamicModule } from '@cisstech/nge/services';
+import { NgeUiTreeModule } from '@cisstech/nge/ui/tree';
+import { NgeUiIconModule } from '@cisstech/nge/ui/icon';
 
 import { ProblemsComponent } from './problems.component';
 

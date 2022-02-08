@@ -1,9 +1,9 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { NgeMarkdownModule } from '@mcisse/nge/markdown';
-import { SafePipeModule } from '@mcisse/nge/pipes';
+import { NgeMarkdownModule } from '@cisstech/nge/markdown';
+import { SafePipeModule } from '@cisstech/nge/pipes';
 
-import { IDynamicModule } from '@mcisse/nge/services';
+import { IDynamicModule } from '@cisstech/nge/services';
 
 import { PreviewEditorComponent } from './preview-editor.component';
 

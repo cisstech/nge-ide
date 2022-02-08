@@ -14,7 +14,7 @@ import {
     ViewContainerScopes,
     ViewContainerService,
     ViewService,
-} from '@mcisse/nge-ide/core';
+} from '@cisstech/nge-ide/core';
 import { Subscription } from 'rxjs';
 
 const CLOSED_SIZE = 5;

@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { FileService, IdeService, MemFileProvider } from '@mcisse/nge-ide/core';
+import { FileService, IdeService, MemFileProvider } from '@cisstech/nge-ide/core';
 import { Subscription } from 'rxjs';
 
 @Component({

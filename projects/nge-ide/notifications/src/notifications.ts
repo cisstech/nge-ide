@@ -7,7 +7,7 @@ import {
     NotificationService,
     ViewContainerService,
     ViewService
-} from '@mcisse/nge-ide/core';
+} from '@cisstech/nge-ide/core';
 import { of } from 'rxjs';
 import { NotificationCommandClear } from './commands';
 

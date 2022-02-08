@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { FaIcon } from '@mcisse/nge/ui/icon';
+import { FaIcon } from '@cisstech/nge/ui/icon';
 import { ExplorerService } from '../../explorer.service';
 import { CommandGroups, IExplorerCommand } from './explorer.command';
 

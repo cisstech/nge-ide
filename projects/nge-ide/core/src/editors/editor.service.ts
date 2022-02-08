@@ -1,6 +1,6 @@
 import { Injectable, Injector, Predicate, Type } from '@angular/core';
-import { ConfirmOptions, DialogService } from '@mcisse/nge/ui/dialog';
-import { CodIcon } from '@mcisse/nge/ui/icon';
+import { ConfirmOptions, DialogService } from '@cisstech/nge/ui/dialog';
+import { CodIcon } from '@cisstech/nge/ui/icon';
 import { BehaviorSubject, Subject, Subscription } from 'rxjs';
 import { CommandService, ICommand } from '../commands';
 import { IContribution } from '../contributions/index';
@@ -332,7 +332,7 @@ export class EditorService implements IContribution {
             activeResource: resource,
             visibleEditors: this.editorGroups$.value.map(g => g.activeEditor as any).filter(e => !!e),
         });
-        
+
         this.didOpen.next(resource);
     }
 

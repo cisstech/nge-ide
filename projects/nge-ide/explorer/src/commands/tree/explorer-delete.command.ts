@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { FileService, NotificationService, Paths } from '@mcisse/nge-ide/core';
-import { DialogService } from '@mcisse/nge/ui/dialog';
-import { CodIcon } from '@mcisse/nge/ui/icon';
+import { FileService, NotificationService, Paths } from '@cisstech/nge-ide/core';
+import { DialogService } from '@cisstech/nge/ui/dialog';
+import { CodIcon } from '@cisstech/nge/ui/icon';
 import { ExplorerService } from '../../explorer.service';
 import { CommandGroups, IExplorerCommand } from './explorer.command';
 

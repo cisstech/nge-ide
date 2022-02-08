@@ -7,9 +7,9 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { NzTabsModule } from 'ng-zorro-antd/tabs';
 
 import { AngularSplitModule } from 'angular-split';
-import { NgeUiIconModule } from '@mcisse/nge/ui/icon';
+import { NgeUiIconModule } from '@cisstech/nge/ui/icon';
 
-import { CommandModule, DirectivesModule, PipesModule } from '@mcisse/nge-ide/core';
+import { CommandModule, DirectivesModule, PipesModule } from '@cisstech/nge-ide/core';
 
 import { WorkbenchComponent } from './workbench.component';
 

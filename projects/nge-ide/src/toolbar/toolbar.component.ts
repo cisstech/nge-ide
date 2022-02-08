@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { IToolbarItem, ToolbarGroups, ToolbarSevice } from '@mcisse/nge-ide/core';
+import { IToolbarItem, ToolbarGroups, ToolbarSevice } from '@cisstech/nge-ide/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 

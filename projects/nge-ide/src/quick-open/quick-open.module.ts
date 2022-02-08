@@ -4,9 +4,9 @@ import { ReactiveFormsModule } from '@angular/forms';
 
 import { MatAutocompleteModule } from '@angular/material/autocomplete'
 
-import { NgeUiIconModule } from '@mcisse/nge/ui/icon';
+import { NgeUiIconModule } from '@cisstech/nge/ui/icon';
 
-import { PipesModule } from '@mcisse/nge-ide/core';
+import { PipesModule } from '@cisstech/nge-ide/core';
 
 import { QuickOpenComponent } from './quick-open.component';
 

@@ -1,5 +1,5 @@
 import { Injector } from '@angular/core';
-import { Icon } from '@mcisse/nge/ui/icon';
+import { Icon } from '@cisstech/nge/ui/icon';
 import { EditorGroup } from './editor';
 import { Preview } from './preview';
 

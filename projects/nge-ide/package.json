@@ -1,5 +1,5 @@
 {
-  "name": "@mcisse/nge-ide",
+  "name": "@cisstech/nge-ide",
   "version": "13.0.1",
   "description": "An extensible and flexible open source ide written in Angular.",
   "keywords": [
@@ -7,12 +7,12 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/mciissee/nge-ide"
+    "url": "https://github.com/cisstech/nge-ide"
   },
   "bugs": {
-    "url": "https://github.com/mciissee/nge-ide/issues"
+    "url": "https://github.com/cisstech/nge-ide/issues"
   },
-  "homepage": "https://github.com/mciissee/nge-ide",
+  "homepage": "https://github.com/cisstech/nge-ide",
   "author": {
     "name": "Mamadou Cisse",
     "email": "mciissee@gmail.com"
@@ -23,7 +23,7 @@
     "@angular/core": "^13.0.3",
     "@angular/cdk": "^13.0.3",
     "@angular/material": "^13.0.3",
-    "@mcisse/nge": "^13.1.0",
+    "@cisstech/nge": "^13.1.0",
     "rxjs": "^7.5.2",
     "@ngx-pwa/local-storage": "^13.0.2",
     "angular-split": "^13.1.0",

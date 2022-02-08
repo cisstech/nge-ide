@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { NotificationService } from '@mcisse/nge-ide/core';
+import { NotificationService } from '@cisstech/nge-ide/core';
 
 @Component({
     selector: 'ide-notifications',

@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
-import { IStatusBarItem, StatusBarService } from '@mcisse/nge-ide/core';
+import { IStatusBarItem, StatusBarService } from '@cisstech/nge-ide/core';
 import { Subscription } from 'rxjs';
 
 @Component({

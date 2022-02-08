@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
-import { ICommand } from "@mcisse/nge-ide/core";
-import { CodIcon, Icon } from "@mcisse/nge/ui/icon";
+import { ICommand } from "@cisstech/nge-ide/core";
+import { CodIcon, Icon } from "@cisstech/nge/ui/icon";
 import { ExplorerService } from "../../explorer.service";
 
 export const EXPLORER_COMMAND_TOGGLE_FILTERING = 'explorer.commands.toggle-filtering';

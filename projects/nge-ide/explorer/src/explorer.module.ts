@@ -6,11 +6,11 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 
 import { NzDropDownModule } from 'ng-zorro-antd/dropdown';
 
-import { CommandModule, DirectivesModule } from '@mcisse/nge-ide/core';
+import { CommandModule, DirectivesModule } from '@cisstech/nge-ide/core';
 
-import { IDynamicModule } from '@mcisse/nge/services';
-import { NgeUiIconModule } from '@mcisse/nge/ui/icon';
-import { NgeUiTreeModule } from '@mcisse/nge/ui/tree';
+import { IDynamicModule } from '@cisstech/nge/services';
+import { NgeUiIconModule } from '@cisstech/nge/ui/icon';
+import { NgeUiTreeModule } from '@cisstech/nge/ui/tree';
 
 import { ExplorerComponent } from './explorer.component';
 

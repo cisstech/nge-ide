@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { CodIcon } from "@mcisse/nge/ui/icon";
+import { CodIcon } from "@cisstech/nge/ui/icon";
 import { ICommand } from "../../commands";
 import { EditorService } from "../editor.service";
 import { PreviewService } from "../preview.service";

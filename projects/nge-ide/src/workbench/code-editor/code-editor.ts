@@ -1,4 +1,4 @@
-import { Editor, FileService, OpenRequest } from "@mcisse/nge-ide/core";
+import { Editor, FileService, OpenRequest } from "@cisstech/nge-ide/core";
 
 export class CodeEditor extends Editor {
     component = () => import('./code-editor.module').then(m => m.CodeEditorModule);

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { ICommand } from '@mcisse/nge-ide/core';
-import { CodIcon } from '@mcisse/nge/ui/icon';
+import { ICommand } from '@cisstech/nge-ide/core';
+import { CodIcon } from '@cisstech/nge/ui/icon';
 import { ExplorerService } from '../../explorer.service';
 
 export const EXPLORER_COMMAND_COLLAPSE = 'explorer.commands.collapse-all';

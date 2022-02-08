@@ -1,6 +1,6 @@
 import { Injector, NgModule, Injectable } from '@angular/core';
-import { CONTRIBUTION, EditorService, IContribution, SETTINGS_URI, SidebarContainer, ViewContainerService } from '@mcisse/nge-ide/core';
-import { CodIcon } from '@mcisse/nge/ui/icon';
+import { CONTRIBUTION, EditorService, IContribution, SETTINGS_URI, SidebarContainer, ViewContainerService } from '@cisstech/nge-ide/core';
+import { CodIcon } from '@cisstech/nge/ui/icon';
 import { SettingsEditor } from './settings-editor/settings-editor';
 
 /**

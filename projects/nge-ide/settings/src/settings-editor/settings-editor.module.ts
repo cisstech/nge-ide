@@ -8,9 +8,9 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatFormFieldModule } from '@angular/material/form-field';
 
-import { IDynamicModule } from '@mcisse/nge/services';
+import { IDynamicModule } from '@cisstech/nge/services';
 import { SettingsEditorComponent } from './settings-editor.component';
-import { PipesModule } from '@mcisse/nge-ide/core';
+import { PipesModule } from '@cisstech/nge-ide/core';
 
 
 @NgModule({

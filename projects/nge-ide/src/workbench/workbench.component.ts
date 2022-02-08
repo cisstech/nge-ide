@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, OnDestroy, OnInit } from '@angular/core';
-import { EditorGroup, EditorService, EditorTab } from '@mcisse/nge-ide/core';
+import { EditorGroup, EditorService, EditorTab } from '@cisstech/nge-ide/core';
 import { combineLatest, Observable, Subscription } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
 import { CodeEditor } from './code-editor/code-editor';

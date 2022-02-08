@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
-import { ICommand, NotificationService } from "@mcisse/nge-ide/core";
-import { CodIcon } from "@mcisse/nge/ui/icon";
+import { ICommand, NotificationService } from "@cisstech/nge-ide/core";
+import { CodIcon } from "@cisstech/nge/ui/icon";
 
 export const NOTIFICATION_COMMAND_CLEAR = 'notification.commands.clear';
 

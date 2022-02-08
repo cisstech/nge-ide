@@ -1,4 +1,4 @@
-import { Icon } from '@mcisse/nge/ui/icon';
+import { Icon } from '@cisstech/nge/ui/icon';
 
 
 export class Keybinding {

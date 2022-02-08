@@ -11,15 +11,15 @@ import {
 import {
     DndData, EditorService, FileService, FileSystemProviderCapabilities, IdeService,
     IFile, NotificationService, Paths, StorageService
-} from '@mcisse/nge-ide/core';
-import { DialogService } from '@mcisse/nge/ui/dialog';
-import { FileIconOptions } from '@mcisse/nge/ui/icon';
+} from '@cisstech/nge-ide/core';
+import { DialogService } from '@cisstech/nge/ui/dialog';
+import { FileIconOptions } from '@cisstech/nge/ui/icon';
 import {
     ITreeNodeHolder,
     ITreeState,
     TreeComponent,
     TreeState
-} from '@mcisse/nge/ui/tree';
+} from '@cisstech/nge/ui/tree';
 import {
     NzContextMenuService,
     NzDropdownMenuComponent

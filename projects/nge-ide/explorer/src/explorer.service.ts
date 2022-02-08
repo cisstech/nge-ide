@@ -1,7 +1,7 @@
 import { Injectable, Type } from '@angular/core';
 import {
     CommandService, EditorService, FileService, FileSystemProviderCapabilities, IContribution, IFile, NotificationService
-} from '@mcisse/nge-ide/core';
+} from '@cisstech/nge-ide/core';
 import {
     ITree,
     ITreeAdapter,
@@ -9,7 +9,7 @@ import {
     ITreeKeyAction,
     ITreeMouseAction,
     TreeService
-} from '@mcisse/nge/ui/tree';
+} from '@cisstech/nge/ui/tree';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { IExplorerCommand } from './commands';
 

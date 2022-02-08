@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 
 import { AngularSplitModule } from 'angular-split';
 
-import { CoreModule, EditorModule } from '@mcisse/nge-ide/core';
+import { CoreModule, EditorModule } from '@cisstech/nge-ide/core';
 
 import { IdeComponent } from './ide.component';
 import { InfobarModule } from './infobar/infobar.module';

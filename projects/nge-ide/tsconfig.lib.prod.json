@@ -3,13 +3,13 @@
   "compilerOptions": {
     "declarationMap": false,
     "paths": {
-      "@mcisse/nge-ide": ["dist/nge-ide"],
-      "@mcisse/nge-ide/core": ["dist/nge-ide/core"],
-      "@mcisse/nge-ide/explorer": ["dist/nge-ide/explorer"],
-      "@mcisse/nge-ide/search": ["dist/nge-ide/search"],
-      "@mcisse/nge-ide/settings": ["dist/nge-ide/settings"],
-      "@mcisse/nge-ide/problems": ["dist/nge-ide/problems"],
-      "@mcisse/nge-ide/notifications": ["dist/nge-ide/notifications"]
+      "@cisstech/nge-ide": ["dist/nge-ide"],
+      "@cisstech/nge-ide/core": ["dist/nge-ide/core"],
+      "@cisstech/nge-ide/explorer": ["dist/nge-ide/explorer"],
+      "@cisstech/nge-ide/search": ["dist/nge-ide/search"],
+      "@cisstech/nge-ide/settings": ["dist/nge-ide/settings"],
+      "@cisstech/nge-ide/problems": ["dist/nge-ide/problems"],
+      "@cisstech/nge-ide/notifications": ["dist/nge-ide/notifications"]
     }
   },
   "angularCompilerOptions": {

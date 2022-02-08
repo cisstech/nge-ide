@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnDestroy, OnInit } from '@angular/core';
-import { MonacoService, Editor, OpenOptions, OpenRequest, NotificationService, EditorService } from '@mcisse/nge-ide/core';
+import { MonacoService, Editor, OpenOptions, OpenRequest, NotificationService, EditorService } from '@cisstech/nge-ide/core';
 import { Subscription } from 'rxjs';
 
 import IDisposable = monaco.IDisposable;

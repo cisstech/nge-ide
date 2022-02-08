@@ -1,5 +1,5 @@
 import { Injectable, Injector } from '@angular/core';
-import { NgeMonacoLoaderService } from '@mcisse/nge/monaco';
+import { NgeMonacoLoaderService } from '@cisstech/nge/monaco';
 import { fromEvent, PartialObserver, Subject, Subscription } from 'rxjs';
 import { CONTRIBUTION, IContribution } from './contributions/index';
 import { FileService } from './files/index';

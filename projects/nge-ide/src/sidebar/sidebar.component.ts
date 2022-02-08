@@ -14,7 +14,7 @@ import {
     SidebarContainer,
     ViewContainerScopes,
     ViewContainerService,
-} from '@mcisse/nge-ide/core';
+} from '@cisstech/nge-ide/core';
 import { lastValueFrom, Subscription } from 'rxjs';
 import { map, take } from 'rxjs/operators';
 

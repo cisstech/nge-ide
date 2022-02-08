@@ -1,4 +1,4 @@
-import { Editor, FileService, OpenRequest, Paths } from "@mcisse/nge-ide/core";
+import { Editor, FileService, OpenRequest, Paths } from "@cisstech/nge-ide/core";
 
 const extensions = [
     'mp3', 'wav', 'ogg', // audio
