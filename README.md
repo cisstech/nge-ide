@@ -13,7 +13,7 @@ An extensible and flexible open source ide written in Angular.
 [![Tests](https://github.com/cisstech/nge-ide/workflows/Tests/badge.svg)](https://github.com/cisstech/nge-ide/actions/)
 <!-- [![codecov](https://codecov.io/gh/cisstech/nge-ide/branch/main/graph/badge.svg)](https://codecov.io/gh/cisstech/nge-ide) -->
 [![codefactor](https://www.codefactor.io/repository/github/cisstech/nge-ide/badge/main)](https://www.codefactor.io/repository/github/cisstech/nge-ide/overview/main)
-[![GitHub Release Date](https://img.shields.io/github/release-date/cisstech/nge-ide.svg)](https://github.com/cisstech/nge-ide/releases)
+[![GitHub Tag](https://img.shields.io/github/tag/cisstech/nge-ide.svg)](https://github.com/cisstech/nge-ide/tags)
 [![npm package](https://img.shields.io/npm/v/@cisstech/nge-ide.svg)](https://www.npmjs.org/package/@cisstech/nge-ide)
 [![NPM downloads](http://img.shields.io/npm/dm/@cisstech/nge-ide.svg)](https://npmjs.org/package/@cisstech/nge-ide)
 [![licence](https://img.shields.io/github/license/cisstech/nge-ide)](https://github.com/cisstech/nge-ide/blob/main/LICENSE)
