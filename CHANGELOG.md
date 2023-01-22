@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [13.0.4](https://github.com/cisstech/nge-ide/compare/v13.0.3...v13.0.4) (2023-01-22)
+
+
+### Bug Fixes
+
+* **core:** temporary fix for null cachedResolver [#1](https://github.com/cisstech/nge-ide/issues/1) ([d5c0c16](https://github.com/cisstech/nge-ide/commit/d5c0c16cbc92209d035acf2fba6d7ab42e971aba))
+
 ### [13.0.3](https://github.com/cisstech/nge-ide/compare/v13.0.1...v13.0.3) (2022-02-08)
 
 ### [13.0.2](https://github.com/cisstech/nge-ide/compare/v13.0.1...v13.0.2) (2022-02-08)
