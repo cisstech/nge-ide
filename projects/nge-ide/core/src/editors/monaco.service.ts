@@ -437,7 +437,7 @@ export class MonacoService implements IContribution {
             setTimeout(() => {
                 const { _cachedResolver } = _standaloneKeybindingService;
                 resolve(_cachedResolver._lookupMap);
-            });
+            }, 500);
         });
 
         const registerEditorAction = (action: string, group: ToolbarGroups, priority: number, separator?: boolean) => {
