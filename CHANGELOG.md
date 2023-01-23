@@ -2,6 +2,8 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [15.0.0](https://github.com/cisstech/nge-ide/compare/v13.0.4...v15.0.0) (2023-01-23)
+
 ### [13.0.4](https://github.com/cisstech/nge-ide/compare/v13.0.3...v13.0.4) (2023-01-22)
 
 
