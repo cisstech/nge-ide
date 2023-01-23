@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { MatBadgeModule } from '@angular/material/badge';
-import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatLegacyTooltipModule as MatTooltipModule } from '@angular/material/legacy-tooltip';
 
 import { AngularSplitModule } from 'angular-split';
 import { NgeUiIconModule } from '@cisstech/nge/ui/icon';

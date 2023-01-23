@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatLegacyTooltipModule as MatTooltipModule } from '@angular/material/legacy-tooltip';
 import { NgeUiIconModule } from '@cisstech/nge/ui/icon';
 import { CommandGroupComponent } from './command-group/command-group.component';
 

@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
-import { FormControl } from '@angular/forms';
-import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
+import { UntypedFormControl } from '@angular/forms';
+import { MatLegacyAutocompleteSelectedEvent as MatAutocompleteSelectedEvent } from '@angular/material/legacy-autocomplete';
 import { CommandService, EditorService, FileService, ICommand, IFile, Keybinding, KeyCodes, KeyModifiers, Paths, ToolbarButton, ToolbarGroups, ToolbarSevice } from '@cisstech/nge-ide/core';
 import { Observable } from 'rxjs';
 import { debounceTime, map, startWith } from 'rxjs/operators';
@@ -28,7 +28,7 @@ export class QuickOpenComponent implements OnInit {
         }
     }(this);
 
-    readonly form = new FormControl();
+    readonly form = new UntypedFormControl();
     readonly $entries: Observable<IFile[]> = this.form
         .valueChanges
         .pipe(
