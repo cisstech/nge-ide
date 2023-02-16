@@ -9,30 +9,29 @@ import { NzTabsModule } from 'ng-zorro-antd/tabs';
 import { AngularSplitModule } from 'angular-split';
 import { NgeUiIconModule } from '@cisstech/nge/ui/icon';
 
-import { CommandModule, DirectivesModule, PipesModule } from '@cisstech/nge-ide/core';
+import {
+  CommandModule,
+  DirectivesModule,
+  PipesModule,
+} from '@cisstech/nge-ide/core';
 
 import { WorkbenchComponent } from './workbench.component';
 
-
 @NgModule({
-    imports: [
-        CommonModule,
+  imports: [
+    CommonModule,
 
-        MatTooltipModule,
-        MatProgressBarModule,
-        NzTabsModule,
+    MatTooltipModule,
+    MatProgressBarModule,
+    NzTabsModule,
 
-        CommandModule,
-        NgeUiIconModule,
-        PipesModule,
-        DirectivesModule,
-        AngularSplitModule,
-    ],
-    exports: [
-        WorkbenchComponent,
-    ],
-    declarations: [
-        WorkbenchComponent,
-    ]
+    CommandModule,
+    NgeUiIconModule,
+    PipesModule,
+    DirectivesModule,
+    AngularSplitModule,
+  ],
+  exports: [WorkbenchComponent],
+  declarations: [WorkbenchComponent],
 })
 export class WorkbenchModule {}

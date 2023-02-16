@@ -4,8 +4,8 @@ import { ITask } from '@cisstech/nge-ide/core';
 @Component({
   selector: 'ide-taskbar',
   templateUrl: './taskbar.component.html',
-  styleUrls: ['./taskbar.component.scss']
+  styleUrls: ['./taskbar.component.scss'],
 })
 export class TaskbarComponent {
-    @Input() task!: ITask;
+  @Input() task!: ITask;
 }

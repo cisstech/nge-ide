@@ -10,14 +10,9 @@ import { NgeUiIconModule } from '@cisstech/nge/ui/icon';
 import { ProblemsComponent } from './problems.component';
 
 @NgModule({
-  imports: [
-    CommonModule,
-    MatTooltipModule,
-    NgeUiTreeModule,
-    NgeUiIconModule,
-  ],
+  imports: [CommonModule, MatTooltipModule, NgeUiTreeModule, NgeUiIconModule],
   declarations: [ProblemsComponent],
 })
 export class ProblemsModule implements IDynamicModule {
-    component = ProblemsComponent;
+  component = ProblemsComponent;
 }

@@ -8,15 +8,9 @@ import { IDynamicModule } from '@cisstech/nge/services';
 import { PreviewEditorComponent } from './preview-editor.component';
 
 @NgModule({
-    imports: [
-        CommonModule,
-        SafePipeModule,
-        NgeMarkdownModule,
-    ],
-    declarations: [
-        PreviewEditorComponent,
-    ],
+  imports: [CommonModule, SafePipeModule, NgeMarkdownModule],
+  declarations: [PreviewEditorComponent],
 })
 export class PreviewEditorModule implements IDynamicModule {
-    component = PreviewEditorComponent
+  component = PreviewEditorComponent;
 }

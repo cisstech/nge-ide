@@ -15,23 +15,23 @@ import { QuickOpenModule } from './quick-open/quick-open.module';
 import { TaskbarModule } from './taskbar/taskbar.module';
 
 @NgModule({
-    imports: [
-        CommonModule,
+  imports: [
+    CommonModule,
 
-        AngularSplitModule,
+    AngularSplitModule,
 
-        CoreModule,
-        EditorModule,
+    CoreModule,
+    EditorModule,
 
-        InfobarModule,
-        ToolbarModule,
-        SidebarModule,
-        StatusbarModule,
-        WorkbenchModule,
-        QuickOpenModule,
-        TaskbarModule,
-    ],
-    exports: [IdeComponent],
-    declarations: [IdeComponent]
+    InfobarModule,
+    ToolbarModule,
+    SidebarModule,
+    StatusbarModule,
+    WorkbenchModule,
+    QuickOpenModule,
+    TaskbarModule,
+  ],
+  exports: [IdeComponent],
+  declarations: [IdeComponent],
 })
 export class NgeIdeModule {}

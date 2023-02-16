@@ -3,5 +3,5 @@ export function stringToByteArray(input: string): Uint8Array {
 }
 
 export function stringFromByArray(input: Uint8Array): string {
-    return new TextDecoder().decode(input);
+  return new TextDecoder().decode(input);
 }

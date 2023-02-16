@@ -6,11 +6,8 @@ import { NzSpinModule } from 'ng-zorro-antd/spin';
 import { TaskbarComponent } from './taskbar.component';
 
 @NgModule({
-  imports: [
-    CommonModule,
-    NzSpinModule
-  ],
+  imports: [CommonModule, NzSpinModule],
   exports: [TaskbarComponent],
-  declarations: [TaskbarComponent]
+  declarations: [TaskbarComponent],
 })
-export class TaskbarModule { }
+export class TaskbarModule {}

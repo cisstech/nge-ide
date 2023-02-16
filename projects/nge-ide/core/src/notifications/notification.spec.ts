@@ -1,9 +1,9 @@
 import { ErrorNotification } from './notification';
 
-export const testErrorNotification: () => ErrorNotification = () => new ErrorNotification('test');
+export const testErrorNotification: () => ErrorNotification = () =>
+  new ErrorNotification('test');
 
 describe('ErrorNotification', () => {
-
   it('should be created', () => {
     expect(testErrorNotification()).toBeTruthy();
   });
@@ -12,5 +12,3 @@ describe('ErrorNotification', () => {
     expect(new ErrorNotification(`TADA !`, 'warn', 'trace')).toBeTruthy();
   });
 });
-
-

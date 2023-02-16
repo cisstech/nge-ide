@@ -16,19 +16,19 @@ import { NotificationsComponent } from './notifications.component';
 
 @NgModule({
   imports: [
-        CommonModule,
-        MatBadgeModule,
-        MatSelectModule,
-        MatFormFieldModule,
+    CommonModule,
+    MatBadgeModule,
+    MatSelectModule,
+    MatFormFieldModule,
 
-        NzTabsModule,
-        NzBadgeModule,
-        NzSelectModule,
+    NzTabsModule,
+    NzBadgeModule,
+    NzSelectModule,
 
-        ViewModule,
+    ViewModule,
   ],
   declarations: [NotificationsComponent],
 })
 export class NotificationsModule implements IDynamicModule {
-    component = NotificationsComponent;
+  component = NotificationsComponent;
 }

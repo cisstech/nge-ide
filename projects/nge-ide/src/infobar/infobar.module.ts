@@ -14,22 +14,22 @@ import { NzTabsModule } from 'ng-zorro-antd/tabs';
 import { InfobarComponent } from './infobar.component';
 
 @NgModule({
-    declarations: [InfobarComponent],
-    imports: [
-        CommonModule,
-        FormsModule,
+  declarations: [InfobarComponent],
+  imports: [
+    CommonModule,
+    FormsModule,
 
-        MatBadgeModule,
-        MatSelectModule,
-        MatFormFieldModule,
+    MatBadgeModule,
+    MatSelectModule,
+    MatFormFieldModule,
 
-        NzTabsModule,
-        NzBadgeModule,
-        NzSelectModule,
+    NzTabsModule,
+    NzBadgeModule,
+    NzSelectModule,
 
-        ViewModule,
-        CommandModule,
-    ],
-    exports: [InfobarComponent],
+    ViewModule,
+    CommandModule,
+  ],
+  exports: [InfobarComponent],
 })
 export class InfobarModule {}

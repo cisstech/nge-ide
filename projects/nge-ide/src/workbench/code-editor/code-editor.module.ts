@@ -9,13 +9,9 @@ import { NgeMonacoModule } from '@cisstech/nge/monaco';
 import { CodeEditorComponent } from './code-editor.component';
 
 @NgModule({
-    imports: [
-        CommonModule,
-        NzSpinModule,
-        NgeMonacoModule,
-    ],
-    declarations: [CodeEditorComponent],
+  imports: [CommonModule, NzSpinModule, NgeMonacoModule],
+  declarations: [CodeEditorComponent],
 })
 export class CodeEditorModule implements IDynamicModule {
-    component = CodeEditorComponent;
+  component = CodeEditorComponent;
 }

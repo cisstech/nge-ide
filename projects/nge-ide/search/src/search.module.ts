@@ -16,25 +16,22 @@ import { SearchComponent } from './search.component';
 import { SearchInputComponent } from './search-input/search-input.components';
 
 @NgModule({
-    declarations: [
-        SearchComponent,
-        SearchInputComponent
-    ],
-    imports: [
-        CommonModule,
-        FormsModule,
+  declarations: [SearchComponent, SearchInputComponent],
+  imports: [
+    CommonModule,
+    FormsModule,
 
-        MatTooltipModule,
-        MatFormFieldModule,
-        MatProgressSpinnerModule,
+    MatTooltipModule,
+    MatFormFieldModule,
+    MatProgressSpinnerModule,
 
-        PipesModule,
-        DirectivesModule,
+    PipesModule,
+    DirectivesModule,
 
-        NgeUiIconModule,
-        NgeUiTreeModule,
-    ],
+    NgeUiIconModule,
+    NgeUiTreeModule,
+  ],
 })
 export class SearchModule implements IDynamicModule {
-    component = SearchComponent;
+  component = SearchComponent;
 }

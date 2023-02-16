@@ -12,24 +12,21 @@ import { NgeIdeNotificationsModule } from '@cisstech/nge-ide/notifications';
 
 import { ShowcaseComponent } from './showcase.component';
 
-
 @NgModule({
-    imports: [
-        CommonModule,
+  imports: [
+    CommonModule,
 
-        NgeIdeModule,
-        NgeIdeExplorerModule,
-        NgeIdeSearchModule,
-        NgeIdeSettingsModule,
+    NgeIdeModule,
+    NgeIdeExplorerModule,
+    NgeIdeSearchModule,
+    NgeIdeSettingsModule,
 
-        NgeIdeProblemsModule,
-        NgeIdeNotificationsModule,
+    NgeIdeProblemsModule,
+    NgeIdeNotificationsModule,
 
-        RouterModule.forChild([
-            { path: '', component: ShowcaseComponent }
-        ])
-    ],
-    declarations: [ShowcaseComponent],
-    providers: [],
+    RouterModule.forChild([{ path: '', component: ShowcaseComponent }]),
+  ],
+  declarations: [ShowcaseComponent],
+  providers: [],
 })
-export class ShowcaseModule { }
+export class ShowcaseModule {}

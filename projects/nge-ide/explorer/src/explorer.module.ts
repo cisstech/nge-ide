@@ -15,22 +15,22 @@ import { NgeUiTreeModule } from '@cisstech/nge/ui/tree';
 import { ExplorerComponent } from './explorer.component';
 
 @NgModule({
-    imports: [
-        CommonModule,
-        FormsModule,
+  imports: [
+    CommonModule,
+    FormsModule,
 
-        MatTooltipModule,
+    MatTooltipModule,
 
-        NzDropDownModule,
+    NzDropDownModule,
 
-        CommandModule,
+    CommandModule,
 
-        NgeUiIconModule,
-        NgeUiTreeModule,
-        DirectivesModule,
-    ],
-    declarations: [ExplorerComponent],
+    NgeUiIconModule,
+    NgeUiTreeModule,
+    DirectivesModule,
+  ],
+  declarations: [ExplorerComponent],
 })
 export class ExplorerModule implements IDynamicModule {
-    component = ExplorerComponent
+  component = ExplorerComponent;
 }

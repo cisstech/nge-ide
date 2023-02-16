@@ -9,19 +9,15 @@ import { SafePipeModule } from '@cisstech/nge/pipes';
 import { StatusbarComponent } from './statusbar.component';
 
 @NgModule({
-    imports: [
-        CommonModule,
+  imports: [
+    CommonModule,
 
-        MatTooltipModule,
-        MatProgressSpinnerModule,
+    MatTooltipModule,
+    MatProgressSpinnerModule,
 
-        SafePipeModule,
-    ],
-    exports: [
-        StatusbarComponent,
-    ],
-    declarations: [
-        StatusbarComponent,
-    ],
+    SafePipeModule,
+  ],
+  exports: [StatusbarComponent],
+  declarations: [StatusbarComponent],
 })
-export class StatusbarModule { }
+export class StatusbarModule {}

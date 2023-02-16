@@ -5,16 +5,8 @@ import { NgeUiIconModule } from '@cisstech/nge/ui/icon';
 import { CommandGroupComponent } from './command-group/command-group.component';
 
 @NgModule({
-    declarations: [
-        CommandGroupComponent
-    ],
-    imports: [
-        CommonModule,
-        MatTooltipModule,
-        NgeUiIconModule
-    ],
-    exports: [
-        CommandGroupComponent
-    ],
+  declarations: [CommandGroupComponent],
+  imports: [CommonModule, MatTooltipModule, NgeUiIconModule],
+  exports: [CommandGroupComponent],
 })
-export class CommandModule { }
+export class CommandModule {}

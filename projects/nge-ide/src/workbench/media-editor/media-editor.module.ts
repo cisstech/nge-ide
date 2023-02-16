@@ -6,12 +6,9 @@ import { IDynamicModule } from '@cisstech/nge/services';
 import { MediaEditorComponent } from './media-editor.component';
 
 @NgModule({
-    imports: [
-        CommonModule,
-        SafePipeModule,
-    ],
-    declarations: [MediaEditorComponent],
+  imports: [CommonModule, SafePipeModule],
+  declarations: [MediaEditorComponent],
 })
 export class MediaEditorModule implements IDynamicModule {
-    component = MediaEditorComponent;
+  component = MediaEditorComponent;
 }

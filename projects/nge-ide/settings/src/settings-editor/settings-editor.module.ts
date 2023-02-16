@@ -12,22 +12,21 @@ import { IDynamicModule } from '@cisstech/nge/services';
 import { SettingsEditorComponent } from './settings-editor.component';
 import { PipesModule } from '@cisstech/nge-ide/core';
 
-
 @NgModule({
-    imports: [
-        CommonModule,
-        FormsModule,
+  imports: [
+    CommonModule,
+    FormsModule,
 
-        MatListModule,
-        MatInputModule,
-        MatSelectModule,
-        MatCheckboxModule,
-        MatFormFieldModule,
+    MatListModule,
+    MatInputModule,
+    MatSelectModule,
+    MatCheckboxModule,
+    MatFormFieldModule,
 
-        PipesModule,
-    ],
-    declarations: [SettingsEditorComponent],
+    PipesModule,
+  ],
+  declarations: [SettingsEditorComponent],
 })
 export class SettingsEditorModule implements IDynamicModule {
-    component = SettingsEditorComponent;
+  component = SettingsEditorComponent;
 }

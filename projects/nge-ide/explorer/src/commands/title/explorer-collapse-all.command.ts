@@ -5,17 +5,16 @@ import { ExplorerService } from '../../explorer.service';
 
 export const EXPLORER_COMMAND_COLLAPSE = 'explorer.commands.collapse-all';
 
-
 @Injectable()
 export class ExplorerCommandCollapseAll implements ICommand {
-    readonly id = EXPLORER_COMMAND_COLLAPSE;
-    readonly icon = new CodIcon('collapse-all');
-    readonly label = 'Réduire les dossiers';
-    readonly enabled = true;
+  readonly id = EXPLORER_COMMAND_COLLAPSE;
+  readonly icon = new CodIcon('collapse-all');
+  readonly label = 'Réduire les dossiers';
+  readonly enabled = true;
 
-    constructor(private readonly explorerService: ExplorerService) {}
+  constructor(private readonly explorerService: ExplorerService) {}
 
-    execute() {
-        this.explorerService.collapseAll();
-    }
+  execute() {
+    this.explorerService.collapseAll();
+  }
 }

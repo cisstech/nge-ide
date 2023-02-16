@@ -10,18 +10,16 @@ import { NzDropDownModule } from 'ng-zorro-antd/dropdown';
 import { ToolbarComponent } from './toolbar.component';
 
 @NgModule({
-    imports: [
-        CommonModule,
+  imports: [
+    CommonModule,
 
-        MatMenuModule,
-        MatButtonModule,
-        MatDividerModule,
+    MatMenuModule,
+    MatButtonModule,
+    MatDividerModule,
 
-        NzDropDownModule,
-    ],
-    exports: [
-        ToolbarComponent,
-    ],
-    declarations: [ToolbarComponent]
+    NzDropDownModule,
+  ],
+  exports: [ToolbarComponent],
+  declarations: [ToolbarComponent],
 })
-export class ToolbarModule { }
+export class ToolbarModule {}

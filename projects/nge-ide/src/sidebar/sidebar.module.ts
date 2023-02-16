@@ -12,22 +12,18 @@ import { ViewModule } from '@cisstech/nge-ide/core';
 import { SidebarComponent } from './sidebar.component';
 
 @NgModule({
-    imports: [
-        CommonModule,
+  imports: [
+    CommonModule,
 
-        DragDropModule,
-        MatBadgeModule,
-        MatTooltipModule,
-        ViewModule,
+    DragDropModule,
+    MatBadgeModule,
+    MatTooltipModule,
+    ViewModule,
 
-        AngularSplitModule,
-        NgeUiIconModule,
-    ],
-    exports: [
-        SidebarComponent,
-    ],
-    declarations: [
-        SidebarComponent,
-    ],
+    AngularSplitModule,
+    NgeUiIconModule,
+  ],
+  exports: [SidebarComponent],
+  declarations: [SidebarComponent],
 })
 export class SidebarModule {}

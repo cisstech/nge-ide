@@ -7,8 +7,8 @@ import { ViewGroupComponent } from './view-group/view-group.component';
 import { ViewDirective } from './view.directive';
 
 @NgModule({
-    imports: [CommonModule, PortalModule, AngularSplitModule, CommandModule],
-    exports: [ ViewDirective, ViewGroupComponent],
-    declarations: [ ViewDirective, ViewGroupComponent],
+  imports: [CommonModule, PortalModule, AngularSplitModule, CommandModule],
+  exports: [ViewDirective, ViewGroupComponent],
+  declarations: [ViewDirective, ViewGroupComponent],
 })
 export class ViewModule {}
