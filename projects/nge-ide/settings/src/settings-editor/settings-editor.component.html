@@ -1,39 +1,40 @@
 <div class='setting-editor'>
-  <mat-list class='list-groups'>
+  <ul class="list-groups">
     <ng-container *ngFor='let item of groups'>
-      <mat-list-item  *ngIf="item.settings?.length !== 0" (click)='didSelect(item)'>
-        <span class='setting-item' [ngClass]='{ active: selection?.name === item.name}'>
+      <li  *ngIf="item.settings?.length !== 0" (click)='didSelect(item)'>
+        <div class='setting-item-group' [ngClass]='{ active: selection?.name === item.name}'>
           {{item.name|nicifyName}}
-        </span>
-      </mat-list-item>
+        </div>
+      </li>
     </ng-container>
-  </mat-list>
-  <mat-list>
+  </ul>
+  <ul>
     <ng-container *ngIf="selection">
       <ng-container *ngFor="let setting of selection.settings">
-        <mat-list-item>
-          <span mat-line class='setting-item active'>{{setting.name|nicifyName:true}}</span>
-          <p mat-line *ngIf='setting.type !== "Checkbox"'>{{setting.comment}}</p>
-          <div mat-line>
+          <p class='setting-item-name active'>{{setting.name|nicifyName:true}}</p>
+          <p class='setting-item-comment' *ngIf='setting.type !== "Checkbox"'>{{setting.comment}}</p>
+          <div class="setting-item-input">
             <ng-container [ngSwitch]="setting.type">
-              <mat-checkbox  color='primary' *ngSwitchCase="'Checkbox'" [(ngModel)]='setting.value' (change)='didChange()'>{{setting.comment}}</mat-checkbox>
-              <mat-form-field *ngSwitchCase="'Number'">
-                <input matInput type='number' placeholder="" [(ngModel)]="setting.value" (change)='didChange()'>
-              </mat-form-field>
-              <mat-form-field *ngSwitchCase="'Input'">
-                <input matInput type='text' placeholder="" [(ngModel)]="setting.value" (keyup)='didChange()'>
-              </mat-form-field>
-              <mat-form-field *ngSwitchCase="'Dropdown'">
-                <mat-select [(value)]='setting.value' (selectionChange)='didChange()'>
-                  <mat-option *ngFor="let choice of setting.choices" [value]="choice">
-                    {{choice}}
-                  </mat-option>
-                </mat-select>
-              </mat-form-field>
+              <ng-container *ngSwitchCase="'Checkbox'">
+                <label nz-checkbox [(ngModel)]="setting.value" (nzCheckedChange)="didChange()">{{setting.comment}}</label>
+              </ng-container>
+              <ng-container *ngSwitchCase="'Number'">
+                <input type="number" nz-input [(ngModel)]="setting.value" (ngModelChange)="didChange()">
+              </ng-container>
+              <ng-container *ngSwitchCase="'Input'">
+                <input type="text" nz-input [(ngModel)]="setting.value" (ngModelChange)="didChange()">
+              </ng-container>
+              <ng-container *ngSwitchCase="'Dropdown'">
+                <nz-select [(ngModel)]="setting.value" (ngModelChange)="didChange()" nzAllowClear>
+                  <nz-option
+                    *ngFor="let item of setting.choices"
+                    [nzLabel]="item"
+                    [nzValue]="item">
+                  </nz-option>
+                </nz-select>
+              </ng-container>
             </ng-container>
           </div>
-        </mat-list-item>
       </ng-container>
     </ng-container>
-  </mat-list>
-</div>
+  </ul>

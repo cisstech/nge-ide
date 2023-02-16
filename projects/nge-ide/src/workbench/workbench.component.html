@@ -20,7 +20,7 @@
                 <ng-template #iconFile>
                   <ui-icon class="tab-icon" [icon]="tab.options.title|iconFile"></ui-icon>
                 </ng-template>
-                <span class="tab-title" [matTooltip]="tab.options.tooltip">{{tab.options.title}}</span>
+                <span class="tab-title" [nz-tooltip]="tab.options.tooltip">{{tab.options.title}}</span>
                 <ng-container *ngIf="tab.resource|fileChanged|async; else: closeable">
                   <span class="tab-dirty codicon codicon-close-dirty" (click)="group.close(tab.resource)"></span>
                 </ng-container>

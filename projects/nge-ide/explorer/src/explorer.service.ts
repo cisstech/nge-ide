@@ -37,7 +37,7 @@ export class ExplorerService implements IContribution {
   readonly root = this.fileService.treeChange;
   readonly adapter: ITreeAdapter<IFile> = {
     id: 'explorer.tree',
-    idProvider: (node) => node.uri.toString(),
+    idProvider: (node) => node.uri.toString(true),
     nameProvider: (node) => this.fileService.entryName(node.uri),
     childrenProvider: (node) => this.fileService.findChildren(node),
     isExpandable: (node) => node.isFolder,
@@ -260,8 +260,6 @@ export class ExplorerService implements IContribution {
     if (!this.canDownload()) {
       return;
     }
-
-    // TODO support angular universal
     window.open(this.focusedNode()!.url!, '_blank');
   }
 
@@ -317,7 +315,6 @@ export class ExplorerService implements IContribution {
     if (!this.canEdit()) {
       return;
     }
-
     this.tree?.startEdition(this.focusedNode() as IFile);
   }
 
@@ -364,6 +361,7 @@ export class ExplorerService implements IContribution {
       } else {
         await this.fileService.rename(node, text);
       }
+      this.tree.endEdition();
     } catch (error) {
       this.notificationService.publishError(error);
     }

@@ -1,12 +1,13 @@
 import {
   AfterViewChecked,
   ChangeDetectionStrategy,
+  ChangeDetectorRef,
   Component,
   ElementRef,
   HostListener,
   OnDestroy,
   OnInit,
-  ViewChild,
+  ViewChild
 } from '@angular/core';
 import {
   DndData,
@@ -17,19 +18,17 @@ import {
   IFile,
   NotificationService,
   Paths,
-  StorageService,
+  StorageService
 } from '@cisstech/nge-ide/core';
 import { DialogService } from '@cisstech/nge/ui/dialog';
-import { FileIconOptions } from '@cisstech/nge/ui/icon';
 import {
-  ITreeNodeHolder,
   ITreeState,
   TreeComponent,
-  TreeState,
+  TreeState
 } from '@cisstech/nge/ui/tree';
 import {
   NzContextMenuService,
-  NzDropdownMenuComponent,
+  NzDropdownMenuComponent
 } from 'ng-zorro-antd/dropdown';
 import { BehaviorSubject, Subscription } from 'rxjs';
 import { IExplorerCommand } from './commands';
@@ -63,8 +62,9 @@ export class ExplorerComponent implements OnInit, OnDestroy, AfterViewChecked {
     private readonly storageService: StorageService,
     private readonly explorerService: ExplorerService,
     private readonly contextMenuService: NzContextMenuService,
-    private readonly notificationService: NotificationService
-  ) {}
+    private readonly notificationService: NotificationService,
+    private readonly changeDetectorRef: ChangeDetectorRef
+  ) { }
 
   ngOnInit(): void {
     this.restoreState();
@@ -92,6 +92,13 @@ export class ExplorerComponent implements OnInit, OnDestroy, AfterViewChecked {
         this.contextMenuService.create(e.event, this.dropdown);
       })
     );
+
+    this.subscriptions.push(
+      this.root.subscribe(() => {
+        this.tree.endEdition();
+        this.changeDetectorRef.detectChanges();
+      })
+    );
   }
 
   ngOnDestroy(): void {
@@ -106,24 +113,15 @@ export class ExplorerComponent implements OnInit, OnDestroy, AfterViewChecked {
     }
   }
 
+  //#region CALLED FROM TEMPLATE
+
   @HostListener('window:click')
-  _closeContextMenu() {
+  protected closeContextMenu() {
     this.commands.next([]);
   }
 
-  //#region CALLED FROM TEMPLATE
-
-  _trackById(_: number, e: any): string {
+  protected trackById(_: number, e: any): string {
     return e.id;
-  }
-
-  _iconOptions(node: ITreeNodeHolder<IFile>): FileIconOptions {
-    return {
-      alt: node.name,
-      isRoot: node.level === 0,
-      expanded: this.tree.isExpanded(node),
-      isDirectory: node.expandable,
-    };
   }
 
   /**
@@ -132,7 +130,7 @@ export class ExplorerComponent implements OnInit, OnDestroy, AfterViewChecked {
    * - If data.src exists, the function will move the resource 'data.src' to the directory 'data.dst'.
    * @param e the dropped data.
    */
-  async _onDropped(e: DndData) {
+  protected async onDropped(e: DndData) {
     const srcPath = e.src || e.file?.name || '';
     const dstPath = e.dst;
 

@@ -2,7 +2,8 @@
   <ng-container *ngIf="tuple[1]|async as items">
     <ng-container *ngIf="items.length">
       <button
-        mat-button
+        nz-button
+        nzType="text"
         class="menu"
         nz-dropdown
         [nzDropdownMenu]="menu">
@@ -25,7 +26,7 @@
               </li>
             </ng-container>
             <ng-template #separator>
-              <mat-divider *ngIf="!isLast"></mat-divider>
+              <nz-divider nzDashed *ngIf="!isLast"></nz-divider>
             </ng-template>
           </ng-container>
         </ul>

@@ -2,23 +2,23 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { DragDropModule } from '@angular/cdk/drag-drop';
-import { MatBadgeModule } from '@angular/material/badge';
-import { MatLegacyTooltipModule as MatTooltipModule } from '@angular/material/legacy-tooltip';
+import { NzBadgeModule } from 'ng-zorro-antd/badge';
 
 import { AngularSplitModule } from 'angular-split';
 import { NgeUiIconModule } from '@cisstech/nge/ui/icon';
 import { ViewModule } from '@cisstech/nge-ide/core';
 
 import { SidebarComponent } from './sidebar.component';
+import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
 
 @NgModule({
   imports: [
     CommonModule,
 
-    DragDropModule,
-    MatBadgeModule,
-    MatTooltipModule,
     ViewModule,
+    DragDropModule,
+    NzBadgeModule,
+    NzToolTipModule,
 
     AngularSplitModule,
     NgeUiIconModule,

@@ -1,10 +1,5 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
-
-import { MatBadgeModule } from '@angular/material/badge';
-import { MatLegacySelectModule as MatSelectModule } from '@angular/material/legacy-select';
-import { MatLegacyFormFieldModule as MatFormFieldModule } from '@angular/material/legacy-form-field';
 
 import { NzTabsModule } from 'ng-zorro-antd/tabs';
 import { NzBadgeModule } from 'ng-zorro-antd/badge';
@@ -17,14 +12,9 @@ import { NotificationsComponent } from './notifications.component';
 @NgModule({
   imports: [
     CommonModule,
-    MatBadgeModule,
-    MatSelectModule,
-    MatFormFieldModule,
-
     NzTabsModule,
     NzBadgeModule,
     NzSelectModule,
-
     ViewModule,
   ],
   declarations: [NotificationsComponent],

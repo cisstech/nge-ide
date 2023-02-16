@@ -2,7 +2,6 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
-import { MatLegacyTooltipModule as MatTooltipModule } from '@angular/material/legacy-tooltip';
 
 import { NzDropDownModule } from 'ng-zorro-antd/dropdown';
 
@@ -18,13 +17,8 @@ import { ExplorerComponent } from './explorer.component';
   imports: [
     CommonModule,
     FormsModule,
-
-    MatTooltipModule,
-
     NzDropDownModule,
-
     CommandModule,
-
     NgeUiIconModule,
     NgeUiTreeModule,
     DirectivesModule,

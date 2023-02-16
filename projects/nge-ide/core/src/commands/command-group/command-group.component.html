@@ -5,7 +5,7 @@
         class="command"
         role="button"
         [attr.command-id]="command.id"
-        [matTooltip]="command.label"
+        [nz-tooltip]="command.label"
         (click)="_execute(command, $event)">
         <ui-icon [icon]="command.icon"></ui-icon>
       </div>

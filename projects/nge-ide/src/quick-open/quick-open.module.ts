@@ -2,12 +2,14 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 
-import { MatLegacyAutocompleteModule as MatAutocompleteModule } from '@angular/material/legacy-autocomplete';
+import { A11yModule } from '@angular/cdk/a11y';
+import { NzAutocompleteModule } from 'ng-zorro-antd/auto-complete';
 
 import { NgeUiIconModule } from '@cisstech/nge/ui/icon';
 
 import { PipesModule } from '@cisstech/nge-ide/core';
 
+import { NzInputModule } from 'ng-zorro-antd/input';
 import { QuickOpenComponent } from './quick-open.component';
 
 @NgModule({
@@ -15,7 +17,10 @@ import { QuickOpenComponent } from './quick-open.component';
     CommonModule,
     ReactiveFormsModule,
 
-    MatAutocompleteModule,
+    A11yModule,
+
+    NzInputModule,
+    NzAutocompleteModule,
 
     PipesModule,
     NgeUiIconModule,
@@ -23,4 +28,4 @@ import { QuickOpenComponent } from './quick-open.component';
   exports: [QuickOpenComponent],
   declarations: [QuickOpenComponent],
 })
-export class QuickOpenModule {}
+export class QuickOpenModule { }

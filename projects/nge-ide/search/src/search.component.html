@@ -43,9 +43,9 @@
   </div>
 </ng-container>
 <ng-container *ngIf="searching">
-  <div class="center">
-    <mat-spinner diameter="64" strokeWidth="2"></mat-spinner>
-  </div>
+  <nz-skeleton [nzActive]="true"></nz-skeleton>
+  <nz-skeleton [nzActive]="true"></nz-skeleton>
+  <nz-skeleton [nzActive]="true"></nz-skeleton>
 </ng-container>
 <ui-tree #treeRef [nodes]="nodes" [adapter]="adapter">
   <ng-container *treeNode="let node">

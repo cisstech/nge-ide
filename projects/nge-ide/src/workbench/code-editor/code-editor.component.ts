@@ -1,18 +1,13 @@
 import {
-  ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
   Input,
   OnDestroy,
-  OnInit,
+  OnInit
 } from '@angular/core';
 import {
-  MonacoService,
-  Editor,
-  OpenOptions,
-  OpenRequest,
-  NotificationService,
-  EditorService,
+  Editor, EditorService, MonacoService, NotificationService, OpenOptions,
+  OpenRequest
 } from '@cisstech/nge-ide/core';
 import { Subscription } from 'rxjs';
 
@@ -24,7 +19,6 @@ import IStandaloneDiffEditor = monaco.editor.IStandaloneDiffEditor;
   selector: 'ide-code-editor',
   templateUrl: './code-editor.component.html',
   styleUrls: ['./code-editor.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CodeEditorComponent implements OnInit, OnDestroy {
   private readonly disposables: IDisposable[] = [];
@@ -56,21 +50,24 @@ export class CodeEditorComponent implements OnInit, OnDestroy {
     private readonly editorService: EditorService,
     private readonly changeDetectorRef: ChangeDetectorRef,
     private readonly notificationService: NotificationService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.subscriptions.push(
       this.editor.onChangeRequest.subscribe((request) => {
         this.request = request;
         this.opening = true;
-        this.changeDetectorRef.detectChanges();
+        this.changeDetectorRef.markForCheck();
         this.handleRequest();
       })
     );
 
     this.subscriptions.push(
-      this.editorService.state.subscribe((_) => {
-        this.codeEditor?.layout();
+      this.editorService.editorGroups.subscribe(() => {
+        setTimeout(() => { // handle group close
+          this.codeEditor?.layout();
+          this.changeDetectorRef.markForCheck();
+        }, 300)
       })
     );
   }
@@ -111,7 +108,7 @@ export class CodeEditorComponent implements OnInit, OnDestroy {
       this.notificationService.publishError(error);
     } finally {
       this.opening = false;
-      this.changeDetectorRef.detectChanges();
+      this.changeDetectorRef.markForCheck();
     }
 
     this.handleDiffOptions(options);

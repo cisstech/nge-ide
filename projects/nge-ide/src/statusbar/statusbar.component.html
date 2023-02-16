@@ -2,7 +2,7 @@
   <ng-container *ngFor="let item of leftViews; trackBy: track">
     <div
       *ngIf="item.active | async"
-      [matTooltip]="item.tooltip || ''"
+      [nz-tooltip]="item.tooltip || ''"
       class="status-bar-item"
       [class.clickable]="!!item.action"
       [innerHTML]="item.content | async | safe: 'html'"
@@ -13,7 +13,7 @@
   <ng-container *ngFor="let item of rightViews; trackBy: track">
     <div
       *ngIf="item.active | async"
-      [matTooltip]="item.tooltip || ''"
+      [nz-tooltip]="item.tooltip || ''"
       class="status-bar-item"
       [class.clickable]="!!item.action"
       [innerHTML]="item.content | async | safe: 'html'"

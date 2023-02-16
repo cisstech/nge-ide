@@ -18,13 +18,14 @@
     role="button"
     [class.active]="isActive(item)"
     [attr.aria-label]="item.title">
-    <ui-icon
-      class="activitybar-icon"
-      [id]="item.id"
-      [icon]="item.icon"
-      [matBadge]="(item.badge|async) || ''"
-      [matTooltip]="item.title"
-      (click)="setActive(item)">
-    </ui-icon>
+    <nz-badge [nzCount]="(item.badge|async) || 0">
+      <ui-icon
+        class="activitybar-icon"
+        [id]="item.id"
+        [icon]="item.icon"
+        [nz-tooltip]="item.title"
+        (click)="setActive(item)">
+      </ui-icon>
+    </nz-badge>
   </div>
 </ng-template>

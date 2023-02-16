@@ -1,12 +1,18 @@
 <ui-tree #treeRef [adapter]="adapter" [nodes]="(root|async)||[]">
   <ng-container *treeNode="let node">
-    <ui-icon [icon]="node.name | iconFile: _iconOptions(node)"></ui-icon>
+    <ui-icon
+    [icon]="node.name|iconFile:{
+      alt: node.name,
+      isRoot: node.level === 0,
+      expanded: node.expanded,
+      isDirectory: node.expandable
+    }"/>
     <div class="tree-label"
       [title]="node.data.uri.path"
       [highlight]="node.name"
       [highlightPattern]="treeRef.filter.term"
       dnd
-      (dropped)="_onDropped($event)"
+      (dropped)="onDropped($event)"
       [dndData]="node.id">
     </div>
     <div class="tree-commands">
@@ -19,7 +25,7 @@
 <nz-dropdown-menu #menu="nzDropdownMenu">
   <ul nz-menu role="menu" #m="nzMenu">
     <ng-container *ngFor="let group of commands|async; let isLastGroup = last;">
-      <ng-container *ngFor="let command of group; trackBy: _trackById; let isLastCommand = last;">
+      <ng-container *ngFor="let command of group; trackBy: trackById; let isLastCommand = last;">
         <li role="menuitem" nz-menu-item (click)="command.execute()">
           {{command.label}}
         </li>

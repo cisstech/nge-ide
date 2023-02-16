@@ -3,17 +3,20 @@
     #input
     type="text"
     placeholder="Entrez un nom de fichier pour filtrer.."
-    [autofocus]="true"
     (blur)="onBlured()"
-    [matAutocomplete]="auto"
-    [formControl]="form"/>
-  <mat-autocomplete #auto="matAutocomplete" (optionSelected)="onSelected($event)">
-    <mat-option *ngFor="let entry of $entries | async" [value]="entry">
+    [nzAutocomplete]="auto"
+    [formControl]="form"
+    [cdkTrapFocus]="visible"
+    [cdkTrapFocusAutoCapture]="true"
+    />
+  <nz-autocomplete nzBackfill #auto (selectionChange)="onSelected($event.nzValue)">
+    <nz-auto-option
+      *ngFor="let entry of $entries|async; filterBy:filterByUri;" [nzValue]="entry" [nzLabel]="entry.uri|fileName">
       <div class="entry">
-        <ui-icon class="entry-icon" [icon]="entry.uri.path | iconFile"></ui-icon>
-        <span class="entry-name">{{ entry.uri | fileName }}</span>
+        <ui-icon class="entry-icon" [icon]="entry.uri.path|iconFile"></ui-icon>
+        <span class="entry-name">{{ entry.uri|fileName }}</span>
         <span class="entry-path">{{ entry.uri.path }}</span>
       </div>
-    </mat-option>
-  </mat-autocomplete>
+    </nz-auto-option>
+  </nz-autocomplete>
 </div>

@@ -1,35 +1,47 @@
 .setting-editor {
-    height: calc(100% - 36px);
-    display: flex;
-}
-
-
-.mat-form-field {
-    width: 75%;
+  height: calc(100% - 36px);
+  display: flex;
 }
 
 .tab-bar {
-    padding: 0;
+  padding: 0;
 }
 
-.mat-list {
-    height: 100%;
-    width: 100%;
-    overflow: auto;
-    &.mat-list-base {
-        margin-bottom: 8px;
-    }
+ul {
+  height: 100%;
+  width: 100%;
+  overflow: auto;
+  list-style-type: none;
 }
 
-.mat-list.list-groups {
-    width: 180px;
-    padding: 0 12px;
-    overflow: auto;
+.list-groups {
+  width: 180px;
+  padding: 0 12px;
+  overflow: auto;
 }
 
-.setting-item {
-    cursor: pointer;
-    &.active, &:hover {
-        color: #007bff;
-    }
+.setting-item-group {
+  cursor: pointer;
+  padding: 8px 0;
+  &.active,
+  &:hover {
+    color: #007bff;
+  }
+}
+
+.setting-item-name {
+  cursor: pointer;
+  &.active,
+  &:hover {
+    color: #007bff;
+  }
+}
+
+.setting-item-input {
+  margin-bottom: 8px;
+  max-width: 75%;
+}
+
+nz-select {
+  width: 100%;
 }

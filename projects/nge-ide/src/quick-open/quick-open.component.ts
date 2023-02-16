@@ -1,11 +1,9 @@
 import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
-  Component,
-  OnInit,
+  Component, OnInit
 } from '@angular/core';
 import { UntypedFormControl } from '@angular/forms';
-import { MatLegacyAutocompleteSelectedEvent as MatAutocompleteSelectedEvent } from '@angular/material/legacy-autocomplete';
 import {
   CommandService,
   EditorService,
@@ -18,10 +16,10 @@ import {
   Paths,
   ToolbarButton,
   ToolbarGroups,
-  ToolbarSevice,
+  ToolbarSevice
 } from '@cisstech/nge-ide/core';
 import { Observable } from 'rxjs';
-import { debounceTime, map, startWith } from 'rxjs/operators';
+import { debounceTime, map } from 'rxjs/operators';
 
 @Component({
   selector: 'ide-quick-open',
@@ -30,7 +28,7 @@ import { debounceTime, map, startWith } from 'rxjs/operators';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class QuickOpenComponent implements OnInit {
-  private readonly command = new (class QuickOpenCommand implements ICommand {
+  private readonly command = new (class implements ICommand {
     readonly id = 'editor.commands.quick-open';
     readonly label = 'Aller au fichier..';
     readonly enabled = true;
@@ -40,7 +38,7 @@ export class QuickOpenComponent implements OnInit {
       modifiers: [KeyModifiers.CTRL_CMD],
     });
 
-    constructor(private readonly component: QuickOpenComponent) {}
+    constructor(private readonly component: QuickOpenComponent) { }
 
     execute() {
       this.component.show();
@@ -53,16 +51,20 @@ export class QuickOpenComponent implements OnInit {
     map((query) => this.filter(query).slice(0, 10))
   );
 
-  data: IFile[] = [];
-  visible = false;
+  protected data: IFile[] = [];
+  protected visible = false;
+
+  get isVisible(): boolean {
+    return this.visible;
+  }
 
   constructor(
     private readonly fileService: FileService,
     private readonly editorService: EditorService,
     private readonly toolbarService: ToolbarSevice,
     private readonly commandService: CommandService,
-    private readonly changeDetectorRef: ChangeDetectorRef
-  ) {}
+    private readonly changeDetectorRef: ChangeDetectorRef,
+  ) { }
 
   ngOnInit(): void {
     this.commandService.register(this.command);
@@ -75,13 +77,19 @@ export class QuickOpenComponent implements OnInit {
     );
   }
 
-  onBlured() {
+  protected onBlured() {
+   setTimeout(() => {
+    this.hide();
+   }, 300) // allow onSelected to be called.
+  }
+
+  protected onSelected(file: IFile) {
+    this.editorService.open(file.uri);
     this.hide();
   }
 
-  onSelected(e: MatAutocompleteSelectedEvent) {
-    this.hide();
-    this.editorService.open((e.option.value as IFile).uri);
+  protected filterByUri(_: number, file: IFile) {
+    return file.uri.path;
   }
 
   private filter(query: string): IFile[] {
@@ -98,15 +106,13 @@ export class QuickOpenComponent implements OnInit {
     this.form.setValue('');
     this.data = [];
     this.visible = false;
-    this.changeDetectorRef.detectChanges();
+    this.changeDetectorRef.markForCheck();
   }
 
   private show(): void {
     this.visible = true;
     this.form.setValue('');
-    this.changeDetectorRef.detectChanges();
-
     this.data = this.fileService.findAll((file) => !file.isFolder);
-    this.changeDetectorRef.detectChanges();
+    this.changeDetectorRef.markForCheck();
   }
 }

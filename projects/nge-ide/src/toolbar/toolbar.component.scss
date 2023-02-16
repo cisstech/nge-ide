@@ -6,8 +6,14 @@
   font-size: 12px;
   padding: 0 8px;
   background-color: rgb(59, 66, 82);
-  color: rgb(216, 222, 233);
   border-bottom: 1px solid var(--tab-border);
+  * {
+    color: rgb(216, 222, 233) !important;
+  }
+}
+
+nz-divider {
+  margin: 8px 0;
 }
 
 .menu {
@@ -37,7 +43,6 @@
 .menu-label {
   padding: 0px 32px 0px 2px;
 }
-
 
 .spacer {
   flex: 1;

@@ -1,9 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { MatBadgeModule } from '@angular/material/badge';
-import { MatLegacyFormFieldModule as MatFormFieldModule } from '@angular/material/legacy-form-field';
-import { MatLegacySelectModule as MatSelectModule } from '@angular/material/legacy-select';
 
 import { CommandModule, ViewModule } from '@cisstech/nge-ide/core';
 
@@ -18,10 +15,6 @@ import { InfobarComponent } from './infobar.component';
   imports: [
     CommonModule,
     FormsModule,
-
-    MatBadgeModule,
-    MatSelectModule,
-    MatFormFieldModule,
 
     NzTabsModule,
     NzBadgeModule,

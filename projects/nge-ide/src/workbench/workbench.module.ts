@@ -1,29 +1,27 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 
-import { MatLegacyTooltipModule as MatTooltipModule } from '@angular/material/legacy-tooltip';
-import { MatLegacyProgressBarModule as MatProgressBarModule } from '@angular/material/legacy-progress-bar';
-
 import { NzTabsModule } from 'ng-zorro-antd/tabs';
 
-import { AngularSplitModule } from 'angular-split';
 import { NgeUiIconModule } from '@cisstech/nge/ui/icon';
+import { AngularSplitModule } from 'angular-split';
 
 import {
   CommandModule,
   DirectivesModule,
-  PipesModule,
+  PipesModule
 } from '@cisstech/nge-ide/core';
 
+import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
 import { WorkbenchComponent } from './workbench.component';
 
 @NgModule({
   imports: [
     CommonModule,
 
-    MatTooltipModule,
-    MatProgressBarModule,
     NzTabsModule,
+
+    NzToolTipModule,
 
     CommandModule,
     NgeUiIconModule,
@@ -34,4 +32,4 @@ import { WorkbenchComponent } from './workbench.component';
   exports: [WorkbenchComponent],
   declarations: [WorkbenchComponent],
 })
-export class WorkbenchModule {}
+export class WorkbenchModule { }

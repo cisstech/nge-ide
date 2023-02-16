@@ -33,24 +33,6 @@
     background-color: var(--sideBar-background);
     border-left: 2px solid var(--activityBar-activeBorder);
   }
-
-  &::ng-deep {
-    .mat-badge-content {
-      right: 0px !important;
-      top: -8px !important;
-      font-size: 12px !important;
-      font-weight: 600 !important;
-      width: unset !important;
-      min-width: 8px !important;
-      height: 16px !important;
-      line-height: 16px !important;
-      padding: 0 4px !important;
-      border-radius: 20px !important;
-      text-align: center !important;
-      color: var(--activityBarBadge-foreground) !important;
-      background-color: var(--activityBarBadge-background) !important;
-    }
-  }
 }
 
 .activitybar-icon {
@@ -69,6 +51,10 @@
 
 .spacer {
   flex: 1;
+}
+
+nz-badge {
+  z-index: 10;
 }
 
 // https://material.angular.io/cdk/drag-drop/overview

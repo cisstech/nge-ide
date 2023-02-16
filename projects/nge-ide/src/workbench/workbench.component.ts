@@ -1,5 +1,6 @@
 import {
   ChangeDetectionStrategy,
+  ChangeDetectorRef,
   Component,
   OnDestroy,
   OnInit,
@@ -28,13 +29,17 @@ export class WorkbenchComponent implements OnInit, OnDestroy {
     map(([commands, _]) => commands.slice()) // slice to force trigger change detection of command-group component
   );
 
-  constructor(private readonly editorService: EditorService) {}
+  constructor(private readonly editorService: EditorService, private readonly changeDetectorRef: ChangeDetectorRef) {}
 
   ngOnInit(): void {
     this.editorService.registerEditors(
       new CodeEditor(),
       new MediaEditor(),
       new PreviewEditor()
+    );
+    this.subscriptions.push(
+      this.groups.subscribe(() => {
+      })
     );
   }
 
