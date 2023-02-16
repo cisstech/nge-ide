@@ -163,6 +163,11 @@ export class FileService implements IContribution {
     return provider.hasCapability(capability);
   }
 
+  hasCapabilityForAnyProvider(capability: FileSystemProviderCapabilities) {
+    return !!Array.from(this.providers.values()).find(e => e.hasCapability(capability));
+  }
+
+
   // CONTENT MANAGEMENT
 
   /**

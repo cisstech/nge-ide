@@ -57,13 +57,6 @@ export class NotificationService implements IContribution {
     if (err == null) {
       return;
     }
-    // TODO handle other type of errors
-    if (err instanceof Error) {
-      this.publish(new ErrorNotification(err.message, 'error', err.stack));
-    } else if (!(err instanceof HttpErrorResponse)) {
-      this.publish(
-        new ErrorNotification(JSON.stringify(err), 'error', new Error().stack)
-      );
-    }
+    this.publish(new ErrorNotification(err.message || JSON.stringify(err), 'error', err.stack) || new Error().stack);
   }
 }

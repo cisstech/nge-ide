@@ -11,6 +11,7 @@ import { CodeEditorComponent } from './code-editor.component';
 @NgModule({
   imports: [CommonModule, NzSpinModule, NgeMonacoModule],
   declarations: [CodeEditorComponent],
+  exports: [CodeEditorComponent]
 })
 export class CodeEditorModule implements IDynamicModule {
   component = CodeEditorComponent;

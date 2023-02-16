@@ -24,6 +24,7 @@ import { ExplorerComponent } from './explorer.component';
     DirectivesModule,
   ],
   declarations: [ExplorerComponent],
+  exports: [ExplorerComponent]
 })
 export class ExplorerModule implements IDynamicModule {
   component = ExplorerComponent;

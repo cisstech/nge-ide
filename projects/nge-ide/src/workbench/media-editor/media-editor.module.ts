@@ -8,6 +8,7 @@ import { MediaEditorComponent } from './media-editor.component';
 @NgModule({
   imports: [CommonModule, SafePipeModule],
   declarations: [MediaEditorComponent],
+  exports: [MediaEditorComponent]
 })
 export class MediaEditorModule implements IDynamicModule {
   component = MediaEditorComponent;

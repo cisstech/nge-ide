@@ -10,6 +10,7 @@ import { ProblemsComponent } from './problems.component';
 @NgModule({
   imports: [CommonModule, NgeUiTreeModule, NgeUiIconModule],
   declarations: [ProblemsComponent],
+  exports: [ProblemsComponent]
 })
 export class ProblemsModule implements IDynamicModule {
   component = ProblemsComponent;

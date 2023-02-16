@@ -29,6 +29,12 @@ export class ViewService implements IContribution {
     });
   }
 
+  unregister(id: string) {
+    for (const [k, v] of this.registry.entries()) {
+      v.next(v.value.filter(e => e.id !== id))
+    }
+  }
+
   deactivate(): void {
     this.registry.clear();
   }

@@ -41,6 +41,12 @@ export class ViewContainerService implements IContribution {
     this.registry.next(entries);
   }
 
+  unregister(id: string) {
+    this.registry.next(
+      this.registry.value.filter(e => e.id !== id)
+    );
+  }
+
   deactivate(): void {
     this.registry.next([]);
   }

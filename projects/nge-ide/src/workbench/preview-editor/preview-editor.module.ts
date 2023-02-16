@@ -10,6 +10,7 @@ import { PreviewEditorComponent } from './preview-editor.component';
 @NgModule({
   imports: [CommonModule, SafePipeModule, NgeMarkdownModule],
   declarations: [PreviewEditorComponent],
+  exports: [PreviewEditorComponent]
 })
 export class PreviewEditorModule implements IDynamicModule {
   component = PreviewEditorComponent;

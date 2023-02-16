@@ -10,7 +10,7 @@ import { NzSkeletonModule } from 'ng-zorro-antd/skeleton';
 
 import { DirectivesModule, PipesModule } from '@cisstech/nge-ide/core';
 
-import { SearchInputComponent } from './search-input/search-input.components';
+import { SearchInputComponent } from './search-input/search-input.component';
 import { SearchComponent } from './search.component';
 
 @NgModule({
@@ -27,6 +27,9 @@ import { SearchComponent } from './search.component';
     NgeUiIconModule,
     NgeUiTreeModule,
   ],
+  exports: [
+    SearchComponent, SearchInputComponent
+  ]
 })
 export class SearchModule implements IDynamicModule {
   component = SearchComponent;
