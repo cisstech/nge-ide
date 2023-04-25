@@ -94,10 +94,7 @@ export class ExplorerComponent implements OnInit, OnDestroy, AfterViewChecked {
     );
 
     this.subscriptions.push(
-      this.root.subscribe(() => {
-        this.tree.endEdition();
-        this.changeDetectorRef.detectChanges();
-      })
+      this.root.subscribe(() =>  this.tree.endEdition())
     );
   }
 

@@ -121,7 +121,7 @@ export class MemFileProvider extends FileSystemProvider {
     }
   }
 
-  readDirectory(uri: monaco.Uri): Promise<IFile[]> {
+  override readDirectory(uri: monaco.Uri): Promise<IFile[]> {
     const entry = this._lookupAsDirectory(uri, false);
     const result: IFile[] = [entry];
     for (const f of this.entries.values()) {
@@ -135,7 +135,7 @@ export class MemFileProvider extends FileSystemProvider {
     return Promise.resolve(result);
   }
 
-  read(uri: monaco.Uri): Promise<string> {
+  override read(uri: monaco.Uri): Promise<string> {
     const file = this._lookupAsFile(uri);
     if (file == null) {
       throw FileSystemError.FileNotFound();
@@ -143,7 +143,7 @@ export class MemFileProvider extends FileSystemProvider {
     return Promise.resolve(file.content || '');
   }
 
-  write(uri: monaco.Uri, content: string, update?: boolean) {
+  override write(uri: monaco.Uri, content: string, update?: boolean) {
     this._lookupParentDirectory(uri);
 
     let entry = this._lookup(uri, true);
@@ -165,14 +165,14 @@ export class MemFileProvider extends FileSystemProvider {
     entry.content = content;
   }
 
-  createDirectory(uri: monaco.Uri) {
+  override createDirectory(uri: monaco.Uri) {
     this._lookupParentDirectory(uri);
 
     const entry = new MemFile('folder', uri.path);
     this.entries.set(uri.path, entry);
   }
 
-  delete(uri: monaco.Uri) {
+  override delete(uri: monaco.Uri) {
     this._lookup(uri, false);
     for (const k of this.entries.keys()) {
       if (k.startsWith(uri.path)) {
@@ -181,7 +181,7 @@ export class MemFileProvider extends FileSystemProvider {
     }
   }
 
-  rename(uri: monaco.Uri, name: string) {
+  override rename(uri: monaco.Uri, name: string) {
     this._lookup(uri, false);
 
     const oldPrefix = uri.path;
@@ -197,7 +197,7 @@ export class MemFileProvider extends FileSystemProvider {
     }
   }
 
-  move(
+  override move(
     source: monaco.Uri,
     destination: monaco.Uri,
     options: { copy: boolean }
@@ -227,7 +227,7 @@ export class MemFileProvider extends FileSystemProvider {
     }
   }
 
-  upload(file: File, destination: monaco.Uri): Promise<void> {
+  override upload(file: File, destination: monaco.Uri): Promise<void> {
     this._lookupAsDirectory(destination, false);
 
     destination = destination.with({
@@ -253,7 +253,7 @@ export class MemFileProvider extends FileSystemProvider {
     });
   }
 
-  search(
+  override search(
     uri: monaco.Uri,
     form: SearchForm
   ): Promise<SearchResult<monaco.Uri>[]> {

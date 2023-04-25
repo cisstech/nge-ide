@@ -34,9 +34,11 @@ export class NotificationService implements IContribution {
       this.eventBus
         .on<Notification>(NOTIFICATION_EVENT_CHANNEL)
         .subscribe((e) => {
-          const notifications = this.subject.value;
-          notifications.unshift(e.data);
-          this.subject.next(notifications);
+          if (e.data) {
+            const notifications = this.subject.value;
+            notifications.unshift(e.data);
+            this.subject.next(notifications);
+          }
         })
     );
   }

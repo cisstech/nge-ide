@@ -1,6 +1,5 @@
 import { Injector, Type } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { ICommand } from '../commands';
 import { OpenOptions, OpenRequest } from './opener';
 
 declare type OpenHandler = (
@@ -245,11 +244,7 @@ export class EditorGroup {
     return new Promise<void>((resolve, reject) => {
       const request = new OpenRequest(resource, this.injector, options);
 
-      let editor = this._activeEditor;
-      if (!editor?.canHandle(request)) {
-        editor = this.editors.find((e) => e.canHandle(request));
-      }
-
+      let editor = this.editors.find((e) => e.canHandle(request));
       if (!editor) {
         reject(`There is no registered editor to open "${request.uri}"`);
         return;
