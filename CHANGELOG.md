@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [15.1.1](https://github.com/cisstech/nge-ide/compare/v15.1.0...v15.1.1) (2023-04-25)
+
+
+### Bug Fixes
+
+* **explorer:** tree rendering ([2d6b215](https://github.com/cisstech/nge-ide/commit/2d6b215fdebdac1a9995d60dad4de71ee40b4b5a))
+
 ## [15.1.0](https://github.com/cisstech/nge-ide/compare/v15.0.2...v15.1.0) (2023-02-16)
 
 
