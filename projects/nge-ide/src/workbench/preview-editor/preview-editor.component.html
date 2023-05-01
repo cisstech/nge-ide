@@ -1,7 +1,7 @@
 <ng-container *ngIf="preview; else: noPreview">
   <ng-container [ngSwitch]="preview!.type">
     <div class="preview-editor" *ngSwitchCase="'URL'">
-      <iframe [src]="preview!.data|safe:'url'" frameborder="0"></iframe>
+      <iframe [src]="preview!.data|safe:'resource'" frameborder="0"></iframe>
     </div>
     <div class="preview-editor" *ngSwitchCase="'HTML'">
       <iframe [srcdoc]="preview!.data|safe:'html'" frameborder="0"></iframe>

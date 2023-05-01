@@ -33,7 +33,7 @@ export class InfobarComponent implements OnInit, OnDestroy {
 
   /** Current size of the infobar */
   @Input()
-  size: number = OPENED_SIZE;
+  size: number = CLOSED_SIZE;
 
   @Output()
   sizeChange = new EventEmitter<number>();

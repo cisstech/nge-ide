@@ -8,7 +8,7 @@ export const NOTIFICATION_COMMAND_CLEAR = 'notification.commands.clear';
 export class NotificationCommandClear implements ICommand {
   readonly id = NOTIFICATION_COMMAND_CLEAR;
   readonly icon = new CodIcon('trash');
-  readonly label = 'Éffacer';
+  readonly label = 'Effacer';
   readonly enabled = true;
 
   constructor(private readonly notificationService: NotificationService) {}
