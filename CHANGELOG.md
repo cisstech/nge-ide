@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [15.1.3](https://github.com/cisstech/nge-ide/compare/v15.1.2...v15.1.3) (2023-06-06)
+
+
+### Bug Fixes
+
+* **workbench:** refresh preview editor ([b2f9004](https://github.com/cisstech/nge-ide/commit/b2f9004d86b655260cbc7b80e29368bb2f585b0e))
+
 ### [15.1.2](https://github.com/cisstech/nge-ide/compare/v15.1.1...v15.1.2) (2023-05-01)
 
 
