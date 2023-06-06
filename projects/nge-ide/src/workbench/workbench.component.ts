@@ -1,12 +1,11 @@
 import {
   ChangeDetectionStrategy,
-  ChangeDetectorRef,
   Component,
   OnDestroy,
-  OnInit,
+  OnInit
 } from '@angular/core';
 import { EditorGroup, EditorService, EditorTab } from '@cisstech/nge-ide/core';
-import { combineLatest, Observable, Subscription } from 'rxjs';
+import { Observable, Subscription, combineLatest } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
 import { CodeEditor } from './code-editor/code-editor';
 import { MediaEditor } from './media-editor/media-editor';
@@ -29,7 +28,7 @@ export class WorkbenchComponent implements OnInit, OnDestroy {
     map(([commands, _]) => commands.slice()) // slice to force trigger change detection of command-group component
   );
 
-  constructor(private readonly editorService: EditorService, private readonly changeDetectorRef: ChangeDetectorRef) {}
+  constructor(private readonly editorService: EditorService) {}
 
   ngOnInit(): void {
     this.editorService.registerEditors(

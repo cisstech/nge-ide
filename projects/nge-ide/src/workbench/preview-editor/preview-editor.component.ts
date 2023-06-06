@@ -29,6 +29,7 @@ export class PreviewEditorComponent implements OnInit, OnDestroy {
       this.editor.onChangeRequest.subscribe((request) => {
         this.preview = request.options?.preview;
         this.changeDetectorRef.markForCheck();
+        this.changeDetectorRef.detectChanges();
       })
     );
   }
