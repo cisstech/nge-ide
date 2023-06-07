@@ -21,6 +21,7 @@ import {
   NgeMarkdownIconsProvider,
   NgeMarkdownHighlighterProvider,
   NgeMarkdownHighlighterMonacoProvider,
+  NgeMarkdownThemeProvider,
 } from '@cisstech/nge/markdown';
 import { NgeUiDialogModule } from '@cisstech/nge/ui/dialog';
 
@@ -57,6 +58,10 @@ import { AppComponent } from './app.component';
     NgeMarkdownLinkAnchorProvider,
     NgeMarkdownAdmonitionsProvider,
     NgeMarkdownHighlighterProvider,
+    NgeMarkdownThemeProvider({
+      name: 'github',
+      styleUrl: 'assets/nge/markdown/themes/github.css',
+    }),
     NgeMarkdownHighlighterMonacoProvider(NgeMonacoColorizerService),
     {
       provide: NGE_DOC_RENDERERS,
