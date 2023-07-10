@@ -9,4 +9,4 @@ const declarations = [DndDirective, EditorDirective, HighlightDirective];
   exports: [...declarations],
   declarations: [...declarations],
 })
-export class DirectivesModule {}
+export class EditorDirectivesModule {}

@@ -5,7 +5,7 @@ import { FormsModule } from '@angular/forms';
 
 import { NzDropDownModule } from 'ng-zorro-antd/dropdown';
 
-import { CommandModule, DirectivesModule } from '@cisstech/nge-ide/core';
+import { CommandModule, EditorDirectivesModule } from '@cisstech/nge-ide/core';
 
 import { IDynamicModule } from '@cisstech/nge/services';
 import { NgeUiIconModule } from '@cisstech/nge/ui/icon';
@@ -21,7 +21,7 @@ import { ExplorerComponent } from './explorer.component';
     CommandModule,
     NgeUiIconModule,
     NgeUiTreeModule,
-    DirectivesModule,
+    EditorDirectivesModule,
   ],
   declarations: [ExplorerComponent],
   exports: [ExplorerComponent]

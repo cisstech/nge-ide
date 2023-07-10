@@ -8,7 +8,7 @@ import { AngularSplitModule } from 'angular-split';
 
 import {
   CommandModule,
-  DirectivesModule,
+  EditorDirectivesModule,
   PipesModule
 } from '@cisstech/nge-ide/core';
 
@@ -26,7 +26,7 @@ import { WorkbenchComponent } from './workbench.component';
     CommandModule,
     NgeUiIconModule,
     PipesModule,
-    DirectivesModule,
+    EditorDirectivesModule,
     AngularSplitModule,
   ],
   exports: [WorkbenchComponent],

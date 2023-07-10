@@ -8,7 +8,7 @@ import { NgeUiIconModule } from '@cisstech/nge/ui/icon';
 import { NgeUiTreeModule } from '@cisstech/nge/ui/tree';
 import { NzSkeletonModule } from 'ng-zorro-antd/skeleton';
 
-import { DirectivesModule, PipesModule } from '@cisstech/nge-ide/core';
+import { EditorDirectivesModule, PipesModule } from '@cisstech/nge-ide/core';
 
 import { SearchInputComponent } from './search-input/search-input.component';
 import { SearchComponent } from './search.component';
@@ -22,7 +22,7 @@ import { SearchComponent } from './search.component';
     NzSkeletonModule,
 
     PipesModule,
-    DirectivesModule,
+    EditorDirectivesModule,
 
     NgeUiIconModule,
     NgeUiTreeModule,
