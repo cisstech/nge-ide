@@ -186,17 +186,19 @@ export class FileService implements IContribution {
   }
 
   contentChange(uri: monaco.Uri): Observable<IContent | undefined> {
-    return this.contents.pipe(map((value) => value.get(uri.with({ query: '' }).toString(true))));
+    uri = uri.with({ query: ''  })
+    return this.contents.pipe(map((value) => value.get(uri.toString(true))));
   }
 
   update(uri: monaco.Uri, content: string): void {
+    uri = uri.with({ query: ''  })
     const contents = this.contents.value;
-    const match = contents.get(uri.with({ query: '' }).toString(true));
+    const match = contents.get(uri.toString(true));
     if (!match) {
       throw FileSystemError.FileNotFound(uri);
     }
 
-    contents.set(uri.with({ query: '' }).toString(true), {
+    contents.set(uri.toString(true), {
       ...match,
       current: content,
       changed: match.initial !== content,
@@ -206,15 +208,17 @@ export class FileService implements IContribution {
   }
 
   async open(uri: monaco.Uri): Promise<IContent> {
+    uri = uri.with({ query: ''  })
+
     const contents = this.contents.value;
-    const content = contents.get(uri.with({ query: '' }).toString(true));
+    const content = contents.get(uri.toString(true));
     if (content) {
       return content;
     }
 
     const value = await this.readFile(uri);
     const newContent = { initial: value, current: value, changed: false };
-    this.contents.next(contents.set(uri.with({ query: '' }).toString(true), newContent));
+    this.contents.next(contents.set(uri.toString(true), newContent));
 
     return newContent;
   }
@@ -226,6 +230,7 @@ export class FileService implements IContribution {
    * @throws {@link FileSystemError.FileNotFound} when `uri` doesn't exist.
    */
   async save(uri: monaco.Uri): Promise<void> {
+    uri = uri.with({ query: ''  })
     const file = this.find(uri);
     if (!file) {
       throw FileSystemError.FileNotFound(uri);
@@ -235,7 +240,7 @@ export class FileService implements IContribution {
       return;
     }
 
-    const content = this.contents.value.get(uri.with({ query: '' }).toString(true));
+    const content = this.contents.value.get(uri.toString(true));
     if (!content) {
       throw FileSystemError.FileNotFound(uri);
     }
@@ -247,7 +252,7 @@ export class FileService implements IContribution {
 
       content.changed = false;
 
-      this.contents.value.set(uri.with({ query: '' }).toString(true), content);
+      this.contents.value.set(uri.toString(true), content);
       this.contents.next(this.contents.value);
 
       this.didSaveFile.next(uri);
@@ -255,8 +260,9 @@ export class FileService implements IContribution {
   }
 
   async close(uri: monaco.Uri): Promise<void> {
+    uri = uri.with({ query: ''  })
     this.willCloseFile.next(uri);
-    this.contents.value.delete(uri.with({ query: '' }).toString(true));
+    this.contents.value.delete(uri.toString(true));
     this.contents.next(this.contents.value);
     this.didCloseFile.next(uri);
   }
@@ -355,6 +361,7 @@ export class FileService implements IContribution {
   // OPERATIONS
 
   async readFile(uri: monaco.Uri): Promise<string> {
+    uri = uri.with({ query: ''  })
     const provider = await this.withProvider(
       uri,
       FileSystemProviderCapabilities.FileRead
@@ -363,6 +370,7 @@ export class FileService implements IContribution {
   }
 
   async writeFile(uri: monaco.Uri, content: string): Promise<void> {
+    uri = uri.with({ query: ''  })
     const provider = await this.withProvider(
       uri,
       FileSystemProviderCapabilities.FileWrite
