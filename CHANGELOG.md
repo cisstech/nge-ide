@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [15.2.0](https://github.com/cisstech/nge-ide/compare/v15.1.3...v15.2.0) (2023-07-10)
+
+
+### Features
+
+* add editor preview reload command ([01e213f](https://github.com/cisstech/nge-ide/commit/01e213fbc491e347e85e7d38e26af265858de95a))
+
+
+### Bug Fixes
+
+* ignore query params while call URI.toString ([5ebd306](https://github.com/cisstech/nge-ide/commit/5ebd306fd783ba5aa640c2608c2a5196b164c493))
+
 ### [15.1.3](https://github.com/cisstech/nge-ide/compare/v15.1.2...v15.1.3) (2023-06-06)
 
 
