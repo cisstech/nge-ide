@@ -50,6 +50,6 @@ export class OpenRequest {
     if (!(o instanceof OpenRequest)) {
       return false;
     }
-    return o.uri.toString(true) == this.uri.toString(true);
+    return o.uri.with({ query: '' }).toString(true) == this.uri.with({ query: '' }).toString(true);
   }
 }

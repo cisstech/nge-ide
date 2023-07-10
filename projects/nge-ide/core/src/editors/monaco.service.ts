@@ -177,7 +177,7 @@ export class MonacoService implements IContribution {
     const uri = options.uri.with({ fragment: '', query: '' });
 
     let model = editor.getModel();
-    if (model && uri.toString(true) === model.uri.toString(true)) {
+    if (model && uri.with({ query: '' }).toString(true) === model.uri.with({ query: '' }).toString(true)) {
       return; // already opened
     }
 
@@ -202,7 +202,7 @@ export class MonacoService implements IContribution {
     editor.setModel(model);
     editor.updateOptions({ readOnly: file.readOnly });
 
-    const viewState = this.viewStates.get(uri.toString(true));
+    const viewState = this.viewStates.get(uri.with({ query: '' }).toString(true));
     if (viewState) {
       editor.restoreViewState(viewState);
     }
@@ -294,7 +294,7 @@ export class MonacoService implements IContribution {
           const model = editor.getModel();
           if (model) {
             this.viewStates.set(
-              model.uri.toString(true),
+              model.uri.with({ query: '' }).toString(true),
               editor.saveViewState()
             );
           }
