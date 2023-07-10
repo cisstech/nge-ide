@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [15.2.1](https://github.com/cisstech/nge-ide/compare/v15.2.0...v15.2.1) (2023-07-10)
+
+
+### Bug Fixes
+
+* file open not working with query params ([456bce7](https://github.com/cisstech/nge-ide/commit/456bce7a1589718651afade24abb0868b97b3e81))
+
 ## [15.2.0](https://github.com/cisstech/nge-ide/compare/v15.1.3...v15.2.0) (2023-07-10)
 
 

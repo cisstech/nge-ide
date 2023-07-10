@@ -1,6 +1,6 @@
 {
   "name": "@cisstech/nge-ide",
-  "version": "15.2.0",
+  "version": "15.2.1",
   "description": "An extensible and flexible open source ide written in Angular.",
   "keywords": [
     "angular"
