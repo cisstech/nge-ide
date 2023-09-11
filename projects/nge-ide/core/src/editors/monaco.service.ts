@@ -501,14 +501,6 @@ export class MonacoService implements IContribution {
       // _standaloneThemeService,
       _standaloneKeybindingService,
     } = e as any;
-
-    const lookup = await new Promise<any>((resolve) => {
-      setTimeout(() => {
-        const { _cachedResolver } = _standaloneKeybindingService;
-        resolve(_cachedResolver._lookupMap);
-      }, 500);
-    });
-
     const registerEditorAction = (
       action: string,
       group: ToolbarGroups,
@@ -522,10 +514,14 @@ export class MonacoService implements IContribution {
         isSeparator: false,
         command: new (class implements ICommand {
           readonly id = action;
-          readonly label = e.getAction(action).label;
-          readonly keybinding = lookup
-            .get(action)?.[0]
-            ?.resolvedKeybinding?.getLabel();
+          readonly label = e.getAction(action)?.label || '';
+          get keybinding() {
+            const lookup = _standaloneKeybindingService._cachedResolver?._lookupMap
+              ?? _standaloneKeybindingService._getResolver()._lookupMap;
+            return lookup
+              ?.get(action)?.[0]
+              ?.resolvedKeybinding?.getLabel();
+          }
 
           get enabled() {
             return !!editorService.activeEditor;

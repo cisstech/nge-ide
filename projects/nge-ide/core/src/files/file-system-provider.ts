@@ -229,15 +229,15 @@ export abstract class FileSystemProvider implements IFileSystemProvider {
  */
 export function fileSystemProviderCapabilityName(
   capability: FileSystemProviderCapabilities
-) {
-  return (
-    {
-      FileRead: 'FileRead',
-      FileWrite: 'FileWrite',
-      FileDelete: 'FileDelete',
-      FileUpload: 'FileUpload',
-      FileMove: 'FileMove',
-      FileSearch: 'FileSearch',
-    } as Record<FileSystemProviderCapabilities, string>
-  )[capability];
+): string {
+  const names = {
+    [FileSystemProviderCapabilities.FileRead]: 'FileRead',
+    [FileSystemProviderCapabilities.FileWrite]: 'FileWrite',
+    [FileSystemProviderCapabilities.FileDelete]: 'FileDelete',
+    [FileSystemProviderCapabilities.FileUpload]: 'FileUpload',
+    [FileSystemProviderCapabilities.FileMove]: 'FileMove',
+    [FileSystemProviderCapabilities.FileSearch]: 'FileSearch',
+  } as Record<number, string>;
+
+  return names[capability];
 }
