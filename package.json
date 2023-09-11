@@ -52,7 +52,7 @@
     "@cisstech/nge": "^16.0.1",
     "@ngx-pwa/local-storage": "^16.3.0",
     "angular-split": "^16.2.1",
-    "marked": "^4.2.12",
+    "marked": "^9.0.0",
     "monaco-editor": "^0.43.0",
     "ng-event-bus": "^5.2.0",
     "ng-zorro-antd": "^16.1.0",
