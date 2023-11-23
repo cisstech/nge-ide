@@ -60,7 +60,7 @@ import { AppComponent } from './app.component';
     NgeMarkdownHighlighterProvider,
     NgeMarkdownThemeProvider({
       name: 'github',
-      styleUrl: 'assets/nge/markdown/themes/github.css',
+      styleUrl: 'assets/vendors/nge/markdown/themes/github.css',
     }),
     NgeMarkdownHighlighterMonacoProvider(NgeMonacoColorizerService),
     {
