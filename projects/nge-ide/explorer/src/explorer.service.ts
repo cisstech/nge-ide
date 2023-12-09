@@ -77,11 +77,23 @@ export class ExplorerService implements IContribution {
     private readonly notificationService: NotificationService
   ) {}
 
+  /**
+   * Refresh the explorer tree.
+   */
+  refresh(): void {
+    this.fileService.refresh();
+  }
+
   deactivate() {
     this.clipboardData = [];
     this.commandRegistry.next([]);
   }
 
+
+  /**
+   * Register commands to the explorer view.
+   * @param commands The commands to register.
+   */
   registerCommands(
     ...commands: (IExplorerCommand | Type<IExplorerCommand>)[]
   ): void {
@@ -96,6 +108,10 @@ export class ExplorerService implements IContribution {
     ]);
   }
 
+  /**
+   * List the commands registered to the explorer view.
+   * @returns The list of commands grouped by group name.
+   */
   listCommands(): IExplorerCommand[][] {
     const commands = this.commandRegistry.value;
     const groups = commands.reduce((rec, next) => {
@@ -111,30 +127,56 @@ export class ExplorerService implements IContribution {
       .filter((e) => e.length);
   }
 
+  /**
+   * List the currently selected files of the explorer view.
+   * @returns The list of selected files.
+   */
   selections(): IFile[] {
     return this.fileService.normalize(this.tree?.selections() || []);
   }
 
+  /**
+   * Gets the currently focused node of the explorer view.
+   * @returns The currently focused node.
+   */
   focusedNode(): IFile | undefined {
     return this.tree?.focusedNode();
   }
 
+  /**
+   * Expand the given node in the explorer view.
+   * @param node The node to expand.
+   */
   expand(node: IFile): void {
     this.tree?.expand(node);
   }
 
+  /**
+   * Expand all nodes in the explorer view.
+   */
   expandAll(): void {
     this.tree?.expandAll();
   }
 
+  /**
+   * Collapse the given node in the explorer view.
+   * @param node The node to collapse.
+   */
   collapse(node: IFile): void {
     this.tree?.collapse(node);
   }
 
+  /**
+   * Collapse all nodes in the explorer view.
+   */
   collapseAll(): void {
     this.tree?.collapseAll();
   }
 
+  /**
+   * Tells if the explorer view has a selection.
+   * @returns The list of selected nodes.
+   */
   hasSelection(): boolean {
     return !!this.tree?.selections()?.length;
   }

@@ -8,9 +8,9 @@ import { FileSystemError } from './file-system-error';
 import {
   FileChangeType,
   FileSystemProviderCapabilities,
-  fileSystemProviderCapabilityName,
   IFileChange,
   IFileSystemProvider,
+  fileSystemProviderCapabilityName,
 } from './file-system-provider';
 import { SearchForm, SearchResult } from './file-system-search';
 
@@ -84,6 +84,15 @@ export class FileService implements IContribution {
     this.contents.next(new Map());
 
     this.folders.splice(0, this.folders.length);
+  }
+
+
+  getProvider(scheme: string): IFileSystemProvider | undefined {
+    return this.providers.get(scheme);
+  }
+
+  listProviders(): ReadonlyArray<IFileSystemProvider> {
+    return Array.from(this.providers.values());
   }
 
   /**
