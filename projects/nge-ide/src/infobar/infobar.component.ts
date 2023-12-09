@@ -17,7 +17,7 @@ import {
 } from '@cisstech/nge-ide/core';
 import { Subscription } from 'rxjs';
 
-const CLOSED_SIZE = 5;
+const CLOSED_SIZE = 4;
 const OPENED_SIZE = 25;
 
 @Component({
@@ -95,9 +95,11 @@ export class InfobarComponent implements OnInit, OnDestroy {
       (e) => e.id === container.id
     );
 
-    if (this.size <= OPENED_SIZE / 2) {
-      this.size = OPENED_SIZE / 2;
-      this.sizeChange.emit(this.size);
+    if (this.activeContainerView) { // no open on first load
+      if (this.size <= OPENED_SIZE / 2) {
+        this.size = OPENED_SIZE / 2;
+        this.sizeChange.emit(this.size);
+      }
     }
 
     this.changeDetectorRef.markForCheck();
