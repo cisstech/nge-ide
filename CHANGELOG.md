@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [17.0.0](https://github.com/cisstech/nge-ide/compare/v16.0.0...v17.0.0) (2023-12-09)
+
+
+### Features
+
+* **explorer:** expose refresh api ([eb0d172](https://github.com/cisstech/nge-ide/commit/eb0d172b1abf6ae3619db049cd6ac92143f866bd))
+
 ## [16.0.0](https://github.com/cisstech/nge-ide/compare/v15.2.3...v16.0.0) (2023-09-11)
 
 ### [15.2.3](https://github.com/cisstech/nge-ide/compare/v15.2.1...v15.2.3) (2023-07-10)
