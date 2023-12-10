@@ -20,9 +20,11 @@
                 [class.disabled]="!item.command?.enabled"
                 [attr.data-command]="item.command?.id"
                 (click)="item.command?.execute()">
-                <div class="menu-icon"></div>
-                <div class="menu-label">{{ item.command?.label }}</div>
-                <div class="menu-shorcut">{{ item.command?.keybinding }}</div>
+                <div class="menu-item-content">
+                  <div class="menu-icon"></div>
+                  <div class="menu-label">{{ item.command?.label }}</div>
+                  <div class="menu-shorcut">{{ item.command?.keybinding }}</div>
+                </div>
               </li>
             </ng-container>
             <ng-template #separator>

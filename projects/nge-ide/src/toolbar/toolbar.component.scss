@@ -29,15 +29,18 @@ nz-divider {
   line-height: 24px;
   font-size: 14px;
   padding: 0;
-  display: grid;
   cursor: pointer;
-  grid-template-columns: 32px 1fr auto 32px;
   &.disabled {
     opacity: 0.4;
     &:hover {
       background-color: transparent;
     }
   }
+}
+
+.menu-item-content {
+  display: grid;
+  grid-template-columns: 32px 1fr auto 32px;
 }
 
 .menu-label {
