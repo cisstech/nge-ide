@@ -8,8 +8,14 @@ export enum ToolbarGroups {
   GO = 'GO',
 }
 
+export interface IToolbarCustomGroup {
+  readonly name: string;
+  readonly anchor: ToolbarGroups;
+  readonly position: 'before' | 'after';
+}
+
 export interface IToolbarItem {
-  readonly group: ToolbarGroups;
+  readonly group: string;
   readonly command?: ICommand;
   readonly priority: number;
   readonly isSeparator: boolean;
@@ -17,11 +23,12 @@ export interface IToolbarItem {
 
 export class ToolbarButton implements IToolbarItem {
   readonly isSeparator = false;
-  readonly group: ToolbarGroups;
+  readonly group: string;
   readonly command: ICommand;
   readonly priority: number;
+
   constructor(args: {
-    group: ToolbarGroups;
+    group: string;
     command: ICommand;
     priority: number;
   }) {
@@ -34,5 +41,5 @@ export class ToolbarButton implements IToolbarItem {
 export class ToolbarSeparator implements IToolbarItem {
   readonly shorcut = '';
   readonly isSeparator = true;
-  constructor(readonly group: ToolbarGroups, readonly priority: number) {}
+  constructor(readonly group: string, readonly priority: number) {}
 }

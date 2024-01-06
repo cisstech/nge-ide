@@ -1,5 +1,5 @@
-<ng-container *ngFor="let tuple of menus">
-  <ng-container *ngIf="tuple[1]|async as items">
+@for (tuple of menus; track tuple[0]) {
+   <ng-container *ngIf="tuple[1]|async as items">
     <ng-container *ngIf="items.length">
       <button
         nz-button
@@ -11,7 +11,7 @@
       </button>
       <nz-dropdown-menu #menu="nzDropdownMenu">
         <ul nz-menu role="menu">
-          <ng-container *ngFor="let item of items; let isLast = last;">
+          @for (item of items; track $index) {
             <ng-container *ngIf="!item.isSeparator; else separator">
               <li
                 nz-menu-item
@@ -28,14 +28,14 @@
               </li>
             </ng-container>
             <ng-template #separator>
-              <nz-divider nzDashed *ngIf="!isLast"></nz-divider>
+              <nz-divider nzDashed *ngIf="!$last"></nz-divider>
             </ng-template>
-          </ng-container>
+          }
         </ul>
       </nz-dropdown-menu>
     </ng-container>
   </ng-container>
-</ng-container>
+}
 
 <div class="spacer"></div>
 <a href="https://github.com/cisstech/nge-ide" target="_blank" mat-button>NGE IDE</a>
