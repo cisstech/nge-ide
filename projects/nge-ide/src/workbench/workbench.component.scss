@@ -53,3 +53,25 @@
   border: 1px solid;
   border-radius: 8px;
 }
+
+.container-welcome {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  justify-content: center;
+}
+
+
+.cisstech {
+  border-radius: 50%;
+  width: 92px;
+  height: auto;
+  cursor: pointer;
+  transition: transform 0.3s ease-in-out;
+  &:hover {
+    transform: scale(1.1);
+  }
+}
+

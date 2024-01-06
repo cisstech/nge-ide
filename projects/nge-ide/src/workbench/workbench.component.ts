@@ -19,7 +19,7 @@ import { PreviewEditor } from './preview-editor/preview-editor';
 })
 export class WorkbenchComponent implements OnInit, OnDestroy {
   private readonly subscriptions: Subscription[] = [];
-
+  protected empty = false
   readonly groups: Observable<EditorGroup[]> = this.editorService.editorGroups;
   readonly commands = combineLatest([
     this.editorService.commands.pipe(startWith([])),
@@ -37,7 +37,8 @@ export class WorkbenchComponent implements OnInit, OnDestroy {
       new PreviewEditor()
     );
     this.subscriptions.push(
-      this.groups.subscribe(() => {
+      this.groups.subscribe((groups) => {
+        this.empty = groups.length === 0;
       })
     );
   }

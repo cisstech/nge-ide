@@ -12,7 +12,9 @@
     <as-split-area [order]="1" [size]="$any('*')">
       <as-split direction="vertical" [gutterSize]="2" [useTransition]="true" (dragEnd)="infobar.size=$any($event.sizes[1])">
         <as-split-area [size]="100 - infobar.size">
-          <ide-workbench class="workbench" #workbench></ide-workbench>
+          <ide-workbench class="workbench" #workbench>
+            <ng-content />
+          </ide-workbench>
         </as-split-area>
         <as-split-area [visible]="!infobar.isEmpty" [size]="infobar.size">
           <ide-infobar #infobar></ide-infobar>
