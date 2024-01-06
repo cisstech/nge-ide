@@ -14,6 +14,14 @@ export interface IToolbarCustomGroup {
   readonly position: 'before' | 'after';
 }
 
+export interface IToolbarButton {
+  command: ICommand;
+  colors?: {
+    foreground: string;
+    background: string;
+  }
+}
+
 export interface IToolbarItem {
   readonly group: string;
   readonly command?: ICommand;

@@ -1,3 +1,18 @@
+<ng-container *ngIf="buttons|async as actions">
+  @for (action of actions; track action.command.id) {
+    <button
+      *ngIf="action.command.enabled"
+      nz-button
+      [nzType]="action.colors ? 'primary' : 'default'"
+      (click)="action.command.execute()"
+      [style.background-color]="action.colors?.background"
+      [style.color]="action.colors?.foreground"
+      class="action">
+        <ui-icon [icon]="action.command.icon" />
+        {{ action.command.label }}
+    </button>
+  }
+</ng-container>
 @for (tuple of menus; track tuple[0]) {
    <ng-container *ngIf="tuple[1]|async as items">
     <ng-container *ngIf="items.length">
@@ -38,4 +53,4 @@
 }
 
 <div class="spacer"></div>
-<a href="https://github.com/cisstech/nge-ide" target="_blank" mat-button>NGE IDE</a>
+<a href="https://github.com/cisstech/nge-ide" target="_blank" nz-button nzType="link">NGE IDE</a>

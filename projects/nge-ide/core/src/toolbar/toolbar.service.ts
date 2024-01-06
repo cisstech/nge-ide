@@ -1,14 +1,22 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { IToolbarCustomGroup, IToolbarItem, ToolbarGroups } from './toolbar.model';
+import { IToolbarButton, IToolbarCustomGroup, IToolbarItem, ToolbarGroups } from './toolbar.model';
 import { IContribution } from '../contributions/index';
+import { ICommand } from '../commands';
 
 @Injectable()
 export class ToolbarSevice implements IContribution {
   readonly id = 'workbench.contrib.toolbar-service';
   private readonly registry = new BehaviorSubject<IToolbarItem[]>([]);
+  private readonly buttonRegistry = new BehaviorSubject<IToolbarButton[]>([]);
   private readonly customGroupRegistry = new BehaviorSubject<IToolbarCustomGroup[]>([]);
+
+
+  deactivate(): void {
+    this.registry.next([]);
+    this.customGroupRegistry.next([]);
+  }
 
 
   register(...items: IToolbarItem[]): void {
@@ -23,9 +31,10 @@ export class ToolbarSevice implements IContribution {
     this.customGroupRegistry.next(entries);
   }
 
-  deactivate(): void {
-    this.registry.next([]);
-    this.customGroupRegistry.next([]);
+  registerButton(...buttons: IToolbarButton[]): void {
+    const entries = this.buttonRegistry.value;
+    entries.push(...buttons);
+    this.buttonRegistry.next(entries);
   }
 
   listOfGroup(group: string): Observable<IToolbarItem[]> {
@@ -34,7 +43,13 @@ export class ToolbarSevice implements IContribution {
       .pipe(map((items) => items.filter((item) => item.group === group)));
   }
 
+
+  listButtons(): Observable<IToolbarButton[]> {
+    return this.buttonRegistry.asObservable();
+  }
+
   listCustomGroups(): Observable<IToolbarCustomGroup[]> {
     return this.customGroupRegistry.asObservable();
   }
+
 }

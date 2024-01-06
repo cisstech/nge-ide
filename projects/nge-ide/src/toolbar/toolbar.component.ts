@@ -12,13 +12,13 @@ import { map } from 'rxjs/operators';
   selector: 'ide-toolbar',
   templateUrl: './toolbar.component.html',
   styleUrls: ['./toolbar.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ToolbarComponent implements OnInit {
   private readonly destroyRef = inject(DestroyRef)
   private readonly toolbarService = inject(ToolbarSevice)
 
   protected menus: [string, Observable<IToolbarItem[]>][] = [];
+  protected buttons = this.toolbarService.listButtons();
 
   ngOnInit() {
     this.toolbarService.listCustomGroups().pipe(
