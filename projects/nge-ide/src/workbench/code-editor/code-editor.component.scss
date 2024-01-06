@@ -11,3 +11,28 @@
   left: 50%;
   transform: translate(-50%, -50%);
 }
+
+:host::ng-deep {
+  .drop-controller-widget {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    padding: 10px;
+    border-radius: 4px;
+    white-space: nowrap;
+    z-index: 100;
+  }
+
+  .drop-controller-widget div {
+    padding: 8px 12px;
+    cursor: pointer;
+    transition:
+      background-color 0.3s,
+      color 0.3s;
+  }
+
+  .drop-controller-widget div:hover {
+    background-color: #f3f3f3;
+    color: #333;
+  }
+}

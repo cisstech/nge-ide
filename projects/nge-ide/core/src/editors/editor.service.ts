@@ -9,12 +9,15 @@ import { NotificationService } from '../notifications';
 import { Paths } from '../utils/index';
 import { Editor, EditorGroup, EditorState } from './editor';
 import { OpenOptions } from './opener';
+import { DropIntoEditorHandler } from './drop-into-editor-controller/drop-into-editor-controller';
 
 @Injectable()
 export class EditorService implements IContribution {
   readonly id = 'workbench.contrib.editor-service';
   private readonly subscriptions: Subscription[] = [];
   private readonly groups: Map<string, EditorGroup> = new Map();
+
+  private readonly dropInEditorHandlers: DropIntoEditorHandler[] = [];
 
   private readonly didOpen = new Subject<monaco.Uri>();
   private readonly willOpen = new Subject<monaco.Uri>();
@@ -57,6 +60,13 @@ export class EditorService implements IContribution {
   /** shorcut to state.value.visibleEditors */
   get visibleEditors(): ReadonlyArray<Editor> {
     return this.state$.value.visibleEditors;
+  }
+
+  /**
+   * The handlers to insert a text into the editor when a file is dropped into it from the file explorer.
+   */
+  get dropHandlers(): ReadonlyArray<DropIntoEditorHandler> {
+    return this.dropInEditorHandlers;
   }
 
   constructor(
@@ -124,6 +134,15 @@ export class EditorService implements IContribution {
       ...this.commands$.value,
     ]);
   }
+
+  /**
+   * Register a handler to insert a text into the editor when a file is dropped into it from the file explorer.
+   * @param handler the handler to register.
+   */
+  registerDropInEditorHandler(handler: DropIntoEditorHandler): void {
+    this.dropInEditorHandlers.push(handler);
+  }
+
 
   /**
    * Checks whether the given `resource` is opened in any editor.

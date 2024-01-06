@@ -8,6 +8,11 @@ import {
 } from '@angular/core';
 
 /**
+ * Data passed to dataTransfer.setData method when a data is dragged using DndDirective.
+ */
+export const DndDataTransfer = 'dnd-data';
+
+/**
  * Element that can share or accept a data of dragged dom element.
  *
  * - the class `dnd-over` is added to the element when a dragged data hover the element.
@@ -65,7 +70,12 @@ export class DndDirective implements AfterContentInit {
       }
       if (e.dataTransfer) {
         e.dataTransfer.effectAllowed = 'move';
-        e.dataTransfer.setData('dnd-data', this.dndData);
+        e.dataTransfer.setData(DndDataTransfer, this.dndData);
+        if (typeof this.dndData === 'string') {
+          // standard way to share a string data, this is handled by most applications
+          // like vscode, chrome, firefox, etc.
+          e.dataTransfer.setData('text/plain', this.dndData);
+        }
       }
       node.classList.add('dnd-drag');
       return false;
@@ -149,7 +159,7 @@ export class DndDirective implements AfterContentInit {
 
       if (e.dataTransfer) {
         const dst = this.dndData;
-        const src = e.dataTransfer.getData('dnd-data');
+        const src = e.dataTransfer.getData(DndDataTransfer);
         if (src || file) {
           this.dropped.emit({ src, file: file as any, dst });
         }

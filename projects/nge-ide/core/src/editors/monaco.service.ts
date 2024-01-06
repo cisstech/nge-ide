@@ -92,23 +92,27 @@ export class MonacoService implements IContribution {
     undefined
   );
 
-  private readonly didFollowLink = new Subject<{
-    uri: monaco.Uri;
-    link: string;
-  }>();
+  private readonly didFollowLink = new Subject<{ uri: monaco.Uri;  link: string; }>();
+  private readonly didCreateEditor = new Subject<IStandaloneCodeEditor>();
 
   private setModelMarkers?: any;
   private monacoApiDecorated = false;
 
   /** Emitted when active editor cursor position change. */
   readonly cursorChange = this.cursor$.asObservable();
+
   /** Emitted when active editor change. */
   readonly activeEditorChange = this.activeEditor$.asObservable();
+
   /** Emitted when active editor language change. */
   readonly activeLangageChange = this.activeLanguage$.asObservable();
 
   /** Emitted when a link is clicked inside the editor */
   readonly onDidFollowLink = this.didFollowLink.asObservable();
+
+  /** Emitted when a new editor is created */
+  readonly onDidCreateEditor = this.didCreateEditor.asObservable();
+
 
   get cursor(): Nullable<IPosition> {
     return this.cursor$.value;
@@ -239,7 +243,8 @@ export class MonacoService implements IContribution {
   onCreateEditor(editor: IStandaloneCodeEditor): void {
     this.decorateMonacoEditorApi();
 
-    const linkDetector = (editor as any).getContribution(LINK_DETECTOR_CONTRIB);
+    const linkDetector = editor.getContribution(LINK_DETECTOR_CONTRIB) as any;
+
     const openBase = linkDetector.openerService.open;
     linkDetector.openerService.open = async (
       uri: monaco.Uri,
@@ -251,10 +256,7 @@ export class MonacoService implements IContribution {
         options
       );
       if (!opened) {
-        this.didFollowLink.next({
-          uri,
-          link: uri.path,
-        });
+        this.didFollowLink.next({ uri, link: uri.path });
       }
     };
 
@@ -316,6 +318,8 @@ export class MonacoService implements IContribution {
     });
 
     this.updateSettings();
+
+    this.didCreateEditor.next(editor);
   }
 
   onDisposeEditor(editor: IStandaloneCodeEditor): void {
