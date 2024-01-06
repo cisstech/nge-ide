@@ -22,10 +22,9 @@
     "@angular/common": "^17.0.0",
     "@angular/core": "^17.0.0",
     "@angular/cdk": "^17.0.0",
-    "@angular/material": "^17.0.0",
-    "@cisstech/nge": "^17.0.0",
+    "@cisstech/nge": "^17.4.0",
     "rxjs": "^7.5.2",
-    "@ngx-pwa/local-storage": "^16.3.0",
+    "@ngx-pwa/local-storage": "^17.0.0",
     "angular-split": "^17.0.0",
     "ng-event-bus": "^5.2.0",
     "ng-zorro-antd": "^17.0.0"
