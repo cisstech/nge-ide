@@ -1,29 +1,28 @@
 // ANGULAR
+import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 // LIBS
 import { NGE_DOC_RENDERERS } from '@cisstech/nge/doc';
 import {
-  NgeMonacoColorizerService,
-  NgeMonacoModule,
-  NGE_MONACO_THEMES,
-} from '@cisstech/nge/monaco';
-import {
+  NgeMarkdownAdmonitionsProvider,
+  NgeMarkdownEmojiProvider,
+  NgeMarkdownHighlighterMonacoProvider,
+  NgeMarkdownHighlighterProvider,
+  NgeMarkdownIconsProvider,
+  NgeMarkdownKatexProvider,
+  NgeMarkdownLinkAnchorProvider,
   NgeMarkdownModule,
   NgeMarkdownTabbedSetProvider,
-  NgeMarkdownAdmonitionsProvider,
-  NgeMarkdownLinkAnchorProvider,
-  NgeMarkdownKatexProvider,
-  NgeMarkdownEmojiProvider,
-  NgeMarkdownIconsProvider,
-  NgeMarkdownHighlighterProvider,
-  NgeMarkdownHighlighterMonacoProvider,
   NgeMarkdownThemeProvider,
 } from '@cisstech/nge/markdown';
-import { NgeUiDialogModule } from '@cisstech/nge/ui/dialog';
+import {
+  NGE_MONACO_THEMES,
+  NgeMonacoColorizerService,
+  NgeMonacoModule,
+} from '@cisstech/nge/monaco';
 
 // MODULE
 import { AppRoutingModule } from './app-routing.module';
@@ -36,7 +35,6 @@ import { AppComponent } from './app.component';
     HttpClientModule,
 
     NgeMarkdownModule,
-    NgeUiDialogModule,
     NgeMonacoModule.forRoot({
       locale: 'fr',
       theming: {

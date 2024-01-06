@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
 import {
+  DialogService,
   EditorService,
   FileService,
   ICommand,
   NotificationService,
 } from '@cisstech/nge-ide/core';
 import { CodIcon } from '@cisstech/nge/ui/icon';
-import { DialogService } from '@cisstech/nge/ui/dialog';
 import { ExplorerService } from '../../explorer.service';
 
 export const EXPLORER_COMMAND_REFRESH = 'explorer.commands.refresh';
@@ -39,6 +39,7 @@ export class ExplorerCommandRefresh implements ICommand {
           message: 'Vous perdrez toutes les modifications non sauvegardées.',
           noTitle: 'Annuler',
           okTitle: 'Actualiser',
+          danger: true,
         });
 
       if (!shouldConfirm || (await askConfirmation())) {

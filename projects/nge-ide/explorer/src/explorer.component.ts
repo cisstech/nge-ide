@@ -1,7 +1,6 @@
 import {
   AfterViewChecked,
   ChangeDetectionStrategy,
-  ChangeDetectorRef,
   Component,
   ElementRef,
   HostListener,
@@ -10,17 +9,17 @@ import {
   ViewChild
 } from '@angular/core';
 import {
+  DialogService,
   DndData,
   EditorService,
   FileService,
   FileSystemProviderCapabilities,
-  IdeService,
   IFile,
+  IdeService,
   NotificationService,
   Paths,
   StorageService
 } from '@cisstech/nge-ide/core';
-import { DialogService } from '@cisstech/nge/ui/dialog';
 import {
   ITreeState,
   TreeComponent,
@@ -63,7 +62,6 @@ export class ExplorerComponent implements OnInit, OnDestroy, AfterViewChecked {
     private readonly explorerService: ExplorerService,
     private readonly contextMenuService: NzContextMenuService,
     private readonly notificationService: NotificationService,
-    private readonly changeDetectorRef: ChangeDetectorRef
   ) { }
 
   ngOnInit(): void {

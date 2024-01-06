@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 import {
+  DialogService,
   FileService,
   NotificationService,
   Paths,
 } from '@cisstech/nge-ide/core';
-import { DialogService } from '@cisstech/nge/ui/dialog';
 import { CodIcon } from '@cisstech/nge/ui/icon';
 import { ExplorerService } from '../../explorer.service';
 import { CommandGroups, IExplorerCommand } from './explorer.command';
@@ -70,6 +70,7 @@ export class ExplorerCommandDelete implements IExplorerCommand {
       message,
       noTitle: 'Annuler',
       okTitle: 'Supprimer',
+      danger: true,
     });
 
     if (confirmed) {

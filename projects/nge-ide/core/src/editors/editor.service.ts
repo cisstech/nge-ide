@@ -1,9 +1,9 @@
 import { Injectable, Injector, Predicate, Type } from '@angular/core';
-import { ConfirmOptions, DialogService } from '@cisstech/nge/ui/dialog';
 import { CodIcon } from '@cisstech/nge/ui/icon';
 import { BehaviorSubject, Subject, Subscription } from 'rxjs';
 import { CommandService, ICommand } from '../commands';
 import { IContribution } from '../contributions/index';
+import { ConfirmOptions, DialogService } from '../dialog';
 import { FileChangeType, FileService } from '../files/index';
 import { NotificationService } from '../notifications';
 import { Paths } from '../utils/index';
@@ -312,7 +312,7 @@ export class EditorService implements IContribution {
       message:
         'Vos modifications seront perdues si vous ne les enregistrez pas.',
       buttons: [
-        { id: 'dontsave', title: 'Ne pas sauvegarder', role: 'custom' },
+        { id: 'dontsave', title: 'Ne pas sauvegarder', danger: true },
       ],
       okTitle: 'Sauvegarder',
       noTitle: 'Annuler',

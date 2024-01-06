@@ -13,8 +13,12 @@ import { StorageService } from './storage/index';
 import { TaskService } from './tasks/index';
 import { ToolbarSevice } from './toolbar/index';
 import { ViewContainerService, ViewService } from './views/index';
+import { DialogModule } from './dialog';
 
 @NgModule({
+  imports: [
+    DialogModule
+  ],
   providers: [
     IdeService,
     NgEventBus,
