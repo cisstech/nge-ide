@@ -14,8 +14,10 @@
 
 :host::ng-deep {
   .drop-controller-widget {
-    border: 1px solid #ddd;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    background-color: var(--drop-controller-widget-background, #fff);
+    color: var(--drop-controller-widget-color, #333);
+    border: 1px solid var(--drop-controller-widget-border, #ddd);
+    box-shadow: var(--drop-controller-widget-box-shadow, 0 2px 8px rgba(0, 0, 0, 0.1));
     padding: 0;
     border-radius: 4px;
     white-space: nowrap;
@@ -31,7 +33,7 @@
   }
 
   .drop-controller-widget div:hover {
-    background-color: #f3f3f3;
-    color: #333;
+    background-color: var(--drop-controller-widget-hover-background, #f3f3f3);
+    color: var(--drop-controller-widget-hover-color, #333);
   }
 }
