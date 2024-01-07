@@ -18,6 +18,12 @@ import {
 } from '@cisstech/nge/ui/tree';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { IExplorerCommand } from './commands';
+import { FileNestingPattern } from './file-nesting/file-nesting';
+
+type ExplorerFile = IFile & {
+  parent?: IFile;
+  children: IFile[];
+};
 
 /**
  * Provides an API to interact with the explorer view tree.
@@ -27,20 +33,93 @@ export class ExplorerService implements IContribution {
   readonly id = 'workbench.contrib.explorer-service';
 
   private readonly contextMenu = new Subject<ITreeMouseAction<IFile>>();
-  private readonly commandRegistry = new BehaviorSubject<IExplorerCommand[]>(
-    []
-  );
+  private readonly commandRegistry = new BehaviorSubject<IExplorerCommand[]>([]);
+  private readonly fileNestingPatternsRegistry = new BehaviorSubject<FileNestingPattern[]>([])
+
+  get fileNestingPatterns(): ReadonlyArray<FileNestingPattern> {
+    return this.fileNestingPatternsRegistry.value;
+  }
+
 
   private clipboardData: IFile[] = [];
   private newFileType: 'file' | 'folder' | undefined;
 
-  readonly root = this.fileService.treeChange;
+  readonly root = this.fileService.treeChange
+
   readonly adapter: ITreeAdapter<IFile> = {
     id: 'explorer.tree',
-    idProvider: (node) => node.uri.with({ query: '' }).toString(true),
+    idProvider: (node) => this.fileService.entryId(node.uri),
     nameProvider: (node) => this.fileService.entryName(node.uri),
-    childrenProvider: (node) => this.fileService.findChildren(node),
-    isExpandable: (node) => node.isFolder,
+    childrenProvider: (node) => {
+      const o = node as ExplorerFile;
+      if (!o.isFolder) {
+        return o.children
+      } else {
+        o.children = []
+      }
+
+      const children = (
+        this.fileService.findChildren(node) as ExplorerFile[]
+      ).map(child => {
+        const adapted: ExplorerFile = {
+          ...child,
+          parent: node,
+        }
+        return adapted
+      });
+
+      const nestedIds: string[] = [];
+
+      try {
+        children.forEach(child => {
+          const name = this.fileService.entryName(child.uri);
+
+          let match: RegExpMatchArray | undefined;
+          let pattern: FileNestingPattern | undefined;
+          for (const item of this.fileNestingPatterns) {
+            match = name.match(item.parent) as RegExpMatchArray;
+            if (match) {
+              pattern = item;
+              break;
+            }
+          }
+
+
+          if (match && pattern) {
+            const matchers = pattern.children.map(child => {
+              child = match?.length === 2 ? child.replace('${capture}', match![1]) : child;
+              return new RegExp(child);
+            })
+
+            const nested = children.filter((o) => {
+              const childName = this.fileService.entryName(o.uri);
+              if (name === childName) {
+                return false;
+              }
+              return matchers.some(regex => childName.match(regex))
+            })
+
+            child.children = nested
+            nested.forEach(n => {
+              nestedIds.push(this.fileService.entryId(n.uri))
+            })
+          }
+        })
+      } catch (error) {
+        console.error(error)
+      }
+
+      const parent = node as ExplorerFile;
+      parent.children = children.filter(child => {
+        return !nestedIds.includes(this.fileService.entryId(child.uri))
+      })
+      return parent.children;
+    },
+    isExpandable: (node) => {
+      const o = node as ExplorerFile;
+      if (o.isFolder) return true;
+      return !!o.children?.length
+    },
     onDidEditName: this.onEditNode.bind(this),
     keepStateOnChangeNodes: true,
     enableKeyboardFiltering: false,
@@ -59,7 +138,7 @@ export class ExplorerService implements IContribution {
         },
       },
     },
-  };
+  }
 
   get tree(): ITree<IFile> {
     return this.treeService.get(this.adapter.id) as any;
@@ -69,13 +148,14 @@ export class ExplorerService implements IContribution {
     return this.contextMenu.asObservable();
   }
 
+
   constructor(
     private readonly treeService: TreeService,
     private readonly fileService: FileService,
     private readonly editorService: EditorService,
     private readonly commandService: CommandService,
     private readonly notificationService: NotificationService
-  ) {}
+  ) { }
 
   /**
    * Refresh the explorer tree.
@@ -87,8 +167,23 @@ export class ExplorerService implements IContribution {
   deactivate() {
     this.clipboardData = [];
     this.commandRegistry.next([]);
+    this.fileNestingPatternsRegistry.next([])
   }
 
+  registerFileNestingPatterns(...patterns: FileNestingPattern[]): void {
+    this.fileNestingPatternsRegistry.next([
+      ...this.fileNestingPatternsRegistry.value,
+      ...patterns
+    ])
+    this.fileService.emitTreeChange()
+  }
+
+  unregisterFileNestingPatterns(...ids: string[]): void {
+    this.fileNestingPatternsRegistry.next([
+      ...this.fileNestingPatternsRegistry.value.filter(o => !ids.includes(o.id))
+    ])
+    this.fileService.emitTreeChange()
+  }
 
   /**
    * Register commands to the explorer view.

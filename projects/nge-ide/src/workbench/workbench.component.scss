@@ -63,15 +63,3 @@
   justify-content: center;
 }
 
-
-.workbench-logo {
-  border-radius: 16%;
-  width: 92px;
-  height: auto;
-  cursor: pointer;
-  transition: transform 0.3s ease-in-out;
-  &:hover {
-    transform: scale(1.1);
-  }
-}
-

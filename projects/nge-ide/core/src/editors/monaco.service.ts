@@ -181,7 +181,7 @@ export class MonacoService implements IContribution {
     const uri = options.uri.with({ fragment: '', query: '' });
 
     let model = editor.getModel();
-    if (model && this.fileService.idFromUri(uri) === this.fileService.idFromUri(model.uri)) {
+    if (model && this.fileService.entryId(uri) === this.fileService.entryId(model.uri)) {
       return; // already opened
     }
 

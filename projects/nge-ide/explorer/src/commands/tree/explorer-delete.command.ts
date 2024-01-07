@@ -3,7 +3,7 @@ import {
   DialogService,
   FileService,
   NotificationService,
-  Paths,
+  Paths
 } from '@cisstech/nge-ide/core';
 import { CodIcon } from '@cisstech/nge/ui/icon';
 import { ExplorerService } from '../../explorer.service';

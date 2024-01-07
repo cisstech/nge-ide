@@ -1,12 +1,15 @@
 <ui-tree #treeRef [adapter]="adapter" [nodes]="(root|async)||[]">
   <ng-container *treeNode="let node">
-    <ui-icon
-    [icon]="node.name|iconFile:{
-      alt: node.name,
-      isRoot: node.level === 0,
-      expanded: node.expanded,
-      isDirectory: node.expandable
-    }"/>
+    <!-- ADD PADDING ON FILE NODES TO COMPENSATE THE CHEVRON -->
+    <div style="padding-left: 12px;" *ngIf="!node.expandable"></div>
+    @if (node.expandable && node.level > 0) {
+      @if (node.expanded) {
+        <ui-icon class="tree-toggle" [icon]="'chevron-down'|iconCodicon" />
+      } @else {
+       <ui-icon class="tree-toggle" [icon]="'chevron-right'|iconCodicon" />
+      }
+    }
+    <ui-icon *ngIf="node|explorerFileIconOptions as options" [icon]="node.name|iconFile:options"/>
     <div class="tree-label"
       [title]="node.data.uri.path"
       [highlight]="node.name"

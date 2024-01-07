@@ -62,7 +62,7 @@ export class ExplorerContribution implements IContribution {
       ExplorerCommandFileExport,
       ExplorerCommandFileUpload,
       ExplorerCommandPaste,
-      ExplorerCommandRename
+      ExplorerCommandRename,
     );
 
     explorerService.registerCommands(
@@ -74,7 +74,7 @@ export class ExplorerContribution implements IContribution {
       ExplorerCommandFileExport,
       ExplorerCommandFileUpload,
       ExplorerCommandPaste,
-      ExplorerCommandRename
+      ExplorerCommandRename,
     );
 
     toolbarService.register(

@@ -12,6 +12,7 @@ import { NgeUiIconModule } from '@cisstech/nge/ui/icon';
 import { NgeUiTreeModule } from '@cisstech/nge/ui/tree';
 
 import { ExplorerComponent } from './explorer.component';
+import { ExplorerFileIconOptionsPipe } from './pipes/explorer-file-icon-options.pipe';
 
 @NgModule({
   imports: [
@@ -22,6 +23,7 @@ import { ExplorerComponent } from './explorer.component';
     NgeUiIconModule,
     NgeUiTreeModule,
     EditorDirectivesModule,
+    ExplorerFileIconOptionsPipe
   ],
   declarations: [ExplorerComponent],
   exports: [ExplorerComponent]

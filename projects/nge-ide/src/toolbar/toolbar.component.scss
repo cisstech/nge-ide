@@ -60,3 +60,15 @@ nz-divider {
 .spacer {
   flex: 1;
 }
+
+svg {
+  width: 24px;
+  height: auto;
+  border-radius: 8px;
+}
+
+a {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}

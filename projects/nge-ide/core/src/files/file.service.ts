@@ -130,6 +130,13 @@ export class FileService implements IContribution {
     this.rebuildIndex();
   }
 
+  /**
+   * Emits the current tree without reloading the files.
+   */
+  emitTreeChange() {
+    this.tree.next(this.tree.value.slice());
+  }
+
   // PROVIDERS
 
   hasProvider(scheme: string) {
@@ -162,6 +169,17 @@ export class FileService implements IContribution {
         (f) => !uris.some((uri) => uri.toString(true) === f.uri.toString(true))
       )
     );
+    return this.refresh();
+  }
+
+  replaceFolder(oldUri: monaco.Uri, newFolder: IFolder): Promise<void> {
+    const index = this.folders.findIndex(
+      (f) => uriID(f.uri) === uriID(oldUri)
+    );
+    if (index === -1) {
+      throw new Error(`Folder ${oldUri.toString(true)} is not registered.`);
+    }
+    this.folders[index] = newFolder;
     return this.refresh();
   }
 
@@ -399,7 +417,7 @@ export class FileService implements IContribution {
 
   // UTILS
 
-  idFromUri(uri: monaco.Uri): string {
+  entryId(uri: monaco.Uri): string {
     return uriID(uri);
   }
 
