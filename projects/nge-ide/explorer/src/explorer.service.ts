@@ -50,6 +50,9 @@ export class ExplorerService implements IContribution {
     id: 'explorer.tree',
     idProvider: (node) => this.fileService.entryId(node.uri),
     nameProvider: (node) => this.fileService.entryName(node.uri),
+    tooltipProvider(node) {
+      return node.uri.authority + node.uri.path;
+    },
     childrenProvider: (node) => {
       const o = node as ExplorerFile;
       if (!o.isFolder) {
@@ -200,6 +203,12 @@ export class ExplorerService implements IContribution {
         }
         return c;
       }),
+    ]);
+  }
+
+  unregisterCommands(...ids: string[]): void {
+    this.commandRegistry.next([
+      ...this.commandRegistry.value.filter((o) => !ids.includes(o.id)),
     ]);
   }
 

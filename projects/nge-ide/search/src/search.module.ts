@@ -10,6 +10,7 @@ import { NzSkeletonModule } from 'ng-zorro-antd/skeleton';
 
 import { EditorDirectivesModule, PipesModule } from '@cisstech/nge-ide/core';
 
+import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
 import { SearchInputComponent } from './search-input/search-input.component';
 import { SearchComponent } from './search.component';
 
@@ -19,6 +20,7 @@ import { SearchComponent } from './search.component';
     CommonModule,
     FormsModule,
 
+    NzToolTipModule,
     NzSkeletonModule,
 
     PipesModule,

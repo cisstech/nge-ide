@@ -38,6 +38,9 @@ export class SearchComponent implements OnInit, OnDestroy, AfterViewChecked {
     nameProvider: (node) => node.label,
     childrenProvider: (node) => node.children || [],
     isExpandable: (node) => !!node.children?.length,
+    tooltipProvider(node) {
+      return node.resource.authority + node.resource.path;
+    },
     actions: {
       mouse: {
         click: (e) => {

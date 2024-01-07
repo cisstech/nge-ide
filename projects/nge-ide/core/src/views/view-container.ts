@@ -24,6 +24,15 @@ export interface IViewContainer {
 
   /** Optional badge to show with the title. */
   readonly badge: Observable<number>;
+
+  /**
+   * Optional order of the container.
+   * @remarks
+   * - The order is used to sort the containers inside the sidebar.
+   * - The higher the order, the more the container will be on the bottom.
+   * @default 0
+   */
+  readonly order?: number;
 }
 
 /**

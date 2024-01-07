@@ -19,7 +19,7 @@ export class ViewContainerService implements IContribution {
    */
   list<T extends IViewContainer>(scope: ViewContainerScopes): Observable<T[]> {
     return this.registry.pipe(
-      map((arr) => arr.filter((v) => v.scope === scope))
+      map((arr) => arr.filter((v) => v.scope === scope).sort((a, b) => (a.order ?? 0) - (b.order ?? 0)))
     ) as Observable<T[]>;
   }
 
@@ -36,7 +36,7 @@ export class ViewContainerService implements IContribution {
           `There is already a view container registered with the id ${container.id}`
         );
       }
-      entries.unshift(container);
+      entries.push(container);
     });
     this.registry.next(entries);
   }

@@ -27,7 +27,7 @@ export class ExplorerCommandCopyPath implements IExplorerCommand {
     const length = selections.length;
     if (length) {
       this.clipboardService.copy(
-        selections.map((e) => e.uri.fsPath).join('\n')
+        selections.map((e) => e.uri.authority + e.uri.path).join('\n')
       );
     }
   }

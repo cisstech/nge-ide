@@ -11,8 +11,8 @@
     (search)="search()">
   </ide-search-input>
 </div>
-<!--
-<div>
+
+<!-- <div>
   <span>Fichiers à inclure</span>
   <ide-search-input
     [controls]="false"
@@ -32,7 +32,7 @@
     (search)="search()">
   </ide-search-input>
 </div>
--->
+ -->
 <ng-container *ngIf="isEmpty">
   <div>
     Aucun résultat pour '{{ form.query }}'
@@ -49,7 +49,7 @@
 </ng-container>
 <ui-tree #treeRef [nodes]="nodes" [adapter]="adapter">
   <ng-container *treeNode="let node">
-    <span class="tree-label">
+    <span class="tree-label" [nz-tooltip]="node.tooltip">
       <ng-container *ngIf="node.expandable; else leafTemplate">
         <div class="codicon codicon-{{treeRef.isExpanded(node) ? 'chevron-down' : 'chevron-right' }}"></div>&nbsp;
         <ui-icon [icon]="node.name | iconFile"></ui-icon>&nbsp;

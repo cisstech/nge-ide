@@ -239,7 +239,7 @@ export class EditorService implements IContribution {
 
     this.willOpen.next(resource);
 
-    let title = options.title || Paths.basename(resource.path);
+    let title = options.title || this.fileService.entryName(resource);
     if (options?.preview) {
       title = 'Preview: ' + title;
     }
@@ -250,11 +250,12 @@ export class EditorService implements IContribution {
     }
 
     try {
+      const rootFolderName = this.fileService.entryName(resource.with({ path: '/' }))
       await group.open(resource, {
         ...options,
         icon,
         title,
-        tooltip: resource.path,
+        tooltip:  Paths.join([rootFolderName, resource.path])
       });
       return true;
     } catch (error) {

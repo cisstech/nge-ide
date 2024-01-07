@@ -10,9 +10,9 @@ import {
   FileService,
   ICommand,
   IFile,
-  Keybinding,
   KeyCodes,
   KeyModifiers,
+  Keybinding,
   Paths,
   ToolbarButton,
   ToolbarGroups,
@@ -48,7 +48,7 @@ export class QuickOpenComponent implements OnInit {
   readonly form = new UntypedFormControl();
   readonly $entries: Observable<IFile[]> = this.form.valueChanges.pipe(
     debounceTime(100),
-    map((query) => this.filter(query).slice(0, 10))
+    map((query) => this.filter(query).slice(0, 50))
   );
 
   protected data: IFile[] = [];
@@ -86,10 +86,6 @@ export class QuickOpenComponent implements OnInit {
   protected onSelected(file: IFile) {
     this.editorService.open(file.uri);
     this.hide();
-  }
-
-  protected filterByUri(_: number, file: IFile) {
-    return file.uri.path;
   }
 
   private filter(query: string): IFile[] {

@@ -10,13 +10,16 @@
     [cdkTrapFocusAutoCapture]="true"
     />
   <nz-autocomplete nzBackfill #auto (selectionChange)="onSelected($event.nzValue)">
+  @for(entry of $entries|async; track $index) {
     <nz-auto-option
-      *ngFor="let entry of $entries|async; filterBy:filterByUri;" [nzValue]="entry" [nzLabel]="entry.uri|fileName">
+      [nzValue]="entry" [nzLabel]="entry.uri|fileName">
       <div class="entry">
         <ui-icon class="entry-icon" [icon]="entry.uri.path|iconFile"></ui-icon>
         <span class="entry-name">{{ entry.uri|fileName }}</span>
-        <span class="entry-path">{{ entry.uri.path }}</span>
+        <span class="entry-path">{{ entry.uri.authority }}{{ entry.uri.path }}</span>
       </div>
     </nz-auto-option>
+
+  }
   </nz-autocomplete>
 </div>
