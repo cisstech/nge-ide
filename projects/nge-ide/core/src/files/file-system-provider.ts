@@ -31,6 +31,7 @@ export enum FileSystemProviderCapabilities {
   FileUpload = 1 << 4,
   FileMove = 1 << 5,
   FileSearch = 1 << 6,
+  FileStat = 1 << 7,
 }
 
 /**
@@ -67,10 +68,19 @@ export interface IFileSystemProvider {
   hasCapability(capability: FileSystemProviderCapabilities): boolean;
 
   /**
+   * Retrieve a file.
+   *
+   * @param uri The uri of the file.
+   * @return A promise that resolves with the file info.
+   * @throws {@link FileSystemError.FileNotFound} when `uri` doesn't exist.
+   */
+  stat(uri: monaco.Uri): Promise<IFile>;
+
+  /**
    * Retrieves recursivly all entries of a directory.
    *
    * Note: This method should include the directory itself.
-   * @param uri? The uri of the directory.
+   * @param uri The uri of the directory.
    * @return  A promise that resolves with a list of {@link IFile}.
    * @throws {@link FileSystemError.FileNotFound} when `uri` doesn't exist.
    */
@@ -173,6 +183,10 @@ export abstract class FileSystemProvider implements IFileSystemProvider {
 
   hasCapability(capability: FileSystemProviderCapabilities): boolean {
     return !!(this.capabilities & capability);
+  }
+
+  stat(uri: monaco.Uri): Promise<IFile> {
+    throw new Error('Operation not supported');
   }
 
   readDirectory(uri: monaco.Uri): IFile[] | Promise<IFile[]> {

@@ -90,7 +90,8 @@ export class MemFileProvider extends FileSystemProvider {
     FileSystemProviderCapabilities.FileMove |
     FileSystemProviderCapabilities.FileDelete |
     FileSystemProviderCapabilities.FileSearch |
-    FileSystemProviderCapabilities.FileUpload;
+    FileSystemProviderCapabilities.FileUpload |
+    FileSystemProviderCapabilities.FileStat;
 
   readonly root = monaco.Uri.parse(`${this.scheme}:///`);
 
@@ -119,6 +120,14 @@ export class MemFileProvider extends FileSystemProvider {
         new MemFile('file', `/${i}/file.svg`, SVG)
       );
     }
+  }
+
+  override stat(uri: monaco.Uri): Promise<IFile> {
+    const entry = this._lookup(uri, false);
+    if (entry) {
+      return Promise.resolve(entry);
+    }
+    throw FileSystemError.FileNotFound(uri);
   }
 
   override readDirectory(uri: monaco.Uri): Promise<IFile[]> {

@@ -22,7 +22,7 @@ interface IFolder {
 }
 
 interface IContent {
-  initial: string;
+  initial: string | undefined;
   current: string;
   changed: boolean;
 }
@@ -38,6 +38,7 @@ export class FileService implements IContribution {
 
   private readonly folders: IFolder[] = [];
   private readonly entries: Map<string, IFile> = new Map();
+  private readonly unRegisteredEntries: Map<string, IFile> = new Map();
   private readonly parents: Map<string, IFile> = new Map();
   private readonly children: Map<string, IFile[]> = new Map();
 
@@ -82,6 +83,7 @@ export class FileService implements IContribution {
     this.parents.clear();
     this.children.clear();
     this.providers.clear();
+    this.unRegisteredEntries.clear();
 
     this.tree.next([]);
     this.contents.next(new Map());
@@ -105,6 +107,7 @@ export class FileService implements IContribution {
     this.entries.clear();
     this.parents.clear();
     this.children.clear();
+    this.unRegisteredEntries.clear();
 
     for (const folder of this.folders) {
       const provider = await this.withProvider(folder.uri);
@@ -123,6 +126,7 @@ export class FileService implements IContribution {
         }
       });
     }
+
     this.rebuildIndex();
   }
 
@@ -218,9 +222,10 @@ export class FileService implements IContribution {
 
     const id = uriID(uri)
     const contents = this.contents.value;
-    const match = contents.get(id);
-    if (!match) {
-      throw FileSystemError.FileNotFound(uri);
+    const match = contents.get(id) || {
+      changed: true,
+      initial: undefined,
+      current: content,
     }
 
     contents.set(id, {
@@ -268,7 +273,7 @@ export class FileService implements IContribution {
       return;
     }
 
-    const content = this.contents.value.get(id);
+    const content = this.contents.value.get(id) || await this.open(uri);
     if (!content) {
       throw FileSystemError.FileNotFound(uri);
     }
@@ -279,6 +284,7 @@ export class FileService implements IContribution {
       await this.writeFile(uri, content.current);
 
       content.changed = false;
+      content.initial = content.initial || content.current;
 
       this.contents.value.set(id, content);
       this.contents.next(this.contents.value);
@@ -320,8 +326,14 @@ export class FileService implements IContribution {
    * @param uri The uri to find.
    * @returns A promise that resolves with the file if found `undefined` otherwise.
    */
-  find(uri: monaco.Uri): Promise<IFile | undefined> {
-    return Promise.resolve(this.entries.get(uriID(uri)));
+  async find(uri: monaco.Uri): Promise<IFile | undefined> {
+    const entry = this.entries.get(uriID(uri)) || this.unRegisteredEntries.get(uriID(uri));
+    if (entry) return entry;
+
+    const provider = await this.withProvider(uri, FileSystemProviderCapabilities.FileStat);
+    const file = await provider.stat(uri);
+    this.unRegisteredEntries.set(uriID(uri), file);
+    return file;
   }
 
   /**
