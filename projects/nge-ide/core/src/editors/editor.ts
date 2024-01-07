@@ -252,8 +252,6 @@ export class EditorGroup {
       throw new Error(`There is no registered editor to open "${request.uri}"`);
     }
 
-    editor.handle(request);
-
     if (!this.contains(resource)) {
       this._tabs.push({ options, resource });
     }
