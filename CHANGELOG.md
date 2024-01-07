@@ -2,6 +2,25 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [17.4.0](https://github.com/cisstech/nge-ide/compare/v17.1.0...v17.4.0) (2024-01-07)
+
+
+### ⚠ BREAKING CHANGES
+
+* **file:** fileService.open calls should be awaited
+
+### Features
+
+* **explorer:** file nesting pattern api ([7e686fc](https://github.com/cisstech/nge-ide/commit/7e686fcf2f7657438a00baa6e3da445c48733f32))
+* **file:** open file from unregistered folders ([1db2e5b](https://github.com/cisstech/nge-ide/commit/1db2e5baff8b3d659874c7ada237e577b37317b7))
+* **toolbar:** api to add custom buttons ([2eab5bd](https://github.com/cisstech/nge-ide/commit/2eab5bd2d84beadba7248742a84a0d05bc792c62))
+* **toolbar:** expose api to add custom menu group ([8b7790c](https://github.com/cisstech/nge-ide/commit/8b7790cd79d848a40f0be19a11493df71883f7de))
+* **workbench:** display custom content if no editor is opened ([db88211](https://github.com/cisstech/nge-ide/commit/db882110a63505aff94388519bb5a92f45498deb))
+* **workbench:** drop file path into editor ([e1286dd](https://github.com/cisstech/nge-ide/commit/e1286dd49e1b52f0fcb7823690c7513c72428557))
+
+
+* **file:** async open and read files ([87b4fa2](https://github.com/cisstech/nge-ide/commit/87b4fa2ddfe1f2280a0e60ed0f5bca1ea0acd9c6))
+
 ## [17.1.0](https://github.com/cisstech/nge-ide/compare/v17.0.0...v17.1.0) (2023-12-10)
 
 
