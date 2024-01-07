@@ -92,8 +92,8 @@ export class FileService implements IContribution {
   }
 
 
-  getProvider(scheme: string): IFileSystemProvider | undefined {
-    return this.providers.get(scheme);
+  getProvider<T extends IFileSystemProvider = IFileSystemProvider>(scheme: string): T | undefined {
+    return this.providers.get(scheme) as T | undefined;
   }
 
   listProviders(): ReadonlyArray<IFileSystemProvider> {
@@ -109,23 +109,11 @@ export class FileService implements IContribution {
     this.children.clear();
     this.unRegisteredEntries.clear();
 
-    for (const folder of this.folders) {
-      const provider = await this.withProvider(folder.uri);
-      const files = await provider.readDirectory(folder.uri);
-      files.forEach((file) => {
-        const id = uriID(file.uri);
-        this.entries.set(id, file);
-
-        const prefix = id.substring(0, id.length - file.uri.fsPath.length);
-        const parent = prefix + Paths.dirname(file.uri.fsPath);
-        if (parent !== id) {
-          const children = this.children.get(parent) || [];
-          children.push(file);
-          this.children.set(parent, children);
-          this.parents.set(id, this.entries.get(parent)!);
-        }
-      });
-    }
+    await Promise.all(
+      this.folders.map(async (folder) => {
+        await this.loadFolder(folder);
+      })
+    )
 
     this.rebuildIndex();
   }
@@ -156,20 +144,39 @@ export class FileService implements IContribution {
     this.providers.set(provider.scheme, provider);
   }
 
-  registerFolders(...folders: IFolder[]): Promise<void> {
+  async registerFolders(...folders: IFolder[]): Promise<void> {
     this.folders.push(...folders);
-    return this.refresh();
+    await Promise.all(folders.map((f) => this.loadFolder(f)));
+    return this.rebuildIndex();
   }
 
-  removeFolders(...uris: monaco.Uri[]): Promise<void> {
+  removeFolders(...uris: monaco.Uri[]): void {
     this.folders.splice(
       0,
       this.folders.length,
       ...this.folders.filter(
-        (f) => !uris.some((uri) => uri.toString(true) === f.uri.toString(true))
+        (f) => !uris.some((uri) => uriID(uri) === uriID(f.uri))
       )
     );
-    return this.refresh();
+
+
+    const parentKeys = Array.from(this.parents.keys());
+    const childrenKeys = Array.from(this.children.keys());
+    uris.forEach((uri) => {
+      parentKeys.forEach((key) => {
+        if (this.isAncestor(uri, monaco.Uri.parse(key))) {
+          this.parents.delete(key);
+        }
+      });
+
+      childrenKeys.forEach((key) => {
+        if (this.isAncestor(uri, monaco.Uri.parse(key))) {
+          this.children.delete(key);
+        }
+      });
+    })
+
+    this.rebuildIndex();
   }
 
   replaceFolder(oldUri: monaco.Uri, newFolder: IFolder): Promise<void> {
@@ -433,18 +440,22 @@ export class FileService implements IContribution {
   }
 
   isParent(uri: monaco.Uri, candidate: monaco.Uri): boolean {
-    const parent = this.parents.get(uriID(uri));
+    const a = uriID(uri);
+    const b = uriID(candidate);
+    const parent = this.parents.get(a);
     if (!parent) {
       return false;
     }
-    return uriID(parent.uri) === candidate.toString(true);
+    return a === b;
   }
 
   isAncestor(uri: monaco.Uri, candidate: monaco.Uri): boolean {
-    if (uriID(uri) === candidate.toString(true)) {
+    const a = uriID(uri);
+    const b = uriID(candidate);
+    if (a === b) {
       return false;
     }
-    return uriID(uri).startsWith(candidate.toString(true));
+    return a.startsWith(b);
   }
 
   entryName(uri: monaco.Uri): string {
@@ -662,14 +673,6 @@ export class FileService implements IContribution {
   }
 
   private rebuildIndex(): void {
-    const contents = this.contents.value;
-    contents.forEach((_, k) => {
-      if (!this.entries.has(k)) {
-        contents.delete(k);
-      }
-    });
-    this.contents.next(contents);
-
     const tree: IFile[] = [];
     this.folders.forEach((folder) => {
       const entry = this.entries.get(uriID(folder.uri))
@@ -682,6 +685,26 @@ export class FileService implements IContribution {
     this.children.forEach((v, _) => this.sortFiles(v));
     this.tree.next(tree);
   }
+
+
+  private async loadFolder(folder: IFolder) {
+    const provider = await this.withProvider(folder.uri);
+    const files = await provider.readDirectory(folder.uri);
+    files.forEach((file) => {
+      const id = uriID(file.uri);
+      this.entries.set(id, file);
+
+      const prefix = id.substring(0, id.length - file.uri.fsPath.length);
+      const parent = prefix + Paths.dirname(file.uri.fsPath);
+      if (parent !== id) {
+        const children = this.children.get(parent) || [];
+        children.push(file);
+        this.children.set(parent, children);
+        this.parents.set(id, this.entries.get(parent)!);
+      }
+    });
+  }
+
 
   private sortFiles(files: IFile[]): IFile[] {
     return files.sort((a, b) => {

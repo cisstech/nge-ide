@@ -288,13 +288,14 @@ export class Paths {
   /**
    * Returns the directory name of a path. Similar to the Unix dirname command.
    * @param path the path to evaluate
+   * @param normalize: If true, the path will be normalized by removing multiple following slashes and unnecessary separators.
    */
-  static dirname(path: string) {
+  static dirname(path: string, normalize: boolean = true) {
     if (path == null) {
       throw new ReferenceError('"path" is required');
     }
 
-    path = Paths.normalize(path.replace(/\\/g, '/'));
+    path = normalize ? Paths.normalize(path.replace(/\\/g, '/')) : path;
     let head = path.slice(0, path.lastIndexOf('/') + 1);
     if (head && !head.match(/^\/*$/g)) {
       head = head.replace(/\/*$/g, '');
@@ -320,16 +321,22 @@ export class Paths {
    * Join several segments into one path
    * @param parts: the segments
    * @param sep: path separator
+   * @param normalize: If true, the path will be normalized by removing multiple following slashes and unnecessary separators.
    */
-  static join(parts: string[], sep: string = '') {
+  static join(parts: string[], sep: string = '', normalize: boolean = true) {
     if (parts == null) {
       throw new ReferenceError('"parts" is required');
     }
 
+    parts = parts.filter(Boolean)
     sep = sep || '/';
     const separator = sep || '/';
     const replace = new RegExp(separator + '{1,}', 'g');
-    return parts.join(separator).replace(replace, separator);
+    if (normalize) {
+      return parts.join(separator).replace(replace, separator);
+    } else {
+      return parts.join(separator)
+    }
   }
 
   // https://github.com/jonschlinkert/normalize-path/blob/master/index.js

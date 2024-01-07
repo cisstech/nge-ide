@@ -23,10 +23,12 @@ export class ShowcaseComponent implements OnInit, OnDestroy {
     this.subscription = this.ide.onAfterStart(() => {
       const provider = new MemFileProvider();
       this.fileService.registerProvider(provider);
-      this.fileService.registerFolders({
-        name: '/',
-        uri: provider.root,
-      });
+      provider.roots.forEach((root) => {
+        this.fileService.registerFolders({
+          name: root.authority,
+          uri: root,
+        });
+      })
     });
   }
 
