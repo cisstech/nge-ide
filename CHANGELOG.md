@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [17.5.2](https://github.com/cisstech/nge-ide/compare/v17.5.1...v17.5.2) (2024-01-07)
+
+
+### Features
+
+* **view:** expose api to add command on existing views ([2016370](https://github.com/cisstech/nge-ide/commit/2016370ab50dca578924bf26f732143ce661d968))
+
 ### [17.5.1](https://github.com/cisstech/nge-ide/compare/v17.5.0...v17.5.1) (2024-01-07)
 
 
