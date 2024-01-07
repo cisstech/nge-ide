@@ -11,6 +11,17 @@ type IStandaloneCodeEditor = monaco.editor.IStandaloneCodeEditor;
 
 const ID = 'drop-controller-widget'
 
+type Handler = string | {
+  /**
+   * The label of the handler that will be shown in the editor.
+   */
+  label: string
+  /**
+   * The value that will be inserted into the editor.
+   */
+  value: string
+}
+
 /**
  * A handler function that will be called when file is dropped into editor from the file explorer.
  * @param uri The uri of the file that was dropped.
@@ -22,7 +33,7 @@ export type DropIntoEditorHandler = (
   uri: monaco.Uri,
   editor: IStandaloneCodeEditor,
   position: IPosition,
-) => string[] | Promise<string[]>;
+) => Handler[] | Promise<Handler[]>;
 
 export class DropIntoEditorController {
   private dropController!: any;
@@ -69,10 +80,13 @@ export class DropIntoEditorController {
       handlers.map(handler => handler(uri, editor, position))
     ))
 
-    const insertOptions: string[] = []
+    const insertOptions: (readonly [string, string])[] = []
     results.forEach(result => {
       if (result) {
-        insertOptions.push(...result.filter(Boolean))
+        insertOptions.push(
+          ...result
+            .filter(Boolean)
+            .map(handler => typeof handler === 'string' ? [handler, handler] as const: [handler.label, handler.value] as const))
       }
     })
 
@@ -98,9 +112,9 @@ export class DropIntoEditorController {
         document.addEventListener('click', removeIfClickedOutside)
 
 
-        insertOptions.forEach(text => {
+        insertOptions.forEach(tuple => {
           const button = document.createElement('div')
-          button.textContent = text
+          button.textContent = tuple[0]
           button.onclick = () => {
             const range: IRange = {
               startLineNumber: position.lineNumber,
@@ -108,10 +122,10 @@ export class DropIntoEditorController {
               endLineNumber: position.lineNumber,
               endColumn: position.column,
             }
-            editor.executeEdits('api', [{ range, text, forceMoveMarkers: true, }])
+            editor.executeEdits('api', [{ range, text: tuple[1], forceMoveMarkers: true, }])
 
             setTimeout(() => {
-              editor.setPosition({ lineNumber: position.lineNumber, column: position.column + text.length })
+              editor.setPosition({ lineNumber: position.lineNumber, column: position.column + tuple[1].length })
               editor.focus()
             })
             editor.removeContentWidget(widget)
