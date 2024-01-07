@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [17.5.1](https://github.com/cisstech/nge-ide/compare/v17.5.0...v17.5.1) (2024-01-07)
+
+
+### Features
+
+* **workbench:** export drop-controller-widget css vars ([a1256d6](https://github.com/cisstech/nge-ide/commit/a1256d6f91dd39956a4af3912628814cd2de920f))
+
 ## [17.5.0](https://github.com/cisstech/nge-ide/compare/v17.4.0...v17.5.0) (2024-01-07)
 
 
