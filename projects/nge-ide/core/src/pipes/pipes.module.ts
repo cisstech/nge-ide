@@ -9,4 +9,4 @@ const declarations = [FileNamePipe, NicifyNamePipe, FileChangedPipe];
   exports: [...declarations],
   declarations: [...declarations],
 })
-export class PipesModule {}
+export class EditorPipesModule {}

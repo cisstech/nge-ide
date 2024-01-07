@@ -49,7 +49,7 @@
 </ng-container>
 <ui-tree #treeRef [nodes]="nodes" [adapter]="adapter">
   <ng-container *treeNode="let node">
-    <span class="tree-label" [nz-tooltip]="node.tooltip">
+    <span class="tree-label" [nz-tooltip]="node.data.resource|fileName:true">
       <ng-container *ngIf="node.expandable; else leafTemplate">
         <div class="codicon codicon-{{treeRef.isExpanded(node) ? 'chevron-down' : 'chevron-right' }}"></div>&nbsp;
         <ui-icon [icon]="node.name | iconFile"></ui-icon>&nbsp;

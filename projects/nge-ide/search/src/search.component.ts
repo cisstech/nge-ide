@@ -10,14 +10,13 @@ import {
 } from '@angular/core';
 import {
   EditorService,
-  emptySearchForm,
   FileService,
   IdeService,
-  IFile,
   NotificationService,
   SearchForm,
   SearchResult,
   StorageService,
+  emptySearchForm
 } from '@cisstech/nge-ide/core';
 import { ITree, ITreeAdapter, TreeComponent } from '@cisstech/nge/ui/tree';
 import { Subscription } from 'rxjs';
@@ -38,9 +37,6 @@ export class SearchComponent implements OnInit, OnDestroy, AfterViewChecked {
     nameProvider: (node) => node.label,
     childrenProvider: (node) => node.children || [],
     isExpandable: (node) => !!node.children?.length,
-    tooltipProvider(node) {
-      return node.resource.authority + node.resource.path;
-    },
     actions: {
       mouse: {
         click: (e) => {
@@ -84,7 +80,7 @@ export class SearchComponent implements OnInit, OnDestroy, AfterViewChecked {
     private readonly storageService: StorageService,
     private readonly changeDetectorRef: ChangeDetectorRef,
     private readonly notificationService: NotificationService
-  ) {}
+  ) { }
 
   async ngOnInit(): Promise<void> {
     this.subscriptions.push(

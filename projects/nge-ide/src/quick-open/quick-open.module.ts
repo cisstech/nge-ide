@@ -7,7 +7,7 @@ import { NzAutocompleteModule } from 'ng-zorro-antd/auto-complete';
 
 import { NgeUiIconModule } from '@cisstech/nge/ui/icon';
 
-import { PipesModule } from '@cisstech/nge-ide/core';
+import { EditorPipesModule } from '@cisstech/nge-ide/core';
 
 import { NzInputModule } from 'ng-zorro-antd/input';
 import { QuickOpenComponent } from './quick-open.component';
@@ -22,7 +22,7 @@ import { QuickOpenComponent } from './quick-open.component';
     NzInputModule,
     NzAutocompleteModule,
 
-    PipesModule,
+    EditorPipesModule,
     NgeUiIconModule,
   ],
   exports: [QuickOpenComponent],

@@ -16,7 +16,7 @@
       <div class="entry">
         <ui-icon class="entry-icon" [icon]="entry.uri.path|iconFile"></ui-icon>
         <span class="entry-name">{{ entry.uri|fileName }}</span>
-        <span class="entry-path">{{ entry.uri.authority }}{{ entry.uri.path }}</span>
+        <span class="entry-path">{{ entry.uri|fileName:true }}</span>
       </div>
     </nz-auto-option>
 

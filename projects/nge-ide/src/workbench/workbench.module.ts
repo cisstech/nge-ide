@@ -9,7 +9,7 @@ import { AngularSplitModule } from 'angular-split';
 import {
   CommandModule,
   EditorDirectivesModule,
-  PipesModule
+  EditorPipesModule
 } from '@cisstech/nge-ide/core';
 
 import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
@@ -25,7 +25,7 @@ import { WorkbenchComponent } from './workbench.component';
 
     CommandModule,
     NgeUiIconModule,
-    PipesModule,
+    EditorPipesModule,
     EditorDirectivesModule,
     AngularSplitModule,
   ],

@@ -5,7 +5,7 @@ import { FormsModule } from '@angular/forms';
 
 import { NzDropDownModule } from 'ng-zorro-antd/dropdown';
 
-import { CommandModule, EditorDirectivesModule } from '@cisstech/nge-ide/core';
+import { CommandModule, EditorDirectivesModule, EditorPipesModule } from '@cisstech/nge-ide/core';
 
 import { IDynamicModule } from '@cisstech/nge/services';
 import { NgeUiIconModule } from '@cisstech/nge/ui/icon';
@@ -24,6 +24,7 @@ import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
     CommandModule,
     NgeUiIconModule,
     NgeUiTreeModule,
+    EditorPipesModule,
     EditorDirectivesModule,
     ExplorerFileIconOptionsPipe
   ],
