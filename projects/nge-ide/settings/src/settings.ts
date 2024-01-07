@@ -32,6 +32,7 @@ export class Contribution implements IContribution {
         readonly icon = new CodIcon('settings-gear');
         readonly side = 'left';
         readonly align = 'bottom';
+        readonly order = 100000000;
         readonly onClickHandler = () =>
           editorService.open(monaco.Uri.parse(SETTINGS_URI), {
             title: 'Paramètres',
