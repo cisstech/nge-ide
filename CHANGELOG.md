@@ -2,6 +2,22 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [17.5.0](https://github.com/cisstech/nge-ide/compare/v17.4.0...v17.5.0) (2024-01-07)
+
+
+### Features
+
+* **file:** implements multi root folders for inmemory fs ([3f5e8d1](https://github.com/cisstech/nge-ide/commit/3f5e8d1d5802f51e17c49c909269c2a3b3180fe5))
+* show uri authority in file name tooltip ([b6b3fd4](https://github.com/cisstech/nge-ide/commit/b6b3fd4cf29e9f0297b82632b9bfca7390fca4fe))
+* **sidebar:** always show settings on bottom ([00249b3](https://github.com/cisstech/nge-ide/commit/00249b3a3c47952801083ce7a1743d01e82223a2))
+* **sidebar:** dropdown items ([71a2768](https://github.com/cisstech/nge-ide/commit/71a2768f78431b2227c88bfa4b91c1e2c135e47a))
+* **workbench:** allow to specify custom label and value for OnDropIntoEditorHandlers ([2060950](https://github.com/cisstech/nge-ide/commit/20609505db8a4e3d877e202133cb89eff91fc9ec))
+
+
+### Bug Fixes
+
+* **toolbar:** typo in ToolbarService name ([62090d1](https://github.com/cisstech/nge-ide/commit/62090d1b6cf794867b7cccd7f009f121fd8b2d33))
+
 ## [17.4.0](https://github.com/cisstech/nge-ide/compare/v17.1.0...v17.4.0) (2024-01-07)
 
 
