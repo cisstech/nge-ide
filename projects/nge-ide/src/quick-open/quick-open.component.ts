@@ -16,7 +16,7 @@ import {
   Paths,
   ToolbarButton,
   ToolbarGroups,
-  ToolbarSevice
+  ToolbarService
 } from '@cisstech/nge-ide/core';
 import { Observable } from 'rxjs';
 import { debounceTime, map } from 'rxjs/operators';
@@ -61,7 +61,7 @@ export class QuickOpenComponent implements OnInit {
   constructor(
     private readonly fileService: FileService,
     private readonly editorService: EditorService,
-    private readonly toolbarService: ToolbarSevice,
+    private readonly toolbarService: ToolbarService,
     private readonly commandService: CommandService,
     private readonly changeDetectorRef: ChangeDetectorRef,
   ) { }

@@ -7,7 +7,7 @@ import {
   ToolbarButton,
   ToolbarGroups,
   ToolbarSeparator,
-  ToolbarSevice,
+  ToolbarService,
   ViewContainerService,
   ViewService,
 } from '@cisstech/nge-ide/core';
@@ -46,7 +46,7 @@ export class ExplorerContribution implements IContribution {
   activate(injector: Injector) {
     const viewService = injector.get(ViewService);
     const commandService = injector.get(CommandService);
-    const toolbarService = injector.get(ToolbarSevice);
+    const toolbarService = injector.get(ToolbarService);
     const explorerService = injector.get(ExplorerService);
     const viewContainerService = injector.get(ViewContainerService);
 

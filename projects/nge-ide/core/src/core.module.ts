@@ -11,7 +11,7 @@ import { SettingsService } from './settings/index';
 import { StatusBarService } from './status-bar/index';
 import { StorageService } from './storage/index';
 import { TaskService } from './tasks/index';
-import { ToolbarSevice } from './toolbar/index';
+import { ToolbarService } from './toolbar/index';
 import { ViewContainerService, ViewService } from './views/index';
 import { DialogModule } from './dialog';
 
@@ -27,7 +27,7 @@ import { DialogModule } from './dialog';
     TaskService,
     EditorService,
     MonacoService,
-    ToolbarSevice,
+    ToolbarService,
     CommandService,
     StorageService,
     PreviewService,
@@ -42,7 +42,7 @@ import { DialogModule } from './dialog';
     { provide: CONTRIBUTION, multi: true, useExisting: TaskService },
     { provide: CONTRIBUTION, multi: true, useExisting: EditorService },
     { provide: CONTRIBUTION, multi: true, useExisting: MonacoService },
-    { provide: CONTRIBUTION, multi: true, useExisting: ToolbarSevice },
+    { provide: CONTRIBUTION, multi: true, useExisting: ToolbarService },
     { provide: CONTRIBUTION, multi: true, useExisting: CommandService },
     { provide: CONTRIBUTION, multi: true, useExisting: PreviewService },
     { provide: CONTRIBUTION, multi: true, useExisting: SettingsService },

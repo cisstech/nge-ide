@@ -3,7 +3,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import {
   IToolbarItem,
   ToolbarGroups,
-  ToolbarSevice,
+  ToolbarService,
 } from '@cisstech/nge-ide/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -15,7 +15,7 @@ import { map } from 'rxjs/operators';
 })
 export class ToolbarComponent implements OnInit {
   private readonly destroyRef = inject(DestroyRef)
-  private readonly toolbarService = inject(ToolbarSevice)
+  private readonly toolbarService = inject(ToolbarService)
 
   protected menus: [string, Observable<IToolbarItem[]>][] = [];
   protected buttons = this.toolbarService.listButtons();

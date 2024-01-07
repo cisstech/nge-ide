@@ -44,7 +44,7 @@ import {
   ToolbarButton,
   ToolbarGroups,
   ToolbarSeparator,
-  ToolbarSevice,
+  ToolbarService,
 } from '../toolbar/index';
 import { Paths } from '../utils/index';
 import { EditorService } from './editor.service';
@@ -129,7 +129,7 @@ export class MonacoService implements IContribution {
   constructor(
     private readonly fileService: FileService,
     private readonly editorService: EditorService,
-    private readonly toolbarService: ToolbarSevice,
+    private readonly toolbarService: ToolbarService,
     private readonly settingsService: SettingsService,
     private readonly statusBarService: StatusBarService,
     private readonly diagnosticService: DiagnosticService

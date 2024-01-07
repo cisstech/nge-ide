@@ -6,7 +6,7 @@ import { IContribution } from '../contributions/index';
 import { ICommand } from '../commands';
 
 @Injectable()
-export class ToolbarSevice implements IContribution {
+export class ToolbarService implements IContribution {
   readonly id = 'workbench.contrib.toolbar-service';
   private readonly registry = new BehaviorSubject<IToolbarItem[]>([]);
   private readonly buttonRegistry = new BehaviorSubject<IToolbarButton[]>([]);

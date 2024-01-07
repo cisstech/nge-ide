@@ -6,7 +6,7 @@ import {
   ToolbarButton,
   ToolbarGroups,
   ToolbarSeparator,
-  ToolbarSevice,
+  ToolbarService,
 } from '../toolbar';
 import { EditorCloseAllCommand } from './commands/editor-close-all.command';
 import { EditorCloseCommand } from './commands/editor-close-command';
@@ -31,7 +31,7 @@ export class EditorContribution implements IContribution {
 
   activate(injector: Injector) {
     const commandService = injector.get(CommandService);
-    const toolbarService = injector.get(ToolbarSevice);
+    const toolbarService = injector.get(ToolbarService);
     const previewService = injector.get(PreviewService);
     const editorService = injector.get(EditorService);
     const monacoService = injector.get(MonacoService);
