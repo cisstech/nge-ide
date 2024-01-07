@@ -59,5 +59,13 @@ export abstract class SidebarContainer implements IViewContainer {
   abstract readonly align: 'top' | 'bottom';
 
   /** An action to call for non visual container. */
-  onClickHandler?(): Promise<any>;
+  onClickHandler?(): any | Promise<any>;
+
+  /**
+   * A dropdown menu to show when the container is clicked.
+   */
+  dropdown?: {
+    label: string;
+    action: () => void | Promise<void>;
+  }[]
 }

@@ -10,6 +10,7 @@ import { ViewModule } from '@cisstech/nge-ide/core';
 
 import { SidebarComponent } from './sidebar.component';
 import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
+import { NzDropDownModule } from 'ng-zorro-antd/dropdown';
 
 @NgModule({
   imports: [
@@ -18,6 +19,7 @@ import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
     ViewModule,
     DragDropModule,
     NzBadgeModule,
+    NzDropDownModule,
     NzToolTipModule,
 
     AngularSplitModule,

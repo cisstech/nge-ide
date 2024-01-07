@@ -36,7 +36,7 @@ export class ViewContainerService implements IContribution {
           `There is already a view container registered with the id ${container.id}`
         );
       }
-      entries.push(container);
+      entries.unshift(container);
     });
     this.registry.next(entries);
   }
