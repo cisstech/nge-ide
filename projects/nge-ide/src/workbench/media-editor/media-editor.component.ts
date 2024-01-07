@@ -31,8 +31,8 @@ export class MediaEditorComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.subscriptions.push(
-      this.editor.onChangeRequest.subscribe((request) => {
-        const file = this.fileService.find(request.uri);
+      this.editor.onChangeRequest.subscribe(async (request) => {
+        const file = await this.fileService.find(request.uri);
         this.url = file?.url;
         switch (Paths.extname(request.uri.path)) {
           case 'svg':

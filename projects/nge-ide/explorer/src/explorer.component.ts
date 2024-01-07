@@ -92,7 +92,7 @@ export class ExplorerComponent implements OnInit, OnDestroy, AfterViewChecked {
     );
 
     this.subscriptions.push(
-      this.root.subscribe(() =>  this.tree.endEdition())
+      this.root.subscribe(() => this.tree.endEdition())
     );
   }
 
@@ -142,8 +142,11 @@ export class ExplorerComponent implements OnInit, OnDestroy, AfterViewChecked {
     }
 
     const srcName = Paths.basename(srcPath);
-    const src = this.fileService.find(monaco.Uri.parse(srcPath));
-    const dst = this.fileService.find(monaco.Uri.parse(dstPath));
+    const [src, dst] = await Promise.all([
+      this.fileService.find(monaco.Uri.parse(srcPath)),
+      this.fileService.find(monaco.Uri.parse(dstPath))
+
+    ])
 
     if (!src || this.fileService.isRoot(src.uri)) {
       return;

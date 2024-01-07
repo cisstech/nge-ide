@@ -69,14 +69,13 @@ export abstract class Editor {
    * Checks whether this editor can handle the given `request`.
    * @param request the request to handle.
    */
-  abstract canHandle(request: OpenRequest): boolean;
+  abstract canHandle(request: OpenRequest): boolean | Promise<boolean>;
 
-  handle(request: OpenRequest): boolean {
-    if (this.canHandle(request)) {
+  async handle(request: OpenRequest): Promise<Editor | undefined> {
+    if (await this.canHandle(request)) {
       this.request.next(request);
-      return true;
+      return this;
     }
-    return false;
   }
 
   equals(o: any): boolean {
@@ -179,7 +178,7 @@ export class EditorGroup {
 
     /** the registered editor. */
     private readonly editors: ReadonlyArray<Editor>
-  ) {}
+  ) { }
 
   /**
    * Checks whether the resource is opened in the group.
@@ -241,30 +240,30 @@ export class EditorGroup {
   async open(resource: monaco.Uri, options: OpenOptions): Promise<void> {
     if (this.isActive(resource) && !options.preview) return;
 
-    return new Promise<void>((resolve, reject) => {
-      const request = new OpenRequest(resource, this.injector, options);
+    const request = new OpenRequest(resource, this.injector, options);
 
-      let editor = this.editors.find((e) => e.canHandle(request));
-      if (!editor) {
-        reject(`There is no registered editor to open "${request.uri}"`);
-        return;
-      }
+    let editor: Editor | undefined;
+    for (let i = 0; i < this.editors.length; i++) {
+      editor = await this.editors[i].handle(request);
+      if (editor) break;
+    }
 
-      editor.handle(request);
+    if (!editor) {
+      throw new Error(`There is no registered editor to open "${request.uri}"`);
+    }
 
-      if (!this.contains(resource)) {
-        this._tabs.push({ options, resource });
-      }
+    editor.handle(request);
 
-      this._request = request;
-      this._activeIndex = this.findIndex(resource);
-      this._activeEditor = editor;
-      this._history.push(this._tabs[this._activeIndex]);
+    if (!this.contains(resource)) {
+      this._tabs.push({ options, resource });
+    }
 
-      this.opened(this, editor, resource);
+    this._request = request;
+    this._activeIndex = this.findIndex(resource);
+    this._activeEditor = editor;
+    this._history.push(this._tabs[this._activeIndex]);
 
-      resolve();
-    });
+    this.opened(this, editor, resource);
   }
 
   /**

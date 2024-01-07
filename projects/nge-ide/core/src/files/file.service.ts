@@ -27,6 +27,9 @@ interface IContent {
   changed: boolean;
 }
 
+const uriID = (uri: monaco.Uri) => uri.with({ query: '' }).toString(true);
+const cleanUri = (uri: monaco.Uri) => uri.with({ query: '' });
+
 @Injectable()
 export class FileService implements IContribution {
   readonly id = 'workbench.contrib.file-service';
@@ -107,7 +110,7 @@ export class FileService implements IContribution {
       const provider = await this.withProvider(folder.uri);
       const files = await provider.readDirectory(folder.uri);
       files.forEach((file) => {
-        const id = file.uri.with({ query: '' }).toString(true);
+        const id = uriID(file.uri);
         this.entries.set(id, file);
 
         const prefix = id.substring(0, id.length - file.uri.fsPath.length);
@@ -144,6 +147,17 @@ export class FileService implements IContribution {
 
   registerFolders(...folders: IFolder[]): Promise<void> {
     this.folders.push(...folders);
+    return this.refresh();
+  }
+
+  removeFolders(...uris: monaco.Uri[]): Promise<void> {
+    this.folders.splice(
+      0,
+      this.folders.length,
+      ...this.folders.filter(
+        (f) => !uris.some((uri) => uri.toString(true) === f.uri.toString(true))
+      )
+    );
     return this.refresh();
   }
 
@@ -189,25 +203,27 @@ export class FileService implements IContribution {
   isDirty(uri?: monaco.Uri): boolean {
     const contents = this.contents.value;
     if (uri) {
-      return !!contents.get(uri.with({ query: '' }).toString(true))?.changed;
+      return !!contents.get(uriID(uri))?.changed;
     }
     return Array.from(contents.values()).some((content) => content.changed);
   }
 
   contentChange(uri: monaco.Uri): Observable<IContent | undefined> {
-    uri = uri.with({ query: ''  })
-    return this.contents.pipe(map((value) => value.get(uri.toString(true))));
+    const id = uriID(uri)
+    return this.contents.pipe(map((value) => value.get(id)));
   }
 
   update(uri: monaco.Uri, content: string): void {
-    uri = uri.with({ query: ''  })
+    uri = cleanUri(uri)
+
+    const id = uriID(uri)
     const contents = this.contents.value;
-    const match = contents.get(uri.toString(true));
+    const match = contents.get(id);
     if (!match) {
       throw FileSystemError.FileNotFound(uri);
     }
 
-    contents.set(uri.toString(true), {
+    contents.set(id, {
       ...match,
       current: content,
       changed: match.initial !== content,
@@ -217,17 +233,18 @@ export class FileService implements IContribution {
   }
 
   async open(uri: monaco.Uri): Promise<IContent> {
-    uri = uri.with({ query: ''  })
+    uri = cleanUri(uri)
 
+    const id = uriID(uri)
     const contents = this.contents.value;
-    const content = contents.get(uri.toString(true));
+    const content = contents.get(id);
     if (content) {
       return content;
     }
 
     const value = await this.readFile(uri);
     const newContent = { initial: value, current: value, changed: false };
-    this.contents.next(contents.set(uri.toString(true), newContent));
+    this.contents.next(contents.set(id, newContent));
 
     return newContent;
   }
@@ -236,11 +253,13 @@ export class FileService implements IContribution {
    * Saves the file of the given uri if it's not a readonly file.
    * @param uri monaco.Uri to save.
    * @returns A promises that resolves once the operation done.
-   * @throws {@link FileSystemError.FileNotFound} when `uri` doesn't exist.
+   * @throws {@link FileSystemError.FileNotFound} when `uri` doesn't exist or it's has not been opened before with the {@link open} method.
    */
   async save(uri: monaco.Uri): Promise<void> {
-    uri = uri.with({ query: ''  })
-    const file = this.find(uri);
+    uri = cleanUri(uri)
+
+    const id = uriID(uri)
+    const file = await this.find(uri);
     if (!file) {
       throw FileSystemError.FileNotFound(uri);
     }
@@ -249,7 +268,7 @@ export class FileService implements IContribution {
       return;
     }
 
-    const content = this.contents.value.get(uri.toString(true));
+    const content = this.contents.value.get(id);
     if (!content) {
       throw FileSystemError.FileNotFound(uri);
     }
@@ -261,7 +280,7 @@ export class FileService implements IContribution {
 
       content.changed = false;
 
-      this.contents.value.set(uri.toString(true), content);
+      this.contents.value.set(id, content);
       this.contents.next(this.contents.value);
 
       this.didSaveFile.next(uri);
@@ -269,9 +288,9 @@ export class FileService implements IContribution {
   }
 
   async close(uri: monaco.Uri): Promise<void> {
-    uri = uri.with({ query: ''  })
+    uri = cleanUri(uri)
     this.willCloseFile.next(uri);
-    this.contents.value.delete(uri.toString(true));
+    this.contents.value.delete(uriID(uri));
     this.contents.next(this.contents.value);
     this.didCloseFile.next(uri);
   }
@@ -296,10 +315,23 @@ export class FileService implements IContribution {
     return nodes;
   }
 
-  find(uri: monaco.Uri): IFile | undefined {
-    return this.entries.get(uri.with({ query: '' }).toString(true));
+  /**
+   * Finds a file by its uri from currently registered folders or or by searching in the registered providers.
+   * @param uri The uri to find.
+   * @returns A promise that resolves with the file if found `undefined` otherwise.
+   */
+  find(uri: monaco.Uri): Promise<IFile | undefined> {
+    return Promise.resolve(this.entries.get(uriID(uri)));
   }
 
+  /**
+   * Filters out the current known files using the given predicate.
+   * @remarks
+   * - This will not includes files from folders that are not registered.
+   *
+   * @param predicate The predicate to filter the files.
+   * @returns The filtered files.
+   */
   findAll(predicate: FilePredicate): IFile[] {
     const entries = [];
     for (const pair of this.entries) {
@@ -310,15 +342,28 @@ export class FileService implements IContribution {
     return entries;
   }
 
+  /**
+   * Finds the children of the given entry.
+   *
+   * @remarks
+   * - This will always return an empty array if the entry is not inside a registered folder.
+   * @param entry The entry to find its children.
+   * @returns The children of the given entry.
+   */
   findChildren(entry: IFile): IFile[] {
-    return this.children.get(entry.uri.with({ query: '' }).toString(true)) || [];
+    return this.children.get(uriID(entry.uri)) || [];
   }
 
+  /**
+   * Searches for files in the registered folders that supports the {@link FileSystemProviderCapabilities.FileSearch} capability.
+   * @param form The search form.
+   * @returns A promise that resolves with the search results.
+   */
   async search(form: SearchForm): Promise<SearchResult<monaco.Uri>[]> {
     const results = await Promise.all(
       this.folders.map(async (folder) => {
-        const file = this.find(folder.uri);
-        if (!file) {
+        const folderEntry = await this.find(folder.uri);
+        if (!folderEntry) {
           return [];
         }
         if (
@@ -333,7 +378,7 @@ export class FileService implements IContribution {
           folder.uri,
           FileSystemProviderCapabilities.FileSearch
         );
-        return await provider.search(file.uri, form);
+        return await provider.search(folderEntry.uri, form);
       })
     );
 
@@ -342,27 +387,39 @@ export class FileService implements IContribution {
 
   // UTILS
 
+  idFromUri(uri: monaco.Uri): string {
+    return uriID(uri);
+  }
+
+  /**
+   * Determines whether the given uri is a root folder currently registered.
+   * @param uri The uri to test.
+   * @returns `true` if the uri is a root folder `false` otherwise.
+   */
   isRoot(uri: monaco.Uri): boolean {
     return this.folders.some(
-      (f) => f.uri.with({ query: '' }).toString(true) === uri.with({ query: '' }).toString(true)
+      (f) => uriID(f.uri) === uriID(uri)
     );
   }
 
   isParent(uri: monaco.Uri, candidate: monaco.Uri): boolean {
-    const parent = this.parents.get(uri.with({ query: '' }).toString(true));
-    return parent?.uri.with({ query: '' }).toString(true) === candidate.toString(true);
+    const parent = this.parents.get(uriID(uri));
+    if (!parent) {
+      return false;
+    }
+    return uriID(parent.uri) === candidate.toString(true);
   }
 
   isAncestor(uri: monaco.Uri, candidate: monaco.Uri): boolean {
-    if (uri.with({ query: '' }).toString(true) === candidate.toString(true)) {
+    if (uriID(uri) === candidate.toString(true)) {
       return false;
     }
-    return uri.with({ query: '' }).toString(true).startsWith(candidate.toString(true));
+    return uriID(uri).startsWith(candidate.toString(true));
   }
 
   entryName(uri: monaco.Uri): string {
     const folder = this.folders.find(
-      (f) => uri.with({ query: '' }).toString(true) === f.uri.with({ query: '' }).toString(true)
+      (f) => uriID(uri) === uriID(f.uri)
     );
     return folder?.name || Paths.basename(uri.path);
   }
@@ -370,7 +427,7 @@ export class FileService implements IContribution {
   // OPERATIONS
 
   async readFile(uri: monaco.Uri): Promise<string> {
-    uri = uri.with({ query: ''  })
+    uri = cleanUri(uri)
     const provider = await this.withProvider(
       uri,
       FileSystemProviderCapabilities.FileRead
@@ -379,7 +436,7 @@ export class FileService implements IContribution {
   }
 
   async writeFile(uri: monaco.Uri, content: string): Promise<void> {
-    uri = uri.with({ query: ''  })
+    uri = cleanUri(uri)
     const provider = await this.withProvider(
       uri,
       FileSystemProviderCapabilities.FileWrite
@@ -585,7 +642,11 @@ export class FileService implements IContribution {
 
     const tree: IFile[] = [];
     this.folders.forEach((folder) => {
-      tree.push(this.find(folder.uri)!);
+      const entry = this.entries.get(uriID(folder.uri))
+      if (!entry) {
+        return;
+      }
+      tree.push(entry);
     });
 
     this.children.forEach((v, _) => this.sortFiles(v));

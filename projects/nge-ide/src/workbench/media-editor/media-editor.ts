@@ -26,10 +26,11 @@ const extensions = [
 export class MediaEditor extends Editor {
   component = () =>
     import('./media-editor.module').then((m) => m.MediaEditorModule);
-  canHandle(request: OpenRequest): boolean {
+
+  async canHandle(request: OpenRequest): Promise<boolean> {
     const fileService = request.injector.get(FileService);
-    const file = fileService.find(request.uri);
+    const file = await fileService.find(request.uri);
     const extension = Paths.extname(request.uri.path);
-    return !!file?.url && extensions.includes(extension);
+    return !!file?.url && extensions.includes(extension)
   }
 }
