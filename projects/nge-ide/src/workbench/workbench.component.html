@@ -23,17 +23,18 @@
             <ng-template #title>
               <div class="tab-content">
                 <ng-container *ngIf="tab.options.icon; else iconFile">
-                  <ui-icon class="tab-icon" [icon]="tab.options.icon"></ui-icon>
+                  <ui-icon class="tab-icon" [icon]="tab.options.icon" />
                 </ng-container>
                 <ng-template #iconFile>
                   <ui-icon
                     class="tab-icon"
                     [icon]="tab.options.title | iconFile"
-                  ></ui-icon>
+                  />
                 </ng-template>
                 <span class="tab-title" [nz-tooltip]="tab.options.tooltip" nzTooltipPlacement="top">{{
                   tab.options.title
                 }}</span>
+                <span *ngIf="tab.file?.readOnly" class="codicon codicon-lock-small" nz-tooltip="Éditeur en lecture seule"></span>
                 <ng-container
                   *ngIf="tab.resource | fileChanged | async; else closeable"
                 >

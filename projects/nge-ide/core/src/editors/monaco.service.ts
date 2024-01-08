@@ -37,7 +37,7 @@ import {
   DiagnosticService,
   DiagnosticSeverity,
 } from '../diagnostics/index';
-import { FileChangeType, FileService } from '../files/index';
+import { FileChangeType, FileService, IFile } from '../files/index';
 import { SettingsService } from '../settings/index';
 import { StatusBarService } from '../status-bar/index';
 import {
@@ -170,24 +170,19 @@ export class MonacoService implements IContribution {
   }
 
   async open(options: {
-    uri: monaco.Uri;
+    file: IFile;
     editor: IStandaloneCodeEditor;
     position?: {
       line: number;
       column: number;
     };
   }): Promise<void> {
-    const { editor, position } = options;
-    const uri = options.uri.with({ fragment: '', query: '' });
+    const { file, editor, position } = options;
+    const uri = file.uri.with({ fragment: '', query: '' });
 
     let model = editor.getModel();
     if (model && this.fileService.entryId(uri) === this.fileService.entryId(model.uri)) {
       return; // already opened
-    }
-
-    const file = await this.fileService.find(uri);
-    if (!file) {
-      return;
     }
 
     const language = this.findLanguage(uri);

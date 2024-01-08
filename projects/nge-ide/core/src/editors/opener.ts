@@ -2,6 +2,7 @@ import { Injector } from '@angular/core';
 import { Icon } from '@cisstech/nge/ui/icon';
 import { EditorGroup } from './editor';
 import { Preview } from './preview';
+import { IFile } from '../files';
 
 /**
  * Represents file open options.
@@ -9,8 +10,10 @@ import { Preview } from './preview';
 export interface OpenOptions {
   /**  Icon to show in the tabbar (default to a file icon). */
   readonly icon?: Icon;
+
   /**  Title to show in the tabbar. */
   readonly title: string;
+
   /**  Tooltip to show in the tabbar. */
   readonly tooltip: string;
 
@@ -38,9 +41,23 @@ export interface OpenOptions {
  */
 export class OpenRequest {
   constructor(
+    /**
+     * The uri to open.
+     */
     readonly uri: monaco.Uri,
+
+    /**
+     * Editor scope injector.
+     */
     readonly injector: Injector,
-    readonly options: OpenOptions
+    /**
+     * The options associated with the request.
+     */
+    readonly options: OpenOptions,
+    /**
+     * The file associated with the request if any.
+     */
+    readonly file?: IFile,
   ) {
     this.uri = uri;
     this.options = options;

@@ -97,10 +97,13 @@ export class CodeEditorComponent implements OnInit, OnDestroy {
     }
 
     const options = this.request.options || {};
+    if (!this.request.file) {
+      throw new Error('code-editor: File to open not specified');
+    }
 
     try {
       await this.monacoService.open({
-        uri: this.request.uri,
+        file: this.request.file,
         editor: this.codeEditor,
         position: options.position,
       });

@@ -6,7 +6,7 @@ import {
   OnDestroy,
   OnInit,
 } from '@angular/core';
-import { Editor, FileService, Paths } from '@cisstech/nge-ide/core';
+import { Editor, Paths } from '@cisstech/nge-ide/core';
 import { Subscription } from 'rxjs';
 
 @Component({
@@ -25,14 +25,13 @@ export class MediaEditorComponent implements OnInit, OnDestroy {
   editor!: Editor;
 
   constructor(
-    private readonly fileService: FileService,
     private readonly changeDetectorRef: ChangeDetectorRef
   ) {}
 
   ngOnInit(): void {
     this.subscriptions.push(
       this.editor.onChangeRequest.subscribe(async (request) => {
-        const file = await this.fileService.find(request.uri);
+        const { file } = request
         this.url = file?.url;
         switch (Paths.extname(request.uri.path)) {
           case 'svg':

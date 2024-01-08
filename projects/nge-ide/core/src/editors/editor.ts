@@ -1,6 +1,7 @@
 import { Injector, Type } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { OpenOptions, OpenRequest } from './opener';
+import { FileService, IFile } from '../files';
 
 declare type OpenHandler = (
   group: EditorGroup,
@@ -20,8 +21,14 @@ declare type CloseGuard = (
 ) => Promise<boolean>;
 
 export interface EditorTab {
+  /** The options associated with the tab. */
   readonly options: OpenOptions;
+
+  /** The uri of the resource. */
   readonly resource: monaco.Uri;
+
+  /** The file associated with the request if any. */
+  readonly file?: IFile;
 }
 
 /**
@@ -94,7 +101,7 @@ export abstract class Editor {
  */
 export class EditorGroup {
   private static NEXT_ID = 0;
-
+  private fileService?: FileService
   private _tabs: EditorTab[] = [];
   private _request?: OpenRequest;
   private _history: EditorTab[] = [];
@@ -240,7 +247,17 @@ export class EditorGroup {
   async open(resource: monaco.Uri, options: OpenOptions): Promise<void> {
     if (this.isActive(resource) && !options.preview) return;
 
-    const request = new OpenRequest(resource, this.injector, options);
+    this.fileService = this.fileService || this.injector.get(FileService);
+
+    let file: IFile | undefined;
+    if (this.fileService.hasProvider(resource.scheme)) {
+     file = await this.fileService.find(resource);
+     if (!file) {
+       throw new Error(`File not found "${resource}"`);
+     }
+    }
+
+    const request = new OpenRequest(resource, this.injector, options, file);
 
     let editor: Editor | undefined;
     for (let i = 0; i < this.editors.length; i++) {
@@ -253,7 +270,7 @@ export class EditorGroup {
     }
 
     if (!this.contains(resource)) {
-      this._tabs.push({ options, resource });
+      this._tabs.push({ options, resource, file });
     }
 
     this._request = request;

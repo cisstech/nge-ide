@@ -37,6 +37,7 @@ export class FileService implements IContribution {
   private readonly providers = new Map<string, IFileSystemProvider>();
 
   private folderSorter?: (a: IFolder, b: IFolder) => number
+  private nameProvider?: (uri: monaco.Uri) => string
 
   private readonly folders: IFolder[] = [];
   private readonly entries: Map<string, IFile> = new Map();
@@ -247,6 +248,14 @@ export class FileService implements IContribution {
     this.folderSorter = sorter;
   }
 
+  /**
+   * Registers a function that will be used to get the name of a file.
+   * @param provider The name provider function.
+   */
+  registerNameProvider(provider: (uri: monaco.Uri) => string) {
+    this.nameProvider = provider;
+  }
+
   // CONTENT MANAGEMENT
 
   /**
@@ -264,11 +273,25 @@ export class FileService implements IContribution {
     return Array.from(contents.values()).some((content) => content.changed);
   }
 
+  /**
+   * Watches for changes in the content of the file identified by the given URI.
+   *
+   * @param uri - The URI of the file.
+   * @returns An Observable that emits the content of the file, or undefined if the file does not exist or it's not opened.
+   */
   contentChange(uri: monaco.Uri): Observable<IContent | undefined> {
     const id = uriID(uri)
     return this.contents.pipe(map((value) => value.get(id)));
   }
 
+  /**
+   * Updates the content of a file identified by the given URI.
+   * @remarks
+   * - This will not update the file by calling it's provider `write` method but it will only update the content editor cache.
+   * - To persist the changes, you should call the {@link save} method.
+   * @param uri - The URI of the file to update.
+   * @param content - The new content of the file.
+   */
   update(uri: monaco.Uri, content: string): void {
     uri = cleanUri(uri)
 
@@ -289,6 +312,13 @@ export class FileService implements IContribution {
     this.contents.next(contents);
   }
 
+  /**
+   * Opens a file with the specified URI and returns its content.
+   * If the content is already available, it is returned from the cache.
+   * Otherwise, the file is read and added to the cache before returning its content.
+   * @param uri The URI of the file to open.
+   * @returns A promise that resolves to the content of the file.
+   */
   async open(uri: monaco.Uri): Promise<IContent> {
     uri = cleanUri(uri)
 
@@ -497,11 +527,31 @@ export class FileService implements IContribution {
     return a.startsWith(b);
   }
 
+
+  /**
+   * Returns the entry name for the given URI.
+   * If the URI belongs to a folder, it returns the folder name.
+   * If the URI is a file, it returns the file name.
+   * If the URI is the root folder, it returns the authority.
+   * @remarks
+   * - If a name provider is registered with the {@link registerNameProvider} method, it will be used to get the entry name.
+   * @param uri The URI for which to get the entry name.
+   * @returns The entry name for the given URI.
+   */
   entryName(uri: monaco.Uri): string {
-    const folder = this.folders.find(
-      (f) => uriID(uri) === uriID(f.uri)
-    );
-    return folder?.name || Paths.basename(uri.path);
+    if (this.nameProvider) {
+      return this.nameProvider(uri);
+    }
+
+    const folder = this.folders.find((f) => uriID(uri) === uriID(f.uri));
+    if (folder?.name) {
+      return folder.name;
+    }
+    const basename = Paths.basename(uri.path);
+    if (!basename || basename === '/') {
+        return uri.authority;
+    }
+    return basename;
   }
 
   // OPERATIONS

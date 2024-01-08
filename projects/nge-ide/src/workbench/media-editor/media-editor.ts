@@ -28,8 +28,9 @@ export class MediaEditor extends Editor {
     import('./media-editor.module').then((m) => m.MediaEditorModule);
 
   async canHandle(request: OpenRequest): Promise<boolean> {
-    const fileService = request.injector.get(FileService);
-    const file = await fileService.find(request.uri);
+    const { file } = request
+    if (!file) return false
+
     const extension = Paths.extname(request.uri.path);
     return !!file?.url && extensions.includes(extension)
   }
