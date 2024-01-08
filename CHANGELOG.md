@@ -2,6 +2,8 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [17.5.4](https://github.com/cisstech/nge-ide/compare/v17.5.3...v17.5.4) (2024-01-08)
+
 ### [17.5.3](https://github.com/cisstech/nge-ide/compare/v17.5.2...v17.5.3) (2024-01-08)
 
 
