@@ -4,14 +4,14 @@ import {
   Input,
   OnChanges,
   OnDestroy,
-  ViewContainerRef,
+  ViewContainerRef
 } from '@angular/core';
 import { CompilerService } from '@cisstech/nge/services';
 import { Editor } from '../editors/index';
 
 @Directive({ selector: '[editor]' })
 export class EditorDirective implements OnChanges, OnDestroy {
-  private componentRef?: ComponentRef<any>;
+  private readonly componentRefs = new Map<string, ComponentRef<any>>();
 
   @Input('editor') editor?: Editor;
 
@@ -22,18 +22,26 @@ export class EditorDirective implements OnChanges, OnDestroy {
 
   async ngOnChanges(): Promise<void> {
     if (this.editor) {
-      this.componentRef?.destroy();
-      this.componentRef = await this.compiler.render({
-        container: this.viewContainerRef,
-        type: await this.editor.component(),
-        inputs: {
-          editor: this.editor,
-        },
-      });
+      let componentRef = this.componentRefs.get(this.editor.id);
+      if (!componentRef) {
+        componentRef = await this.compiler.render({
+          container: this.viewContainerRef,
+          type: await this.editor.component(),
+          inputs: { editor: this.editor },
+        });
+        this.componentRefs.set(this.editor.id, componentRef);
+      } else {
+        while (this.viewContainerRef.length > 0) {
+          this.viewContainerRef.detach()
+        }
+        this.viewContainerRef.insert(componentRef.hostView)
+      }
     }
   }
 
   ngOnDestroy(): void {
-    this.componentRef?.destroy();
+    Object.values(this.componentRefs).forEach((componentRef) =>
+      componentRef.destroy()
+    );
   }
 }
