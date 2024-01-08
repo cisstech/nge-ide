@@ -11,7 +11,7 @@
         <div class="spacer"></div>
         <ide-command-group [commands]="(view.commands|async) || []"></ide-command-group>
       </header>
-      <section class="content">
+      <section class="content" [id]="view.id">
         <ng-template [view]="view"></ng-template>
       </section>
   </as-split-area>

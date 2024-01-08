@@ -17,6 +17,7 @@
     <div
       class="activitybar-item"
       role="button"
+      [id]="item.id"
       [attr.aria-label]="item.title">
       <nz-badge [nzCount]="(item.badge|async) || 0">
         <ui-icon
@@ -33,6 +34,7 @@
     <div
       class="activitybar-item"
       role="button"
+      [id]="item.id"
       [class.active]="isActive(item)"
       [attr.aria-label]="item.title">
       <nz-badge [nzCount]="(item.badge|async) || 0">
