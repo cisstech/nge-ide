@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [17.5.3](https://github.com/cisstech/nge-ide/compare/v17.5.2...v17.5.3) (2024-01-08)
+
+
+### Features
+
+* **explorer:** add api to register folder sorter ([31e0150](https://github.com/cisstech/nge-ide/commit/31e0150589c76cd8189ed9f0729fa431b91861fd))
+
 ### [17.5.2](https://github.com/cisstech/nge-ide/compare/v17.5.1...v17.5.2) (2024-01-07)
 
 
