@@ -36,6 +36,8 @@ export class FileService implements IContribution {
 
   private readonly providers = new Map<string, IFileSystemProvider>();
 
+  private folderSorter?: (a: IFolder, b: IFolder) => number
+
   private readonly folders: IFolder[] = [];
   private readonly entries: Map<string, IFile> = new Map();
   private readonly unRegisteredEntries: Map<string, IFile> = new Map();
@@ -144,52 +146,6 @@ export class FileService implements IContribution {
     this.providers.set(provider.scheme, provider);
   }
 
-  async registerFolders(...folders: IFolder[]): Promise<void> {
-    this.folders.push(...folders);
-    await Promise.all(folders.map((f) => this.loadFolder(f)));
-    return this.rebuildIndex();
-  }
-
-  removeFolders(...uris: monaco.Uri[]): void {
-    this.folders.splice(
-      0,
-      this.folders.length,
-      ...this.folders.filter(
-        (f) => !uris.some((uri) => uriID(uri) === uriID(f.uri))
-      )
-    );
-
-
-    const parentKeys = Array.from(this.parents.keys());
-    const childrenKeys = Array.from(this.children.keys());
-    uris.forEach((uri) => {
-      parentKeys.forEach((key) => {
-        if (this.isAncestor(uri, monaco.Uri.parse(key))) {
-          this.parents.delete(key);
-        }
-      });
-
-      childrenKeys.forEach((key) => {
-        if (this.isAncestor(uri, monaco.Uri.parse(key))) {
-          this.children.delete(key);
-        }
-      });
-    })
-
-    this.rebuildIndex();
-  }
-
-  replaceFolder(oldUri: monaco.Uri, newFolder: IFolder): Promise<void> {
-    const index = this.folders.findIndex(
-      (f) => uriID(f.uri) === uriID(oldUri)
-    );
-    if (index === -1) {
-      throw new Error(`Folder ${oldUri.toString(true)} is not registered.`);
-    }
-    this.folders[index] = newFolder;
-    return this.refresh();
-  }
-
   /**
    * Checks if the service can handle the given uri.
    * @param uri monaco.Uri to test.
@@ -219,6 +175,77 @@ export class FileService implements IContribution {
     return !!Array.from(this.providers.values()).find(e => e.hasCapability(capability));
   }
 
+  // Folders
+
+  /**
+   * Registers the specified folders and loads their tree structure into the index.
+   *
+   * @param folders The folders to register.
+   * @returns A promise that resolves when the registration is complete.
+   */
+  async registerFolders(...folders: IFolder[]): Promise<void> {
+    this.folders.push(...folders);
+    await Promise.all(folders.map((f) => this.loadFolder(f)));
+    return this.rebuildIndex();
+  }
+
+  /**
+   * Unregisters the specified folders from the file service.
+   *
+   * @remarks
+   * - This will also remove all the files inside the unregistered folders from the index.
+   *
+   * @param uris - The URIs of the folders to unregister.
+   */
+  unregisterFolders(...uris: monaco.Uri[]): void {
+    this.folders.splice(
+      0,
+      this.folders.length,
+      ...this.folders.filter(
+        (f) => !uris.some((uri) => uriID(uri) === uriID(f.uri))
+      )
+    );
+
+    this.removeFoldersFromIndex(uris);
+
+    this.rebuildIndex();
+  }
+
+  /**
+   * Replaces a root folder with a new folder.
+   *
+   * @remarks
+   * - This will also remove all the files inside the unregistered folders from the index.
+   *
+   * @param oldUri The URI of the folder to be replaced.
+   * @param newFolder The new folder object.
+   * @returns A promise that resolves when the folder is replaced.
+   * @throws Error if the folder to be replaced is not registered.
+   */
+  async replaceFolder(oldUri: monaco.Uri, newFolder: IFolder): Promise<void> {
+    const index = this.folders.findIndex(
+      (f) => uriID(f.uri) === uriID(oldUri)
+    );
+    if (index === -1) {
+      throw new Error(`Folder ${oldUri.toString(true)} is not registered.`);
+    }
+
+    this.removeFoldersFromIndex([oldUri]);
+
+    this.folders[index] = newFolder;
+
+    await this.loadFolder(newFolder);
+
+    this.rebuildIndex()
+  }
+
+  /**
+   * Registers a function that will be used to sort the folders.
+   * @param sorter The sorter function.
+   */
+  registerFolderSorter(sorter: (a: IFolder, b: IFolder) => number) {
+    this.folderSorter = sorter;
+  }
 
   // CONTENT MANAGEMENT
 
@@ -439,6 +466,12 @@ export class FileService implements IContribution {
     );
   }
 
+  /**
+   * Determines whether the given uri is a parent of the given candidate.
+   * @param uri The uri to test.
+   * @param candidate The candidate to test.
+   * @returns `true` if the uri is a parent of the candidate `false` otherwise.
+   */
   isParent(uri: monaco.Uri, candidate: monaco.Uri): boolean {
     const a = uriID(uri);
     const b = uriID(candidate);
@@ -449,6 +482,12 @@ export class FileService implements IContribution {
     return a === b;
   }
 
+  /**
+   * Determines whether the given uri is a child of the given candidate.
+   * @param uri The uri to test.
+   * @param candidate The candidate to test.
+   * @returns `true` if the uri is a child of the candidate `false` otherwise.
+   */
   isAncestor(uri: monaco.Uri, candidate: monaco.Uri): boolean {
     const a = uriID(uri);
     const b = uriID(candidate);
@@ -674,7 +713,7 @@ export class FileService implements IContribution {
 
   private rebuildIndex(): void {
     const tree: IFile[] = [];
-    this.folders.forEach((folder) => {
+    this.folders.sort(this.folderSorter).forEach((folder) => {
       const entry = this.entries.get(uriID(folder.uri))
       if (!entry) {
         return;
@@ -685,7 +724,6 @@ export class FileService implements IContribution {
     this.children.forEach((v, _) => this.sortFiles(v));
     this.tree.next(tree);
   }
-
 
   private async loadFolder(folder: IFolder) {
     const provider = await this.withProvider(folder.uri);
@@ -714,6 +752,30 @@ export class FileService implements IContribution {
         return a.uri.path.localeCompare(b.uri.path, 'en', { numeric: true });
       }
       return a.isFolder ? -1 : 1;
+    });
+  }
+
+  private removeFoldersFromIndex(uris: monaco.Uri[]) {
+    const parentKeys = Array.from(this.parents.keys());
+    const childrenKeys = Array.from(this.children.keys());
+    uris.forEach((uri) => {
+      parentKeys.forEach((key) => {
+        if (this.isAncestor(monaco.Uri.parse(key), uri)) {
+          this.parents.delete(key);
+          this.entries.delete(key);
+        }
+      });
+
+      childrenKeys.forEach((key) => {
+        if (this.isAncestor(monaco.Uri.parse(key), uri)) {
+          this.children.delete(key);
+          this.entries.delete(key);
+        }
+      });
+
+      this.entries.delete(uriID(uri));
+      this.children.delete(uriID(uri));
+      this.parents.delete(uriID(uri));
     });
   }
 }
