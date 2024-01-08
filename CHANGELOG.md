@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [17.5.5](https://github.com/cisstech/nge-ide/compare/v17.5.4...v17.5.5) (2024-01-08)
+
+
+### Features
+
+* add id attribute on view containers ([58a17a2](https://github.com/cisstech/nge-ide/commit/58a17a2e538aa75558a824c2c49990aaa6c603c4))
+* **editor:** auto add file on open request info ([1b40051](https://github.com/cisstech/nge-ide/commit/1b400510f6ae310af6179b18aee0f294abbfc7f7))
+
 ### [17.5.4](https://github.com/cisstech/nge-ide/compare/v17.5.3...v17.5.4) (2024-01-08)
 
 ### [17.5.3](https://github.com/cisstech/nge-ide/compare/v17.5.2...v17.5.3) (2024-01-08)
