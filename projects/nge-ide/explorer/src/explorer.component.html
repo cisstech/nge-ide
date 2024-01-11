@@ -11,7 +11,7 @@
     }
     <ui-icon *ngIf="node|explorerFileIconOptions as options" [icon]="node.name|iconFile:options"/>
     <div class="tree-label"
-      [nz-tooltip]="node.data.uri|fileName:true"
+      [title]="node.data.uri|fileName:true"
       nzTooltipPlacement="topRight"
       [highlight]="node.name"
       [highlightPattern]="treeRef.filter.term"

@@ -99,7 +99,7 @@ export class SidebarComponent implements OnInit, OnDestroy {
               this.top.find((c) => c.id === containerId) ||
               this.bottom.find((c) => c.id === containerId);
             if (container) {
-              this.setActive(container);
+              this.setActive(container, true);
             }
           })
         );
@@ -139,17 +139,17 @@ export class SidebarComponent implements OnInit, OnDestroy {
   }
 
   /**
-   * Sets the given `view` as the active one.
+   * Sets the given `view` as the active one and toggles the opening state unless `open` is set to `true`.
    * @param container The view to activate.
-   * @param toggle
+   * @param open Whether to open the sidebar if it is closed.
    */
-  async setActive(container: SidebarContainer): Promise<void> {
+  async setActive(container: SidebarContainer, open?: boolean): Promise<void> {
     if (container.onClickHandler) {
       await container.onClickHandler();
       return;
     }
 
-    if (this.isActive(container)) {
+    if (this.isActive(container) && !open) {
       this.toggle();
     } else {
       this.active = container;
