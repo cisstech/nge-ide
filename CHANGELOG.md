@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [17.6.0](https://github.com/cisstech/nge-ide/compare/v17.5.5...v17.6.0) (2024-01-11)
+
+
+### Bug Fixes
+
+* **sidebar:** explorer tooltip ([70fbda4](https://github.com/cisstech/nge-ide/commit/70fbda43d4258a4765a802f37172561f1f3c094f))
+
 ### [17.5.5](https://github.com/cisstech/nge-ide/compare/v17.5.4...v17.5.5) (2024-01-08)
 
 
