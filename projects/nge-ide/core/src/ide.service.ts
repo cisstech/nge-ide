@@ -1,6 +1,6 @@
 import { Injectable, Injector } from '@angular/core';
 import { NgeMonacoLoaderService } from '@cisstech/nge/monaco';
-import { fromEvent, PartialObserver, Subject, Subscription } from 'rxjs';
+import { BehaviorSubject, fromEvent, PartialObserver, Subject, Subscription } from 'rxjs';
 import { CONTRIBUTION, IContribution } from './contributions/index';
 import { FileService } from './files/index';
 
@@ -13,6 +13,9 @@ export class IdeService {
   private readonly subscriptions: Subscription[] = [];
   private readonly didAfterStart = new Subject<void>();
   private readonly didBeforeStop = new Subject<void>();
+  private readonly startedStatus = new BehaviorSubject<boolean>(false);
+
+  readonly started = this.startedStatus.asObservable();
 
   constructor(private readonly injector: Injector) {}
 
@@ -40,7 +43,9 @@ export class IdeService {
         }
       })
     );
+
     this.didAfterStart.next();
+    this.startedStatus.next(true);
   }
 
   /**
