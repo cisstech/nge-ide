@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [17.7.0](https://github.com/cisstech/nge-ide/compare/v17.6.0...v17.7.0) (2024-02-09)
+
+
+### Features
+
+* **core:** expose ide started event ([5c97e83](https://github.com/cisstech/nge-ide/commit/5c97e83913ee01c9f084892d9b94c7c78277f66a))
+
 ## [17.6.0](https://github.com/cisstech/nge-ide/compare/v17.5.5...v17.6.0) (2024-01-11)
 
 
