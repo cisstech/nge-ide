@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { CodIcon } from '@cisstech/nge/ui/icon';
-import { ICommand } from '../../commands';
+import { ICommand, Keybinding } from '../../commands';
+import { KeyCodes, KeyModifiers } from '../../keybinding';
 import { EditorService } from '../editor.service';
 import { PreviewService } from '../preview.service';
 
@@ -12,6 +13,11 @@ export class EditorPreviewCommand implements ICommand {
   readonly id = EDITOR_PREVIEW_COMMAND;
   readonly icon = new CodIcon('open-preview');
   readonly label = 'Prévisualiser';
+  readonly keybinding = new Keybinding({
+    key: KeyCodes.P,
+    label: '⌘ P',
+    modifiers: [KeyModifiers.CTRL_CMD],
+  });
 
   get enabled(): boolean {
     const { activeGroup } = this.editorService;
@@ -23,8 +29,8 @@ export class EditorPreviewCommand implements ICommand {
       return false;
     }
 
+    this.editorService.saveActiveResource()
     return (
-      !activeGroup.isInPreviewMode &&
       this.previewService.canHandle(activeResource)
     );
   }
@@ -62,7 +68,7 @@ export class EditorPreviewReloadCommand implements ICommand {
     if (!activeResource) {
       return false;
     }
-
+    
     return (activeGroup.isInPreviewMode &&
       this.previewService.canHandle(activeResource)
     );
