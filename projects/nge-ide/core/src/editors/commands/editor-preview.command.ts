@@ -14,8 +14,8 @@ export class EditorPreviewCommand implements ICommand {
   readonly icon = new CodIcon('open-preview');
   readonly label = 'Prévisualiser';
   readonly keybinding = new Keybinding({
-    key: KeyCodes.P,
-    label: '⌘ P',
+    key: KeyCodes.ENTER,
+    label: '⌘ ENTER',
     modifiers: [KeyModifiers.CTRL_CMD],
   });
 
