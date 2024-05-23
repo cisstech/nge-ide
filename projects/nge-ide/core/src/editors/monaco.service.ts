@@ -17,6 +17,7 @@ import {
   ACTION_INSERT_CURSOR_ABOVE,
   ACTION_INSERT_CURSOR_AT_END_OF_EACH_LINE_SELECTED,
   ACTION_INSERT_CURSOR_BELOW,
+  ACTION_INSERT_LINE_AFTER,
   ACTION_JUMP_TO_BRACKET,
   ACTION_MARKER_NEXT,
   ACTION_MARKER_PREV,
@@ -138,6 +139,7 @@ export class MonacoService implements IContribution {
   async activate(): Promise<void> {
     await this.registerToolbarItems();
     this.registerStatusBarItems();
+    this.registerEditorShortcuts();
 
     this.subscriptions.push(
       this.fileService.onDidCloseFile.subscribe(this.disposeModel.bind(this))
@@ -418,6 +420,14 @@ export class MonacoService implements IContribution {
     });
   }
 
+  private registerEditorShortcuts() {
+    monaco.editor.addKeybindingRule({
+      keybinding: monaco.KeyMod.CtrlCmd | monaco.KeyCode.Enter,
+      command: null, 
+      when: null,
+    });
+  }
+
   private onDidChangeCursorPosition(
     event: monaco.editor.ICursorPositionChangedEvent,
     editor: monaco.editor.IStandaloneCodeEditor
@@ -677,7 +687,7 @@ export class MonacoService implements IContribution {
     registerEditorAction(ACTION_JUMP_TO_BRACKET, ToolbarGroups.GO, 20, true);
     registerEditorAction(ACTION_MARKER_NEXT, ToolbarGroups.GO, 30);
     registerEditorAction(ACTION_MARKER_PREV, ToolbarGroups.GO, 30, true);
-
+   
     n.remove();
     e.dispose();
   }
