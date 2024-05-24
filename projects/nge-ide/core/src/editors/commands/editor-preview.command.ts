@@ -29,7 +29,6 @@ export class EditorPreviewCommand implements ICommand {
       return false;
     }
 
-    this.editorService.saveActiveResource()
     return (
       this.previewService.canHandle(activeResource)
     );
@@ -45,7 +44,7 @@ export class EditorPreviewCommand implements ICommand {
     if (!activeResource) {
       return;
     }
-
+    this.editorService.saveActiveResource()
     await this.editorService.open(activeResource, {
       preview: await this.previewService.handle(activeResource),
     });
