@@ -55,7 +55,7 @@
     "angular-split": "^17.1.1",
     "marked": "^11.0.1",
     "monaco-editor": "^0.43.0",
-    "ng-event-bus": "^5.2.0",
+    "ng-event-bus": "^6.0.0",
     "ng-zorro-antd": "^17.0.1",
     "ngx-pipes": "^3.2.2",
     "rxjs": "^7.5.2",
