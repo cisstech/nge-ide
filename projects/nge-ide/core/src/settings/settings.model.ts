@@ -715,5 +715,13 @@ export namespace Settings {
       comment:
         'Annotates each line in the focused file with information from the revision which last modified the line.',
     },
+    {
+      name: 'toggleSideBar',
+      group: 'ide.layout',
+      type: Types.Dropdown,
+      value: 'opened',
+      choices: ['closed', 'opened'],
+      comment: 'Controls whether the sidebar is opened or closed by default.',
+    }
   ];
 }
