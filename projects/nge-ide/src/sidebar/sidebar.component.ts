@@ -14,6 +14,7 @@ import {
   SidebarContainer,
   ViewContainerScopes,
   ViewContainerService,
+  SettingsService,
 } from '@cisstech/nge-ide/core';
 import { lastValueFrom, Subscription } from 'rxjs';
 import { map, take } from 'rxjs/operators';
@@ -76,7 +77,8 @@ export class SidebarComponent implements OnInit, OnDestroy {
     private readonly ideService: IdeService,
     private readonly storageService: StorageService,
     private readonly changeDetectionRef: ChangeDetectorRef,
-    private readonly viewContainerService: ViewContainerService
+    private readonly viewContainerService: ViewContainerService,
+    private readonly settingsService: SettingsService
   ) {}
 
   ngOnInit(): void {
@@ -90,9 +92,10 @@ export class SidebarComponent implements OnInit, OnDestroy {
         );
 
         this.subscriptions.push(
+          this.ideService.onAfterStart(this.restoreState.bind(this)),
           this.ideService.onBeforeStop(this.saveState.bind(this))
         );
-
+        
         this.subscriptions.push(
           this.viewContainerService.onDidOpen().subscribe((containerId) => {
             const container =
@@ -153,11 +156,7 @@ export class SidebarComponent implements OnInit, OnDestroy {
       this.toggle();
     } else {
       this.active = container;
-      if (this.size === CLOSED_SIZE) {
-        this.size = OPENED_SIZE;
-      }
     }
-
     this.changeDetectionRef.markForCheck();
   }
 
@@ -172,10 +171,14 @@ export class SidebarComponent implements OnInit, OnDestroy {
   }
 
   private async restoreState(): Promise<void> {
+    const defaultSizeSetting = this.settingsService.get('ide.layout', 'toggleSideBar')?.value;
+    const defaultSize = defaultSizeSetting === 'closed' ? CLOSED_SIZE : OPENED_SIZE;
+    this.size = defaultSize;
+
     this.state = await lastValueFrom(
       this.storageService
         .get<State>(this.storageId, {
-          size: OPENED_SIZE,
+          size: defaultSize,
           order: [],
           active: '',
         })
