@@ -46,11 +46,12 @@
 .tab-dirty,
 .tab-close {
   margin: 0 4px;
+  padding-right: 1px;
 }
 
 .tab-dirty:hover,
 .tab-close:hover {
-  border: 1px solid;
+  outline: 1px solid;
   border-radius: 8px;
 }
 
