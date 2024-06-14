@@ -82,7 +82,6 @@ export class SidebarComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    this.settingsService.activate();
     this.restoreState()
       .then(() => {
         this.subscriptions.push(
@@ -93,9 +92,10 @@ export class SidebarComponent implements OnInit, OnDestroy {
         );
 
         this.subscriptions.push(
+          this.ideService.onAfterStart(this.restoreState.bind(this)),
           this.ideService.onBeforeStop(this.saveState.bind(this))
         );
-
+        
         this.subscriptions.push(
           this.viewContainerService.onDidOpen().subscribe((containerId) => {
             const container =
@@ -113,7 +113,6 @@ export class SidebarComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.saveState();
     this.subscriptions.forEach((s) => s.unsubscribe());
-    this.settingsService.deactivate();
   }
 
   trackById(_: number, item: any): string {
@@ -173,7 +172,7 @@ export class SidebarComponent implements OnInit, OnDestroy {
 
   private async restoreState(): Promise<void> {
     const defaultSizeSetting = this.settingsService.get('ide.layout', 'toggleSideBar')?.value;
-    const defaultSize = defaultSizeSetting === 'opened' ? OPENED_SIZE : CLOSED_SIZE;
+    const defaultSize = defaultSizeSetting === 'closed' ? CLOSED_SIZE : OPENED_SIZE;
     this.size = defaultSize;
 
     this.state = await lastValueFrom(
