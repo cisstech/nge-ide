@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [17.7.3](https://github.com/cisstech/nge-ide/compare/v17.7.2...v17.7.3) (2024-06-14)
+
+
+### Bug Fixes
+
+* **sidebar-settings:** Now contributions are not manually activated. ([9dc9758](https://github.com/cisstech/nge-ide/commit/9dc975853c277bf684526933040b2bed17fbdba7))
+* **tab:** Fix a minor bug due to tab resizing ([9398730](https://github.com/cisstech/nge-ide/commit/9398730a11792513d5b93f1c6d88bbe25922b6aa))
+* **tabs:** tooltip are now placed either top or bottom ([9a5b254](https://github.com/cisstech/nge-ide/commit/9a5b2548ec668c8928bcece074c33fa8ed2add70))
+
 ### [17.7.2](https://github.com/cisstech/nge-ide/compare/v17.7.1...v17.7.2) (2024-05-24)
 
 ### [17.7.1](https://github.com/cisstech/nge-ide/compare/v17.7.0...v17.7.1) (2024-05-23)
