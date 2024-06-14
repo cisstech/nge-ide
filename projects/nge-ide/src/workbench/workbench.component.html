@@ -31,7 +31,7 @@
                     [icon]="tab.options.title | iconFile"
                   />
                 </ng-template>
-                <span class="tab-title" [nz-tooltip]="tab.options.tooltip" nzTooltipPlacement="top">{{
+                <span class="tab-title" [nz-tooltip]="tab.options.tooltip" [nzTooltipPlacement]="['top', 'bottom']">{{
                   tab.options.title
                 }}</span>
                 <span *ngIf="tab.file?.readOnly" class="codicon codicon-lock-small" nz-tooltip="Éditeur en lecture seule"></span>
