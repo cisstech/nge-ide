@@ -13,6 +13,7 @@ const extensions = [
   'webm',
   'mov', // video
   'jpeg',
+  'jpg',
   'gif',
   'png',
   'apng',
