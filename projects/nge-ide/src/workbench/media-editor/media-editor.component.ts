@@ -37,6 +37,7 @@ export class MediaEditorComponent implements OnInit, OnDestroy {
           case 'svg':
           case 'png':
           case 'jpeg':
+          case 'jpg':
           case 'gif':
           case 'tiff':
             this.type = 'image';
