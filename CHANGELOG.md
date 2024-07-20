@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [17.7.4](https://github.com/cisstech/nge-ide/compare/v17.7.3...v17.7.4) (2024-07-20)
+
+
+### Bug Fixes
+
+* **workbench:** Add media support for 'jpg' extension ([a5fb2a4](https://github.com/cisstech/nge-ide/commit/a5fb2a4062e9984c4e46d74d11f90dfd78ecbe18))
+
 ### [17.7.3](https://github.com/cisstech/nge-ide/compare/v17.7.2...v17.7.3) (2024-06-14)
 
 
