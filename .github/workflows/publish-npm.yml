@@ -1,0 +1,84 @@
+name: Publish Package to npmjs
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Select version type'
+        required: true
+        default: 'patch'
+        type: choice
+        options:
+          - patch
+          - minor
+          - major
+
+env:
+  NODE_VERSION: 22
+
+jobs:
+  prepare:
+      name: Prepare
+      runs-on: ubuntu-latest
+      steps:
+        - uses: DerYeger/yarn-setup-action@master
+          with:
+            node-version: ${{ env.NODE_VERSION }}
+
+  publish:
+    runs-on: ubuntu-latest
+    needs: prepare
+    permissions:
+      contents: write  # Write access to repository content
+      packages: write  # Write access to publish packages
+      id-token: write  # Permission to create releases
+      pull-requests: write  # Permission to create pull requests
+    steps:
+      - uses: DerYeger/yarn-setup-action@master
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+
+      - name: Setup Git user
+        run: |
+          git config --global user.name ${{ github.actor }}
+          git config --global user.email ${{ github.actor }}@users.noreply.github.com
+
+      - name: Bump version
+        id: bump_version
+        run: |
+         echo "version=$(npm version ${{ github.event.inputs.version }} --no-git-tag-version)" >> $GITHUB_OUTPUT
+
+      - name: Checkout branch and run standard-version
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          git checkout -b release/${{ steps.bump_version.outputs.version }}
+          npx standard-version --skip.bump --skip.commit --skip.tag --release-as ${{ inputs.version }}
+          git add package.json
+          git add CHANGELOG.md
+          cat package.json
+          git commit -m "[no-ci] chore(release): ${{ steps.bump_version.outputs.version }}"
+          git tag ${{ steps.bump_version.outputs.version }}
+          git push --follow-tags origin release/${{ steps.bump_version.outputs.version }}
+          gh pr create --title "Release: ${{ steps.bump_version.outputs.version }}" --body "This pull request contains the updated package.json with the new release version" --base main --head release/${{ steps.bump_version.outputs.version }}
+
+      - name: Publish Release
+        if: success()
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ steps.bump_version.outputs.version }}
+          release_name: "v${{ steps.bump_version.outputs.version  }}"
+          body: No changelog provided
+          draft: false
+
+      - name: Publish to npm
+        if: success()
+        run: |
+          echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_PUBLIC_TOKEN }}" > ~/.npmrc
+          yarn build:lib
+          yarn publish ./dist/nge-ide --provenance --access public
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_PUBLIC_TOKEN }}
+        shell: bash
