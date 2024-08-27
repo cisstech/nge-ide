@@ -10,7 +10,7 @@
 
 An extensible and flexible open source ide written in Angular.
 
-[![Tests](https://github.com/cisstech/nge-ide/actions/workflows/tests.yml/badge.svg)](https://github.com/cisstech/nge-ide/actions/workflows/tests.yml)
+[![Tests](https://github.com/cisstech/nge-ide/actions/workflows/ci.yml/badge.svg)](https://github.com/cisstech/nge-ide/actions/workflows/ci.yml)
 [![codecov](https://codecov.io/gh/cisstech/nge-ide/branch/main/graph/badge.svg)](https://codecov.io/gh/cisstech/nge-ide)
 [![codefactor](https://www.codefactor.io/repository/github/cisstech/nge-ide/badge/main)](https://www.codefactor.io/repository/github/cisstech/nge-ide/overview/main)
 [![GitHub Tag](https://img.shields.io/github/tag/cisstech/nge-ide.svg)](https://github.com/cisstech/nge-ide/tags)
@@ -33,7 +33,7 @@ npm install @cisstech/nge @cisstech/nge-ide monaco-editor marked
 
 ## ⌨️ Development
 
-* Clone and install
+- Clone and install
 
 ```bash
 git clone https://github.com/cisstech/nge-ide
@@ -41,7 +41,7 @@ cd nge-ide
 npm install
 ```
 
-* Serve demo
+- Serve demo
 
 ```bash
 npm run start

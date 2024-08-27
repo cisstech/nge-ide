@@ -2,6 +2,9 @@
   "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
   "version": 1,
   "newProjectRoot": "projects",
+  "cli": {
+    "schematicCollections": ["@angular-eslint/schematics"]
+  },
   "projects": {
     "nge-ide": {
       "projectType": "library",
@@ -21,12 +24,11 @@
             }
           }
         },
-        "test": {
-          "builder": "@angular-devkit/build-angular:karma",
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
           "options": {
-            "main": "projects/nge-ide/test.ts",
-            "tsConfig": "projects/nge-ide/tsconfig.spec.json",
-            "karmaConfig": "projects/nge-ide/karma.conf.js"
+            "eslintConfig": ".eslintrc.json",
+            "lintFilePatterns": ["**/*.spec.ts", "**/*.d.ts"]
           }
         }
       }
@@ -43,12 +45,13 @@
       "prefix": "app",
       "architect": {
         "build": {
-          "builder": "@angular-devkit/build-angular:browser",
+          "builder": "@angular-devkit/build-angular:browser-esbuild",
           "options": {
             "outputPath": "dist/demo",
             "index": "projects/demo/src/index.html",
-            "main": "projects/demo/src/main.ts",
-            "polyfills": "projects/demo/src/polyfills.ts",
+            "polyfills": [
+              "projects/demo/src/polyfills.ts"
+            ],
             "tsConfig": "projects/demo/tsconfig.app.json",
             "preserveSymlinks": true,
             "assets": [
@@ -57,19 +60,18 @@
               { "glob": "**/*", "input": "./node_modules/@ant-design/icons-angular/src/inline-svg/", "output": "/assets/vendors/@ant-design/assets/" },
               { "glob": "**/*", "input": "./node_modules/@cisstech/nge/assets/monaco", "output": "./assets/vendors/nge/monaco/" },
               { "glob": "**/*", "input": "./node_modules/@cisstech/nge/assets/markdown/", "output": "./assets/vendors/nge/markdown/" },
-              { "glob": "**/*", "input": "./node_modules/@cisstech/nge/assets/ui/icon/icons/files", "output": "./assets/vendors/nge/ui/icon/icons/files/" }
+              { "glob": "**/*", "input": "./node_modules/@cisstech/nge/assets/ui/icon/assets/icons/files", "output": "./assets/vendors/nge/ui/icon/icons/files/" }
             ],
             "styles": [
               "projects/demo/src/styles.scss",
               "node_modules/ng-zorro-antd/ng-zorro-antd.min.css"
             ],
             "scripts": [],
-            "vendorChunk": true,
             "extractLicenses": false,
-            "buildOptimizer": false,
             "sourceMap": true,
             "optimization": false,
-            "namedChunks": true
+            "namedChunks": true,
+            "main": "projects/demo/src/main.ts"
           },
           "configurations": {
             "production": {
@@ -84,8 +86,6 @@
               "sourceMap": false,
               "namedChunks": false,
               "extractLicenses": true,
-              "vendorChunk": false,
-              "buildOptimizer": true,
               "budgets": [
                 {
                   "type": "initial",
@@ -119,31 +119,11 @@
             "buildTarget": "demo:build"
           }
         },
-        "test": {
-          "builder": "@angular-devkit/build-angular:karma",
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
           "options": {
-            "main": "projects/demo/src/test.ts",
-            "polyfills": "projects/demo/src/polyfills.ts",
-            "tsConfig": "projects/demo/tsconfig.spec.json",
-            "karmaConfig": "projects/demo/karma.conf.js",
-            "assets": [
-              "projects/demo/src/favicon.ico",
-              "projects/demo/src/assets"
-            ],
-            "styles": ["projects/demo/src/styles.scss"],
-            "scripts": []
-          }
-        },
-        "e2e": {
-          "builder": "@angular-devkit/build-angular:protractor",
-          "options": {
-            "protractorConfig": "projects/demo/e2e/protractor.conf.js",
-            "devServerTarget": "demo:serve"
-          },
-          "configurations": {
-            "production": {
-              "devServerTarget": "demo:serve:production"
-            }
+            "eslintConfig": ".eslintrc.json",
+            "lintFilePatterns": ["**/*.spec.ts", "**/*.d.ts"]
           }
         }
       }

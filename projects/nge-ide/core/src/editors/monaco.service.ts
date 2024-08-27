@@ -422,7 +422,7 @@ export class MonacoService implements IContribution {
   private registerEditorShortcuts() {
     monaco.editor.addKeybindingRule({
       keybinding: monaco.KeyMod.CtrlCmd | monaco.KeyCode.Enter,
-      command: null, 
+      command: null,
       when: null,
     });
   }
@@ -686,7 +686,7 @@ export class MonacoService implements IContribution {
     registerEditorAction(ACTION_JUMP_TO_BRACKET, ToolbarGroups.GO, 20, true);
     registerEditorAction(ACTION_MARKER_NEXT, ToolbarGroups.GO, 30);
     registerEditorAction(ACTION_MARKER_PREV, ToolbarGroups.GO, 30, true);
-   
+
     n.remove();
     e.dispose();
   }

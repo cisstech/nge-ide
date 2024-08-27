@@ -13,7 +13,7 @@ export class NotificationsComponent {
 
   constructor(private readonly notificationService: NotificationService) {}
 
-  trackBy(index: number, _: any) {
+  trackBy(index: number) {
     return index;
   }
 }

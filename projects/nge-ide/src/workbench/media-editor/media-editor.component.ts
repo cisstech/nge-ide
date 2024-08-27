@@ -47,7 +47,6 @@ export class MediaEditorComponent implements OnInit, OnDestroy {
           case 'mpeg':
             this.type = 'video';
             break;
-          case 'mpeg':
           case 'wav':
           case 'mp3':
             this.type = 'audio';
