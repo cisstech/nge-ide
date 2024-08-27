@@ -1,5 +1,5 @@
-import { Icon } from '@cisstech/nge/ui/icon';
-import { Observable, of } from 'rxjs';
+import { Icon } from '@cisstech/nge/ui/icon'
+import { Observable, of } from 'rxjs'
 
 /**
  * Lists of view container locations.
@@ -14,16 +14,16 @@ export enum ViewContainerScopes {
  */
 export interface IViewContainer {
   /** Unique identifier of the container */
-  readonly id: string;
+  readonly id: string
 
   /** Title of the container. */
-  readonly title: string;
+  readonly title: string
 
   /** Location of the container */
-  readonly scope: ViewContainerScopes;
+  readonly scope: ViewContainerScopes
 
   /** Optional badge to show with the title. */
-  readonly badge: Observable<number>;
+  readonly badge: Observable<number>
 
   /**
    * Optional order of the container.
@@ -32,49 +32,49 @@ export interface IViewContainer {
    * - The higher the order, the more the container will be on the bottom.
    * @default 0
    */
-  readonly order?: number;
+  readonly order?: number
 }
 
 /**
  * Representation of view container inside the infobar area.
  */
 export abstract class InfobarContainer implements IViewContainer {
-  abstract readonly id: string;
-  abstract readonly title: string;
+  abstract readonly id: string
+  abstract readonly title: string
 
-  readonly scope = ViewContainerScopes.infobar;
-  readonly badge = of(0);
+  readonly scope = ViewContainerScopes.infobar
+  readonly badge = of(0)
 }
 
 /**
  * Representation of view container inside the sidebar area.
  */
 export abstract class SidebarContainer implements IViewContainer {
-  abstract readonly id: string;
-  abstract readonly title: string;
+  abstract readonly id: string
+  abstract readonly title: string
 
-  readonly scope = ViewContainerScopes.sidebar;
+  readonly scope = ViewContainerScopes.sidebar
 
   /** Value of the badge associated to the view. */
-  readonly badge = of(0);
+  readonly badge = of(0)
 
   /** Icon of the container */
-  abstract readonly icon: Icon;
+  abstract readonly icon: Icon
 
   /** Horizontal position of the container */
-  abstract readonly side: 'left' | 'right';
+  abstract readonly side: 'left' | 'right'
 
   /** Vertical position of the view */
-  abstract readonly align: 'top' | 'bottom';
+  abstract readonly align: 'top' | 'bottom'
 
   /** An action to call for non visual container. */
-  onClickHandler?(): any | Promise<any>;
+  onClickHandler?(): any | Promise<any>
 
   /**
    * A dropdown menu to show when the container is clicked.
    */
   dropdown?: {
-    label: string;
-    action: () => void | Promise<void>;
+    label: string
+    action: () => void | Promise<void>
   }[]
 }

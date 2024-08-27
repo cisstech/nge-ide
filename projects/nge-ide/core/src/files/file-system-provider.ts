@@ -1,8 +1,8 @@
 // inspired from vscode api https://code.visualstudio.com/api/references/vscode-api#FileSystem
 // tslint:disable: no-bitwise
 
-import { IFile } from './file';
-import { SearchForm, SearchResult } from './file-system-search';
+import { IFile } from './file'
+import { SearchForm, SearchResult } from './file-system-search'
 
 /**
  * Possible changes that can occur to a file.
@@ -41,12 +41,12 @@ export interface IFileChange {
   /**
    * The type of change that occurred to the file.
    */
-  readonly type: FileChangeType;
+  readonly type: FileChangeType
 
   /**
    * The unified resource identifier of the file that changed.
    */
-  readonly uri: monaco.Uri;
+  readonly uri: monaco.Uri
 }
 
 /**
@@ -60,12 +60,12 @@ export interface IFileChange {
  * folders, regular files.
  */
 export interface IFileSystemProvider {
-  readonly scheme: string;
+  readonly scheme: string
 
   /**
    * Checks if the provider for the provided resource has the provided file system capability.
    */
-  hasCapability(capability: FileSystemProviderCapabilities): boolean;
+  hasCapability(capability: FileSystemProviderCapabilities): boolean
 
   /**
    * Retrieve a file.
@@ -74,7 +74,7 @@ export interface IFileSystemProvider {
    * @return A promise that resolves with the file info.
    * @throws {@link FileSystemError.FileNotFound} when `uri` doesn't exist.
    */
-  stat(uri: monaco.Uri): Promise<IFile>;
+  stat(uri: monaco.Uri): Promise<IFile>
 
   /**
    * Retrieves recursivly all entries of a directory.
@@ -84,7 +84,7 @@ export interface IFileSystemProvider {
    * @return  A promise that resolves with a list of {@link IFile}.
    * @throws {@link FileSystemError.FileNotFound} when `uri` doesn't exist.
    */
-  readDirectory(uri: monaco.Uri): IFile[] | Promise<IFile[]>;
+  readDirectory(uri: monaco.Uri): IFile[] | Promise<IFile[]>
 
   /**
    * Create a new directory.
@@ -94,7 +94,7 @@ export interface IFileSystemProvider {
    * @throws {@link FileSystemError.FileExists} when `uri` already exists.
    * @throws {@link FileSystemError.NoPermissions} when permissions aren't sufficient.
    */
-  createDirectory(uri: monaco.Uri): void | Promise<void>;
+  createDirectory(uri: monaco.Uri): void | Promise<void>
 
   /**
    * Read the entire contents of a file.
@@ -103,7 +103,7 @@ export interface IFileSystemProvider {
    * @return A promise that resolves with a file content.
    * @throws {@link FileSystemError.FileNotFound} when `uri` doesn't exist.
    */
-  read(uri: monaco.Uri): string | Promise<string>;
+  read(uri: monaco.Uri): string | Promise<string>
 
   /**
    * Write data to a file, replacing its entire contents.
@@ -116,11 +116,7 @@ export interface IFileSystemProvider {
    * @throws {@link FileSystemError.FileExists} when `uri` already exists, `create` is set but `overwrite` is not set.
    * @throws {@link FileSystemError.NoPermissions} when permissions aren't sufficient.
    */
-  write(
-    uri: monaco.Uri,
-    content: string,
-    update: boolean
-  ): void | Promise<void>;
+  write(uri: monaco.Uri, content: string, update: boolean): void | Promise<void>
 
   /**
    * Delete a file.
@@ -129,7 +125,7 @@ export interface IFileSystemProvider {
    * @throws {@link FileSystemError.FileNotFound} when `uri` doesn't exist.
    * @throws {@link FileSystemError.NoPermissions} when permissions aren't sufficient.
    */
-  delete(uri: monaco.Uri): void | Promise<void>;
+  delete(uri: monaco.Uri): void | Promise<void>
 
   /**
    * Rename a file or folder.
@@ -141,7 +137,7 @@ export interface IFileSystemProvider {
    * @throws {@link FileSystemError.FileExists} when `newUri` exists and when the `overwrite` option is not `true`.
    * @throws {@link FileSystemError.NoPermissions} when permissions aren't sufficient.
    */
-  rename(uri: monaco.Uri, name: string): void | Promise<void>;
+  rename(uri: monaco.Uri, name: string): void | Promise<void>
 
   /**
    * Copy files or folders.
@@ -154,11 +150,7 @@ export interface IFileSystemProvider {
    * @throws {@link FileSystemError.FileExists} when `destination` exists.
    * @throws {@link FileSystemError.NoPermissions} when permissions aren't sufficient.
    */
-  move(
-    source: monaco.Uri,
-    destination: monaco.Uri,
-    options: { copy: boolean }
-  ): void | Promise<void>;
+  move(source: monaco.Uri, destination: monaco.Uri, options: { copy: boolean }): void | Promise<void>
 
   /**
    * Uploads `file` to the directory `destination`.
@@ -169,71 +161,57 @@ export interface IFileSystemProvider {
    * @throws {@link FileSystemError.FileExists} when `destination` already exists.
    * @throws {@link FileSystemError.NoPermissions} when permissions aren't sufficient.
    */
-  upload(file: File, destination: monaco.Uri): void | Promise<void>;
+  upload(file: File, destination: monaco.Uri): void | Promise<void>
 
-  search(
-    uri: monaco.Uri,
-    form: SearchForm
-  ): Promise<SearchResult<monaco.Uri>[]>;
+  search(uri: monaco.Uri, form: SearchForm): Promise<SearchResult<monaco.Uri>[]>
 }
 
 export abstract class FileSystemProvider implements IFileSystemProvider {
-  abstract readonly scheme: string;
-  abstract readonly capabilities: FileSystemProviderCapabilities;
+  abstract readonly scheme: string
+  abstract readonly capabilities: FileSystemProviderCapabilities
 
   hasCapability(capability: FileSystemProviderCapabilities): boolean {
-    return !!(this.capabilities & capability);
+    return !!(this.capabilities & capability)
   }
 
   stat(uri: monaco.Uri): Promise<IFile> {
-    throw new Error('Operation not supported');
+    throw new Error('Operation not supported')
   }
 
   readDirectory(uri: monaco.Uri): IFile[] | Promise<IFile[]> {
-    throw new Error('Operation not supported');
+    throw new Error('Operation not supported')
   }
 
   createDirectory(uri: monaco.Uri): void | Promise<void> {
-    throw new Error('Operation not supported');
+    throw new Error('Operation not supported')
   }
 
   upload(file: File, destination: monaco.Uri): void | Promise<void> {
-    throw new Error('Operation not supported');
+    throw new Error('Operation not supported')
   }
 
   read(uri: monaco.Uri): string | Promise<string> {
-    throw new Error('Operation not supported');
+    throw new Error('Operation not supported')
   }
 
-  write(
-    uri: monaco.Uri,
-    content: string,
-    update: boolean
-  ): void | Promise<void> {
-    throw new Error('Operation not supported');
+  write(uri: monaco.Uri, content: string, update: boolean): void | Promise<void> {
+    throw new Error('Operation not supported')
   }
 
   delete(uri: monaco.Uri): void | Promise<void> {
-    throw new Error('Operation not supported');
+    throw new Error('Operation not supported')
   }
 
   rename(uri: monaco.Uri, name: string): void | Promise<void> {
-    throw new Error('Operation not supported');
+    throw new Error('Operation not supported')
   }
 
-  move(
-    source: monaco.Uri,
-    destination: monaco.Uri,
-    options: { copy: boolean }
-  ): void | Promise<void> {
-    throw new Error('Operation not supported');
+  move(source: monaco.Uri, destination: monaco.Uri, options: { copy: boolean }): void | Promise<void> {
+    throw new Error('Operation not supported')
   }
 
-  search(
-    uri: monaco.Uri,
-    form: SearchForm
-  ): Promise<SearchResult<monaco.Uri>[]> {
-    throw new Error('Operation not supported');
+  search(uri: monaco.Uri, form: SearchForm): Promise<SearchResult<monaco.Uri>[]> {
+    throw new Error('Operation not supported')
   }
 }
 
@@ -241,9 +219,7 @@ export abstract class FileSystemProvider implements IFileSystemProvider {
  * Gets a human readable name of the given `capability`
  * @param capability The capability to convert.
  */
-export function fileSystemProviderCapabilityName(
-  capability: FileSystemProviderCapabilities
-): string {
+export function fileSystemProviderCapabilityName(capability: FileSystemProviderCapabilities): string {
   const names = {
     [FileSystemProviderCapabilities.FileRead]: 'FileRead',
     [FileSystemProviderCapabilities.FileWrite]: 'FileWrite',
@@ -251,7 +227,7 @@ export function fileSystemProviderCapabilityName(
     [FileSystemProviderCapabilities.FileUpload]: 'FileUpload',
     [FileSystemProviderCapabilities.FileMove]: 'FileMove',
     [FileSystemProviderCapabilities.FileSearch]: 'FileSearch',
-  } as Record<number, string>;
+  } as Record<number, string>
 
-  return names[capability];
+  return names[capability]
 }

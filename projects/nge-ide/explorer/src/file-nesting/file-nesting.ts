@@ -1,5 +1,5 @@
 export interface FileNestingPattern {
-  id: string;
-  parent: RegExp;
-  children: string[];
+  id: string
+  parent: RegExp
+  children: string[]
 }

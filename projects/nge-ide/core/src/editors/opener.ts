@@ -1,39 +1,39 @@
-import { Injector } from '@angular/core';
-import { Icon } from '@cisstech/nge/ui/icon';
-import { EditorGroup } from './editor';
-import { Preview } from './preview';
-import { IFile } from '../files';
+import { Injector } from '@angular/core'
+import { Icon } from '@cisstech/nge/ui/icon'
+import { EditorGroup } from './editor'
+import { Preview } from './preview'
+import { IFile } from '../files'
 
 /**
  * Represents file open options.
  */
 export interface OpenOptions {
   /**  Icon to show in the tabbar (default to a file icon). */
-  readonly icon?: Icon;
+  readonly icon?: Icon
 
   /**  Title to show in the tabbar. */
-  readonly title: string;
+  readonly title: string
 
   /**  Tooltip to show in the tabbar. */
-  readonly tooltip: string;
+  readonly tooltip: string
 
   /** force the editor to open the file as a preview */
-  readonly preview?: Preview;
+  readonly preview?: Preview
 
   /** force the editor to open the file in a new group */
-  readonly openToSide?: boolean;
+  readonly openToSide?: boolean
 
   /** force the editor to open the file in this group */
-  readonly openInGroup?: EditorGroup;
+  readonly openInGroup?: EditorGroup
 
   /** jumping at the given position after the resource is opened */
   readonly position?: {
-    line: number;
-    column: number;
-  };
+    line: number
+    column: number
+  }
 
   /** open the resource with diff editor */
-  readonly diff?: string;
+  readonly diff?: string
 }
 
 /**
@@ -57,16 +57,16 @@ export class OpenRequest {
     /**
      * The file associated with the request if any.
      */
-    readonly file?: IFile,
+    readonly file?: IFile
   ) {
-    this.uri = uri;
-    this.options = options;
+    this.uri = uri
+    this.options = options
   }
 
   equals(o: any): o is OpenRequest {
     if (!(o instanceof OpenRequest)) {
-      return false;
+      return false
     }
-    return o.uri.with({ query: '' }).toString(true) == this.uri.with({ query: '' }).toString(true);
+    return o.uri.with({ query: '' }).toString(true) == this.uri.with({ query: '' }).toString(true)
   }
 }

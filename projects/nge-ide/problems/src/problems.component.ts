@@ -7,7 +7,7 @@ import {
   OnDestroy,
   OnInit,
   ViewChild,
-} from '@angular/core';
+} from '@angular/core'
 import {
   Diagnostic,
   DiagnosticGroup,
@@ -16,9 +16,9 @@ import {
   EditorService,
   NotificationService,
   Paths,
-} from '@cisstech/nge-ide/core';
-import { ITree, ITreeAdapter, TreeComponent } from '@cisstech/nge/ui/tree';
-import { Subscription } from 'rxjs';
+} from '@cisstech/nge-ide/core'
+import { ITree, ITreeAdapter, TreeComponent } from '@cisstech/nge/ui/tree'
+import { Subscription } from 'rxjs'
 
 @Component({
   selector: 'ide-problems',
@@ -27,7 +27,7 @@ import { Subscription } from 'rxjs';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ProblemsComponent implements OnInit, OnDestroy, AfterViewChecked {
-  private readonly subscriptions: Subscription[] = [];
+  private readonly subscriptions: Subscription[] = []
 
   readonly adapter: ITreeAdapter<TreeNode> = {
     id: 'problems.tree',
@@ -38,7 +38,7 @@ export class ProblemsComponent implements OnInit, OnDestroy, AfterViewChecked {
     actions: {
       mouse: {
         click: (e) => {
-          const node = e.node as TreeNode;
+          const node = e.node as TreeNode
           if (node.diagnostic) {
             this.editorService
               .open(monaco.Uri.parse(node.uri), {
@@ -47,17 +47,17 @@ export class ProblemsComponent implements OnInit, OnDestroy, AfterViewChecked {
                   column: node.column || 0,
                 },
               })
-              .catch(this.notificationService.publishError.bind(this));
+              .catch(this.notificationService.publishError.bind(this))
           }
         },
       },
     },
-  };
+  }
 
   @ViewChild(TreeComponent, { static: true })
-  tree!: ITree<TreeNode>;
+  tree!: ITree<TreeNode>
 
-  nodes: TreeNode[] = [];
+  nodes: TreeNode[] = []
 
   constructor(
     private readonly editorService: EditorService,
@@ -70,20 +70,20 @@ export class ProblemsComponent implements OnInit, OnDestroy, AfterViewChecked {
   ngOnInit(): void {
     this.subscriptions.push(
       this.diagnosticService.asObservableAll().subscribe((groups) => {
-        this.nodes = groups.map(this.buildNode.bind(this));
-        this.changeDetectorRef.markForCheck();
+        this.nodes = groups.map(this.buildNode.bind(this))
+        this.changeDetectorRef.markForCheck()
       })
-    );
+    )
   }
 
   ngOnDestroy(): void {
-    this.subscriptions.forEach((e) => e.unsubscribe());
+    this.subscriptions.forEach((e) => e.unsubscribe())
   }
 
   ngAfterViewChecked(): void {
-    const height = this.elementRef.nativeElement.offsetHeight + 'px';
+    const height = this.elementRef.nativeElement.offsetHeight + 'px'
     if (height !== this.adapter.treeHeight) {
-      this.adapter.treeHeight = height;
+      this.adapter.treeHeight = height
     }
   }
 
@@ -100,7 +100,7 @@ export class ProblemsComponent implements OnInit, OnDestroy, AfterViewChecked {
             [DiagnosticSeverity.Hint]: 'codicon codicon-info icon-hint',
             [DiagnosticSeverity.Error]: 'codicon codicon-error icon-error',
             [DiagnosticSeverity.Warning]: 'codicon codicon-warning icon-info',
-          };
+          }
           return {
             id: group.uri + '#' + i,
             uri: group.uri,
@@ -110,36 +110,36 @@ export class ProblemsComponent implements OnInit, OnDestroy, AfterViewChecked {
             iconClass: icons[e.severity],
             lineNumber: e.range.start.lineNumber,
             diagnostic: e,
-          } as TreeNode;
+          } as TreeNode
         })
         .sort((a, b) => {
           if (!a.diagnostic) {
-            return -1;
+            return -1
           }
           if (!b.diagnostic) {
-            return 1;
+            return 1
           }
-          return a.diagnostic.severity.localeCompare(b.diagnostic.severity);
+          return a.diagnostic.severity.localeCompare(b.diagnostic.severity)
         }),
-    };
+    }
   }
 
   private truncate(text: string, length: number): string {
     if (text.length <= length) {
-      return text;
+      return text
     }
-    return text.substr(0, length) + '...';
+    return text.substr(0, length) + '...'
   }
 }
 
 interface TreeNode {
-  id: string;
-  uri: string;
-  name: string;
-  column?: number;
-  tooltip: string;
-  children?: TreeNode[];
-  iconClass?: string;
-  lineNumber?: number;
-  diagnostic?: Diagnostic;
+  id: string
+  uri: string
+  name: string
+  column?: number
+  tooltip: string
+  children?: TreeNode[]
+  iconClass?: string
+  lineNumber?: number
+  diagnostic?: Diagnostic
 }

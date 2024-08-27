@@ -17,16 +17,16 @@ export enum DiagnosticSeverity {
 export interface Diagnostic {
   /** The range to which this diagnostic applies. */
   range: {
-    start: monaco.IPosition;
-    end: monaco.IPosition;
-  };
+    start: monaco.IPosition
+    end: monaco.IPosition
+  }
   /** The human-readable message. */
-  message: string;
+  message: string
   /** The severity. */
-  severity: DiagnosticSeverity;
+  severity: DiagnosticSeverity
 }
 
 export interface DiagnosticGroup {
-  uri: string;
-  diagnostics: Diagnostic[];
+  uri: string
+  diagnostics: Diagnostic[]
 }

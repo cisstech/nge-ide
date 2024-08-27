@@ -1,2 +1,2 @@
-export * from './diagnostic';
-export * from './diagnostic.service';
+export * from './diagnostic'
+export * from './diagnostic.service'

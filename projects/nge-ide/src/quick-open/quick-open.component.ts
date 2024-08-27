@@ -1,9 +1,5 @@
-import {
-  ChangeDetectionStrategy,
-  ChangeDetectorRef,
-  Component, OnInit
-} from '@angular/core';
-import { UntypedFormControl } from '@angular/forms';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core'
+import { UntypedFormControl } from '@angular/forms'
 import {
   CommandService,
   EditorService,
@@ -16,10 +12,10 @@ import {
   Paths,
   ToolbarButton,
   ToolbarGroups,
-  ToolbarService
-} from '@cisstech/nge-ide/core';
-import { Observable } from 'rxjs';
-import { debounceTime, map } from 'rxjs/operators';
+  ToolbarService,
+} from '@cisstech/nge-ide/core'
+import { Observable } from 'rxjs'
+import { debounceTime, map } from 'rxjs/operators'
 
 @Component({
   selector: 'ide-quick-open',
@@ -29,33 +25,33 @@ import { debounceTime, map } from 'rxjs/operators';
 })
 export class QuickOpenComponent implements OnInit {
   private readonly command = new (class implements ICommand {
-    readonly id = 'editor.commands.quick-open';
-    readonly label = 'Aller au fichier..';
-    readonly enabled = true;
+    readonly id = 'editor.commands.quick-open'
+    readonly label = 'Aller au fichier..'
+    readonly enabled = true
     readonly keybinding = new Keybinding({
       key: KeyCodes.O,
       label: '⌘ O',
       modifiers: [KeyModifiers.CTRL_CMD],
-    });
+    })
 
-    constructor(private readonly component: QuickOpenComponent) { }
+    constructor(private readonly component: QuickOpenComponent) {}
 
     execute() {
-      this.component.show();
+      this.component.show()
     }
-  })(this);
+  })(this)
 
-  readonly form = new UntypedFormControl();
+  readonly form = new UntypedFormControl()
   readonly $entries: Observable<IFile[]> = this.form.valueChanges.pipe(
     debounceTime(100),
     map((query) => this.filter(query).slice(0, 50))
-  );
+  )
 
-  protected data: IFile[] = [];
-  protected visible = false;
+  protected data: IFile[] = []
+  protected visible = false
 
   get isVisible(): boolean {
-    return this.visible;
+    return this.visible
   }
 
   constructor(
@@ -63,52 +59,52 @@ export class QuickOpenComponent implements OnInit {
     private readonly editorService: EditorService,
     private readonly toolbarService: ToolbarService,
     private readonly commandService: CommandService,
-    private readonly changeDetectorRef: ChangeDetectorRef,
-  ) { }
+    private readonly changeDetectorRef: ChangeDetectorRef
+  ) {}
 
   ngOnInit(): void {
-    this.commandService.register(this.command);
+    this.commandService.register(this.command)
     this.toolbarService.register(
       new ToolbarButton({
         group: ToolbarGroups.GO,
         priority: 10,
         command: this.command,
       })
-    );
+    )
   }
 
   protected onBlured() {
-   setTimeout(() => {
-    this.hide();
-   }, 300) // allow onSelected to be called.
+    setTimeout(() => {
+      this.hide()
+    }, 300) // allow onSelected to be called.
   }
 
   protected onSelected(file: IFile) {
-    this.editorService.open(file.uri);
-    this.hide();
+    this.editorService.open(file.uri)
+    this.hide()
   }
 
   private filter(query: string): IFile[] {
-    query = (query || '').toLowerCase();
+    query = (query || '').toLowerCase()
     if (!query) {
-      return this.data;
+      return this.data
     }
     return this.data.filter((item) => {
-      return Paths.basename(item.uri.path).toLowerCase().includes(query);
-    });
+      return Paths.basename(item.uri.path).toLowerCase().includes(query)
+    })
   }
 
   private hide(): void {
-    this.form.setValue('');
-    this.data = [];
-    this.visible = false;
-    this.changeDetectorRef.markForCheck();
+    this.form.setValue('')
+    this.data = []
+    this.visible = false
+    this.changeDetectorRef.markForCheck()
   }
 
   private show(): void {
-    this.visible = true;
-    this.form.setValue('');
-    this.data = this.fileService.findAll((file) => !file.isFolder);
-    this.changeDetectorRef.markForCheck();
+    this.visible = true
+    this.form.setValue('')
+    this.data = this.fileService.findAll((file) => !file.isFolder)
+    this.changeDetectorRef.markForCheck()
   }
 }

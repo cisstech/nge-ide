@@ -1,2 +1,2 @@
-export * from './task';
-export * from './task.service';
+export * from './task'
+export * from './task.service'

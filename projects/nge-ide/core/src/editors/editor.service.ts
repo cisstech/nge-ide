@@ -1,72 +1,70 @@
-import { Injectable, Injector, Predicate, Type } from '@angular/core';
-import { CodIcon } from '@cisstech/nge/ui/icon';
-import { BehaviorSubject, Subject, Subscription } from 'rxjs';
-import { CommandService, ICommand } from '../commands';
-import { IContribution } from '../contributions/index';
-import { ConfirmOptions, DialogService } from '../dialog';
-import { FileChangeType, FileService } from '../files/index';
-import { NotificationService } from '../notifications';
-import { Paths } from '../utils/index';
-import { Editor, EditorGroup, EditorState } from './editor';
-import { OpenOptions } from './opener';
-import { DropIntoEditorHandler } from './drop-into-editor-controller/drop-into-editor-controller';
+import { Injectable, Injector, Predicate, Type } from '@angular/core'
+import { CodIcon } from '@cisstech/nge/ui/icon'
+import { BehaviorSubject, Subject, Subscription } from 'rxjs'
+import { CommandService, ICommand } from '../commands'
+import { IContribution } from '../contributions/index'
+import { ConfirmOptions, DialogService } from '../dialog'
+import { FileChangeType, FileService } from '../files/index'
+import { NotificationService } from '../notifications'
+import { Paths } from '../utils/index'
+import { Editor, EditorGroup, EditorState } from './editor'
+import { OpenOptions } from './opener'
+import { DropIntoEditorHandler } from './drop-into-editor-controller/drop-into-editor-controller'
 
 @Injectable()
 export class EditorService implements IContribution {
-  readonly id = 'workbench.contrib.editor-service';
-  private readonly subscriptions: Subscription[] = [];
-  private readonly groups: Map<string, EditorGroup> = new Map();
+  readonly id = 'workbench.contrib.editor-service'
+  private readonly subscriptions: Subscription[] = []
+  private readonly groups: Map<string, EditorGroup> = new Map()
 
-  private readonly dropInEditorHandlers: DropIntoEditorHandler[] = [];
+  private readonly dropInEditorHandlers: DropIntoEditorHandler[] = []
 
-  private readonly didOpen = new Subject<monaco.Uri>();
-  private readonly willOpen = new Subject<monaco.Uri>();
+  private readonly didOpen = new Subject<monaco.Uri>()
+  private readonly willOpen = new Subject<monaco.Uri>()
 
-  private readonly state$ = new BehaviorSubject<EditorState>(
-    this.emptyEditorState()
-  );
-  private readonly commands$ = new BehaviorSubject<ICommand[]>([]);
-  private readonly editorGroups$ = new BehaviorSubject<EditorGroup[]>([]);
+  private readonly state$ = new BehaviorSubject<EditorState>(this.emptyEditorState())
+  private readonly commands$ = new BehaviorSubject<ICommand[]>([])
+  private readonly editorGroups$ = new BehaviorSubject<EditorGroup[]>([])
 
-  private readonly editors: Editor[] = [];
+  private readonly editors: Editor[] = []
 
   /** Emitted after opening a resource. */
-  readonly onDidOpen = this.didOpen.asObservable();
+  readonly onDidOpen = this.didOpen.asObservable()
   /** Emitted before opening a resource. */
-  readonly onWillOpen = this.willOpen.asObservable();
+  readonly onWillOpen = this.willOpen.asObservable()
 
   /** State of the editor. */
-  readonly state = this.state$.asObservable();
-  readonly commands = this.commands$.asObservable();
+  readonly state = this.state$.asObservable()
+  readonly commands = this.commands$.asObservable()
 
   /** Opened editor groups. */
-  readonly editorGroups = this.editorGroups$.asObservable();
+  readonly editorGroups = this.editorGroups$.asObservable()
 
   /** shorcut to state.value.activeGroup */
   get activeGroup(): EditorGroup | undefined {
-    return this.state$.value.activeGroup;
+    return this.state$.value.activeGroup
   }
 
   /** shorcut to state.value.activeEditor */
   get activeEditor(): Editor | undefined {
-    return this.state$.value.activeEditor;
+    return this.state$.value.activeEditor
   }
 
   /** shorcut to state.value.activeResource */
   get activeResource(): monaco.Uri | undefined {
-    return this.state$.value.activeResource;
+    return this.state$.value.activeResource
   }
 
   /** shorcut to state.value.visibleEditors */
   get visibleEditors(): ReadonlyArray<Editor> {
-    return this.state$.value.visibleEditors;
+    return this.state$.value.visibleEditors
   }
 
   /**
    * The handlers to insert a text into the editor when a file is dropped into it from the file explorer.
    */
   get dropHandlers(): ReadonlyArray<DropIntoEditorHandler> {
-    return this.dropInEditorHandlers;
+    return this.dropInEditorHandlers
   }
 
   constructor(
@@ -82,21 +80,21 @@ export class EditorService implements IContribution {
       this.fileService.onDidChangeFile.subscribe((changes) => {
         changes.forEach((change) => {
           if (change.type === FileChangeType.Deleted) {
-            this.close(change.uri, true);
+            this.close(change.uri, true)
           }
-        });
+        })
       })
-    );
+    )
   }
 
   deactivate(): void {
-    this.editors.splice(0, this.editors.length);
-    this.subscriptions.forEach((s) => s.unsubscribe());
-    this.subscriptions.splice(0, this.subscriptions.length);
-    this.groups.clear();
-    this.state$.next(this.emptyEditorState());
-    this.commands$.next([]);
-    this.editorGroups$.next([]);
+    this.editors.splice(0, this.editors.length)
+    this.subscriptions.forEach((s) => s.unsubscribe())
+    this.subscriptions.splice(0, this.subscriptions.length)
+    this.groups.clear()
+    this.state$.next(this.emptyEditorState())
+    this.commands$.next([])
+    this.editorGroups$.next([])
   }
 
   /**
@@ -109,12 +107,10 @@ export class EditorService implements IContribution {
   registerEditors(...editors: Editor[]): void {
     editors.forEach((editor) => {
       if (this.editors.find((entry) => entry.name === editor.name)) {
-        throw new Error(
-          `There is already a editor registered with the id ${editor.name}`
-        );
+        throw new Error(`There is already a editor registered with the id ${editor.name}`)
       }
-      this.editors.unshift(editor);
-    });
+      this.editors.unshift(editor)
+    })
   }
 
   /**
@@ -126,13 +122,13 @@ export class EditorService implements IContribution {
       ...commands
         .map((c) => {
           if (typeof c === 'function') {
-            return this.commandService.find<ICommand>(c);
+            return this.commandService.find<ICommand>(c)
           }
-          return c;
+          return c
         })
         .reverse(),
       ...this.commands$.value,
-    ]);
+    ])
   }
 
   /**
@@ -140,9 +136,8 @@ export class EditorService implements IContribution {
    * @param handler the handler to register.
    */
   registerDropInEditorHandler(handler: DropIntoEditorHandler): void {
-    this.dropInEditorHandlers.push(handler);
+    this.dropInEditorHandlers.push(handler)
   }
-
 
   /**
    * Checks whether the given `resource` is opened in any editor.
@@ -150,7 +145,7 @@ export class EditorService implements IContribution {
    * @returns `true` if the resource is opened `false` otherwises.
    */
   isOpened(resource: monaco.Uri): boolean {
-    return !!this.findGroups((group) => group.contains(resource)).length;
+    return !!this.findGroups((group) => group.contains(resource)).length
   }
 
   /**
@@ -158,8 +153,8 @@ export class EditorService implements IContribution {
    * @param group the group.
    */
   isActiveGroup(group: EditorGroup): boolean {
-    const active = this.state$.value.activeGroup;
-    return !!active && active.id === group.id;
+    const active = this.state$.value.activeGroup
+    return !!active && active.id === group.id
   }
 
   /**
@@ -172,10 +167,8 @@ export class EditorService implements IContribution {
       activeGroup: group,
       activeEditor: group.activeEditor,
       activeResource: group.activeResource,
-      visibleEditors: this.editorGroups$.value
-        .map((g) => g.activeEditor as any)
-        .filter((e) => !!e),
-    });
+      visibleEditors: this.editorGroups$.value.map((g) => g.activeEditor as any).filter((e) => !!e),
+    })
   }
 
   /**
@@ -184,7 +177,7 @@ export class EditorService implements IContribution {
    * @returns An `EditorGroup` object or `null`
    */
   findGroup(predicate: Predicate<EditorGroup>): EditorGroup | undefined {
-    return this.listGroups().find(predicate);
+    return this.listGroups().find(predicate)
   }
 
   /**
@@ -193,7 +186,7 @@ export class EditorService implements IContribution {
    * @returns An array of `EditorGroup` objects.
    */
   findGroups(predicate: Predicate<EditorGroup>): EditorGroup[] {
-    return this.listGroups().filter(predicate);
+    return this.listGroups().filter(predicate)
   }
 
   /**
@@ -202,7 +195,7 @@ export class EditorService implements IContribution {
    * @returns the group or undefined.
    */
   findGroupById(id: string): EditorGroup | undefined {
-    return this.groups.get(id);
+    return this.groups.get(id)
   }
 
   /**
@@ -210,43 +203,40 @@ export class EditorService implements IContribution {
    * @param resource The resource to open.
    * @param options Open options.
    */
-  async open(
-    resource: monaco.Uri,
-    options?: Partial<OpenOptions>
-  ): Promise<boolean> {
-    let group: EditorGroup;
-    const editorGroups = this.listGroups();
-    options = options || {};
+  async open(resource: monaco.Uri, options?: Partial<OpenOptions>): Promise<boolean> {
+    let group: EditorGroup
+    const editorGroups = this.listGroups()
+    options = options || {}
 
     if (options.preview) {
       group =
         editorGroups.find((g) => g.containsPreview(resource)) ||
         editorGroups.find((g) => !this.isActiveGroup(g)) || // open with any non active group
-        this.createGroup(); // open with a new group
+        this.createGroup() // open with a new group
     } else if (options.openToSide) {
-      group = this.createGroup();
+      group = this.createGroup()
     } else {
       group =
         options.openInGroup ||
         editorGroups.find((g) => g.contains(resource)) || // open with an existing group containing the resource
         this.activeGroup || // open with the active group
         editorGroups.find((_) => true) || // open with any group
-        this.createGroup(); // open with a new group
+        this.createGroup() // open with a new group
     }
 
-    this.groups.set(group.id, group);
-    this.editorGroups$.next(this.listGroups());
+    this.groups.set(group.id, group)
+    this.editorGroups$.next(this.listGroups())
 
-    this.willOpen.next(resource);
+    this.willOpen.next(resource)
 
-    let title = options.title || this.fileService.entryName(resource);
+    let title = options.title || this.fileService.entryName(resource)
     if (options?.preview) {
-      title = 'Preview: ' + title;
+      title = 'Preview: ' + title
     }
 
-    let icon = options.icon;
+    let icon = options.icon
     if (!icon && options.preview) {
-      icon = new CodIcon('preview');
+      icon = new CodIcon('preview')
     }
 
     try {
@@ -255,12 +245,12 @@ export class EditorService implements IContribution {
         ...options,
         icon,
         title,
-        tooltip:  Paths.join([rootFolderName, resource.path])
-      });
-      return true;
+        tooltip: Paths.join([rootFolderName, resource.path]),
+      })
+      return true
     } catch (error) {
-      this.notificationService.publishError(error);
-      return false;
+      this.notificationService.publishError(error)
+      return false
     }
   }
 
@@ -270,8 +260,8 @@ export class EditorService implements IContribution {
    * @param force When `true`, force close the resource without asking to save it if it is dirty.
    */
   async close(resource: monaco.Uri, force?: boolean): Promise<any> {
-    const groups = this.findGroups((group) => group.contains(resource));
-    return Promise.all(groups.map((g) => g.close(resource, force)));
+    const groups = this.findGroups((group) => group.contains(resource))
+    return Promise.all(groups.map((g) => g.close(resource, force)))
   }
 
   /**
@@ -279,30 +269,30 @@ export class EditorService implements IContribution {
    * @param force When `true`, force close the resources without asking to save the dirty ones.
    */
   async closeAll(force?: boolean): Promise<void> {
-    let groups = this.listGroups();
+    let groups = this.listGroups()
     while (groups.length !== 0) {
-      await groups[0].closeAll(force);
-      groups = this.listGroups();
+      await groups[0].closeAll(force)
+      groups = this.listGroups()
     }
 
-    this.editorGroups$.next(groups);
+    this.editorGroups$.next(groups)
 
-    this.state$.next(this.emptyEditorState());
+    this.state$.next(this.emptyEditorState())
   }
 
   /**
    * Saves unsaved resources.
    */
   async saveAll(): Promise<any> {
-    const changes: monaco.Uri[] = [];
+    const changes: monaco.Uri[] = []
     this.listGroups().forEach((group) => {
       group.tabs.forEach((tab) => {
         if (this.fileService.isDirty(tab.resource)) {
-          changes.push(tab.resource);
+          changes.push(tab.resource)
         }
-      });
-    });
-    return Promise.all(changes.map((r) => this.save(r)));
+      })
+    })
+    return Promise.all(changes.map((r) => this.save(r)))
   }
 
   /**
@@ -310,87 +300,65 @@ export class EditorService implements IContribution {
    */
   async saveActiveResource(): Promise<void> {
     if (this.activeResource) {
-      this.save(this.activeResource);
+      this.save(this.activeResource)
     }
   }
 
   private async save(resource: monaco.Uri): Promise<void> {
-    await this.fileService.save(resource);
+    await this.fileService.save(resource)
   }
 
-  private async closeGuard(
-    _: EditorGroup,
-    resource: monaco.Uri
-  ): Promise<boolean> {
+  private async closeGuard(_: EditorGroup, resource: monaco.Uri): Promise<boolean> {
     const shouldConfirm =
-      this.fileService.isDirty(resource) &&
-      this.findGroups((group) => group.contains(resource)).length === 1;
+      this.fileService.isDirty(resource) && this.findGroups((group) => group.contains(resource)).length === 1
     const options: ConfirmOptions = {
-      title: `Voulez-vous fermer le fichier "${Paths.basename(
-        resource.path
-      )}"?`,
-      message:
-        'Vos modifications seront perdues si vous ne les enregistrez pas.',
-      buttons: [
-        { id: 'dontsave', title: 'Ne pas sauvegarder', danger: true },
-      ],
+      title: `Voulez-vous fermer le fichier "${Paths.basename(resource.path)}"?`,
+      message: 'Vos modifications seront perdues si vous ne les enregistrez pas.',
+      buttons: [{ id: 'dontsave', title: 'Ne pas sauvegarder', danger: true }],
       okTitle: 'Sauvegarder',
       noTitle: 'Annuler',
-    };
-
-    let choice: any = false;
-    if (
-      !shouldConfirm ||
-      (choice = await this.dialogService.confirmAsync(options))
-    ) {
-      if (choice === true) {
-        await this.save(resource);
-      }
-      return true;
     }
-    return false;
+
+    let choice: any = false
+    if (!shouldConfirm || (choice = await this.dialogService.confirmAsync(options))) {
+      if (choice === true) {
+        await this.save(resource)
+      }
+      return true
+    }
+    return false
   }
 
-  private openHandler(
-    group: EditorGroup,
-    editor: Editor,
-    resource: monaco.Uri
-  ): void {
-    this.groups.set(group.id, group);
-    this.editorGroups$.next(this.listGroups());
+  private openHandler(group: EditorGroup, editor: Editor, resource: monaco.Uri): void {
+    this.groups.set(group.id, group)
+    this.editorGroups$.next(this.listGroups())
     this.state$.next({
       activeGroup: group,
       activeEditor: editor,
       activeResource: resource,
-      visibleEditors: this.editorGroups$.value
-        .map((g) => g.activeEditor as any)
-        .filter((e) => !!e),
-    });
+      visibleEditors: this.editorGroups$.value.map((g) => g.activeEditor as any).filter((e) => !!e),
+    })
 
-    this.didOpen.next(resource);
+    this.didOpen.next(resource)
   }
 
-  private closeHandler(
-    group: EditorGroup,
-    resource: monaco.Uri,
-    isPreview?: boolean
-  ): void {
+  private closeHandler(group: EditorGroup, resource: monaco.Uri, isPreview?: boolean): void {
     if (group.isEmpty) {
-      this.groups.delete(group.id);
+      this.groups.delete(group.id)
     }
 
     if (!isPreview && !this.isOpened(resource)) {
-      this.fileService.close(resource);
+      this.fileService.close(resource)
     }
 
-    this.editorGroups$.next(this.listGroups());
+    this.editorGroups$.next(this.listGroups())
 
-    this.state$.next(this.emptyEditorState());
+    this.state$.next(this.emptyEditorState())
 
     if (group.isEmpty) {
-      const randomGroup = this.findGroup((g) => !g.isEmpty);
+      const randomGroup = this.findGroup((g) => !g.isEmpty)
       if (randomGroup) {
-        this.setActiveGroup(randomGroup);
+        this.setActiveGroup(randomGroup)
       }
     }
   }
@@ -403,11 +371,11 @@ export class EditorService implements IContribution {
       this.closeGuard.bind(this),
       // important to clone to allow multiple instances of the same editor type
       this.editors.map((editor) => new (editor as any).constructor())
-    );
+    )
   }
 
   private listGroups(): EditorGroup[] {
-    return Array.from(this.groups.values());
+    return Array.from(this.groups.values())
   }
 
   private emptyEditorState(): EditorState {
@@ -416,6 +384,6 @@ export class EditorService implements IContribution {
       activeEditor: undefined,
       activeResource: undefined,
       visibleEditors: [],
-    };
+    }
   }
 }

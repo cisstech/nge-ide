@@ -1,24 +1,22 @@
-import { NgModule } from '@angular/core';
-import { NgEventBus } from 'ng-event-bus';
-import { CommandService } from './commands/index';
-import { CONTRIBUTION } from './contributions/index';
-import { DiagnosticService } from './diagnostics/index';
-import { EditorService, MonacoService, PreviewService } from './editors/index';
-import { FileService } from './files/index';
-import { IdeService } from './ide.service';
-import { NotificationService } from './notifications/index';
-import { SettingsService } from './settings/index';
-import { StatusBarService } from './status-bar/index';
-import { StorageService } from './storage/index';
-import { TaskService } from './tasks/index';
-import { ToolbarService } from './toolbar/index';
-import { ViewContainerService, ViewService } from './views/index';
-import { DialogModule } from './dialog';
+import { NgModule } from '@angular/core'
+import { NgEventBus } from 'ng-event-bus'
+import { CommandService } from './commands/index'
+import { CONTRIBUTION } from './contributions/index'
+import { DiagnosticService } from './diagnostics/index'
+import { EditorService, MonacoService, PreviewService } from './editors/index'
+import { FileService } from './files/index'
+import { IdeService } from './ide.service'
+import { NotificationService } from './notifications/index'
+import { SettingsService } from './settings/index'
+import { StatusBarService } from './status-bar/index'
+import { StorageService } from './storage/index'
+import { TaskService } from './tasks/index'
+import { ToolbarService } from './toolbar/index'
+import { ViewContainerService, ViewService } from './views/index'
+import { DialogModule } from './dialog'
 
 @NgModule({
-  imports: [
-    DialogModule
-  ],
+  imports: [DialogModule],
   providers: [
     IdeService,
     NgEventBus,

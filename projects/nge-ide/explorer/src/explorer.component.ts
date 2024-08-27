@@ -6,8 +6,8 @@ import {
   HostListener,
   OnDestroy,
   OnInit,
-  ViewChild
-} from '@angular/core';
+  ViewChild,
+} from '@angular/core'
 import {
   DialogService,
   DndData,
@@ -18,20 +18,13 @@ import {
   IdeService,
   NotificationService,
   Paths,
-  StorageService
-} from '@cisstech/nge-ide/core';
-import {
-  ITreeState,
-  TreeComponent,
-  TreeState
-} from '@cisstech/nge/ui/tree';
-import {
-  NzContextMenuService,
-  NzDropdownMenuComponent
-} from 'ng-zorro-antd/dropdown';
-import { BehaviorSubject, Subscription } from 'rxjs';
-import { IExplorerCommand } from './commands';
-import { ExplorerService } from './explorer.service';
+  StorageService,
+} from '@cisstech/nge-ide/core'
+import { ITreeState, TreeComponent, TreeState } from '@cisstech/nge/ui/tree'
+import { NzContextMenuService, NzDropdownMenuComponent } from 'ng-zorro-antd/dropdown'
+import { BehaviorSubject, Subscription } from 'rxjs'
+import { IExplorerCommand } from './commands'
+import { ExplorerService } from './explorer.service'
 
 @Component({
   selector: 'ide-explorer',
@@ -40,17 +33,17 @@ import { ExplorerService } from './explorer.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ExplorerComponent implements OnInit, OnDestroy, AfterViewChecked {
-  private readonly subscriptions: Subscription[] = [];
+  private readonly subscriptions: Subscription[] = []
 
-  readonly root = this.explorerService.root;
-  readonly adapter = this.explorerService.adapter;
-  readonly commands = new BehaviorSubject<IExplorerCommand[][]>([]);
+  readonly root = this.explorerService.root
+  readonly adapter = this.explorerService.adapter
+  readonly commands = new BehaviorSubject<IExplorerCommand[][]>([])
 
   @ViewChild(TreeComponent, { static: true })
-  tree!: TreeComponent<IFile>;
+  tree!: TreeComponent<IFile>
 
   @ViewChild(NzDropdownMenuComponent, { static: true })
-  dropdown!: NzDropdownMenuComponent;
+  dropdown!: NzDropdownMenuComponent
 
   constructor(
     private readonly ideService: IdeService,
@@ -61,50 +54,48 @@ export class ExplorerComponent implements OnInit, OnDestroy, AfterViewChecked {
     private readonly storageService: StorageService,
     private readonly explorerService: ExplorerService,
     private readonly contextMenuService: NzContextMenuService,
-    private readonly notificationService: NotificationService,
-  ) { }
+    private readonly notificationService: NotificationService
+  ) {}
 
   ngOnInit(): void {
-    this.restoreState();
+    this.restoreState()
 
     this.subscriptions.push(
       this.ideService.onBeforeStop(() => {
-        this.saveState();
+        this.saveState()
       })
-    );
+    )
 
     this.subscriptions.push(
       this.editorService.state.subscribe((state) => {
-        const { activeResource } = state;
+        const { activeResource } = state
         if (activeResource) {
-          const nodeId = activeResource.toString(true);
-          this.tree.expand(nodeId);
-          this.tree.focus(nodeId);
+          const nodeId = activeResource.toString(true)
+          this.tree.expand(nodeId)
+          this.tree.focus(nodeId)
         }
       })
-    );
+    )
 
     this.subscriptions.push(
       this.explorerService.onDidContextMenu.subscribe((e) => {
-        this.commands.next(this.explorerService.listCommands());
-        this.contextMenuService.create(e.event, this.dropdown);
+        this.commands.next(this.explorerService.listCommands())
+        this.contextMenuService.create(e.event, this.dropdown)
       })
-    );
+    )
 
-    this.subscriptions.push(
-      this.root.subscribe(() => this.tree.endEdition())
-    );
+    this.subscriptions.push(this.root.subscribe(() => this.tree.endEdition()))
   }
 
   ngOnDestroy(): void {
-    this.saveState();
-    this.subscriptions.forEach((s) => s.unsubscribe());
+    this.saveState()
+    this.subscriptions.forEach((s) => s.unsubscribe())
   }
 
   ngAfterViewChecked(): void {
-    const height = this.elementRef.nativeElement.offsetHeight + 'px';
+    const height = this.elementRef.nativeElement.offsetHeight + 'px'
     if (height !== this.adapter.treeHeight) {
-      this.adapter.treeHeight = height;
+      this.adapter.treeHeight = height
     }
   }
 
@@ -112,11 +103,11 @@ export class ExplorerComponent implements OnInit, OnDestroy, AfterViewChecked {
 
   @HostListener('window:click')
   protected closeContextMenu() {
-    this.commands.next([]);
+    this.commands.next([])
   }
 
   protected trackById(_: number, e: any): string {
-    return e.id;
+    return e.id
   }
 
   /**
@@ -126,84 +117,73 @@ export class ExplorerComponent implements OnInit, OnDestroy, AfterViewChecked {
    * @param e the dropped data.
    */
   protected async onDropped(e: DndData) {
-    const srcPath = e.src || e.file?.name || '';
-    const dstPath = e.dst;
+    const srcPath = e.src || e.file?.name || ''
+    const dstPath = e.dst
 
     if (srcPath === dstPath) {
-      return;
+      return
     }
 
     if (!srcPath) {
-      return;
+      return
     }
 
     if (!dstPath) {
-      return;
+      return
     }
 
-    const srcName = Paths.basename(srcPath);
+    const srcName = Paths.basename(srcPath)
     const [src, dst] = await Promise.all([
       this.fileService.find(monaco.Uri.parse(srcPath)),
-      this.fileService.find(monaco.Uri.parse(dstPath))
-
+      this.fileService.find(monaco.Uri.parse(dstPath)),
     ])
 
     if (!src || this.fileService.isRoot(src.uri)) {
-      return;
+      return
     }
 
     if (!dst || !dst.isFolder || dst.readOnly) {
-      return;
+      return
     }
 
-    if (
-      e.file &&
-      !this.fileService.hasCapability(
-        dst.uri,
-        FileSystemProviderCapabilities.FileUpload
-      )
-    ) {
-      return;
+    if (e.file && !this.fileService.hasCapability(dst.uri, FileSystemProviderCapabilities.FileUpload)) {
+      return
     }
 
     if (this.fileService.isParent(src.uri, dst.uri)) {
-      return;
+      return
     }
 
     if (this.fileService.isAncestor(dst.uri, src.uri)) {
-      return;
+      return
     }
 
     const options = {
-      title: `Vous êtes sûr de vouloir déplacer '${srcName}' dans '${Paths.basename(
-        dst.uri.path
-      )}'?`,
+      title: `Vous êtes sûr de vouloir déplacer '${srcName}' dans '${Paths.basename(dst.uri.path)}'?`,
       noTitle: 'Annuler',
       okTitle: 'Déplacer',
-    };
+    }
 
     try {
-      const confirmed = await this.dialogService.confirmAsync(options);
+      const confirmed = await this.dialogService.confirmAsync(options)
       if (confirmed) {
-        await this.fileService.move(src || e.file, dst);
-        this.tree.expand(dst);
+        await this.fileService.move(src || e.file, dst)
+        this.tree.expand(dst)
       }
     } catch (error) {
-      this.notificationService.publishError(error);
+      this.notificationService.publishError(error)
     }
   }
 
   //#endregion
 
   private saveState() {
-    this.storageService.set(this.adapter.id, this.tree.saveState()).subscribe();
+    this.storageService.set(this.adapter.id, this.tree.saveState()).subscribe()
   }
 
   private restoreState() {
-    this.storageService
-      .get<ITreeState>(this.adapter.id, new TreeState())
-      .subscribe((state) => {
-        this.tree.restoreState(state);
-      });
+    this.storageService.get<ITreeState>(this.adapter.id, new TreeState()).subscribe((state) => {
+      this.tree.restoreState(state)
+    })
   }
 }

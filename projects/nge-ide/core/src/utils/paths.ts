@@ -257,7 +257,7 @@ const BINARIES = [
   'z',
   'zip',
   'zipx',
-];
+]
 
 export class Paths {
   /**
@@ -268,21 +268,21 @@ export class Paths {
    */
   static extname(path: string) {
     if (path == null) {
-      throw new ReferenceError('"path" is required');
+      throw new ReferenceError('"path" is required')
     }
 
-    const base = Paths.basename(path);
+    const base = Paths.basename(path)
     if (!base) {
-      return base;
+      return base
     }
     if (base.startsWith('.')) {
-      return '';
+      return ''
     }
-    const dotIndex = base.lastIndexOf('.');
+    const dotIndex = base.lastIndexOf('.')
     if (dotIndex === -1) {
-      return '';
+      return ''
     }
-    return base.substring(dotIndex + 1).toLowerCase();
+    return base.substring(dotIndex + 1).toLowerCase()
   }
 
   /**
@@ -292,15 +292,15 @@ export class Paths {
    */
   static dirname(path: string, normalize: boolean = true) {
     if (path == null) {
-      throw new ReferenceError('"path" is required');
+      throw new ReferenceError('"path" is required')
     }
 
-    path = normalize ? Paths.normalize(path.replace(/\\/g, '/')) : path;
-    let head = path.slice(0, path.lastIndexOf('/') + 1);
+    path = normalize ? Paths.normalize(path.replace(/\\/g, '/')) : path
+    let head = path.slice(0, path.lastIndexOf('/') + 1)
     if (head && !head.match(/^\/*$/g)) {
-      head = head.replace(/\/*$/g, '');
+      head = head.replace(/\/*$/g, '')
     }
-    return head;
+    return head
   }
 
   /**
@@ -310,11 +310,11 @@ export class Paths {
    */
   static basename(path: string) {
     if (path == null) {
-      throw new ReferenceError('"path" is required');
+      throw new ReferenceError('"path" is required')
     }
 
-    path = Paths.normalize(path.replace(/\\/g, '/'));
-    return path.slice(path.lastIndexOf('/') + 1, path.length);
+    path = Paths.normalize(path.replace(/\\/g, '/'))
+    return path.slice(path.lastIndexOf('/') + 1, path.length)
   }
 
   /**
@@ -325,15 +325,15 @@ export class Paths {
    */
   static join(parts: string[], sep: string = '', normalize: boolean = true) {
     if (parts == null) {
-      throw new ReferenceError('"parts" is required');
+      throw new ReferenceError('"parts" is required')
     }
 
     parts = parts.filter(Boolean)
-    sep = sep || '/';
-    const separator = sep || '/';
-    const replace = new RegExp(separator + '{1,}', 'g');
+    sep = sep || '/'
+    const separator = sep || '/'
+    const replace = new RegExp(separator + '{1,}', 'g')
     if (normalize) {
-      return parts.join(separator).replace(replace, separator);
+      return parts.join(separator).replace(replace, separator)
     } else {
       return parts.join(separator)
     }
@@ -348,38 +348,38 @@ export class Paths {
    */
   static normalize(path: string, stripTrailing: boolean = true) {
     if (typeof path !== 'string') {
-      throw new TypeError('expected path to be a string');
+      throw new TypeError('expected path to be a string')
     }
 
     if (path === '\\' || path === '/') {
-      return '/';
+      return '/'
     }
 
-    const len = path.length;
+    const len = path.length
     if (len <= 1) {
-      return path;
+      return path
     }
 
     // ensure that win32 namespaces has two leading slashes, so that the path is
     // handled properly by the win32 version of path.parse() after being normalized
     // https://msdn.microsoft.com/library/windows/desktop/aa365247(v=vs.85).aspx#namespaces
-    let prefix = '';
+    let prefix = ''
     if (len > 4 && path[3] === '\\') {
-      const ch = path[2];
+      const ch = path[2]
       if ((ch === '?' || ch === '.') && path.slice(0, 2) === '\\\\') {
-        path = path.slice(2);
-        prefix = '//';
+        path = path.slice(2)
+        prefix = '//'
       }
     }
-    const segs = path.split(/[/\\]+/);
+    const segs = path.split(/[/\\]+/)
     if (stripTrailing !== false && segs[segs.length - 1] === '') {
-      segs.pop();
+      segs.pop()
     }
-    return prefix + segs.join('/');
+    return prefix + segs.join('/')
   }
 
   static isAbsolutePath(path: string): boolean {
-    return !!path && path[0] === '/';
+    return !!path && path[0] === '/'
   }
 
   /**
@@ -388,6 +388,6 @@ export class Paths {
    * @returns
    */
   static isBinaryFile(path: string): boolean {
-    return BINARIES.includes(Paths.extname(path));
+    return BINARIES.includes(Paths.extname(path))
   }
 }

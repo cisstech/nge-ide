@@ -1,12 +1,6 @@
-import {
-  ChangeDetectionStrategy,
-  ChangeDetectorRef,
-  Component,
-  OnDestroy,
-  OnInit,
-} from '@angular/core';
-import { IdeService, ITask, TaskService } from '@cisstech/nge-ide/core';
-import { Subscription } from 'rxjs';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core'
+import { IdeService, ITask, TaskService } from '@cisstech/nge-ide/core'
+import { Subscription } from 'rxjs'
 
 @Component({
   selector: 'ide-root',
@@ -15,9 +9,9 @@ import { Subscription } from 'rxjs';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class IdeComponent implements OnInit, OnDestroy {
-  private readonly subscriptions: Subscription[] = [];
+  private readonly subscriptions: Subscription[] = []
 
-  task?: ITask;
+  task?: ITask
 
   constructor(
     private readonly ide: IdeService,
@@ -28,15 +22,15 @@ export class IdeComponent implements OnInit, OnDestroy {
   async ngOnInit(): Promise<void> {
     this.subscriptions.push(
       this.taskService.current.subscribe((task) => {
-        this.task = task;
-        this.changeDetectorRef.markForCheck();
+        this.task = task
+        this.changeDetectorRef.markForCheck()
       })
-    );
-    await this.ide.start();
+    )
+    await this.ide.start()
   }
 
   async ngOnDestroy(): Promise<void> {
-    this.subscriptions.forEach((s) => s.unsubscribe());
-    await this.ide.stop();
+    this.subscriptions.forEach((s) => s.unsubscribe())
+    await this.ide.stop()
   }
 }

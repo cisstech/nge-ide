@@ -1,9 +1,8 @@
-import { Pipe, PipeTransform } from '@angular/core';
-
+import { Pipe, PipeTransform } from '@angular/core'
 
 @Pipe({
   name: 'explorerFileIconOptions',
-  standalone: true
+  standalone: true,
 })
 export class ExplorerFileIconOptionsPipe implements PipeTransform {
   transform(node: any) {
@@ -11,7 +10,7 @@ export class ExplorerFileIconOptionsPipe implements PipeTransform {
       alt: node.name,
       isRoot: node.level === 0,
       expanded: node.expanded,
-      isDirectory: node.expandable && node.data.isFolder
+      isDirectory: node.expandable && node.data.isFolder,
     }
   }
 }

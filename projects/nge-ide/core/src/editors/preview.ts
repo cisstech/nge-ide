@@ -1,6 +1,6 @@
-import { Injector } from '@angular/core';
-import { FileService } from '../files';
-import { Paths } from '../utils';
+import { Injector } from '@angular/core'
+import { FileService } from '../files'
+import { Paths } from '../utils'
 
 export const enum PreviewTypes {
   URL = 'URL',
@@ -9,56 +9,56 @@ export const enum PreviewTypes {
 }
 
 export interface Preview {
-  data: string;
-  type: PreviewTypes;
+  data: string
+  type: PreviewTypes
 }
 
 export interface PreviewHandler {
-  canHandle(uri: monaco.Uri): boolean;
-  handle(injector: Injector, uri: monaco.Uri): Promise<Preview>;
+  canHandle(uri: monaco.Uri): boolean
+  handle(injector: Injector, uri: monaco.Uri): Promise<Preview>
 }
 
 export class SvgPreviewHandler implements PreviewHandler {
   canHandle(uri: monaco.Uri) {
-    return Paths.extname(uri.path) === 'svg';
+    return Paths.extname(uri.path) === 'svg'
   }
 
   async handle(injector: Injector, uri: monaco.Uri): Promise<Preview> {
-    const fileService = injector.get(FileService);
-    const fileContent = await fileService.open(uri);
+    const fileService = injector.get(FileService)
+    const fileContent = await fileService.open(uri)
     return Promise.resolve({
       type: PreviewTypes.HTML,
       data: fileContent.current,
-    });
+    })
   }
 }
 
 export class HtmlPreviewHandler implements PreviewHandler {
   canHandle(uri: monaco.Uri) {
-    return Paths.extname(uri.path) === 'html';
+    return Paths.extname(uri.path) === 'html'
   }
 
   async handle(injector: Injector, uri: monaco.Uri): Promise<Preview> {
-    const fileService = injector.get(FileService);
-    const fileContent = await fileService.open(uri);
+    const fileService = injector.get(FileService)
+    const fileContent = await fileService.open(uri)
     return Promise.resolve({
       type: PreviewTypes.HTML,
       data: fileContent.current,
-    });
+    })
   }
 }
 
 export class MarkdownPreviewHandler implements PreviewHandler {
   canHandle(uri: monaco.Uri) {
-    return Paths.extname(uri.path) === 'md';
+    return Paths.extname(uri.path) === 'md'
   }
 
   async handle(injector: Injector, uri: monaco.Uri): Promise<Preview> {
-    const fileService = injector.get(FileService);
-    const fileContent = await fileService.open(uri);
+    const fileService = injector.get(FileService)
+    const fileContent = await fileService.open(uri)
     return Promise.resolve({
       type: PreviewTypes.MARKDOWN,
       data: fileContent.current,
-    });
+    })
   }
 }

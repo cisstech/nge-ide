@@ -1,13 +1,6 @@
-import {
-  ChangeDetectionStrategy,
-  ChangeDetectorRef,
-  Component,
-  Input,
-  OnDestroy,
-  OnInit,
-} from '@angular/core';
-import { Editor, Paths } from '@cisstech/nge-ide/core';
-import { Subscription } from 'rxjs';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnDestroy, OnInit } from '@angular/core'
+import { Editor, Paths } from '@cisstech/nge-ide/core'
+import { Subscription } from 'rxjs'
 
 @Component({
   selector: 'ide-media-editor',
@@ -16,23 +9,21 @@ import { Subscription } from 'rxjs';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MediaEditorComponent implements OnInit, OnDestroy {
-  private readonly subscriptions: Subscription[] = [];
+  private readonly subscriptions: Subscription[] = []
 
-  url?: string;
-  type?: string;
+  url?: string
+  type?: string
 
   @Input()
-  editor!: Editor;
+  editor!: Editor
 
-  constructor(
-    private readonly changeDetectorRef: ChangeDetectorRef
-  ) {}
+  constructor(private readonly changeDetectorRef: ChangeDetectorRef) {}
 
   ngOnInit(): void {
     this.subscriptions.push(
       this.editor.onChangeRequest.subscribe(async (request) => {
         const { file } = request
-        this.url = file?.url;
+        this.url = file?.url
         switch (Paths.extname(request.uri.path)) {
           case 'svg':
           case 'png':
@@ -40,25 +31,24 @@ export class MediaEditorComponent implements OnInit, OnDestroy {
           case 'jpg':
           case 'gif':
           case 'tiff':
-            this.type = 'image';
-            break;
+            this.type = 'image'
+            break
           case 'mov':
           case 'mp4':
           case 'mpeg':
-            this.type = 'video';
-            break;
-          case 'mpeg':
+            this.type = 'video'
+            break
           case 'wav':
           case 'mp3':
-            this.type = 'audio';
-            break;
+            this.type = 'audio'
+            break
         }
-        this.changeDetectorRef.markForCheck();
+        this.changeDetectorRef.markForCheck()
       })
-    );
+    )
   }
 
   ngOnDestroy(): void {
-    this.subscriptions.forEach((s) => s.unsubscribe());
+    this.subscriptions.forEach((s) => s.unsubscribe())
   }
 }
