@@ -1,4 +1,4 @@
-import { inject, TestBed, async } from '@angular/core/testing'
+import { inject, TestBed, waitForAsync } from '@angular/core/testing'
 import { NgEventBus } from 'ng-event-bus'
 import { lastValueFrom } from 'rxjs'
 import { ErrorNotification } from './notification'
@@ -15,7 +15,7 @@ describe('NotificationService', () => {
     expect(service).toBeTruthy()
   }))
 
-  it('should count', async(
+  it('should count', waitForAsync(
     inject([NotificationService], (service: NotificationService) => {
       service.publish(new ErrorNotification('message', 'error'))
       lastValueFrom(service.count).then((count) => {
@@ -24,7 +24,7 @@ describe('NotificationService', () => {
     })
   ))
 
-  it('should clear', async(
+  it('should clear', waitForAsync(
     inject([NotificationService], async (service: NotificationService) => {
       service.clear()
       lastValueFrom(service.count).then((count) => {

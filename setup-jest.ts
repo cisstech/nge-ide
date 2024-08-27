@@ -1,6 +1,12 @@
 // https://thymikee.github.io/jest-preset-angular/docs/getting-started/installation/
 
 import 'jest-preset-angular/setup-jest';
+import { TextEncoder, TextDecoder } from 'util'
+
+Object.defineProperties(globalThis, {
+  TextDecoder: { value: TextDecoder, writable: true },
+  TextEncoder: { value: TextEncoder, writable: true },
+});
 
 Object.defineProperty(document, 'doctype', {
   value: '<!DOCTYPE html>',

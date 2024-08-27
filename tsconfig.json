@@ -12,33 +12,18 @@
     "module": "es2020",
     "moduleResolution": "node",
     "importHelpers": true,
+    "resolveJsonModule": true,
+    "moduleDetection": "force",
     "target": "ES2022",
-    "lib": [
-      "es2018",
-      "dom"
-    ],
+    "lib": ["es2019", "dom"],
     "paths": {
-      "@cisstech/nge-ide": [
-        "projects/nge-ide"
-      ],
-      "@cisstech/nge-ide/core": [
-        "projects/nge-ide/core"
-      ],
-      "@cisstech/nge-ide/explorer": [
-        "projects/nge-ide/explorer"
-      ],
-      "@cisstech/nge-ide/search": [
-        "projects/nge-ide/search"
-      ],
-      "@cisstech/nge-ide/settings": [
-        "projects/nge-ide/settings"
-      ],
-      "@cisstech/nge-ide/problems": [
-        "projects/nge-ide/problems"
-      ],
-      "@cisstech/nge-ide/notifications": [
-        "projects/nge-ide/notifications"
-      ]
+      "@cisstech/nge-ide": ["projects/nge-ide"],
+      "@cisstech/nge-ide/core": ["projects/nge-ide/core"],
+      "@cisstech/nge-ide/explorer": ["projects/nge-ide/explorer"],
+      "@cisstech/nge-ide/search": ["projects/nge-ide/search"],
+      "@cisstech/nge-ide/settings": ["projects/nge-ide/settings"],
+      "@cisstech/nge-ide/problems": ["projects/nge-ide/problems"],
+      "@cisstech/nge-ide/notifications": ["projects/nge-ide/notifications"]
     },
     "useDefineForClassFields": false
   },

@@ -55,7 +55,6 @@
             "tsConfig": "projects/demo/tsconfig.app.json",
             "preserveSymlinks": true,
             "assets": [
-              "projects/demo/src/favicon.ico",
               "projects/demo/src/assets",
               { "glob": "**/*", "input": "./node_modules/@ant-design/icons-angular/src/inline-svg/", "output": "/assets/vendors/@ant-design/assets/" },
               { "glob": "**/*", "input": "./node_modules/@cisstech/nge/assets/monaco", "output": "./assets/vendors/nge/monaco/" },
