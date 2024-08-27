@@ -124,6 +124,15 @@
             "eslintConfig": ".eslintrc.json",
             "lintFilePatterns": ["**/*.spec.ts", "**/*.d.ts"]
           }
+        },
+        "deploy": {
+          "builder": "angular-cli-ghpages:deploy",
+          "options": {
+            "dir": "./dist/demo",
+            "repo": "https://github.com/cisstech/nge-ide.git",
+            "buildTarget": "demo:build:production",
+            "baseHref": "https://cisstech.github.io/nge-ide/"
+          }
         }
       }
     }
