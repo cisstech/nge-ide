@@ -1,26 +1,27 @@
-
 // https://github.com/microsoft/vscode/blob/e531b8e963806dfadbd73b10c02785c75ffb8cab/src/vs/editor/contrib/dropIntoEditor/browser/dropIntoEditorContribution.ts#L48
 
-import { DndDataTransfer } from "../../directives";
-import { EditorService } from "../editor.service";
+import { DndDataTransfer } from '../../directives'
+import { EditorService } from '../editor.service'
 
-type IPosition = monaco.IPosition;
-type IRange = monaco.IRange;
-type IContentWidget = monaco.editor.IContentWidget;
-type IStandaloneCodeEditor = monaco.editor.IStandaloneCodeEditor;
+type IPosition = monaco.IPosition
+type IRange = monaco.IRange
+type IContentWidget = monaco.editor.IContentWidget
+type IStandaloneCodeEditor = monaco.editor.IStandaloneCodeEditor
 
 const ID = 'drop-controller-widget'
 
-type Handler = string | {
-  /**
-   * The label of the handler that will be shown in the editor.
-   */
-  label: string
-  /**
-   * The value that will be inserted into the editor.
-   */
-  value: string
-}
+type Handler =
+  | string
+  | {
+      /**
+       * The label of the handler that will be shown in the editor.
+       */
+      label: string
+      /**
+       * The value that will be inserted into the editor.
+       */
+      value: string
+    }
 
 /**
  * A handler function that will be called when file is dropped into editor from the file explorer.
@@ -32,15 +33,22 @@ type Handler = string | {
 export type DropIntoEditorHandler = (
   uri: monaco.Uri,
   editor: IStandaloneCodeEditor,
-  position: IPosition,
-) => Handler[] | Promise<Handler[]>;
+  position: IPosition
+) => Handler[] | Promise<Handler[]>
 
 export class DropIntoEditorController {
-  private dropController!: any;
-  private onDropIntoEditorBase!: (editor: IStandaloneCodeEditor, position: IPosition, dragEvent: DragEvent) => Promise<unknown>;
+  private dropController!: any
+  private onDropIntoEditorBase!: (
+    editor: IStandaloneCodeEditor,
+    position: IPosition,
+    dragEvent: DragEvent
+  ) => Promise<unknown>
 
-  constructor(editor: monaco.editor.IStandaloneCodeEditor, private readonly editorService: EditorService) {
-    const dropController = editor.getContribution('editor.contrib.dropIntoEditorController') as any;
+  constructor(
+    editor: monaco.editor.IStandaloneCodeEditor,
+    private readonly editorService: EditorService
+  ) {
+    const dropController = editor.getContribution('editor.contrib.dropIntoEditorController') as any
     if (!dropController) {
       console.warn('dropController not found')
       return
@@ -58,7 +66,11 @@ export class DropIntoEditorController {
     dropController.onDropIntoEditor = this.onDropIntoEditor.bind(this)
   }
 
-  private async onDropIntoEditor(editor: IStandaloneCodeEditor, position: IPosition, dragEvent: DragEvent): Promise<unknown> {
+  private async onDropIntoEditor(
+    editor: IStandaloneCodeEditor,
+    position: IPosition,
+    dragEvent: DragEvent
+  ): Promise<unknown> {
     const { dataTransfer } = dragEvent
     const insert = dataTransfer?.getData(DndDataTransfer)
     if (!insert) {
@@ -70,23 +82,23 @@ export class DropIntoEditorController {
       return this.onDropIntoEditorBase.call(this.dropController, editor, position, dragEvent)
     }
 
-    const handlers = this.editorService.dropHandlers;
+    const handlers = this.editorService.dropHandlers
     if (!handlers.length) {
       return this.onDropIntoEditorBase.call(this.dropController, editor, position, dragEvent)
     }
 
-
-    const results = (await Promise.all(
-      handlers.map(handler => handler(uri, editor, position))
-    ))
+    const results = await Promise.all(handlers.map((handler) => handler(uri, editor, position)))
 
     const insertOptions: (readonly [string, string])[] = []
-    results.forEach(result => {
+    results.forEach((result) => {
       if (result) {
         insertOptions.push(
           ...result
             .filter(Boolean)
-            .map(handler => typeof handler === 'string' ? [handler, handler] as const: [handler.label, handler.value] as const))
+            .map((handler) =>
+              typeof handler === 'string' ? ([handler, handler] as const) : ([handler.label, handler.value] as const)
+            )
+        )
       }
     })
 
@@ -100,7 +112,7 @@ export class DropIntoEditorController {
       allowEditorOverflow: true,
       suppressMouseDown: true,
       getDomNode: () => {
-        const node = document.createElement('div');
+        const node = document.createElement('div')
         node.classList.add(ID)
 
         const removeIfClickedOutside = (e: MouseEvent) => {
@@ -111,8 +123,7 @@ export class DropIntoEditorController {
         }
         document.addEventListener('click', removeIfClickedOutside)
 
-
-        insertOptions.forEach(tuple => {
+        insertOptions.forEach((tuple) => {
           const button = document.createElement('div')
           button.textContent = tuple[0]
           button.onclick = () => {
@@ -122,7 +133,7 @@ export class DropIntoEditorController {
               endLineNumber: position.lineNumber,
               endColumn: position.column,
             }
-            editor.executeEdits('api', [{ range, text: tuple[1], forceMoveMarkers: true, }])
+            editor.executeEdits('api', [{ range, text: tuple[1], forceMoveMarkers: true }])
 
             setTimeout(() => {
               editor.setPosition({ lineNumber: position.lineNumber, column: position.column + tuple[1].length })
@@ -133,13 +144,16 @@ export class DropIntoEditorController {
           node.appendChild(button)
         })
 
-        return node;
+        return node
       },
       getPosition: () => {
         return {
           position,
-          preference: [monaco.editor.ContentWidgetPositionPreference.BELOW, monaco.editor.ContentWidgetPositionPreference.EXACT],
-        };
+          preference: [
+            monaco.editor.ContentWidgetPositionPreference.BELOW,
+            monaco.editor.ContentWidgetPositionPreference.EXACT,
+          ],
+        }
       },
     }
 

@@ -8,7 +8,7 @@ export class FileSystemError extends Error {
    * @param messageOrUri Message or uri.
    */
   static FileNotFound(messageOrUri?: string | monaco.Uri): FileSystemError {
-    return new FileSystemError('FileNotFound: ' + messageOrUri);
+    return new FileSystemError('FileNotFound: ' + messageOrUri)
   }
 
   /**
@@ -17,17 +17,15 @@ export class FileSystemError extends Error {
    * @param messageOrUri Message or uri.
    */
   static FileExists(messageOrUri?: string | monaco.Uri): FileSystemError {
-    return new FileSystemError('FileExists: ' + messageOrUri);
+    return new FileSystemError('FileExists: ' + messageOrUri)
   }
 
   /**
    * Create an error to signal that a file is not a folder.
    * @param messageOrUri Message or uri.
    */
-  static FileNotADirectory(
-    messageOrUri?: string | monaco.Uri
-  ): FileSystemError {
-    return new FileSystemError('FileNotADirectory: ' + messageOrUri);
+  static FileNotADirectory(messageOrUri?: string | monaco.Uri): FileSystemError {
+    return new FileSystemError('FileNotADirectory: ' + messageOrUri)
   }
 
   /**
@@ -35,7 +33,7 @@ export class FileSystemError extends Error {
    * @param messageOrUri Message or uri.
    */
   static FileIsADirectory(messageOrUri?: string | monaco.Uri): FileSystemError {
-    return new FileSystemError('FileIsADirectory: ' + messageOrUri);
+    return new FileSystemError('FileIsADirectory: ' + messageOrUri)
   }
 
   /**
@@ -43,7 +41,7 @@ export class FileSystemError extends Error {
    * @param messageOrUri Message or uri.
    */
   static NoPermissions(messageOrUri?: string | monaco.Uri): FileSystemError {
-    return new FileSystemError('NoPermissions: ' + messageOrUri);
+    return new FileSystemError('NoPermissions: ' + messageOrUri)
   }
 
   /**
@@ -52,7 +50,7 @@ export class FileSystemError extends Error {
    * @param messageOrUri Message or uri.
    */
   static Unavailable(messageOrUri?: string | monaco.Uri): FileSystemError {
-    return new FileSystemError('Unavailable: ' + messageOrUri);
+    return new FileSystemError('Unavailable: ' + messageOrUri)
   }
 
   /**
@@ -61,6 +59,6 @@ export class FileSystemError extends Error {
    * @param messageOrUri Message or uri.
    */
   constructor(messageOrUri?: string | monaco.Uri) {
-    super(messageOrUri?.toString(true));
+    super(messageOrUri?.toString(true))
   }
 }

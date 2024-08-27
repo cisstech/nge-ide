@@ -1,26 +1,20 @@
-import { Injectable } from '@angular/core';
-import {
-  DialogService,
-  EditorService,
-  FileService,
-  ICommand,
-  NotificationService,
-} from '@cisstech/nge-ide/core';
-import { CodIcon } from '@cisstech/nge/ui/icon';
-import { ExplorerService } from '../../explorer.service';
+import { Injectable } from '@angular/core'
+import { DialogService, EditorService, FileService, ICommand, NotificationService } from '@cisstech/nge-ide/core'
+import { CodIcon } from '@cisstech/nge/ui/icon'
+import { ExplorerService } from '../../explorer.service'
 
-export const EXPLORER_COMMAND_REFRESH = 'explorer.commands.refresh';
+export const EXPLORER_COMMAND_REFRESH = 'explorer.commands.refresh'
 
 /**
  * Command that refresh the explorer file tree.
  */
 @Injectable()
 export class ExplorerCommandRefresh implements ICommand {
-  readonly id = EXPLORER_COMMAND_REFRESH;
-  readonly icon = new CodIcon('refresh');
-  readonly label = 'Actualiser';
+  readonly id = EXPLORER_COMMAND_REFRESH
+  readonly icon = new CodIcon('refresh')
+  readonly label = 'Actualiser'
 
-  readonly enabled = true;
+  readonly enabled = true
 
   constructor(
     private readonly fileService: FileService,
@@ -31,7 +25,7 @@ export class ExplorerCommandRefresh implements ICommand {
   ) {}
 
   async execute(): Promise<void> {
-    const shouldConfirm = this.fileService.isDirty();
+    const shouldConfirm = this.fileService.isDirty()
     try {
       const askConfirmation = () =>
         this.dialogService.confirmAsync({
@@ -40,15 +34,15 @@ export class ExplorerCommandRefresh implements ICommand {
           noTitle: 'Annuler',
           okTitle: 'Actualiser',
           danger: true,
-        });
+        })
 
       if (!shouldConfirm || (await askConfirmation())) {
-        await this.editorService.closeAll(true);
-        await this.fileService.refresh();
-        this.explorerService.collapseAll();
+        await this.editorService.closeAll(true)
+        await this.fileService.refresh()
+        this.explorerService.collapseAll()
       }
     } catch (error) {
-      this.notificationService.publishError(error);
+      this.notificationService.publishError(error)
     }
   }
 }

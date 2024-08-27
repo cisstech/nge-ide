@@ -1,10 +1,6 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import {
-  FileService,
-  IdeService,
-  MemFileProvider,
-} from '@cisstech/nge-ide/core';
-import { Subscription } from 'rxjs';
+import { Component, OnDestroy, OnInit } from '@angular/core'
+import { FileService, IdeService, MemFileProvider } from '@cisstech/nge-ide/core'
+import { Subscription } from 'rxjs'
 
 @Component({
   selector: 'app-showcase',
@@ -12,7 +8,7 @@ import { Subscription } from 'rxjs';
   styleUrls: ['showcase.component.scss'],
 })
 export class ShowcaseComponent implements OnInit, OnDestroy {
-  private subscription?: Subscription;
+  private subscription?: Subscription
 
   constructor(
     private readonly ide: IdeService,
@@ -21,18 +17,18 @@ export class ShowcaseComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.subscription = this.ide.onAfterStart(() => {
-      const provider = new MemFileProvider();
-      this.fileService.registerProvider(provider);
+      const provider = new MemFileProvider()
+      this.fileService.registerProvider(provider)
       provider.roots.forEach((root) => {
         this.fileService.registerFolders({
           name: root.authority,
           uri: root,
-        });
+        })
       })
-    });
+    })
   }
 
   ngOnDestroy(): void {
-    this.subscription?.unsubscribe();
+    this.subscription?.unsubscribe()
   }
 }

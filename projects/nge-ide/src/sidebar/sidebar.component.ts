@@ -1,4 +1,4 @@
-import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
+import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop'
 import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
@@ -7,7 +7,7 @@ import {
   Input,
   OnDestroy,
   OnInit,
-} from '@angular/core';
+} from '@angular/core'
 import {
   IdeService,
   StorageService,
@@ -15,12 +15,12 @@ import {
   ViewContainerScopes,
   ViewContainerService,
   SettingsService,
-} from '@cisstech/nge-ide/core';
-import { lastValueFrom, Subscription } from 'rxjs';
-import { map, take } from 'rxjs/operators';
+} from '@cisstech/nge-ide/core'
+import { lastValueFrom, Subscription } from 'rxjs'
+import { map, take } from 'rxjs/operators'
 
-const CLOSED_SIZE = 48;
-const OPENED_SIZE = 320;
+const CLOSED_SIZE = 48
+const OPENED_SIZE = 320
 
 /**
  * Renders on the sidebar area of the ide.
@@ -32,45 +32,45 @@ const OPENED_SIZE = 320;
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SidebarComponent implements OnInit, OnDestroy {
-  private readonly subscriptions: Subscription[] = [];
-  private empty = false;
+  private readonly subscriptions: Subscription[] = []
+  private empty = false
   private state: State = {
     size: OPENED_SIZE,
     active: '',
     order: [],
-  };
+  }
 
   /** Current size of the sidebar */
-  size = OPENED_SIZE;
+  size = OPENED_SIZE
 
   /** Current active container */
-  active?: SidebarContainer;
+  active?: SidebarContainer
 
   /** Container aligned to the top of the activity bar */
-  top: SidebarContainer[] = [];
+  top: SidebarContainer[] = []
 
   /** Container aligned to the bottom of the activity bar */
-  bottom: SidebarContainer[] = [];
+  bottom: SidebarContainer[] = []
 
   /** Horizontal position of the component in the app */
   @Input()
   @HostBinding('class')
-  side: 'left' | 'right' = 'left';
+  side: 'left' | 'right' = 'left'
 
   @HostBinding('attr.role')
-  role = 'navigation';
+  role = 'navigation'
 
   /**
    * Gets a value indicating whether there is any registered
    * container inside the sidebar.
    */
   get isEmpty(): boolean {
-    return this.empty;
+    return this.empty
   }
 
   /** Storage key of the sidebar state object. */
   get storageId(): string {
-    return 'sidebar.state.' + this.side;
+    return 'sidebar.state.' + this.side
   }
 
   constructor(
@@ -89,48 +89,47 @@ export class SidebarComponent implements OnInit, OnDestroy {
             .list<SidebarContainer>(ViewContainerScopes.sidebar)
             .pipe(map((arr) => arr.filter((e) => e.side === this.side)))
             .subscribe(this.onChangeContainers.bind(this))
-        );
+        )
 
         this.subscriptions.push(
           this.ideService.onAfterStart(this.restoreState.bind(this)),
           this.ideService.onBeforeStop(this.saveState.bind(this))
-        );
-        
+        )
+
         this.subscriptions.push(
           this.viewContainerService.onDidOpen().subscribe((containerId) => {
             const container =
-              this.top.find((c) => c.id === containerId) ||
-              this.bottom.find((c) => c.id === containerId);
+              this.top.find((c) => c.id === containerId) || this.bottom.find((c) => c.id === containerId)
             if (container) {
-              this.setActive(container, true);
+              this.setActive(container, true)
             }
           })
-        );
+        )
       })
-      .catch(console.error);
+      .catch(console.error)
   }
 
   ngOnDestroy(): void {
-    this.saveState();
-    this.subscriptions.forEach((s) => s.unsubscribe());
+    this.saveState()
+    this.subscriptions.forEach((s) => s.unsubscribe())
   }
 
   trackById(_: number, item: any): string {
-    return item.id;
+    return item.id
   }
 
   /**
    * Toggles the opening state of the sidebar.
    */
   toggle() {
-    this.size = this.size === OPENED_SIZE ? CLOSED_SIZE : OPENED_SIZE;
+    this.size = this.size === OPENED_SIZE ? CLOSED_SIZE : OPENED_SIZE
 
-    this.changeDetectionRef.detectChanges();
+    this.changeDetectionRef.detectChanges()
   }
 
   reorder(event: CdkDragDrop<SidebarContainer[]>): void {
-    moveItemInArray(this.top, event.previousIndex, event.currentIndex);
-    this.changeDetectionRef.detectChanges();
+    moveItemInArray(this.top, event.previousIndex, event.currentIndex)
+    this.changeDetectionRef.detectChanges()
   }
 
   /**
@@ -138,7 +137,7 @@ export class SidebarComponent implements OnInit, OnDestroy {
    * @param view The view to test.
    */
   isActive(view: SidebarContainer): boolean {
-    return this.active?.id === view.id;
+    return this.active?.id === view.id
   }
 
   /**
@@ -148,16 +147,16 @@ export class SidebarComponent implements OnInit, OnDestroy {
    */
   async setActive(container: SidebarContainer, open?: boolean): Promise<void> {
     if (container.onClickHandler) {
-      await container.onClickHandler();
-      return;
+      await container.onClickHandler()
+      return
     }
 
     if (this.isActive(container) && !open) {
-      this.toggle();
+      this.toggle()
     } else {
-      this.active = container;
+      this.active = container
     }
-    this.changeDetectionRef.markForCheck();
+    this.changeDetectionRef.markForCheck()
   }
 
   private saveState(): void {
@@ -167,13 +166,13 @@ export class SidebarComponent implements OnInit, OnDestroy {
         order: this.top.map((e) => e.id),
         active: this.active ? this.active.id : '',
       })
-      .subscribe();
+      .subscribe()
   }
 
   private async restoreState(): Promise<void> {
-    const defaultSizeSetting = this.settingsService.get('ide.layout', 'toggleSideBar')?.value;
-    const defaultSize = defaultSizeSetting === 'closed' ? CLOSED_SIZE : OPENED_SIZE;
-    this.size = defaultSize;
+    const defaultSizeSetting = this.settingsService.get('ide.layout', 'toggleSideBar')?.value
+    const defaultSize = defaultSizeSetting === 'closed' ? CLOSED_SIZE : OPENED_SIZE
+    this.size = defaultSize
 
     this.state = await lastValueFrom(
       this.storageService
@@ -183,40 +182,40 @@ export class SidebarComponent implements OnInit, OnDestroy {
           active: '',
         })
         .pipe(take(1))
-    );
+    )
   }
 
   private onChangeContainers(containers: SidebarContainer[]): void {
-    this.empty = !containers.length;
-    this.active = undefined;
-    this.top = containers.filter((v) => v.align === 'top');
-    this.bottom = containers.filter((v) => v.align === 'bottom');
+    this.empty = !containers.length
+    this.active = undefined
+    this.top = containers.filter((v) => v.align === 'top')
+    this.bottom = containers.filter((v) => v.align === 'bottom')
 
     this.top.sort((a, b) => {
-      const i = this.state.order.indexOf(a.id);
-      const j = this.state.order.indexOf(b.id);
+      const i = this.state.order.indexOf(a.id)
+      const j = this.state.order.indexOf(b.id)
       if (i === -1 || j === -1) {
-        return 0;
+        return 0
       }
-      return i - j;
-    });
+      return i - j
+    })
 
     if (!this.empty) {
       const active =
         containers.find((v) => {
-          return v.id === this.state.active;
-        }) || containers.find((v) => !v.onClickHandler);
+          return v.id === this.state.active
+        }) || containers.find((v) => !v.onClickHandler)
       if (active) {
-        this.setActive(active);
+        this.setActive(active)
       }
     }
 
-    this.changeDetectionRef.markForCheck();
+    this.changeDetectionRef.markForCheck()
   }
 }
 
 interface State {
-  size: number;
-  order: string[];
-  active: string;
+  size: number
+  order: string[]
+  active: string
 }

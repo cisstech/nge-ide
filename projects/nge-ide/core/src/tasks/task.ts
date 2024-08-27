@@ -1,4 +1,4 @@
 export interface ITask {
-  readonly text: string;
-  end: () => void;
+  readonly text: string
+  end: () => void
 }

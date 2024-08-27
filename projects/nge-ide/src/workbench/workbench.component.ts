@@ -1,15 +1,10 @@
-import {
-  ChangeDetectionStrategy,
-  Component,
-  OnDestroy,
-  OnInit
-} from '@angular/core';
-import { EditorGroup, EditorService, EditorTab } from '@cisstech/nge-ide/core';
-import { Observable, Subscription, combineLatest } from 'rxjs';
-import { map, startWith } from 'rxjs/operators';
-import { CodeEditor } from './code-editor/code-editor';
-import { MediaEditor } from './media-editor/media-editor';
-import { PreviewEditor } from './preview-editor/preview-editor';
+import { ChangeDetectionStrategy, Component, OnDestroy, OnInit } from '@angular/core'
+import { EditorGroup, EditorService, EditorTab } from '@cisstech/nge-ide/core'
+import { Observable, Subscription, combineLatest } from 'rxjs'
+import { map, startWith } from 'rxjs/operators'
+import { CodeEditor } from './code-editor/code-editor'
+import { MediaEditor } from './media-editor/media-editor'
+import { PreviewEditor } from './preview-editor/preview-editor'
 
 @Component({
   selector: 'ide-workbench',
@@ -18,48 +13,44 @@ import { PreviewEditor } from './preview-editor/preview-editor';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class WorkbenchComponent implements OnInit, OnDestroy {
-  private readonly subscriptions: Subscription[] = [];
+  private readonly subscriptions: Subscription[] = []
   protected empty = false
-  readonly groups: Observable<EditorGroup[]> = this.editorService.editorGroups;
+  readonly groups: Observable<EditorGroup[]> = this.editorService.editorGroups
   readonly commands = combineLatest([
     this.editorService.commands.pipe(startWith([])),
     this.editorService.onDidOpen.pipe(startWith(undefined)), // reload commands every time an editor is opened
   ]).pipe(
     map(([commands, _]) => commands.slice()) // slice to force trigger change detection of command-group component
-  );
+  )
 
   constructor(private readonly editorService: EditorService) {}
 
   ngOnInit(): void {
-    this.editorService.registerEditors(
-      new CodeEditor(),
-      new MediaEditor(),
-      new PreviewEditor()
-    );
+    this.editorService.registerEditors(new CodeEditor(), new MediaEditor(), new PreviewEditor())
     this.subscriptions.push(
       this.groups.subscribe((groups) => {
-        this.empty = groups.length === 0;
+        this.empty = groups.length === 0
       })
-    );
+    )
   }
 
   ngOnDestroy(): void {
-    this.subscriptions.forEach((s) => s.unsubscribe());
+    this.subscriptions.forEach((s) => s.unsubscribe())
   }
 
   isActiveGroup(group: EditorGroup): boolean {
-    return this.editorService.isActiveGroup(group);
+    return this.editorService.isActiveGroup(group)
   }
 
   setActiveGroup(group: EditorGroup): void {
-    this.editorService.setActiveGroup(group);
+    this.editorService.setActiveGroup(group)
   }
 
   trackTab(_: number, item: EditorTab) {
-    return item.resource.toString(true);
+    return item.resource.toString(true)
   }
 
   trackGroup(_: number, item: EditorGroup) {
-    return item.id;
+    return item.id
   }
 }

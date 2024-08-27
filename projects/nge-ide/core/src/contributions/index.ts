@@ -1,1 +1,1 @@
-export * from './contribution';
+export * from './contribution'

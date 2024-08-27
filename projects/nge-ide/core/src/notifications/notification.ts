@@ -1,15 +1,15 @@
-export declare type NotificationLevel = 'error' | 'info' | 'warn';
+export declare type NotificationLevel = 'error' | 'info' | 'warn'
 
-export const NOTIFICATION_EVENT_CHANNEL = 'editor.notification';
+export const NOTIFICATION_EVENT_CHANNEL = 'editor.notification'
 
 export interface Notification {
-  message: string;
-  level: NotificationLevel;
-  type: string;
+  message: string
+  level: NotificationLevel
+  type: string
 }
 
 export class WarningNotification implements Notification {
-  readonly type = 'WarningNotification';
+  readonly type = 'WarningNotification'
   constructor(
     readonly message: string,
     readonly level: NotificationLevel = 'warn',
@@ -18,7 +18,7 @@ export class WarningNotification implements Notification {
 }
 
 export class InfoNotification implements Notification {
-  readonly type = 'InfoNotification';
+  readonly type = 'InfoNotification'
   constructor(
     readonly message: string,
     readonly level: NotificationLevel = 'info',
@@ -27,7 +27,7 @@ export class InfoNotification implements Notification {
 }
 
 export class ErrorNotification implements Notification {
-  readonly type = 'ErrorNotification';
+  readonly type = 'ErrorNotification'
   constructor(
     readonly message: string,
     readonly level: NotificationLevel = 'error',

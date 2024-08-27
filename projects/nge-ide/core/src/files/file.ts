@@ -7,20 +7,20 @@ export interface IFile {
    *
    * Notes: the uri must not end with a slash except for a root uri.
    */
-  readonly uri: monaco.Uri;
+  readonly uri: monaco.Uri
 
   /**
    * Is the file a directory?
    */
-  readonly isFolder: boolean;
+  readonly isFolder: boolean
 
   /**
    * Is the file readonly?
    */
-  readonly readOnly: boolean;
+  readonly readOnly: boolean
 
   /**
    * Optional download url of the file.
    */
-  readonly url?: string;
+  readonly url?: string
 }

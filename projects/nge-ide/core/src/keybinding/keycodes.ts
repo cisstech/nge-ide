@@ -5,7 +5,7 @@
  * @param {Array<number>} codes
  */
 export function hasKeycode(event: KeyboardEvent, ...codes: number[]): boolean {
-  return codes.some((value) => (event.keyCode || event.which) === value);
+  return codes.some((value) => (event.keyCode || event.which) === value)
 }
 
 export const KeyCodes = {
@@ -127,4 +127,4 @@ export const KeyCodes = {
   Y: 89,
   Z: 90,
   ZERO: 48,
-};
+}

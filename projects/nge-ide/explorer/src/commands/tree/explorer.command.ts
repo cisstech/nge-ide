@@ -1,4 +1,4 @@
-import { ICommand } from '@cisstech/nge-ide/core';
+import { ICommand } from '@cisstech/nge-ide/core'
 
 export enum CommandGroups {
   /** Commands related to navigation accross the ide. */
@@ -23,5 +23,5 @@ export interface IExplorerCommand extends ICommand {
    *
    * You should use the constants GROUP_NAVIGATION, GROUP_WORKSPACE...
    */
-  readonly group: CommandGroups;
+  readonly group: CommandGroups
 }

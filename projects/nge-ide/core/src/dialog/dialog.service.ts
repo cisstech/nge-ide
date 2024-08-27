@@ -1,7 +1,6 @@
-import { Injectable, inject } from '@angular/core';
-import { NzModalService } from 'ng-zorro-antd/modal';
-import { ConfirmOptions } from './dialog';
-
+import { Injectable, inject } from '@angular/core'
+import { NzModalService } from 'ng-zorro-antd/modal'
+import { ConfirmOptions } from './dialog'
 
 @Injectable()
 export class DialogService {
@@ -18,23 +17,23 @@ export class DialogService {
         nzCentered: true,
         nzModalType: 'default',
         nzBodyStyle: {
-          ...(!options.message && { display: 'none' })
+          ...(!options.message && { display: 'none' }),
         },
         nzFooter: [
-         ...options.buttons?.map(button => ({
+          ...(options.buttons?.map((button) => ({
             label: button.title,
             danger: button.danger ?? false,
             onClick: () => {
               resolve(button.id)
               modal.close()
-            }
-          })) ?? [],
+            },
+          })) ?? []),
           {
             label: options.noTitle ?? 'Annuler',
             onClick: () => {
               resolve(false)
               modal.close()
-            }
+            },
           },
           {
             label: options.okTitle ?? 'Confirmer',
@@ -43,9 +42,9 @@ export class DialogService {
             onClick: () => {
               resolve(true)
               modal.close()
-            }
-          }
-        ]
+            },
+          },
+        ],
       })
     })
   }

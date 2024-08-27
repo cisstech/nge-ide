@@ -1,12 +1,6 @@
-import {
-  ChangeDetectionStrategy,
-  ChangeDetectorRef,
-  Component,
-  OnDestroy,
-  OnInit,
-} from '@angular/core';
-import { IStatusBarItem, StatusBarService } from '@cisstech/nge-ide/core';
-import { Subscription } from 'rxjs';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core'
+import { IStatusBarItem, StatusBarService } from '@cisstech/nge-ide/core'
+import { Subscription } from 'rxjs'
 
 @Component({
   selector: 'ide-statusbar',
@@ -15,14 +9,14 @@ import { Subscription } from 'rxjs';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class StatusbarComponent implements OnInit, OnDestroy {
-  private readonly subscriptions: Subscription[] = [];
-  private empty = false;
+  private readonly subscriptions: Subscription[] = []
+  private empty = false
 
-  leftViews: IStatusBarItem[] = [];
-  rightViews: IStatusBarItem[] = [];
+  leftViews: IStatusBarItem[] = []
+  rightViews: IStatusBarItem[] = []
 
   get isEmpty(): boolean {
-    return this.empty;
+    return this.empty
   }
 
   constructor(
@@ -36,23 +30,23 @@ export class StatusbarComponent implements OnInit, OnDestroy {
         this.leftViews = items
           .filter((e) => e.side === 'left')
           .sort((a, b) => {
-            return (b.priority || 0) - (a.priority || 0);
-          });
+            return (b.priority || 0) - (a.priority || 0)
+          })
         this.rightViews = items
           .filter((e) => e.side === 'right')
           .sort((a, b) => {
-            return (b.priority || 0) - (a.priority || 0);
-          });
-        this.changeDetectorRef.markForCheck();
+            return (b.priority || 0) - (a.priority || 0)
+          })
+        this.changeDetectorRef.markForCheck()
       })
-    );
+    )
   }
 
   ngOnDestroy(): void {
-    this.subscriptions.forEach((s) => s.unsubscribe());
+    this.subscriptions.forEach((s) => s.unsubscribe())
   }
 
   track(_: number, item: IStatusBarItem) {
-    return item.id;
+    return item.id
   }
 }

@@ -1,14 +1,13 @@
-import { ErrorNotification } from './notification';
+import { ErrorNotification } from './notification'
 
-export const testErrorNotification: () => ErrorNotification = () =>
-  new ErrorNotification('test');
+export const testErrorNotification: () => ErrorNotification = () => new ErrorNotification('test')
 
 describe('ErrorNotification', () => {
   it('should be created', () => {
-    expect(testErrorNotification()).toBeTruthy();
-  });
+    expect(testErrorNotification()).toBeTruthy()
+  })
 
   it('should be created with all constructor fields', () => {
-    expect(new ErrorNotification(`TADA !`, 'warn', 'trace')).toBeTruthy();
-  });
-});
+    expect(new ErrorNotification(`TADA !`, 'warn', 'trace')).toBeTruthy()
+  })
+})

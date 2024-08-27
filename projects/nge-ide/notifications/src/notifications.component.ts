@@ -1,5 +1,5 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { NotificationService } from '@cisstech/nge-ide/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core'
+import { NotificationService } from '@cisstech/nge-ide/core'
 
 @Component({
   selector: 'ide-notifications',
@@ -8,12 +8,12 @@ import { NotificationService } from '@cisstech/nge-ide/core';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class NotificationsComponent {
-  readonly empty = this.notificationService.isEmpty;
-  readonly items = this.notificationService.items;
+  readonly empty = this.notificationService.isEmpty
+  readonly items = this.notificationService.items
 
   constructor(private readonly notificationService: NotificationService) {}
 
   trackBy(index: number) {
-    return index;
+    return index
   }
 }

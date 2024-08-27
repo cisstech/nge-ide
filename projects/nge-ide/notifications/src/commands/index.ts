@@ -1,1 +1,1 @@
-export * from './notification-clear.command';
+export * from './notification-clear.command'

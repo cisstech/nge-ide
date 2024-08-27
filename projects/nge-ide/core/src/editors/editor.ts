@@ -1,34 +1,23 @@
-import { Injector, Type } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
-import { OpenOptions, OpenRequest } from './opener';
-import { FileService, IFile } from '../files';
+import { Injector, Type } from '@angular/core'
+import { BehaviorSubject, Observable } from 'rxjs'
+import { OpenOptions, OpenRequest } from './opener'
+import { FileService, IFile } from '../files'
 
-declare type OpenHandler = (
-  group: EditorGroup,
-  editor: Editor,
-  resource: monaco.Uri
-) => void;
+declare type OpenHandler = (group: EditorGroup, editor: Editor, resource: monaco.Uri) => void
 
-declare type CloseHandler = (
-  group: EditorGroup,
-  resource: monaco.Uri,
-  isPreview?: boolean
-) => void;
+declare type CloseHandler = (group: EditorGroup, resource: monaco.Uri, isPreview?: boolean) => void
 
-declare type CloseGuard = (
-  group: EditorGroup,
-  resource: monaco.Uri
-) => Promise<boolean>;
+declare type CloseGuard = (group: EditorGroup, resource: monaco.Uri) => Promise<boolean>
 
 export interface EditorTab {
   /** The options associated with the tab. */
-  readonly options: OpenOptions;
+  readonly options: OpenOptions
 
   /** The uri of the resource. */
-  readonly resource: monaco.Uri;
+  readonly resource: monaco.Uri
 
   /** The file associated with the request if any. */
-  readonly file?: IFile;
+  readonly file?: IFile
 }
 
 /**
@@ -36,60 +25,58 @@ export interface EditorTab {
  */
 export interface EditorState {
   /** Current active editor group (the one focused in the workspace could be `null`) */
-  readonly activeGroup?: EditorGroup;
+  readonly activeGroup?: EditorGroup
 
   /** Current active editor (the one focused in the `activeGroup` could be `null`). */
-  readonly activeEditor?: Editor;
+  readonly activeEditor?: Editor
 
   /** Current active resource (the one focused in explorer tree could be `null`). */
-  readonly activeResource?: monaco.Uri;
+  readonly activeResource?: monaco.Uri
 
   /** Current visible editors */
-  readonly visibleEditors: ReadonlyArray<Editor>;
+  readonly visibleEditors: ReadonlyArray<Editor>
 }
 
 /** Represents an editor that is attached to a component. */
 export abstract class Editor {
-  private static NEXT_ID = 0;
-  private readonly request = new BehaviorSubject<OpenRequest | undefined>(
-    undefined
-  );
+  private static NEXT_ID = 0
+  private readonly request = new BehaviorSubject<OpenRequest | undefined>(undefined)
 
   /** unique identifier of the editor */
-  readonly id: string = 'editor#' + ++Editor.NEXT_ID;
+  readonly id: string = 'editor#' + ++Editor.NEXT_ID
 
-  abstract readonly component: () => Type<any> | Promise<Type<any>>;
+  abstract readonly component: () => Type<any> | Promise<Type<any>>
 
   get name(): string {
-    return this.constructor.name;
+    return this.constructor.name
   }
 
   get options(): OpenOptions | undefined {
-    return this.request.value?.options;
+    return this.request.value?.options
   }
 
   get onChangeRequest(): Observable<OpenRequest> {
-    return this.request.asObservable() as Observable<OpenRequest>;
+    return this.request.asObservable() as Observable<OpenRequest>
   }
 
   /**
    * Checks whether this editor can handle the given `request`.
    * @param request the request to handle.
    */
-  abstract canHandle(request: OpenRequest): boolean | Promise<boolean>;
+  abstract canHandle(request: OpenRequest): boolean | Promise<boolean>
 
   async handle(request: OpenRequest): Promise<Editor | undefined> {
     if (await this.canHandle(request)) {
-      this.request.next(request);
-      return this;
+      this.request.next(request)
+      return this
     }
   }
 
   equals(o: any): boolean {
     if (!(o instanceof Editor)) {
-      return false;
+      return false
     }
-    return o.id === this.id;
+    return o.id === this.id
   }
 }
 
@@ -100,59 +87,59 @@ export abstract class Editor {
  * A group can contains only one active editor at a time and on instance of a resource.
  */
 export class EditorGroup {
-  private static NEXT_ID = 0;
+  private static NEXT_ID = 0
   private fileService?: FileService
-  private _tabs: EditorTab[] = [];
-  private _request?: OpenRequest;
-  private _history: EditorTab[] = [];
-  private _activeIndex = 0;
-  private _activeEditor?: Editor;
+  private _tabs: EditorTab[] = []
+  private _request?: OpenRequest
+  private _history: EditorTab[] = []
+  private _activeIndex = 0
+  private _activeEditor?: Editor
 
   /** Unique identifier of this group. */
-  readonly id: string = 'editor-group#' + ++EditorGroup.NEXT_ID;
+  readonly id: string = 'editor-group#' + ++EditorGroup.NEXT_ID
 
   get isEmpty(): boolean {
-    return this._tabs.length === 0;
+    return this._tabs.length === 0
   }
 
   /** Tabs of the group. */
   get tabs(): EditorTab[] {
-    return this._tabs;
+    return this._tabs
   }
 
   /** Gets the index of the current active editor. */
   get activeIndex(): number {
-    return this._activeIndex;
+    return this._activeIndex
   }
 
   /** Sets the index of the current active editor. */
   set activeIndex(index: number) {
     if (index === this._activeIndex) {
-      return;
+      return
     }
 
     if (this._tabs[index]) {
-      this._activeIndex = index;
-      const { resource, options } = this._tabs[index];
-      this.open(resource, options);
+      this._activeIndex = index
+      const { resource, options } = this._tabs[index]
+      this.open(resource, options)
     }
   }
 
   /** Current active editor. */
   get activeEditor(): Editor | undefined {
-    return this._activeEditor;
+    return this._activeEditor
   }
 
   /** Current active resource. */
   get activeResource(): monaco.Uri | undefined {
-    return this._request ? this._request.uri : undefined;
+    return this._request ? this._request.uri : undefined
   }
 
   /**
    * Gets a value indicating whether the current active resource is in a preview mode.
    */
   get isInPreviewMode(): boolean {
-    return !!this._request && !!this._request.options.preview;
+    return !!this._request && !!this._request.options.preview
   }
 
   constructor(
@@ -185,7 +172,7 @@ export class EditorGroup {
 
     /** the registered editor. */
     private readonly editors: ReadonlyArray<Editor>
-  ) { }
+  ) {}
 
   /**
    * Checks whether the resource is opened in the group.
@@ -195,8 +182,8 @@ export class EditorGroup {
    */
   contains(resource: monaco.Uri): boolean {
     return this._tabs.some((e) => {
-      return e.resource.toString(true) === resource.toString(true);
-    });
+      return e.resource.toString(true) === resource.toString(true)
+    })
   }
 
   /**
@@ -206,11 +193,8 @@ export class EditorGroup {
    */
   containsPreview(resource: monaco.Uri): boolean {
     return this._tabs.some((e) => {
-      return (
-        e.resource.toString(true) === resource.toString(true) &&
-        !!e.options.preview
-      );
-    });
+      return e.resource.toString(true) === resource.toString(true) && !!e.options.preview
+    })
   }
 
   /**
@@ -219,7 +203,7 @@ export class EditorGroup {
    * @throws {ReferenceError} if any of the arguments is null.
    */
   isActive(resource: monaco.Uri): boolean {
-    return this.activeResource?.toString(true) === resource.toString(true);
+    return this.activeResource?.toString(true) === resource.toString(true)
   }
 
   /**
@@ -229,8 +213,8 @@ export class EditorGroup {
    */
   findIndex(resource: monaco.Uri): number {
     return this._tabs.findIndex((e) => {
-      return e.resource.toString(true) === resource.toString(true);
-    });
+      return e.resource.toString(true) === resource.toString(true)
+    })
   }
 
   /**
@@ -245,40 +229,40 @@ export class EditorGroup {
    * @returns An promise that resolve once the resource is opened.
    */
   async open(resource: monaco.Uri, options: OpenOptions): Promise<void> {
-    if (this.isActive(resource) && !options.preview) return;
+    if (this.isActive(resource) && !options.preview) return
 
-    this.fileService = this.fileService || this.injector.get(FileService);
+    this.fileService = this.fileService || this.injector.get(FileService)
 
-    let file: IFile | undefined;
+    let file: IFile | undefined
     if (this.fileService.hasProvider(resource.scheme)) {
-     file = await this.fileService.find(resource);
-     if (!file) {
-       throw new Error(`File not found "${resource}"`);
-     }
+      file = await this.fileService.find(resource)
+      if (!file) {
+        throw new Error(`File not found "${resource}"`)
+      }
     }
 
-    const request = new OpenRequest(resource, this.injector, options, file);
+    const request = new OpenRequest(resource, this.injector, options, file)
 
-    let editor: Editor | undefined;
+    let editor: Editor | undefined
     for (let i = 0; i < this.editors.length; i++) {
-      editor = await this.editors[i].handle(request);
-      if (editor) break;
+      editor = await this.editors[i].handle(request)
+      if (editor) break
     }
 
     if (!editor) {
-      throw new Error(`There is no registered editor to open "${request.uri}"`);
+      throw new Error(`There is no registered editor to open "${request.uri}"`)
     }
 
     if (!this.contains(resource)) {
-      this._tabs.push({ options, resource, file });
+      this._tabs.push({ options, resource, file })
     }
 
-    this._request = request;
-    this._activeIndex = this.findIndex(resource);
-    this._activeEditor = editor;
-    this._history.push(this._tabs[this._activeIndex]);
+    this._request = request
+    this._activeIndex = this.findIndex(resource)
+    this._activeEditor = editor
+    this._history.push(this._tabs[this._activeIndex])
 
-    this.opened(this, editor, resource);
+    this.opened(this, editor, resource)
   }
 
   /**
@@ -294,28 +278,28 @@ export class EditorGroup {
    * @returns A promise that resolve with `true` if the resource is removed `false` otherwise.
    */
   async close(resource: monaco.Uri, force?: boolean): Promise<boolean> {
-    const index = this.findIndex(resource);
-    if (index === -1) return false;
+    const index = this.findIndex(resource)
+    if (index === -1) return false
 
-    let tab = this._tabs[index];
+    let tab = this._tabs[index]
     const closeable =
       force || // close if forced
       tab.options.preview || // preview resource is always closeable
-      (await this.closeGuard(this, tab.resource)); // check if dirty
+      (await this.closeGuard(this, tab.resource)) // check if dirty
 
-    if (!closeable) return false;
+    if (!closeable) return false
 
-    this._tabs.splice(index, 1);
+    this._tabs.splice(index, 1)
 
     if (this.isEmpty || this.isActive(resource)) {
-      this._request = undefined;
-      this._activeIndex = -1;
-      this._activeEditor = undefined;
+      this._request = undefined
+      this._activeIndex = -1
+      this._activeEditor = undefined
     }
 
-    this.closed(this, tab.resource, !!tab.options.preview);
+    this.closed(this, tab.resource, !!tab.options.preview)
 
-    return true;
+    return true
   }
 
   /**
@@ -326,16 +310,16 @@ export class EditorGroup {
   async closeAll(force?: boolean): Promise<boolean> {
     while (this._tabs.length) {
       if (!(await this.close(this._tabs[0].resource, force))) {
-        return false;
+        return false
       }
     }
-    return true;
+    return true
   }
 
   equals(o: any): boolean {
     if (!(o instanceof EditorGroup)) {
-      return false;
+      return false
     }
-    return o.id === this.id;
+    return o.id === this.id
   }
 }

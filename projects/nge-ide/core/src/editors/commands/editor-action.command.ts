@@ -1,5 +1,5 @@
-import { ICommand } from '../../commands';
-import { MonacoService } from '../monaco.service';
+import { ICommand } from '../../commands'
+import { MonacoService } from '../monaco.service'
 
 export class EditorActionCommand implements ICommand {
   constructor(
@@ -10,23 +10,18 @@ export class EditorActionCommand implements ICommand {
   ) {}
 
   get enabled(): boolean {
-    return !!this.monaco.activeEditor;
+    return !!this.monaco.activeEditor
   }
 
   async execute(): Promise<void> {
-    const activeEditor = this.monaco.activeEditor;
+    const activeEditor = this.monaco.activeEditor
     if (activeEditor) {
-      activeEditor.focus();
-      activeEditor.trigger('code', this.id, null);
+      activeEditor.focus()
+      activeEditor.trigger('code', this.id, null)
     }
   }
 
-  static from(
-    id: string,
-    label: string,
-    keybinding: string,
-    monaco: MonacoService
-  ) {
-    return new EditorActionCommand(id, label, keybinding, monaco);
+  static from(id: string, label: string, keybinding: string, monaco: MonacoService) {
+    return new EditorActionCommand(id, label, keybinding, monaco)
   }
 }

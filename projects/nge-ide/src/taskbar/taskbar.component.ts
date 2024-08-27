@@ -1,5 +1,5 @@
-import { Component, Input } from '@angular/core';
-import { ITask } from '@cisstech/nge-ide/core';
+import { Component, Input } from '@angular/core'
+import { ITask } from '@cisstech/nge-ide/core'
 
 @Component({
   selector: 'ide-taskbar',
@@ -7,5 +7,5 @@ import { ITask } from '@cisstech/nge-ide/core';
   styleUrls: ['./taskbar.component.scss'],
 })
 export class TaskbarComponent {
-  @Input() task!: ITask;
+  @Input() task!: ITask
 }

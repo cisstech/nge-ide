@@ -1,11 +1,5 @@
-import {
-  ChangeDetectionStrategy,
-  Component,
-  EventEmitter,
-  Input,
-  Output,
-} from '@angular/core';
-import { ICommand } from '../command';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core'
+import { ICommand } from '../command'
 
 @Component({
   selector: 'ide-command-group',
@@ -14,23 +8,23 @@ import { ICommand } from '../command';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CommandGroupComponent {
-  @Input() commands: ICommand[] = [];
-  @Output() execute = new EventEmitter();
+  @Input() commands: ICommand[] = []
+  @Output() execute = new EventEmitter()
 
   _execute(command: ICommand, event: Event) {
-    event.preventDefault();
-    event.stopPropagation();
+    event.preventDefault()
+    event.stopPropagation()
     if (this.execute.observers.length) {
       this.execute.next({
         event,
         command,
-      });
+      })
     } else {
-      command.execute();
+      command.execute()
     }
   }
 
   _trackById(_: number, command: ICommand): any {
-    return command.id;
+    return command.id
   }
 }

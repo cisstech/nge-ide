@@ -1,20 +1,20 @@
-import { Injectable } from '@angular/core';
-import { ClipboardService } from '@cisstech/nge/services';
-import { FaIcon } from '@cisstech/nge/ui/icon';
-import { ExplorerService } from '../../explorer.service';
-import { CommandGroups, IExplorerCommand } from './explorer.command';
+import { Injectable } from '@angular/core'
+import { ClipboardService } from '@cisstech/nge/services'
+import { FaIcon } from '@cisstech/nge/ui/icon'
+import { ExplorerService } from '../../explorer.service'
+import { CommandGroups, IExplorerCommand } from './explorer.command'
 
-export const EXPLORER_COMMAND_COPY_PATH = 'explorer.commands.copy-path';
+export const EXPLORER_COMMAND_COPY_PATH = 'explorer.commands.copy-path'
 
 @Injectable()
 export class ExplorerCommandCopyPath implements IExplorerCommand {
-  readonly id = EXPLORER_COMMAND_COPY_PATH;
-  readonly icon = new FaIcon('fas fa-link');
-  readonly group = CommandGroups.GROUP_COPY_PASTE;
-  readonly label = 'Copier le chemin';
+  readonly id = EXPLORER_COMMAND_COPY_PATH
+  readonly icon = new FaIcon('fas fa-link')
+  readonly group = CommandGroups.GROUP_COPY_PASTE
+  readonly label = 'Copier le chemin'
 
   get enabled(): boolean {
-    return this.explorerService.hasSelection();
+    return this.explorerService.hasSelection()
   }
 
   constructor(
@@ -23,12 +23,10 @@ export class ExplorerCommandCopyPath implements IExplorerCommand {
   ) {}
 
   execute(): void {
-    const selections = this.explorerService.selections();
-    const length = selections.length;
+    const selections = this.explorerService.selections()
+    const length = selections.length
     if (length) {
-      this.clipboardService.copy(
-        selections.map((e) => e.uri.authority + e.uri.path).join('\n')
-      );
+      this.clipboardService.copy(selections.map((e) => e.uri.authority + e.uri.path).join('\n'))
     }
   }
 }

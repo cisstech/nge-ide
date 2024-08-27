@@ -1,4 +1,4 @@
-import { Injector, NgModule, Injectable } from '@angular/core';
+import { Injector, NgModule, Injectable } from '@angular/core'
 import {
   CommandService,
   CONTRIBUTION,
@@ -10,9 +10,9 @@ import {
   ToolbarService,
   ViewContainerService,
   ViewService,
-} from '@cisstech/nge-ide/core';
-import { CodIcon } from '@cisstech/nge/ui/icon';
-import { of } from 'rxjs';
+} from '@cisstech/nge-ide/core'
+import { CodIcon } from '@cisstech/nge/ui/icon'
+import { of } from 'rxjs'
 import {
   ExplorerCommandCollapseAll,
   ExplorerCommandCopy,
@@ -26,29 +26,29 @@ import {
   ExplorerCommandRefresh,
   ExplorerCommandRename,
   ExplorerCommandToggleFiltering,
-} from './commands';
-import { ExplorerService } from './explorer.service';
+} from './commands'
+import { ExplorerService } from './explorer.service'
 
 /**
  * Identifier of the explorer view component.
  */
-export const EXPLORER_VIEW_ID = 'workbench.view.explorer';
+export const EXPLORER_VIEW_ID = 'workbench.view.explorer'
 
 /**
  * Identifier of the explorer container.
  */
-export const EXPLORER_CONTAINER_ID = 'workbench.container.explorer';
+export const EXPLORER_CONTAINER_ID = 'workbench.container.explorer'
 
 @Injectable()
 export class ExplorerContribution implements IContribution {
-  readonly id = 'workbench.contrib.explorer';
+  readonly id = 'workbench.contrib.explorer'
 
   activate(injector: Injector) {
-    const viewService = injector.get(ViewService);
-    const commandService = injector.get(CommandService);
-    const toolbarService = injector.get(ToolbarService);
-    const explorerService = injector.get(ExplorerService);
-    const viewContainerService = injector.get(ViewContainerService);
+    const viewService = injector.get(ViewService)
+    const commandService = injector.get(CommandService)
+    const toolbarService = injector.get(ToolbarService)
+    const explorerService = injector.get(ExplorerService)
+    const viewContainerService = injector.get(ViewContainerService)
 
     commandService.register(
       ExplorerCommandToggleFiltering,
@@ -62,8 +62,8 @@ export class ExplorerContribution implements IContribution {
       ExplorerCommandFileExport,
       ExplorerCommandFileUpload,
       ExplorerCommandPaste,
-      ExplorerCommandRename,
-    );
+      ExplorerCommandRename
+    )
 
     explorerService.registerCommands(
       ExplorerCommandCopy,
@@ -74,8 +74,8 @@ export class ExplorerContribution implements IContribution {
       ExplorerCommandFileExport,
       ExplorerCommandFileUpload,
       ExplorerCommandPaste,
-      ExplorerCommandRename,
-    );
+      ExplorerCommandRename
+    )
 
     toolbarService.register(
       new ToolbarButton({
@@ -89,16 +89,16 @@ export class ExplorerContribution implements IContribution {
         priority: 1,
       }),
       new ToolbarSeparator(ToolbarGroups.FILE, 1)
-    );
+    )
     viewContainerService.register(
       new (class extends SidebarContainer {
-        readonly id = EXPLORER_CONTAINER_ID;
-        readonly title = 'Explorateur';
-        readonly icon = new CodIcon('files');
-        readonly side = 'left';
-        readonly align = 'top';
+        readonly id = EXPLORER_CONTAINER_ID
+        readonly title = 'Explorateur'
+        readonly icon = new CodIcon('files')
+        readonly side = 'left'
+        readonly align = 'top'
       })()
-    );
+    )
 
     viewService.register({
       id: EXPLORER_VIEW_ID,
@@ -109,9 +109,8 @@ export class ExplorerContribution implements IContribution {
         commandService.find(ExplorerCommandCollapseAll),
       ]),
       viewContainerId: EXPLORER_CONTAINER_ID,
-      component: () =>
-        import('./explorer.module').then((m) => m.ExplorerModule),
-    });
+      component: () => import('./explorer.module').then((m) => m.ExplorerModule),
+    })
   }
 }
 

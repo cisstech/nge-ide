@@ -1,4 +1,4 @@
-export const SETTINGS_URI = 'editor://settings';
+export const SETTINGS_URI = 'editor://settings'
 
 export namespace Settings {
   export enum Types {
@@ -10,30 +10,30 @@ export namespace Settings {
 
   export interface Group {
     /** the title of the group */
-    name: string;
+    name: string
     /** the settings of the group */
-    settings?: Settings.Setting[];
+    settings?: Settings.Setting[]
   }
 
   export interface Setting {
     /** the type of the setting */
-    type: Types;
+    type: Types
     /** the name of the setting */
-    name: string;
+    name: string
     /** the group of the setting */
-    group: string;
+    group: string
     /** the value of the setting */
-    value: any;
+    value: any
     /** the list of values in case of dropdown setting */
-    choices?: any[];
+    choices?: any[]
     /** an optional commentary */
-    comment?: string;
+    comment?: string
     /** is the setting editable? */
-    hidden?: boolean;
+    hidden?: boolean
   }
 
   /** key used to store the settings into localStorage */
-  export const STORAGE_KEY = '_editor.settings';
+  export const STORAGE_KEY = '_editor.settings'
 
   export const defaults: Settings.Setting[] = [
     // Suggestion
@@ -60,8 +60,7 @@ export namespace Settings {
       type: Types.Dropdown,
       value: 'auto',
       choices: ['auto', 'off', 'on'],
-      comment:
-        'Controls whether the editor should run in a mode where it is optimized for screen readers.',
+      comment: 'Controls whether the editor should run in a mode where it is optimized for screen readers.',
     },
     {
       name: 'autoClosingBrackets',
@@ -78,8 +77,7 @@ export namespace Settings {
       type: Types.Dropdown,
       value: 'languageDefined',
       choices: ['always', 'languageDefined', 'beforeWhitespace', 'never'],
-      comment:
-        'Controls whether the editor should automatically close quotes after the user adds an opening quote.',
+      comment: 'Controls whether the editor should automatically close quotes after the user adds an opening quote.',
     },
     {
       name: 'autoIndent',
@@ -94,8 +92,7 @@ export namespace Settings {
       type: Types.Dropdown,
       value: 'languageDefined',
       choices: ['languageDefined', 'quotes', 'brackets', 'never'],
-      comment:
-        'Controls whether the editor should automatically surround selections.',
+      comment: 'Controls whether the editor should automatically surround selections.',
     },
     {
       name: 'automaticLayout',
@@ -116,16 +113,14 @@ export namespace Settings {
       group: 'editor',
       type: Types.Checkbox,
       value: true,
-      comment:
-        'Controls whether the editor should render the inline color decorators and color picker',
+      comment: 'Controls whether the editor should render the inline color decorators and color picker',
     },
     {
       name: 'copyWithSyntaxHighlighting',
       group: 'editor',
       type: Types.Checkbox,
       value: true,
-      comment:
-        'Controls whether syntax highlight should be copied into the clipboard.',
+      comment: 'Controls whether syntax highlight should be copied into the clipboard.',
     },
     // Cursor
     {
@@ -149,30 +144,21 @@ export namespace Settings {
       type: Types.Dropdown,
       value: 'line',
       comment: 'Controls the cursor style.',
-      choices: [
-        'block',
-        'block-outline',
-        'line',
-        'line-thin',
-        'underline',
-        'underline-thin',
-      ],
+      choices: ['block', 'block-outline', 'line', 'line-thin', 'underline', 'underline-thin'],
     },
     {
       name: 'cursorWidth',
       group: 'editor.cursor',
       type: Types.Number,
       value: 0,
-      comment:
-        'Controls the width of the cursor when Editor: Cursor Style is set to line.',
+      comment: 'Controls the width of the cursor when Editor: Cursor Style is set to line.',
     },
     {
       name: 'dragAndDrop',
       group: 'editor',
       type: Types.Checkbox,
       value: true,
-      comment:
-        'Controls if the editor should allow to move selections via drag and drop.',
+      comment: 'Controls if the editor should allow to move selections via drag and drop.',
     },
     {
       name: 'emptySelectionClipboard',
@@ -257,8 +243,7 @@ export namespace Settings {
       group: 'editor',
       type: Types.Checkbox,
       value: true,
-      comment:
-        'Enable the rendering of the glyph margin. Glyph margin is moslty used for debugging.',
+      comment: 'Enable the rendering of the glyph margin. Glyph margin is moslty used for debugging.',
     },
     {
       name: 'hideCursorInOverviewRuler',
@@ -279,8 +264,7 @@ export namespace Settings {
       group: 'editor',
       type: Types.Number,
       value: 300,
-      comment:
-        'Controls the delay in milliseconds after which the hover is shown.',
+      comment: 'Controls the delay in milliseconds after which the hover is shown.',
     },
     {
       name: 'hover.enabled',
@@ -294,8 +278,7 @@ export namespace Settings {
       group: 'editor',
       type: Types.Checkbox,
       value: true,
-      comment:
-        'Controls whether the hover should remain visible when mouse is moved over it',
+      comment: 'Controls whether the hover should remain visible when mouse is moved over it',
     },
     {
       name: 'iconsInSuggestions',
@@ -316,16 +299,14 @@ export namespace Settings {
       group: 'editor',
       type: Types.Checkbox,
       value: true,
-      comment:
-        'Control the behavior and rendering of the code action lightbulb.',
+      comment: 'Control the behavior and rendering of the code action lightbulb.',
     },
     {
       name: 'lineHeight',
       group: 'editor',
       type: Types.Number,
       value: 0,
-      comment:
-        'Controls the line height. Use 0 to compute the line height from the font size.',
+      comment: 'Controls the line height. Use 0 to compute the line height from the font size.',
     },
     {
       name: 'lineNumbers',
@@ -348,8 +329,7 @@ export namespace Settings {
       group: 'editor',
       type: Types.Checkbox,
       value: true,
-      comment:
-        'Controls whether the editor should detect links and make them clickable',
+      comment: 'Controls whether the editor should detect links and make them clickable',
     },
     {
       name: 'matchBrackets',
@@ -371,8 +351,7 @@ export namespace Settings {
       group: 'editor.minimap',
       type: Types.Number,
       value: 120,
-      comment:
-        'Limit the width of the minimap to render at most a certain number of columns.',
+      comment: 'Limit the width of the minimap to render at most a certain number of columns.',
     },
     {
       name: 'minimap.renderCharacters',
@@ -402,16 +381,14 @@ export namespace Settings {
       group: 'editor',
       type: Types.Number,
       value: 1,
-      comment:
-        'A multiplier to be used on the deltaX and deltaY of mouse wheel scroll events.',
+      comment: 'A multiplier to be used on the deltaX and deltaY of mouse wheel scroll events.',
     },
     {
       name: 'mouseWheelZoom',
       group: 'editor',
       type: Types.Checkbox,
       value: false,
-      comment:
-        'Zoom the font in the editor when using the mouse wheel in combination with holding Ctrl',
+      comment: 'Zoom the font in the editor when using the mouse wheel in combination with holding Ctrl',
     },
     {
       name: 'multiCursorMergeOverlapping',
@@ -440,32 +417,28 @@ export namespace Settings {
       group: 'editor',
       type: Types.Checkbox,
       value: true,
-      comment:
-        'Controls if a border should be drawn around the overview ruler.',
+      comment: 'Controls if a border should be drawn around the overview ruler.',
     },
     {
       name: 'overviewRulerLanes',
       group: 'editor',
       type: Types.Number,
       value: 3,
-      comment:
-        'Controls the number of decorations that can show up at the same position in the overview ruler.',
+      comment: 'Controls the number of decorations that can show up at the same position in the overview ruler.',
     },
     {
       name: 'parameterHints.cycle',
       group: 'editor',
       type: Types.Checkbox,
       value: false,
-      comment:
-        'Controls whether the parameter hints menu cycles or closes when reaching the end of the list',
+      comment: 'Controls whether the parameter hints menu cycles or closes when reaching the end of the list',
     },
     {
       name: 'parameterHints.enabled',
       group: 'editor',
       type: Types.Checkbox,
       value: true,
-      comment:
-        'Enables a pop-up that shows parameter documentation and type information as you type',
+      comment: 'Enables a pop-up that shows parameter documentation and type information as you type',
     },
     {
       name: 'quickSuggestions',
@@ -479,8 +452,7 @@ export namespace Settings {
       group: 'editor.suggestions',
       type: Types.Number,
       value: 10,
-      comment:
-        'Controls the delay in milliseconds after which quick suggestions will show up.',
+      comment: 'Controls the delay in milliseconds after which quick suggestions will show up.',
     },
     {
       name: 'renderControlCharacters',
@@ -539,16 +511,14 @@ export namespace Settings {
       group: 'editor',
       type: Types.Number,
       value: 5,
-      comment:
-        'Enable that scrolling can go beyond the last column by a number of columns',
+      comment: 'Enable that scrolling can go beyond the last column by a number of columns',
     },
     {
       name: 'scrollBeyondLastLine',
       group: 'editor',
       type: Types.Checkbox,
       value: true,
-      comment:
-        'Enable that scrolling can go one screen size after the last line.',
+      comment: 'Enable that scrolling can go one screen size after the last line.',
     },
     {
       name: 'scrollbar.verticalScrollbarSize',
@@ -569,8 +539,7 @@ export namespace Settings {
       group: 'editor',
       type: Types.Checkbox,
       value: true,
-      comment:
-        'Should the corresponding line be selected when clicking on the line number?',
+      comment: 'Should the corresponding line be selected when clicking on the line number?',
     },
     {
       name: 'selectionClipboard',
@@ -591,8 +560,7 @@ export namespace Settings {
       group: 'editor',
       type: Types.Dropdown,
       value: 'mouseover',
-      comment:
-        'Controls whether the fold controls on the gutter are automatically hidden.',
+      comment: 'Controls whether the fold controls on the gutter are automatically hidden.',
       choices: ['always', 'mouseover'],
     },
     {
@@ -615,8 +583,7 @@ export namespace Settings {
       group: 'editor.suggestions',
       type: Types.Dropdown,
       value: 'inline',
-      comment:
-        'Controls whether snippets are shown with other suggestions and how they are sorted.',
+      comment: 'Controls whether snippets are shown with other suggestions and how they are sorted.',
       choices: ['top', 'bottom', 'inline', 'none'],
     },
     {
@@ -624,16 +591,14 @@ export namespace Settings {
       group: 'editor.suggestions',
       type: Types.Number,
       value: 0,
-      comment:
-        'Font size for the suggest widget. When set to 0, the value of Editor: Font Size is used.',
+      comment: 'Font size for the suggest widget. When set to 0, the value of Editor: Font Size is used.',
     },
     {
       name: 'suggestLineHeight',
       group: 'editor.suggestions',
       type: Types.Number,
       value: 0,
-      comment:
-        'Line height for the suggest widget. When set to 0, the value of Editor: Line Height is used.',
+      comment: 'Line height for the suggest widget. When set to 0, the value of Editor: Line Height is used.',
     },
     {
       name: 'suggestOnTriggerCharacters',
@@ -647,8 +612,7 @@ export namespace Settings {
       group: 'editor.suggestions',
       type: Types.Dropdown,
       value: 'recentlyUsed',
-      comment:
-        'Controls how suggestions are pre-selected when showing the suggest list.',
+      comment: 'Controls how suggestions are pre-selected when showing the suggest list.',
       choices: ['first', 'recentlyUsed', 'recentlyUsedByPrefix'],
     },
     {
@@ -671,16 +635,14 @@ export namespace Settings {
       group: 'editor.suggestions',
       type: Types.Checkbox,
       value: true,
-      comment:
-        'Controls whether completions should be computed based  on words in the document',
+      comment: 'Controls whether completions should be computed based  on words in the document',
     },
     {
       name: 'wordSeparators',
       group: 'editor',
       type: Types.Input,
       value: '`~!@#$%^&*()-=+[{]}|;:\'",.<>/?',
-      comment:
-        'Characters that will be used as word separators when doing word related navigations or operations.',
+      comment: 'Characters that will be used as word separators when doing word related navigations or operations.',
     },
     {
       name: 'wordWrap',
@@ -695,8 +657,7 @@ export namespace Settings {
       group: 'editor',
       type: Types.Number,
       value: 80,
-      comment:
-        'Controls the wrapping column of the editor when Editor: Word Wrap is wordWrapColumn or bounded.',
+      comment: 'Controls the wrapping column of the editor when Editor: Word Wrap is wordWrapColumn or bounded.',
     },
     {
       name: 'wrappingIndent',
@@ -722,6 +683,6 @@ export namespace Settings {
       value: 'opened',
       choices: ['closed', 'opened'],
       comment: 'Controls whether the sidebar is opened or closed by default.',
-    }
-  ];
+    },
+  ]
 }
