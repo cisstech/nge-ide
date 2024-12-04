@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core'
 import { CodIcon } from '@cisstech/nge/ui/icon'
-import { ICommand, Keybinding } from '../../commands'
-import { KeyCodes, KeyModifiers } from '../../keybinding'
+import { ICommand } from '../../commands'
 import { EditorService } from '../editor.service'
 import { PreviewService } from '../preview.service'
 
@@ -13,11 +12,6 @@ export class EditorPreviewCommand implements ICommand {
   readonly id = EDITOR_PREVIEW_COMMAND
   readonly icon = new CodIcon('open-preview')
   readonly label = 'Prévisualiser'
-  readonly keybinding = new Keybinding({
-    key: KeyCodes.ENTER,
-    label: '⌘ ENTER',
-    modifiers: [KeyModifiers.CTRL_CMD],
-  })
 
   get enabled(): boolean {
     const { activeGroup } = this.editorService
