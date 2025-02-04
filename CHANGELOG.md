@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [18.0.1](https://github.com/cisstech/nge-ide/compare/v18.0.0...v18.0.1) (2025-02-04)
+
+
+### Bug Fixes
+
+* **preview-command:** remove previsualisation shortcut ([c6a309f](https://github.com/cisstech/nge-ide/commit/c6a309feaccbd6567ebf29f810c25b74c34ac6c6))
+
 ## 18.0.0 (2024-08-27)
 
 ### [17.7.4](https://github.com/cisstech/nge-ide/compare/v17.7.3...v17.7.4) (2024-07-20)

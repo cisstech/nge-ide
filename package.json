@@ -1,6 +1,6 @@
 {
   "name": "@cisstech/nge-ide",
-  "version": "18.0.0",
+  "version": "18.0.1",
   "description": "An extensible and flexible open source ide written in Angular.",
   "keywords": [
     "angular"
@@ -131,5 +131,6 @@
   },
   "publishConfig": {
     "registry": "https://registry.npmjs.org"
-  }
+  },
+  "packageManager": "yarn@1.22.22+sha1.ac34549e6aa8e7ead463a7407e1c7390f61a6610"
 }
