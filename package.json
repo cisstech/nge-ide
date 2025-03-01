@@ -57,7 +57,7 @@
     "@ngx-pwa/local-storage": "^18.0.0",
     "angular-split": "^17.1.1",
     "marked": "^11.0.1",
-    "monaco-editor": "^0.43.0",
+    "monaco-editor": "^0.52.2",
     "ng-event-bus": "^7.0.1",
     "ng-zorro-antd": "^18.1.1",
     "ngx-pipes": "^3.2.2",
