@@ -1,12 +1,16 @@
 <ng-container *ngIf="!isEmpty">
   <ul class="activitybar" role="toolbar" aria-label="Activity Bar" cdkDropList (cdkDropListDropped)="reorder($event)">
-    <li *ngFor="let item of top; trackBy: trackById" cdkDrag cdkDragLockAxis="y">
-      <ng-container *ngTemplateOutlet="activityBarItemTplt; context: { $implicit: item }"></ng-container>
-    </li>
+    @for (item of top; track item.id) {
+      <li cdkDrag cdkDragLockAxis="y">
+        <ng-container *ngTemplateOutlet="activityBarItemTplt; context: { $implicit: item }"></ng-container>
+      </li>
+    }
     <li class="spacer"></li>
-    <li *ngFor="let item of bottom; trackBy: trackById">
-      <ng-container *ngTemplateOutlet="activityBarItemTplt; context: { $implicit: item }"></ng-container>
-    </li>
+    @for (item of bottom; track item.id) {
+      <li>
+        <ng-container *ngTemplateOutlet="activityBarItemTplt; context: { $implicit: item }"></ng-container>
+      </li>
+    }
   </ul>
   <div class="sidebar" aria-label="Side Bar">
     <ide-view-group *ngIf="active" [container]="active"></ide-view-group>
@@ -14,19 +18,16 @@
 </ng-container>
 <ng-template #activityBarItemTplt let-item>
   @if (item.dropdown) {
-    <div
-      class="activitybar-item"
-      role="button"
-      [id]="item.id"
-      [attr.aria-label]="item.title">
-      <nz-badge [nzCount]="(item.badge|async) || 0">
+    <div class="activitybar-item" role="button" [id]="item.id" [attr.aria-label]="item.title">
+      <nz-badge [nzCount]="(item.badge | async) || 0">
         <ui-icon
           class="activitybar-icon"
           [id]="item.id"
           [icon]="item.icon"
           [nz-tooltip]="item.title"
           nz-dropdown
-          [nzDropdownMenu]="menu">
+          [nzDropdownMenu]="menu"
+        >
         </ui-icon>
       </nz-badge>
     </div>
@@ -36,14 +37,16 @@
       role="button"
       [id]="item.id"
       [class.active]="isActive(item)"
-      [attr.aria-label]="item.title">
-      <nz-badge [nzCount]="(item.badge|async) || 0">
+      [attr.aria-label]="item.title"
+    >
+      <nz-badge [nzCount]="(item.badge | async) || 0">
         <ui-icon
           class="activitybar-icon"
           [id]="item.id"
           [icon]="item.icon"
           [nz-tooltip]="item.title"
-          (click)="setActive(item)">
+          (click)="setActive(item)"
+        >
         </ui-icon>
       </nz-badge>
     </div>

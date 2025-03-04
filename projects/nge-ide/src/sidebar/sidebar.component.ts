@@ -10,11 +10,11 @@ import {
 } from '@angular/core'
 import {
   IdeService,
-  StorageService,
+  SettingsService,
   SidebarContainer,
+  StorageService,
   ViewContainerScopes,
   ViewContainerService,
-  SettingsService,
 } from '@cisstech/nge-ide/core'
 import { lastValueFrom, Subscription } from 'rxjs'
 import { map, take } from 'rxjs/operators'
@@ -40,8 +40,6 @@ export class SidebarComponent implements OnInit, OnDestroy {
     order: [],
   }
 
-  /** Current size of the sidebar */
-  size = OPENED_SIZE
 
   /** Current active container */
   active?: SidebarContainer
@@ -59,6 +57,10 @@ export class SidebarComponent implements OnInit, OnDestroy {
 
   @HostBinding('attr.role')
   role = 'navigation'
+
+
+  /** Current size of the sidebar */
+  size = OPENED_SIZE
 
   /**
    * Gets a value indicating whether there is any registered
@@ -112,10 +114,6 @@ export class SidebarComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.saveState()
     this.subscriptions.forEach((s) => s.unsubscribe())
-  }
-
-  trackById(_: number, item: any): string {
-    return item.id
   }
 
   /**
@@ -172,7 +170,7 @@ export class SidebarComponent implements OnInit, OnDestroy {
   private async restoreState(): Promise<void> {
     const defaultSizeSetting = this.settingsService.get('ide.layout', 'toggleSideBar')?.value
     const defaultSize = defaultSizeSetting === 'closed' ? CLOSED_SIZE : OPENED_SIZE
-    this.size = defaultSize
+    this.size = this.side === 'left' ? defaultSize : CLOSED_SIZE
 
     this.state = await lastValueFrom(
       this.storageService
