@@ -130,6 +130,7 @@ export class ExplorerService implements IContribution {
   }
 
   get tree(): ITree<IFile> {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     return this.treeService.get(this.adapter.id) as any
   }
 

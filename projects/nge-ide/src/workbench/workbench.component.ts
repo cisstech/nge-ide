@@ -20,7 +20,7 @@ export class WorkbenchComponent implements OnInit, OnDestroy {
     this.editorService.commands.pipe(startWith([])),
     this.editorService.onDidOpen.pipe(startWith(undefined)), // reload commands every time an editor is opened
   ]).pipe(
-    map(([commands, _]) => commands.slice()) // slice to force trigger change detection of command-group component
+    map(([commands]) => commands.slice()) // slice to force trigger change detection of command-group component
   )
 
   constructor(private readonly editorService: EditorService) {}
