@@ -1,3 +1,4 @@
+import { NzButtonType } from 'ng-zorro-antd/button'
 import { ICommand } from '../commands'
 
 export enum ToolbarGroups {
@@ -16,6 +17,7 @@ export interface IToolbarCustomGroup {
 
 export interface IToolbarButton {
   command: ICommand
+  buttonType?: NzButtonType
   colors?: {
     foreground: string
     background: string

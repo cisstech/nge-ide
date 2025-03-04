@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, DestroyRef, OnInit, inject } from '@angular/core'
+import { Component, DestroyRef, OnInit, inject } from '@angular/core'
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop'
 import { IToolbarItem, ToolbarGroups, ToolbarService } from '@cisstech/nge-ide/core'
 import { Observable } from 'rxjs'

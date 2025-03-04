@@ -1,27 +1,23 @@
-<ng-container *ngIf="buttons|async as actions">
+<ng-container *ngIf="buttons | async as actions">
   @for (action of actions; track action.command.id) {
     <button
       *ngIf="action.command.enabled"
       nz-button
-      [nzType]="action.colors ? 'primary' : 'default'"
+      [nzType]="action.buttonType || (action.colors ? 'primary' : 'default')"
       (click)="action.command.execute()"
       [style.background-color]="action.colors?.background"
       [style.color]="action.colors?.foreground"
-      class="action">
-        <ui-icon [icon]="action.command.icon" />
-        {{ action.command.label }}
+      class="action"
+    >
+      <ui-icon [icon]="action.command.icon" />
+      {{ action.command.label }}
     </button>
   }
 </ng-container>
 @for (tuple of menus; track tuple[0]) {
-   <ng-container *ngIf="tuple[1]|async as items">
+  <ng-container *ngIf="tuple[1] | async as items">
     <ng-container *ngIf="items.length">
-      <button
-        nz-button
-        nzType="text"
-        class="menu"
-        nz-dropdown
-        [nzDropdownMenu]="menu">
+      <button nz-button nzType="text" class="menu" nz-dropdown [nzDropdownMenu]="menu">
         {{ tuple[0] }}
       </button>
       <nz-dropdown-menu #menu="nzDropdownMenu">
@@ -34,7 +30,8 @@
                 class="menu-item"
                 [class.disabled]="!item.command?.enabled"
                 [attr.data-command]="item.command?.id"
-                (click)="item.command?.execute()">
+                (click)="item.command?.execute()"
+              >
                 <div class="menu-item-content">
                   <div class="menu-icon"></div>
                   <div class="menu-label">{{ item.command?.label }}</div>
@@ -54,7 +51,7 @@
 
 <div class="spacer"></div>
 <a href="https://github.com/cisstech/nge-ide" target="_blank" nz-button nzType="link">
-    NGE IDE
+  NGE IDE
   <svg
     class="workbench-logo"
     xmlns="http://www.w3.org/2000/svg"
@@ -66,9 +63,7 @@
   >
     <defs>
       <clipPath id="a">
-        <path
-          d="M 114 82 L 262 82 L 262 234.792969 L 114 234.792969 Z M 114 82"
-        />
+        <path d="M 114 82 L 262 82 L 262 234.792969 L 114 234.792969 Z M 114 82" />
       </clipPath>
       <clipPath id="b">
         <path
@@ -351,5 +346,4 @@
       </g>
     </g>
   </svg>
-
 </a>
