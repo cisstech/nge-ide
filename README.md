@@ -54,7 +54,7 @@ import { NgeIdeNotificationsModule } from '@cisstech/nge-ide/notifications'
 @NgModule({
   imports: [
     BrowserModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
 
     NgeIdeModule,
     NgeIdeExplorerModule,
@@ -510,7 +510,7 @@ export class MyAdvancedContribution implements IContribution {
 
   activate() {
     // Show notifications
-    this.notificationService.publishInfo('IDE initialized')
+    this.notificationService.publish(new InfoNotification('IDE initialized'))
 
     // Add item to status bar
     this.statusBarService.register({
