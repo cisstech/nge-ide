@@ -55,7 +55,7 @@
     "@angular/router": "^18.2.1",
     "@cisstech/nge": "^18.2.0",
     "@ngx-pwa/local-storage": "^18.0.0",
-    "angular-split": "^17.1.1",
+    "angular-split": "^18.0.0",
     "marked": "^11.0.1",
     "monaco-editor": "^0.52.2",
     "ng-event-bus": "^7.0.1",
