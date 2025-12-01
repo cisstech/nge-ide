@@ -1380,9 +1380,9 @@
   integrity sha512-0hYQ8SB4Db5zvZB4axdMHGwEaQjkZzFjQiN9LVYvIFB2nSUHW9tYpxWriPrWDASIxiaXax83REcLxuSdnGPZtw==
 
 "@cisstech/nge@^18.2.0":
-  version "18.2.0"
-  resolved "https://registry.yarnpkg.com/@cisstech/nge/-/nge-18.2.0.tgz#576f12bcfef409a13098c383adb1c6537406db42"
-  integrity sha512-C+JqeaoaKxL6i6l/hZ9dfCiZ+fsLBSyxPnKmGUynse3LPbtt9kaeNDUSaqUECu62zaZKc20wakkcOis5+eaRBA==
+  version "18.3.0"
+  resolved "https://registry.yarnpkg.com/@cisstech/nge/-/nge-18.3.0.tgz#8f92504a36373b5726b2ee65e80d3bcc153ccf83"
+  integrity sha512-alP9xV1ulW3V1x/lgq3m1V/sag5+7J/xdK/l6qd0K7Ql03EtppcqooKEC5mpYRJ0yn0h9zP5n/vcpzbOp6/WnQ==
   dependencies:
     tslib "^2.3.0"
 
