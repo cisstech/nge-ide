@@ -1,29 +1,30 @@
-<ng-container *ngIf="buttons | async as actions">
+@if (buttons | async; as actions) {
   @for (action of actions; track action.command.id) {
-    <button
-      *ngIf="action.command.enabled"
-      nz-button
-      [nzType]="action.buttonType || (action.colors ? 'primary' : 'default')"
-      (click)="action.command.execute()"
-      [style.background-color]="action.colors?.background"
-      [style.color]="action.colors?.foreground"
-      class="action"
-    >
-      <ui-icon [icon]="action.command.icon" />
-      {{ action.command.label }}
-    </button>
+    @if (action.command.enabled) {
+      <button
+        nz-button
+        [nzType]="action.buttonType || (action.colors ? 'primary' : 'default')"
+        (click)="action.command.execute()"
+        [style.background-color]="action.colors?.background"
+        [style.color]="action.colors?.foreground"
+        class="action"
+      >
+        <ui-icon [icon]="action.command.icon" />
+        {{ action.command.label }}
+      </button>
+    }
   }
-</ng-container>
+}
 @for (tuple of menus; track tuple[0]) {
-  <ng-container *ngIf="tuple[1] | async as items">
-    <ng-container *ngIf="items.length">
+  @if (tuple[1] | async; as items) {
+    @if (items.length) {
       <button nz-button nzType="text" class="menu" nz-dropdown [nzDropdownMenu]="menu">
         {{ tuple[0] }}
       </button>
       <nz-dropdown-menu #menu="nzDropdownMenu">
         <ul nz-menu role="menu">
           @for (item of items; track $index) {
-            <ng-container *ngIf="!item.isSeparator; else separator">
+            @if (!item.isSeparator) {
               <li
                 nz-menu-item
                 role="menuitem"
@@ -38,15 +39,16 @@
                   <div class="menu-shorcut">{{ item.command?.keybinding }}</div>
                 </div>
               </li>
-            </ng-container>
-            <ng-template #separator>
-              <nz-divider nzDashed *ngIf="!$last"></nz-divider>
-            </ng-template>
+            } @else {
+              @if (!$last) {
+                <nz-divider nzDashed></nz-divider>
+              }
+            }
           }
         </ul>
       </nz-dropdown-menu>
-    </ng-container>
-  </ng-container>
+    }
+  }
 }
 
 <div class="spacer"></div>

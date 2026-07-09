@@ -1,40 +1,45 @@
-<div class='setting-editor'>
+<div class="setting-editor">
   <ul class="list-groups">
-    <ng-container *ngFor='let item of groups'>
-      <li  *ngIf="item.settings?.length !== 0" (click)='didSelect(item)'>
-        <div class='setting-item-group' [ngClass]='{ active: selection?.name === item.name}'>
-          {{item.name|nicifyName}}
-        </div>
-      </li>
-    </ng-container>
+    @for (item of groups; track item) {
+      @if (item.settings?.length !== 0) {
+        <li (click)="didSelect(item)">
+          <div class="setting-item-group" [ngClass]="{ active: selection?.name === item.name }">
+            {{ item.name | nicifyName }}
+          </div>
+        </li>
+      }
+    }
   </ul>
   <ul>
-    <ng-container *ngIf="selection">
-      <ng-container *ngFor="let setting of selection.settings">
-          <p class='setting-item-name active'>{{setting.name|nicifyName:true}}</p>
-          <p class='setting-item-comment' *ngIf='setting.type !== "Checkbox"'>{{setting.comment}}</p>
-          <div class="setting-item-input">
-            <ng-container [ngSwitch]="setting.type">
-              <ng-container *ngSwitchCase="'Checkbox'">
-                <label nz-checkbox [(ngModel)]="setting.value" (nzCheckedChange)="didChange()">{{setting.comment}}</label>
-              </ng-container>
-              <ng-container *ngSwitchCase="'Number'">
-                <input type="number" nz-input [(ngModel)]="setting.value" (ngModelChange)="didChange()">
-              </ng-container>
-              <ng-container *ngSwitchCase="'Input'">
-                <input type="text" nz-input [(ngModel)]="setting.value" (ngModelChange)="didChange()">
-              </ng-container>
-              <ng-container *ngSwitchCase="'Dropdown'">
-                <nz-select [(ngModel)]="setting.value" (ngModelChange)="didChange()" nzAllowClear>
-                  <nz-option
-                    *ngFor="let item of setting.choices"
-                    [nzLabel]="item"
-                    [nzValue]="item">
-                  </nz-option>
-                </nz-select>
-              </ng-container>
-            </ng-container>
-          </div>
-      </ng-container>
-    </ng-container>
+    @if (selection) {
+      @for (setting of selection.settings; track setting) {
+        <p class="setting-item-name active">{{ setting.name | nicifyName: true }}</p>
+        @if (setting.type !== 'Checkbox') {
+          <p class="setting-item-comment">{{ setting.comment }}</p>
+        }
+        <div class="setting-item-input">
+          @switch (setting.type) {
+            @case ('Checkbox') {
+              <label nz-checkbox [(ngModel)]="setting.value" (nzCheckedChange)="didChange()">{{
+                setting.comment
+              }}</label>
+            }
+            @case ('Number') {
+              <input type="number" nz-input [(ngModel)]="setting.value" (ngModelChange)="didChange()" />
+            }
+            @case ('Input') {
+              <input type="text" nz-input [(ngModel)]="setting.value" (ngModelChange)="didChange()" />
+            }
+            @case ('Dropdown') {
+              <nz-select [(ngModel)]="setting.value" (ngModelChange)="didChange()" nzAllowClear>
+                @for (item of setting.choices; track item) {
+                  <nz-option [nzLabel]="item" [nzValue]="item"> </nz-option>
+                }
+              </nz-select>
+            }
+          }
+        </div>
+      }
+    }
   </ul>
+</div>

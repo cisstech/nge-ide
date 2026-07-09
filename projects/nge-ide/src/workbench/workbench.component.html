@@ -1,69 +1,50 @@
-<div class="container-welcome" *ngIf="empty">
-  <ng-content />
-</div>
-<as-split
-  direction="horizontal"
-  [gutterSize]="2"
-  [useTransition]="true"
-  cdkDropListGroup
->
-  <ng-container *ngFor="let group of groups | async; trackBy: trackGroup">
-    <as-split-area
-      class="editor-group"
-      [class.editor-group--active]="isActiveGroup(group)"
-    >
+@if (empty) {
+  <div class="container-welcome">
+    <ng-content />
+  </div>
+}
+<as-split direction="horizontal" [gutterSize]="2" [useTransition]="true" cdkDropListGroup>
+  @for (group of groups | async; track trackGroup($index, group)) {
+    <as-split-area class="editor-group" [class.editor-group--active]="isActiveGroup(group)">
       <nz-tabset
         nzType="card"
         (click)="setActiveGroup(group)"
         [(nzSelectedIndex)]="group.activeIndex"
         [nzTabBarExtraContent]="buttons"
       >
-        <ng-container *ngFor="let tab of group.tabs; trackBy: trackTab">
+        @for (tab of group.tabs; track trackTab($index, tab)) {
           <nz-tab [nzTitle]="title">
             <ng-template #title>
               <div class="tab-content">
-                <ng-container *ngIf="tab.options.icon; else iconFile">
+                @if (tab.options.icon) {
                   <ui-icon class="tab-icon" [icon]="tab.options.icon" />
-                </ng-container>
-                <ng-template #iconFile>
-                  <ui-icon
-                    class="tab-icon"
-                    [icon]="tab.options.title | iconFile"
-                  />
-                </ng-template>
+                } @else {
+                  <ui-icon class="tab-icon" [icon]="tab.options.title | iconFile" />
+                }
                 <span class="tab-title" [nz-tooltip]="tab.options.tooltip" [nzTooltipPlacement]="['top', 'bottom']">{{
                   tab.options.title
                 }}</span>
-                <span *ngIf="tab.file?.readOnly" class="codicon codicon-lock-small" nz-tooltip="Éditeur en lecture seule"></span>
-                <ng-container
-                  *ngIf="tab.resource | fileChanged | async; else closeable"
-                >
-                  <span
-                    class="tab-dirty codicon codicon-close-dirty"
-                    (click)="group.close(tab.resource)"
-                  ></span>
-                </ng-container>
-                <ng-template #closeable>
-                  <span
-                    class="tab-close codicon codicon-close"
-                    (click)="group.close(tab.resource)"
-                  ></span>
-                </ng-template>
+                @if (tab.file?.readOnly) {
+                  <span class="codicon codicon-lock-small" nz-tooltip="Éditeur en lecture seule"></span>
+                }
+                @if (tab.resource | fileChanged | async) {
+                  <span class="tab-dirty codicon codicon-close-dirty" (click)="group.close(tab.resource)"></span>
+                } @else {
+                  <span class="tab-close codicon codicon-close" (click)="group.close(tab.resource)"></span>
+                }
               </div>
             </ng-template>
           </nz-tab>
-        </ng-container>
+        }
         <ng-template #buttons>
-          <ng-container *ngIf="isActiveGroup(group)">
-            <ide-command-group
-              [commands]="(commands | async) || []"
-            ></ide-command-group>
-          </ng-container>
+          @if (isActiveGroup(group)) {
+            <ide-command-group [commands]="(commands | async) || []"></ide-command-group>
+          }
         </ng-template>
       </nz-tabset>
       <div class="editor-wrapper" (click)="setActiveGroup(group)">
         <ng-template [editor]="group.activeEditor"></ng-template>
       </div>
     </as-split-area>
-  </ng-container>
+  }
 </as-split>

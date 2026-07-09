@@ -8,19 +8,20 @@
     [(pattern)]="pattern"
     placeholder="Rechercher"
     arialLabel="Rechercher: Écrivez votre texte et pressez Entrer pour rechercher or Esc pour annuler"
-    (search)="search()">
+    (search)="search()"
+  >
   </ide-search-input>
 </div>
 
 <!-- <div>
-  <span>Fichiers à inclure</span>
-  <ide-search-input
-    [controls]="false"
-    [(query)]="form.include"
-    placeholder="src,home/a.ts"
-    arialLabel="Fichiers à inclure"
-    (search)="search()">
-  </ide-search-input>
+<span>Fichiers à inclure</span>
+<ide-search-input
+  [controls]="false"
+  [(query)]="form.include"
+  placeholder="src,home/a.ts"
+  arialLabel="Fichiers à inclure"
+  (search)="search()">
+</ide-search-input>
 </div>
 <div>
   <span>Fichers à exclure</span>
@@ -32,8 +33,8 @@
     (search)="search()">
   </ide-search-input>
 </div>
- -->
-<ng-container *ngIf="isEmpty">
+-->
+@if (isEmpty) {
   <div>
     Aucun résultat pour '{{ form.query }}'
     <!--
@@ -41,26 +42,25 @@
     <span *ngIf="form.exclude"> excluding '{{ form.exclude }}' </span>
     -->
   </div>
-</ng-container>
-<ng-container *ngIf="searching">
+}
+@if (searching) {
   <nz-skeleton [nzActive]="true"></nz-skeleton>
   <nz-skeleton [nzActive]="true"></nz-skeleton>
   <nz-skeleton [nzActive]="true"></nz-skeleton>
-</ng-container>
+}
 <ui-tree #treeRef [nodes]="nodes" [adapter]="adapter">
   <ng-container *treeNode="let node">
-    <span class="tree-label" [nz-tooltip]="node.data.resource|fileName:true">
-      <ng-container *ngIf="node.expandable; else leafTemplate">
-        <div class="codicon codicon-{{treeRef.isExpanded(node) ? 'chevron-down' : 'chevron-right' }}"></div>&nbsp;
-        <ui-icon [icon]="node.name | iconFile"></ui-icon>&nbsp;
+    <span class="tree-label" [nz-tooltip]="node.data.resource | fileName: true">
+      @if (node.expandable) {
+        <div class="codicon codicon-{{ treeRef.isExpanded(node) ? 'chevron-down' : 'chevron-right' }}"></div>
+        &nbsp; <ui-icon [icon]="node.name | iconFile"></ui-icon>&nbsp;
         <span [highlight]="node.name" [highlightPattern]="pattern"></span>
-      </ng-container>
-      <ng-template #leafTemplate>
+      } @else {
         <div [style.margin]="'0 8px'">
           <span>{{ node.data.lineno }}:</span>&nbsp;
           <span [highlight]="node.name" [highlightPattern]="pattern"></span>
         </div>
-      </ng-template>
+      }
     </span>
   </ng-container>
 </ui-tree>

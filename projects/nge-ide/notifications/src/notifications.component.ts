@@ -13,8 +13,4 @@ export class NotificationsComponent {
   readonly items = this.notificationService.items
 
   constructor(private readonly notificationService: NotificationService) {}
-
-  trackBy(index: number) {
-    return index
-  }
 }

@@ -5,8 +5,7 @@
     "declarationMap": true,
     "declaration": true,
     "inlineSources": true,
-    "types": ["../../node_modules/monaco-editor/monaco.d.ts"],
-    "lib": ["dom", "es2018"]
+    "types": ["../../node_modules/monaco-editor/monaco.d.ts"]
   },
   "angularCompilerOptions": {
     "skipTemplateCodegen": true,

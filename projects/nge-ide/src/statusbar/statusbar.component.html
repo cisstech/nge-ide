@@ -1,23 +1,25 @@
 <div class="status-bar-container">
-  <ng-container *ngFor="let item of leftViews; trackBy: track">
-    <div
-      *ngIf="item.active | async"
-      [nz-tooltip]="item.tooltip || ''"
-      class="status-bar-item"
-      [class.clickable]="!!item.action"
-      [innerHTML]="item.content | async | safe: 'html'"
-      (click)="item.action && item.action()">
-    </div>
-  </ng-container>
+  @for (item of leftViews; track track($index, item)) {
+    @if (item.active | async) {
+      <div
+        [nz-tooltip]="item.tooltip || ''"
+        class="status-bar-item"
+        [class.clickable]="!!item.action"
+        [innerHTML]="item.content | async | safe: 'html'"
+        (click)="item.action && item.action()"
+      ></div>
+    }
+  }
   <div class="spacer"></div>
-  <ng-container *ngFor="let item of rightViews; trackBy: track">
-    <div
-      *ngIf="item.active | async"
-      [nz-tooltip]="item.tooltip || ''"
-      class="status-bar-item"
-      [class.clickable]="!!item.action"
-      [innerHTML]="item.content | async | safe: 'html'"
-      (click)="item.action && item.action()">
-    </div>
-  </ng-container>
+  @for (item of rightViews; track track($index, item)) {
+    @if (item.active | async) {
+      <div
+        [nz-tooltip]="item.tooltip || ''"
+        class="status-bar-item"
+        [class.clickable]="!!item.action"
+        [innerHTML]="item.content | async | safe: 'html'"
+        (click)="item.action && item.action()"
+      ></div>
+    }
+  }
 </div>

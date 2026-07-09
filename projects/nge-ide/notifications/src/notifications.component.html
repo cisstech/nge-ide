@@ -1,13 +1,21 @@
-<ul class='list-notifs'>
-  <span class="label-empty" *ngIf="empty|async">AUCUNE NOTIFICATION</span>
-  <ng-container *ngFor="let item of items|async; trackBy: trackBy;">
-    <li class='item-notif item-notif--{{ item.level }}'>
-      <ng-container [ngSwitch]="item.level">
-        <div *ngSwitchCase="'info'" class="item-notif__icon codicon codicon-info"></div>
-        <div *ngSwitchCase="'warn'"  class="item-notif__icon codicon codicon-warning"></div>
-        <div *ngSwitchDefault class="item-notif__icon codicon codicon-error"></div>
-      </ng-container>
-      <div class='item-notif__content' [innerHTML]='item.message'></div>
+<ul class="list-notifs">
+  @if (empty | async) {
+    <span class="label-empty">AUCUNE NOTIFICATION</span>
+  }
+  @for (item of items | async; track $index) {
+    <li class="item-notif item-notif--{{ item.level }}">
+      @switch (item.level) {
+        @case ('info') {
+          <div class="item-notif__icon codicon codicon-info"></div>
+        }
+        @case ('warn') {
+          <div class="item-notif__icon codicon codicon-warning"></div>
+        }
+        @default {
+          <div class="item-notif__icon codicon codicon-error"></div>
+        }
+      }
+      <div class="item-notif__content" [innerHTML]="item.message"></div>
     </li>
-  </ng-container>
+  }
 </ul>
