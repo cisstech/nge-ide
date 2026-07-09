@@ -1,4 +1,4 @@
-<nz-tabset [nzType]="'card'" [nzTabBarExtraContent]="extra" [(nzSelectedIndex)]="activeContainerIndex">
+<nz-tabs [nzType]="'card'" [nzTabBarExtraContent]="extra" [(nzSelectedIndex)]="activeContainerIndex">
   @for (container of containers; track trackById($index, container)) {
     <nz-tab [nzTitle]="title" (nzClick)="setActiveContainer(container)">
       <ng-template #title>
@@ -20,7 +20,7 @@
       <ide-command-group [commands]="(activeContainerView!.commands | async) || []"></ide-command-group>
     }
   </ng-template>
-</nz-tabset>
+</nz-tabs>
 @if (activeContainerView) {
   <div class="infobar-content">
     <ng-template [view]="activeContainerView"></ng-template>

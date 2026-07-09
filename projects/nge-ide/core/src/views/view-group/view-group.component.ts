@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input } from '@angular/core'
 import { StorageService } from '../../storage/index'
-import { IOutputData } from 'angular-split'
+import { SplitGutterInteractionEvent } from 'angular-split'
 import { take } from 'rxjs/operators'
 import { IView } from '../view'
 import { IViewContainer } from '../view-container'
@@ -55,7 +55,7 @@ export class ViewGroupComponent {
   ) {}
 
   //#region TEMPLATE FUNCTIONS
-  _dragEnd(data: IOutputData): void {
+  _dragEnd(data: SplitGutterInteractionEvent): void {
     this.state = { sizes: data.sizes as number[] }
     this.storageService.set(this.storageId, this.state).subscribe()
     this.changeDetectionRef.detectChanges()

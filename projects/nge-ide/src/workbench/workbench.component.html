@@ -6,7 +6,7 @@
 <as-split direction="horizontal" [gutterSize]="2" [useTransition]="true" cdkDropListGroup>
   @for (group of groups | async; track trackGroup($index, group)) {
     <as-split-area class="editor-group" [class.editor-group--active]="isActiveGroup(group)">
-      <nz-tabset
+      <nz-tabs
         nzType="card"
         (click)="setActiveGroup(group)"
         [(nzSelectedIndex)]="group.activeIndex"
@@ -41,7 +41,7 @@
             <ide-command-group [commands]="(commands | async) || []"></ide-command-group>
           }
         </ng-template>
-      </nz-tabset>
+      </nz-tabs>
       <div class="editor-wrapper" (click)="setActiveGroup(group)">
         <ng-template [editor]="group.activeEditor"></ng-template>
       </div>
