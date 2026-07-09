@@ -5,6 +5,7 @@ import { Settings, SettingsService } from '@cisstech/nge-ide/core'
   selector: 'ide-settings-editor',
   templateUrl: './settings-editor.component.html',
   styleUrls: ['./settings-editor.component.scss'],
+  standalone: false,
 })
 export class SettingsEditorComponent implements OnInit {
   /** setting groups */

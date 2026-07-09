@@ -11,6 +11,7 @@ import { ViewService } from '../view.service'
   templateUrl: './view-group.component.html',
   styleUrls: ['./view-group.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: false,
 })
 export class ViewGroupComponent {
   readonly minSize = 5

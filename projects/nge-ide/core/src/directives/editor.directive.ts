@@ -2,7 +2,10 @@ import { ComponentRef, Directive, Input, OnChanges, OnDestroy, ViewContainerRef 
 import { CompilerService } from '@cisstech/nge/services'
 import { Editor } from '../editors/index'
 
-@Directive({ selector: '[editor]' })
+@Directive({
+  selector: '[editor]',
+  standalone: false,
+})
 export class EditorDirective implements OnChanges, OnDestroy {
   private readonly componentRefs = new Map<string, ComponentRef<any>>()
 

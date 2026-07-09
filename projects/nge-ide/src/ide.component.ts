@@ -7,6 +7,7 @@ import { Subscription } from 'rxjs'
   templateUrl: 'ide.component.html',
   styleUrls: ['ide.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: false,
 })
 export class IdeComponent implements OnInit, OnDestroy {
   private readonly subscriptions: Subscription[] = []

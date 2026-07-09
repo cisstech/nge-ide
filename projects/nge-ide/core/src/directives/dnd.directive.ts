@@ -14,6 +14,7 @@ export const DndDataTransfer = 'dnd-data'
 @Directive({
   // tslint:disable-next-line: directive-selector
   selector: '[dnd]',
+  standalone: false,
 })
 export class DndDirective implements AfterContentInit {
   @Input()

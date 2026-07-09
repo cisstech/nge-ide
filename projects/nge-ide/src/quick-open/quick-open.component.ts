@@ -22,6 +22,7 @@ import { debounceTime, map } from 'rxjs/operators'
   templateUrl: './quick-open.component.html',
   styleUrls: ['./quick-open.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: false,
 })
 export class QuickOpenComponent implements OnInit {
   private readonly command = new (class implements ICommand {

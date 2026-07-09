@@ -7,6 +7,7 @@ import { Subscription } from 'rxjs'
   templateUrl: './preview-editor.component.html',
   styleUrls: ['./preview-editor.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: false,
 })
 export class PreviewEditorComponent implements OnInit, OnDestroy {
   private readonly subscriptions: Subscription[] = []

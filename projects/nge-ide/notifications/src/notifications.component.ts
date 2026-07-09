@@ -6,6 +6,7 @@ import { NotificationService } from '@cisstech/nge-ide/core'
   templateUrl: 'notifications.component.html',
   styleUrls: ['./notifications.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: false,
 })
 export class NotificationsComponent {
   readonly empty = this.notificationService.isEmpty

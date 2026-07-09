@@ -6,6 +6,7 @@ import { Subscription } from 'rxjs'
   selector: 'app-showcase',
   templateUrl: 'showcase.component.html',
   styleUrls: ['showcase.component.scss'],
+  standalone: false,
 })
 export class ShowcaseComponent implements OnInit, OnDestroy {
   private subscription?: Subscription

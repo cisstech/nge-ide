@@ -17,6 +17,7 @@ import IStandaloneDiffEditor = monaco.editor.IStandaloneDiffEditor
   selector: 'ide-code-editor',
   templateUrl: './code-editor.component.html',
   styleUrls: ['./code-editor.component.scss'],
+  standalone: false,
 })
 export class CodeEditorComponent implements OnInit, OnDestroy {
   private readonly disposables: IDisposable[] = []

@@ -5,6 +5,7 @@ import { FileService } from '../files/index'
 
 @Pipe({
   name: 'fileChanged',
+  standalone: false,
 })
 export class FileChangedPipe implements PipeTransform {
   constructor(private readonly fileService: FileService) {}

@@ -19,6 +19,7 @@ const OPENED_SIZE = 25
   templateUrl: './infobar.component.html',
   styleUrls: ['./infobar.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: false,
 })
 export class InfobarComponent implements OnInit, OnDestroy {
   private readonly subscriptions: Subscription[] = []

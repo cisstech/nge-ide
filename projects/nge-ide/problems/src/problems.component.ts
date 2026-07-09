@@ -25,6 +25,7 @@ import { Subscription } from 'rxjs'
   templateUrl: 'problems.component.html',
   styleUrls: ['./problems.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: false,
 })
 export class ProblemsComponent implements OnInit, OnDestroy, AfterViewChecked {
   private readonly subscriptions: Subscription[] = []

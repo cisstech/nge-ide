@@ -7,6 +7,7 @@ import { Subscription } from 'rxjs'
   templateUrl: './statusbar.component.html',
   styleUrls: ['./statusbar.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: false,
 })
 export class StatusbarComponent implements OnInit, OnDestroy {
   private readonly subscriptions: Subscription[] = []

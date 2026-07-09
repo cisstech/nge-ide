@@ -31,6 +31,7 @@ import { ExplorerService } from './explorer.service'
   templateUrl: './explorer.component.html',
   styleUrls: ['./explorer.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: false,
 })
 export class ExplorerComponent implements OnInit, OnDestroy, AfterViewChecked {
   private readonly subscriptions: Subscription[] = []

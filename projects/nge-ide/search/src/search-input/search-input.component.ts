@@ -5,6 +5,7 @@ import { Component, OnInit, Input, Output, EventEmitter, ChangeDetectionStrategy
   templateUrl: 'search-input.component.html',
   styleUrls: ['./search-input.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: false,
 })
 export class SearchInputComponent implements OnInit {
   @Input() ariaLabel = ''

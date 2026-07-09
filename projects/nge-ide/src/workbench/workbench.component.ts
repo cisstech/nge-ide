@@ -11,6 +11,7 @@ import { PreviewEditor } from './preview-editor/preview-editor'
   templateUrl: './workbench.component.html',
   styleUrls: ['./workbench.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: false,
 })
 export class WorkbenchComponent implements OnInit, OnDestroy {
   private readonly subscriptions: Subscription[] = []

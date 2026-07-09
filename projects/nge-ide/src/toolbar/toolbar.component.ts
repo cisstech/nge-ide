@@ -8,6 +8,7 @@ import { map } from 'rxjs/operators'
   selector: 'ide-toolbar',
   templateUrl: './toolbar.component.html',
   styleUrls: ['./toolbar.component.scss'],
+  standalone: false,
 })
 export class ToolbarComponent implements OnInit {
   private readonly destroyRef = inject(DestroyRef)

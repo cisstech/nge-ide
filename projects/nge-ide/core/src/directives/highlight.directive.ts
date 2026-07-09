@@ -3,6 +3,7 @@ import { Directive, Input, SimpleChanges, Renderer2, ElementRef, OnChanges } fro
 @Directive({
   // tslint:disable-next-line: directive-selector
   selector: '[highlight]',
+  standalone: false,
 })
 export class HighlightDirective implements OnChanges {
   @Input('highlight')
