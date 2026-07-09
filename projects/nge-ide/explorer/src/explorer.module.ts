@@ -12,13 +12,13 @@ import { NgeUiTreeModule } from '@cisstech/nge/ui/tree'
 
 import { ExplorerComponent } from './explorer.component'
 import { ExplorerFileIconOptionsPipe } from './pipes/explorer-file-icon-options.pipe'
-import { NzToolTipModule } from 'ng-zorro-antd/tooltip'
+import { NzTooltipModule } from 'ng-zorro-antd/tooltip'
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
-    NzToolTipModule,
+    NzTooltipModule,
     NzDropDownModule,
     CommandModule,
     NgeUiIconModule,

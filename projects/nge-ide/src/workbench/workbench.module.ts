@@ -8,7 +8,7 @@ import { AngularSplitModule } from 'angular-split'
 
 import { CommandModule, EditorDirectivesModule, EditorPipesModule } from '@cisstech/nge-ide/core'
 
-import { NzToolTipModule } from 'ng-zorro-antd/tooltip'
+import { NzTooltipModule } from 'ng-zorro-antd/tooltip'
 import { WorkbenchComponent } from './workbench.component'
 
 @NgModule({
@@ -17,7 +17,7 @@ import { WorkbenchComponent } from './workbench.component'
 
     NzTabsModule,
 
-    NzToolTipModule,
+    NzTooltipModule,
 
     CommandModule,
     NgeUiIconModule,

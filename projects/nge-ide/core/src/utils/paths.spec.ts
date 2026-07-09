@@ -12,8 +12,8 @@ describe('Paths', () => {
     expect(Paths.basename('example')).toBe('example')
     expect(Paths.basename('')).toBe('')
 
-    expect(() => Paths.dirname(undefined as any)).toThrowError(ReferenceError)
-    expect(() => Paths.dirname(null as any)).toThrowError(ReferenceError)
+    expect(() => Paths.dirname(undefined as any)).toThrow(ReferenceError)
+    expect(() => Paths.dirname(null as any)).toThrow(ReferenceError)
   })
 
   it('should get dirname of a path', () => {
@@ -31,8 +31,8 @@ describe('Paths', () => {
     expect(Paths.dirname('/example')).toBe('/')
     expect(Paths.dirname('')).toBe('')
 
-    expect(() => Paths.dirname(undefined as any)).toThrowError(ReferenceError)
-    expect(() => Paths.dirname(null as any)).toThrowError(ReferenceError)
+    expect(() => Paths.dirname(undefined as any)).toThrow(ReferenceError)
+    expect(() => Paths.dirname(null as any)).toThrow(ReferenceError)
   })
 
   it('should get extension of a path', () => {
@@ -45,8 +45,8 @@ describe('Paths', () => {
     expect(Paths.extname('example')).toBe('')
     expect(Paths.extname('')).toBe('')
 
-    expect(() => Paths.dirname(undefined as any)).toThrowError(ReferenceError)
-    expect(() => Paths.dirname(null as any)).toThrowError(ReferenceError)
+    expect(() => Paths.dirname(undefined as any)).toThrow(ReferenceError)
+    expect(() => Paths.dirname(null as any)).toThrow(ReferenceError)
   })
 
   it('should join paths', () => {
@@ -56,7 +56,7 @@ describe('Paths', () => {
     expect(Paths.join(['/home', '/demo', 'random.pl'])).toBe('/home/demo/random.pl')
     expect(Paths.join(['/home', 'demo', 'random.pl/'])).toBe('/home/demo/random.pl/')
     expect(Paths.join([])).toBe('')
-    expect(() => Paths.join(undefined as any)).toThrowError(ReferenceError)
-    expect(() => Paths.join(null as any)).toThrowError(ReferenceError)
+    expect(() => Paths.join(undefined as any)).toThrow(ReferenceError)
+    expect(() => Paths.join(null as any)).toThrow(ReferenceError)
   })
 })

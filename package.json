@@ -55,11 +55,11 @@
     "@angular/router": "^21.2.18",
     "@cisstech/nge": "^18.2.0",
     "@ngx-pwa/local-storage": "^18.0.0",
-    "angular-split": "^17.1.1",
+    "angular-split": "^20.0.0",
     "marked": "^11.0.1",
     "monaco-editor": "^0.52.2",
     "ng-event-bus": "^7.0.1",
-    "ng-zorro-antd": "^18.1.1",
+    "ng-zorro-antd": "^21.3.2",
     "ngx-pipes": "^3.2.2",
     "rxjs": "^7.5.2",
     "tslib": "^2.0.0",
@@ -102,7 +102,9 @@
     "tslint": "~6.1.0",
     "typescript": "^5.9.3",
     "typescript-eslint": "^8.33.1",
-    "wait-on": "^7.0.1"
+    "wait-on": "^7.0.1",
+    "jest-environment-jsdom": "^30.0.0",
+    "glob": "^11.0.0"
   },
   "jest": {
     "projects": [
