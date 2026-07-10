@@ -2,6 +2,29 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [22.0.0](https://github.com/cisstech/nge-ide/compare/v18.1.1...v22.0.0) (2026-07-10)
+
+
+### Features
+
+* **ide:** add a startup loading overlay ([eaf7531](https://github.com/cisstech/nge-ide/commit/eaf75310b332064a7327bf6c4aa98c6ff82c2849))
+* **theme:** self-injecting, IDE-scoped theme with a light/dark/system toggle ([6bb7769](https://github.com/cisstech/nge-ide/commit/6bb7769cffd94267dd23b25c06a0e9ccbdeff63b))
+* **ui:** add an internal UI kit to replace ng-zorro ([c6ec751](https://github.com/cisstech/nge-ide/commit/c6ec7518ecfc64975ab29e31f8711c377d4dba5e))
+
+
+### Bug Fixes
+
+* **ci:** disable setup-node's package-manager cache ([6e2becf](https://github.com/cisstech/nge-ide/commit/6e2becfb408343396d9215263eb25afa9d0cd96c))
+* **demo:** migrate ng-zorro tabs and angular-split to their new APIs ([14f5dc6](https://github.com/cisstech/nge-ide/commit/14f5dc68f83beb54ec913c23d41803a876b893f2))
+* **demo:** restore scrolling on docs and landing; Monaco follows nge-doc dark ([d102bac](https://github.com/cisstech/nge-ide/commit/d102bacc23d967b6c4b0170812603833d4bcebdd))
+* **editor:** keep one editor in the DOM and focus a neighbour on close ([101b3c7](https://github.com/cisstech/nge-ide/commit/101b3c77c5666c659cb0d12197cbd78fd4f74910)), closes [#442](https://github.com/cisstech/nge-ide/issues/442)
+* **lint:** align eslint config with modern angular rules for codefactor ([5f2a49d](https://github.com/cisstech/nge-ide/commit/5f2a49d14c51cd617fcec0fa84077813323750b3))
+* **menu:** keep the context menu open on the gesture that opened it ([802bdc9](https://github.com/cisstech/nge-ide/commit/802bdc932713c92107e4ab8f74c0f0b74a1c5b06))
+* **quality:** clear the remaining codefactor findings in the new code ([e5dfb33](https://github.com/cisstech/nge-ide/commit/e5dfb3392e8118bad3721dd66700d9fe1f86a0de))
+* repair jest tests after the Angular 21 upgrade ([3726ed5](https://github.com/cisstech/nge-ide/commit/3726ed502339e299542fda9db6283dafac6ef35b))
+* **storage:** scope stored keys under a default namespace prefix ([a26130c](https://github.com/cisstech/nge-ide/commit/a26130c51f7230d299e9e29ef8e89c591d72a064))
+* **theme:** resolve the persisted theme synchronously on boot ([7b675af](https://github.com/cisstech/nge-ide/commit/7b675af664324e27df9932c9076577bcae4adc68))
+
 ### [18.1.1](https://github.com/cisstech/nge-ide/compare/v18.1.0...v18.1.1) (2026-07-10)
 
 
