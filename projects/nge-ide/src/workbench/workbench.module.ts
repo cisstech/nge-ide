@@ -4,7 +4,14 @@ import { NgModule } from '@angular/core'
 import { NgeUiIconModule } from '@cisstech/nge/ui/icon'
 import { AngularSplitModule } from 'angular-split'
 
-import { CommandModule, EditorDirectivesModule, EditorPipesModule, TabComponent, TabsComponent, TooltipDirective } from '@cisstech/nge-ide/core'
+import {
+  CommandModule,
+  EditorDirectivesModule,
+  EditorPipesModule,
+  TabComponent,
+  TabsComponent,
+  TooltipDirective,
+} from '@cisstech/nge-ide/core'
 
 import { WorkbenchComponent } from './workbench.component'
 

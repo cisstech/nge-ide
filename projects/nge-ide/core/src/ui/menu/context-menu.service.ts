@@ -152,9 +152,7 @@ export class ContextMenuService {
       disposeOnNavigation: true,
     })
 
-    const componentRef = overlayRef.attach(
-      new ComponentPortal(IdeMenuOverlayHostComponent, null, hostInjector)
-    )
+    const componentRef = overlayRef.attach(new ComponentPortal(IdeMenuOverlayHostComponent, null, hostInjector))
     // Render synchronously so the menu is measured (correct position, no flash)
     // and its key manager is ready before we move focus into it.
     componentRef.changeDetectorRef.detectChanges()

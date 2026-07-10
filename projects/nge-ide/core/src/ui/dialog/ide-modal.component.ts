@@ -35,8 +35,7 @@ export class IdeModalContainerComponent<C = unknown> {
   protected readonly data = inject<IdeModalContainerData<C>>(DIALOG_DATA)
 
   /** HTML string to project into the body, or `null` when the content is a component/empty. */
-  protected readonly stringContent: string | null =
-    typeof this.data.content === 'string' ? this.data.content : null
+  protected readonly stringContent: string | null = typeof this.data.content === 'string' ? this.data.content : null
 
   /** Component type to instantiate in the body, or `null` when the content is a string/empty. */
   protected readonly componentContent: Type<C> | null =

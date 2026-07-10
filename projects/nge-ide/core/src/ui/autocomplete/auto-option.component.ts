@@ -64,6 +64,7 @@ export class IdeAutoOptionComponent implements Highlightable {
    * as `$event.value` (was `nzValue`). Typed loosely, like ng-zorro's `nzValue`,
    * so consumers can read it without a cast.
    */
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   @Input() value: any
 
   /** Text shown in the trigger input once the option is picked (was `nzLabel`). */

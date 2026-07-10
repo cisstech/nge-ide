@@ -1,22 +1,7 @@
 import { FocusMonitor } from '@angular/cdk/a11y'
-import {
-  ConnectedPosition,
-  FlexibleConnectedPositionStrategy,
-  Overlay,
-  OverlayRef,
-} from '@angular/cdk/overlay'
+import { ConnectedPosition, FlexibleConnectedPositionStrategy, Overlay, OverlayRef } from '@angular/cdk/overlay'
 import { ComponentPortal } from '@angular/cdk/portal'
-import {
-  DestroyRef,
-  Directive,
-  ElementRef,
-  NgZone,
-  OnDestroy,
-  Renderer2,
-  effect,
-  inject,
-  input,
-} from '@angular/core'
+import { DestroyRef, Directive, ElementRef, NgZone, OnDestroy, Renderer2, effect, inject, input } from '@angular/core'
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop'
 import { ThemeService } from '../../theme/theme.service'
 import { TooltipComponent } from './tooltip.component'

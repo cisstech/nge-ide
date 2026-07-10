@@ -204,9 +204,7 @@ export class IdeModalService {
       ariaLabelledBy: options.title ? titleId : null,
       autoFocus: 'first-tabbable',
       restoreFocus: true,
-      positionStrategy: centered
-        ? undefined
-        : this.overlay.position().global().centerHorizontally().top('12vh'),
+      positionStrategy: centered ? undefined : this.overlay.position().global().centerHorizontally().top('12vh'),
     })
 
     if (keyboard) {

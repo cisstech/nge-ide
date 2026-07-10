@@ -200,7 +200,7 @@ export class SelectComponent implements ControlValueAccessor {
       () => {
         this.document.getElementById(this.listboxId)?.focus()
       },
-      { injector: this.injector },
+      { injector: this.injector }
     )
   }
 
