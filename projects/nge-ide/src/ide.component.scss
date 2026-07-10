@@ -41,3 +41,168 @@
     opacity: 0.5;
   }
 }
+
+// Loading skeleton shown until the IDE has started. Its palette is hardcoded and
+// keyed on the `data-theme` host attribute (with a prefers-color-scheme fallback)
+// because the runtime theme tokens are not injected yet during startup, so it
+// stays correct in both themes without a flash of the wrong colors.
+.ide-loading {
+  --sk-bg: #ffffff;
+  --sk-surface: #f3f3f3;
+  --sk-editor: #ffffff;
+  --sk-sheen: rgba(0, 0, 0, 0.045);
+
+  position: absolute;
+  inset: 0;
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  background: var(--sk-bg);
+
+  &__toolbar {
+    flex: none;
+    height: 40px;
+  }
+
+  &__body {
+    flex: 1 1 auto;
+    min-height: 0;
+    display: flex;
+  }
+
+  &__activity {
+    flex: none;
+    width: 48px;
+  }
+
+  &__sidebar {
+    flex: none;
+    width: 220px;
+  }
+
+  &__editor {
+    flex: 1 1 auto;
+  }
+
+  &__statusbar {
+    flex: none;
+    height: 22px;
+  }
+
+  .sk {
+    position: relative;
+    overflow: hidden;
+    background: var(--sk-surface);
+  }
+
+  &__editor.sk {
+    background: var(--sk-editor);
+  }
+
+  // A sheen sweeps across each region to signal activity.
+  .sk::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    transform: translateX(-100%);
+    background: linear-gradient(90deg, transparent, var(--sk-sheen), transparent);
+    animation: ide-loading-shimmer 1.4s ease-in-out infinite;
+  }
+
+  // Focal point over the skeleton: the mark gently pulses and a slim bar sweeps,
+  // so the load reads as active rather than frozen.
+  &__center {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    pointer-events: none;
+  }
+
+  &__logo {
+    width: 60px;
+    height: 60px;
+    animation: ide-loading-pulse 1.8s ease-in-out infinite;
+    filter: drop-shadow(0 6px 16px rgba(41, 121, 255, 0.25));
+  }
+
+  &__bar {
+    position: relative;
+    width: 150px;
+    height: 3px;
+    border-radius: 3px;
+    overflow: hidden;
+    background: rgba(128, 128, 128, 0.25);
+
+    span {
+      position: absolute;
+      inset: 0 auto 0 0;
+      width: 40%;
+      border-radius: inherit;
+      background: #2979ff;
+      animation: ide-loading-progress 1.4s ease-in-out infinite;
+    }
+  }
+}
+
+@keyframes ide-loading-shimmer {
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+@keyframes ide-loading-pulse {
+  0%,
+  100% {
+    opacity: 0.7;
+    transform: scale(0.94);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.03);
+  }
+}
+
+@keyframes ide-loading-progress {
+  0% {
+    transform: translateX(-110%);
+  }
+  100% {
+    transform: translateX(300%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ide-loading .sk::after,
+  .ide-loading__logo,
+  .ide-loading__bar span {
+    animation: none;
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  .ide-loading {
+    --sk-bg: #1e1e1e;
+    --sk-surface: #252526;
+    --sk-editor: #1e1e1e;
+    --sk-sheen: rgba(255, 255, 255, 0.05);
+  }
+}
+
+:host([data-theme='light']) .ide-loading {
+  --sk-bg: #ffffff;
+  --sk-surface: #f3f3f3;
+  --sk-editor: #ffffff;
+  --sk-sheen: rgba(0, 0, 0, 0.045);
+}
+
+:host([data-theme='dark']) .ide-loading {
+  --sk-bg: #1e1e1e;
+  --sk-surface: #252526;
+  --sk-editor: #1e1e1e;
+  --sk-sheen: rgba(255, 255, 255, 0.05);
+}
