@@ -7,6 +7,8 @@ Angular application.
 
 ```bash
 npm install @cisstech/nge @cisstech/nge-ide monaco-editor marked
+# or
+yarn add @cisstech/nge @cisstech/nge-ide monaco-editor marked
 ```
 
 `@cisstech/nge` provides the Monaco and Markdown integrations the IDE builds on;
