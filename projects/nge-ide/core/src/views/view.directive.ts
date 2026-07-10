@@ -2,8 +2,8 @@ import { ComponentRef, Directive, Input, OnChanges, OnDestroy, ViewContainerRef 
 import { CompilerService } from '@cisstech/nge/services'
 import { IView } from './view'
 
-// tslint:disable-next-line: directive-selector
 @Directive({
+  // eslint-disable-next-line @angular-eslint/directive-selector
   selector: '[view]',
   standalone: false,
 })

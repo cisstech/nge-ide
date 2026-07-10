@@ -31,6 +31,7 @@ import { ThemeService } from '../../theme/theme.service'
  * ```
  */
 @Component({
+  // eslint-disable-next-line @angular-eslint/component-selector
   selector: '[ideMenu]',
   standalone: true,
   exportAs: 'ideMenu',

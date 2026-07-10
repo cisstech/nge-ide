@@ -3,6 +3,7 @@ import { CompilerService } from '@cisstech/nge/services'
 import { Editor } from '../editors/index'
 
 @Directive({
+  // eslint-disable-next-line @angular-eslint/directive-selector
   selector: '[editor]',
   standalone: false,
 })

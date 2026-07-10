@@ -19,7 +19,7 @@
           "error",
           {
             "type": "attribute",
-            "prefix": "app",
+            "prefix": ["app", "ide"],
             "style": "camelCase"
           }
         ],
@@ -27,10 +27,13 @@
           "error",
           {
             "type": "element",
-            "prefix": "app",
+            "prefix": ["app", "ide"],
             "style": "kebab-case"
           }
-        ]
+        ],
+        "@angular-eslint/no-host-metadata-property": "off",
+        "@typescript-eslint/no-var-requires": "off",
+        "no-extra-semi": "off"
       }
     },
     {

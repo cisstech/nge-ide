@@ -12,7 +12,7 @@ export const DndDataTransfer = 'dnd-data'
  * - the class `dnd-drag` is added to the element when the element is dragged.
  */
 @Directive({
-  // tslint:disable-next-line: directive-selector
+  // eslint-disable-next-line @angular-eslint/directive-selector
   selector: '[dnd]',
   standalone: false,
 })
