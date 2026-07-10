@@ -34,8 +34,9 @@ import { AppComponent } from './app.component'
       theming: {
         themes: NGE_MONACO_THEMES.map((theme) => 'assets/vendors/nge/monaco/themes/' + theme),
         default: 'github',
-        // The IDE's own theme toggle drives the editor theme (github / github-dark),
-        // so no darkThemeClassName sync here to avoid the two fighting over it.
+        light: 'github',
+        dark: 'github-dark',
+        darkThemeClassName: 'nge-doc-dark',
       },
     }),
     AppRoutingModule,

@@ -35,9 +35,15 @@ code.
 
 The Monaco editor follows the resolved theme automatically, pairing `github`
 (light) with `github-dark` (dark). Make sure both are available to
-`NgeMonacoModule`; they are included in `NGE_MONACO_THEMES` by default. Leave
-`darkThemeClassName` unset so the IDE remains the single source of truth for the
-editor theme.
+`NgeMonacoModule`; they are included in `NGE_MONACO_THEMES` by default. For an
+IDE-only application, leave `darkThemeClassName` unset so the IDE is the single
+source of truth for the editor theme.
+
+If the same application also renders Monaco outside the IDE (for example on
+nge-doc pages, which toggle the `nge-doc-dark` class), set `darkThemeClassName`
+to that context's dark class so the editor follows it there. Inside its own view
+the IDE still drives the editor theme, because that class is not present in the
+IDE shell.
 
 ## Re-branding
 

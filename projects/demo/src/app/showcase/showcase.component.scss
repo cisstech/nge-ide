@@ -1,4 +1,8 @@
+// The IDE fills the viewport and manages its own internal scrolling, so pin the
+// playground to the viewport height and clip here. Other routes (landing, docs)
+// are free to scroll because the global styles no longer lock the page.
 :host {
   display: block;
-  height: 100%;
+  height: 100vh;
+  overflow: hidden;
 }

@@ -72,7 +72,7 @@ import { RouterLink } from '@angular/router'
         --border-hover: #0969da;
         --accent: #0969da;
         display: block;
-        min-height: 100%;
+        min-height: 100vh;
         background: var(--bg);
         color: var(--fg);
         color-scheme: light;
