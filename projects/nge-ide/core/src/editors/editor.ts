@@ -281,7 +281,7 @@ export class EditorGroup {
     const index = this.findIndex(resource)
     if (index === -1) return false
 
-    let tab = this._tabs[index]
+    const tab = this._tabs[index]
     const closeable =
       force || // close if forced
       tab.options.preview || // preview resource is always closeable
@@ -289,15 +289,32 @@ export class EditorGroup {
 
     if (!closeable) return false
 
+    const wasActive = this.isActive(resource)
+    const activeResource = this.activeResource
     this._tabs.splice(index, 1)
 
-    if (this.isEmpty || this.isActive(resource)) {
+    if (this.isEmpty) {
       this._request = undefined
       this._activeIndex = -1
       this._activeEditor = undefined
+      this.closed(this, tab.resource, !!tab.options.preview)
+    } else if (wasActive) {
+      // The active tab was closed but others remain: focus the neighbour (the
+      // tab that shifted into its place, or the new last one) so the group is
+      // never left without a focused editor.
+      this._request = undefined
+      this._activeIndex = -1
+      this._activeEditor = undefined
+      const next = this._tabs[Math.min(index, this._tabs.length - 1)]
+      await this.open(next.resource, next.options).catch(() => undefined)
+      this.closed(this, tab.resource, !!tab.options.preview)
+    } else {
+      // A background tab was closed: keep the active one and fix its shifted index.
+      if (activeResource) {
+        this._activeIndex = this.findIndex(activeResource)
+      }
+      this.closed(this, tab.resource, !!tab.options.preview)
     }
-
-    this.closed(this, tab.resource, !!tab.options.preview)
 
     return true
   }

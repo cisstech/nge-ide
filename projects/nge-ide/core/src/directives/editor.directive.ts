@@ -15,6 +15,14 @@ export class EditorDirective implements OnChanges, OnDestroy {
 
   async ngOnChanges(): Promise<void> {
     if (this.editor) {
+      // Always detach the currently displayed editor before showing the target
+      // one. Otherwise opening an editor that has not been rendered yet (e.g. a
+      // custom editor on top of a code editor) would append its component while
+      // the previous one stays in the container, leaving two editors in the DOM.
+      while (this.viewContainerRef.length > 0) {
+        this.viewContainerRef.detach()
+      }
+
       let componentRef = this.componentRefs.get(this.editor.id)
       if (!componentRef) {
         componentRef = await this.compiler.render({
@@ -24,15 +32,15 @@ export class EditorDirective implements OnChanges, OnDestroy {
         })
         this.componentRefs.set(this.editor.id, componentRef)
       } else {
-        while (this.viewContainerRef.length > 0) {
-          this.viewContainerRef.detach()
-        }
         this.viewContainerRef.insert(componentRef.hostView)
       }
     }
   }
 
   ngOnDestroy(): void {
-    Object.values(this.componentRefs).forEach((componentRef) => componentRef.destroy())
+    // componentRefs is a Map, so iterate it directly: Object.values() on a Map
+    // returns [] and would leak every cached editor component.
+    this.componentRefs.forEach((componentRef) => componentRef.destroy())
+    this.componentRefs.clear()
   }
 }
