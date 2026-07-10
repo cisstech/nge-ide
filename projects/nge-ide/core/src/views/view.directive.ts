@@ -2,16 +2,18 @@ import { ComponentRef, Directive, Input, OnChanges, OnDestroy, ViewContainerRef 
 import { CompilerService } from '@cisstech/nge/services'
 import { IView } from './view'
 
-// tslint:disable-next-line: directive-selector
-@Directive({ selector: '[view]' })
+@Directive({
+  // eslint-disable-next-line @angular-eslint/directive-selector
+  selector: '[view]',
+  standalone: false,
+})
 export class ViewDirective implements OnChanges, OnDestroy {
-  private componentRef?: ComponentRef<any>
+  private componentRef?: ComponentRef<unknown>
 
-  // tslint:disable-next-line: no-input-rename
-  @Input('view')
+  @Input()
   view?: IView
 
-  @Input() inputs: Record<string, any> = {}
+  @Input() inputs: Record<string, unknown> = {}
 
   constructor(
     private readonly compiler: CompilerService,

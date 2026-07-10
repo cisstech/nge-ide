@@ -13,6 +13,11 @@
 }
 
 :host::ng-deep {
+  nge-monaco-editor,
+  nge-monaco-diff-editor {
+    border: none;
+  }
+
   .drop-controller-widget {
     background-color: var(--drop-controller-widget-background, #fff);
     color: var(--drop-controller-widget-color, #333);

@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input } from '@angular/core'
 import { StorageService } from '../../storage/index'
-import { IOutputData } from 'angular-split'
+import { SplitGutterInteractionEvent } from 'angular-split'
 import { take } from 'rxjs/operators'
 import { IView } from '../view'
 import { IViewContainer } from '../view-container'
@@ -11,6 +11,7 @@ import { ViewService } from '../view.service'
   templateUrl: './view-group.component.html',
   styleUrls: ['./view-group.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: false,
 })
 export class ViewGroupComponent {
   readonly minSize = 5
@@ -54,7 +55,7 @@ export class ViewGroupComponent {
   ) {}
 
   //#region TEMPLATE FUNCTIONS
-  _dragEnd(data: IOutputData): void {
+  _dragEnd(data: SplitGutterInteractionEvent): void {
     this.state = { sizes: data.sizes as number[] }
     this.storageService.set(this.storageId, this.state).subscribe()
     this.changeDetectionRef.detectChanges()
@@ -82,9 +83,6 @@ export class ViewGroupComponent {
     return size <= this.minSize ? 'codicon codicon-chevron-right' : 'codicon codicon-chevron-down'
   }
 
-  _trackById(_: number, e: any): string {
-    return e.id
-  }
   //#endregion
 
   private detectChanges() {

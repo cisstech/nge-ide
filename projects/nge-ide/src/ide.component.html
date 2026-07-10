@@ -1,20 +1,60 @@
+@if (!ready()) {
+  <!--
+    Loading skeleton shown until IdeService.start resolves. It mirrors the IDE
+    chrome (toolbar, activity bar, sidebar, editor, status bar) so the workspace
+    is revealed in one step, instead of the panes and theme flashing and shifting
+    into place as they populate on startup.
+  -->
+  <div class="ide-loading" aria-hidden="true">
+    <div class="ide-loading__toolbar sk"></div>
+    <div class="ide-loading__body">
+      <div class="ide-loading__activity sk"></div>
+      <div class="ide-loading__sidebar sk"></div>
+      <div class="ide-loading__editor sk"></div>
+    </div>
+    <div class="ide-loading__statusbar sk"></div>
+    <div class="ide-loading__center">
+      <svg class="ide-loading__logo" viewBox="0 0 210.71 210.71" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <polygon
+          fill="#448aff"
+          points="104.94 5.35 12.54 38.65 26.54 161.45 104.94 205.35 183.84 161.45 198.14 38.65 104.94 5.35"
+        />
+        <polygon
+          fill="#2979ff"
+          points="104.97 5.35 104.97 205.35 183.87 161.45 198.17 38.65 104.97 5.35"
+        />
+        <path fill="#fff" opacity="0.9" d="M107.4,154.5l21.14-36.61-19,0-4.39,8.36v29.38A2.32,2.32,0,0,0,107.4,154.5Z" />
+        <path
+          fill="#fff"
+          opacity="0.9"
+          d="M160.73,55H105.1V68h31.23l-9,18.1-22.25-.06v14h33.75l23.93-41.45A2.37,2.37,0,0,0,160.73,55Z"
+        />
+        <path
+          fill="#fff"
+          d="M82.07,86l-9-18h32V55H50a2.37,2.37,0,0,0-2,3.55l55.38,95.91a2.28,2.28,0,0,0,1.79,1.15V126.27l-.39.75L91.27,100H105.1v-14Z"
+        />
+      </svg>
+      <div class="ide-loading__bar"><span></span></div>
+    </div>
+  </div>
+}
 <ide-toolbar></ide-toolbar>
 <ide-quick-open #quickOpen></ide-quick-open>
 <as-split
   [class.blur]="quickOpen.isVisible"
   direction="horizontal"
   [gutterSize]="1"
-  [useTransition]="true"
+  [useTransition]="animate()"
   unit="pixel"
 >
-  <as-split-area [order]="0" [minSize]="36" [maxSize]="720" [visible]="!leftside.isEmpty" [size]="leftside.size">
+  <as-split-area [minSize]="36" [maxSize]="720" [visible]="!leftside.isEmpty" [size]="leftside.size">
     <ide-sidebar #leftside side="left"></ide-sidebar>
   </as-split-area>
-  <as-split-area [order]="1" [size]="$any('*')">
+  <as-split-area [size]="$any('*')">
     <as-split
       direction="vertical"
       [gutterSize]="2"
-      [useTransition]="true"
+      [useTransition]="animate()"
       (dragEnd)="infobar.size = $any($event.sizes[1])"
     >
       <as-split-area [size]="100 - infobar.size">
@@ -27,9 +67,11 @@
       </as-split-area>
     </as-split>
   </as-split-area>
-  <as-split-area [order]="2" [minSize]="36" [maxSize]="720" [visible]="!rightside.isEmpty" [size]="rightside.size">
+  <as-split-area [minSize]="36" [maxSize]="720" [visible]="!rightside.isEmpty" [size]="rightside.size">
     <ide-sidebar #rightside side="right"></ide-sidebar>
   </as-split-area>
 </as-split>
-<ide-taskbar *ngIf="task" [task]="task"></ide-taskbar>
+@if (task) {
+  <ide-taskbar [task]="task"></ide-taskbar>
+}
 <ide-statusbar #statubar></ide-statusbar>

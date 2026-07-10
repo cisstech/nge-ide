@@ -4,6 +4,7 @@ import { Paths } from '../utils/index'
 
 @Pipe({
   name: 'fileName',
+  standalone: false,
 })
 export class FileNamePipe implements PipeTransform {
   constructor(private readonly fileService: FileService) {}

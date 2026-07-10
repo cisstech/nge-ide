@@ -1,20 +1,21 @@
-<span class="label-empty" *ngIf='!nodes.length;'>AUCUN PROBLÈME</span>
+@if (!nodes.length) {
+  <span class="label-empty">AUCUN PROBLÈME</span>
+}
 <ui-tree #treeRef [adapter]="adapter" [nodes]="nodes">
   <ng-container *treeNode="let node">
-    <ng-container *ngIf="node.expandable; else leafTemplate">
+    @if (node.expandable) {
       <div class="tree-label">
-        <div class="codicon codicon-{{treeRef.isExpanded(node) ? 'chevron-down' : 'chevron-right' }}"></div>&nbsp;
-        <ui-icon [icon]="node.name | iconFile"></ui-icon>&nbsp;
+        <div class="codicon codicon-{{ treeRef.isExpanded(node) ? 'chevron-down' : 'chevron-right' }}"></div>
+        &nbsp; <ui-icon [icon]="node.name | iconFile"></ui-icon>&nbsp;
         <div>{{ node.name }}</div>
       </div>
-    </ng-container>
-    <ng-template #leafTemplate>
+    } @else {
       <div class="tree-label" [style.margin]="'0 8px'" [title]="node.data.tooltip">
-        <div [class]="node.data.iconClass"></div>&nbsp;
-        <div> {{ node.name }} [{{ node.data.lineNumber }}, {{ node.data.column }}]</div>
+        <div [class]="node.data.iconClass"></div>
+        &nbsp;
+        <div>{{ node.name }} [{{ node.data.lineNumber }}, {{ node.data.column }}]</div>
       </div>
-    </ng-template>
+    }
   </ng-container>
 </ui-tree>
-<ng-template #treeTemplate>
-</ng-template>
+<ng-template #treeTemplate> </ng-template>

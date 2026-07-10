@@ -1,8 +1,9 @@
 import { Directive, Input, SimpleChanges, Renderer2, ElementRef, OnChanges } from '@angular/core'
 
 @Directive({
-  // tslint:disable-next-line: directive-selector
+  // eslint-disable-next-line @angular-eslint/directive-selector
   selector: '[highlight]',
+  standalone: false,
 })
 export class HighlightDirective implements OnChanges {
   @Input('highlight')
@@ -29,7 +30,7 @@ export class HighlightDirective implements OnChanges {
     if (typeof this.pattern === 'string') {
       // string
       this.pattern = this.pattern.trim()
-      this.renderer.setProperty(this.el.nativeElement, 'innerHTML', !!this.pattern ? this.hightlightRegex() : this.text)
+      this.renderer.setProperty(this.el.nativeElement, 'innerHTML', this.pattern ? this.hightlightRegex() : this.text)
       return
     }
 
@@ -72,7 +73,7 @@ export class HighlightDirective implements OnChanges {
   }
 
   private escape(str: string) {
-    const replacements: any = {
+    const replacements: Record<string, string> = {
       '&': '&amp;',
       '<': '&lt;',
       '>': '&gt;',

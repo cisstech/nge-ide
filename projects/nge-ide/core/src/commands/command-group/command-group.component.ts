@@ -6,6 +6,7 @@ import { ICommand } from '../command'
   templateUrl: 'command-group.component.html',
   styleUrls: ['./command-group.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: false,
 })
 export class CommandGroupComponent {
   @Input() commands: ICommand[] = []
@@ -22,9 +23,5 @@ export class CommandGroupComponent {
     } else {
       command.execute()
     }
-  }
-
-  _trackById(_: number, command: ICommand): any {
-    return command.id
   }
 }

@@ -1,0 +1,23 @@
+:host {
+  display: none;
+}
+
+.ide-autocomplete-panel {
+  box-sizing: border-box;
+  width: 100%;
+  max-height: 268px;
+  margin: 0;
+  padding: 2px 0;
+  overflow-x: hidden;
+  overflow-y: auto;
+  font-family: inherit;
+  color: var(--foreground, #cccccc);
+  background: var(--editorSuggestWidget-background, var(--dropdown-background, var(--input-background, #252526)));
+  border: 1px solid var(--editorSuggestWidget-border, var(--dropdown-border, var(--tab-border, #454545)));
+  border-radius: 3px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.36);
+}
+
+.ide-autocomplete-panel--empty {
+  display: none;
+}

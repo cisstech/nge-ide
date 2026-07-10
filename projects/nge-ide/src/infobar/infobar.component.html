@@ -1,30 +1,28 @@
-<nz-tabset [nzType]="'card'" [nzTabBarExtraContent]="extra" [(nzSelectedIndex)]="activeContainerIndex">
-  <ng-container *ngFor="let container of containers; trackBy: trackById">
-    <nz-tab
-      [nzTitle]="title"
-      (nzClick)="setActiveContainer(container)">
+<ide-tabs [type]="'card'" [tabBarExtraContent]="extra" [(selectedIndex)]="activeContainerIndex">
+  @for (container of containers; track container.id) {
+    <ide-tab [title]="title" (tabClick)="setActiveContainer(container)">
       <ng-template #title>
-        <nz-badge [nzCount]="(container.badge|async) || 0" [nzShowZero]="false" [nzOffset]="[0, 0]">
-          <span>{{container.title}}</span>
-        </nz-badge>
+        <ide-badge [count]="(container.badge | async) || 0" [showZero]="false" [offset]="[0, 0]">
+          <span>{{ container.title }}</span>
+        </ide-badge>
       </ng-template>
-    </nz-tab>
-  </ng-container>
+    </ide-tab>
+  }
   <ng-template #extra>
-    <ng-container *ngIf="activeContainerView">
-      <ng-container *ngIf="activeContainerViews.length > 1">
-        <nz-select [ngModel]="activeContainerView!.id" (ngModelChange)="setActiveView($event)">
-          <ng-container *ngFor="let view of activeContainerViews; trackBy: trackById">
-            <nz-option [nzValue]="view.id" [nzLabel]="view.title"></nz-option>
-          </ng-container>
-        </nz-select>
-      </ng-container>
-      <ide-command-group [commands]="(activeContainerView!.commands|async) || []"></ide-command-group>
-    </ng-container>
+    @if (activeContainerView) {
+      @if (activeContainerViews.length > 1) {
+        <ide-select [ngModel]="activeContainerView!.id" (ngModelChange)="setActiveView($event)">
+          @for (view of activeContainerViews; track view.id) {
+            <ide-option [value]="view.id" [label]="view.title"></ide-option>
+          }
+        </ide-select>
+      }
+      <ide-command-group [commands]="(activeContainerView!.commands | async) || []"></ide-command-group>
+    }
   </ng-template>
-</nz-tabset>
-<ng-container *ngIf="activeContainerView">
+</ide-tabs>
+@if (activeContainerView) {
   <div class="infobar-content">
     <ng-template [view]="activeContainerView"></ng-template>
   </div>
-</ng-container>
+}

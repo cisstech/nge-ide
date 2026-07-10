@@ -4,25 +4,6 @@
 }
 
 .editor-group::ng-deep {
-  .ant-tabs-bar {
-    margin: 0;
-  }
-
-  .ant-tabs-nav {
-    margin: 0;
-    padding: 0 12px 0 0;
-  }
-
-  .ant-tabs-extra-content {
-    height: 40px;
-  }
-
-  .ant-tabs-tab {
-    display: inline-flex;
-    align-items: center;
-    padding: 0 !important;
-  }
-
   .tab-content {
     display: inline-flex;
     align-items: center;
@@ -30,15 +11,9 @@
   }
 }
 
-.editor-group--active::ng-deep {
-  .ant-tabs-tab-active {
-    border-bottom: 1.5px solid !important;
-  }
-}
-
 .editor-wrapper {
   display: block;
-  height: calc(100% - 41px); // 41px is the height of the nz-tabset element
+  height: calc(100% - 41px); // leave room for the tab bar
   width: 100%;
 }
 

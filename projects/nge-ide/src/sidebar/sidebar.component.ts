@@ -30,6 +30,7 @@ const OPENED_SIZE = 320
   templateUrl: './sidebar.component.html',
   styleUrls: ['./sidebar.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: false,
 })
 export class SidebarComponent implements OnInit, OnDestroy {
   private readonly subscriptions: Subscription[] = []
@@ -39,7 +40,6 @@ export class SidebarComponent implements OnInit, OnDestroy {
     active: '',
     order: [],
   }
-
 
   /** Current active container */
   active?: SidebarContainer
@@ -57,7 +57,6 @@ export class SidebarComponent implements OnInit, OnDestroy {
 
   @HostBinding('attr.role')
   role = 'navigation'
-
 
   /** Current size of the sidebar */
   size = OPENED_SIZE

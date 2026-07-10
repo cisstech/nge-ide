@@ -4,24 +4,21 @@ on:
   workflow_dispatch:
     inputs:
       version:
-        description: 'Select version type'
+        description: 'Bump keyword (patch | minor | major) or an explicit version such as 22.0.0'
         required: true
         default: 'patch'
-        type: choice
-        options:
-          - patch
-          - minor
-          - major
+        type: string
 
 env:
-  NODE_VERSION: 22
+  NODE_VERSION: 24.18.0
 
 jobs:
   prepare:
       name: Prepare
       runs-on: ubuntu-latest
       steps:
-        - uses: DerYeger/yarn-setup-action@master
+        - uses: actions/checkout@v5
+        - uses: ./.github/actions/setup
           with:
             node-version: ${{ env.NODE_VERSION }}
 
@@ -34,7 +31,10 @@ jobs:
       id-token: write  # Permission to create releases
       pull-requests: write  # Permission to create pull requests
     steps:
-      - uses: DerYeger/yarn-setup-action@master
+      - uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+      - uses: ./.github/actions/setup
         with:
           node-version: ${{ env.NODE_VERSION }}
 
@@ -43,42 +43,36 @@ jobs:
           git config --global user.name ${{ github.actor }}
           git config --global user.email ${{ github.actor }}@users.noreply.github.com
 
-      - name: Bump version
-        id: bump_version
+      - name: Bump version and generate changelog
+        id: release
         run: |
-         echo "version=$(npm version ${{ github.event.inputs.version }} --no-git-tag-version)" >> $GITHUB_OUTPUT
+          npx standard-version --skip.commit --skip.tag --release-as ${{ inputs.version }}
+          VERSION=$(node -p "require('./package.json').version")
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
+          awk '/^#{2,3} \[?[0-9]+\.[0-9]+\.[0-9]+/{c++} c==1{print} c==2{exit}' CHANGELOG.md > RELEASE_NOTES.md
 
-      - name: Checkout branch and run standard-version
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          git checkout -b release/${{ steps.bump_version.outputs.version }}
-          npx standard-version --skip.bump --skip.commit --skip.tag --release-as ${{ inputs.version }}
-          git add package.json
-          git add CHANGELOG.md
-          cat package.json
-          git commit -m "[no-ci] chore(release): ${{ steps.bump_version.outputs.version }}"
-          git tag ${{ steps.bump_version.outputs.version }}
-          git push --follow-tags origin release/${{ steps.bump_version.outputs.version }}
-          gh pr create --title "Release: ${{ steps.bump_version.outputs.version }}" --body "This pull request contains the updated package.json with the new release version" --base main --head release/${{ steps.bump_version.outputs.version }}
-
-      - name: Publish Release
-        if: success()
-        uses: actions/create-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          tag_name: ${{ steps.bump_version.outputs.version }}
-          release_name: "v${{ steps.bump_version.outputs.version  }}"
-          body: No changelog provided
-          draft: false
-
-      - name: Publish to npm
-        if: success()
+      # npm publish is the one step that is hard to undo, so it runs first.
+      # If it fails, the tag / branch / GitHub release / PR below are skipped
+      # and nothing points at a version that is not on npm.
+      - name: Build and publish to npm
         run: |
           echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_PUBLIC_TOKEN }}" > ~/.npmrc
           yarn build:lib
-          yarn publish ./dist/nge-ide --provenance --access public
+          npm publish ./dist/nge-ide --provenance --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_PUBLIC_TOKEN }}
-        shell: bash
+
+      - name: Tag, push and publish the GitHub release
+        if: success()
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          VERSION=${{ steps.release.outputs.version }}
+          git checkout -b release/v$VERSION
+          git add package.json CHANGELOG.md
+          git commit -m "[no-ci] chore(release): v$VERSION"
+          git tag -a v$VERSION -m "v$VERSION"
+          git push origin release/v$VERSION
+          git push origin "v$VERSION"
+          gh release create v$VERSION --title "v$VERSION" --notes-file RELEASE_NOTES.md
+          gh pr create --title "Release: v$VERSION" --body "Automated release for v$VERSION (already published to npm and released on GitHub in this run). Merges the version bump and CHANGELOG into main." --base main --head release/v$VERSION

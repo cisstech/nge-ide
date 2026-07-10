@@ -11,7 +11,6 @@ import { NgeIdeProblemsModule } from '@cisstech/nge-ide/problems'
 import { NgeIdeNotificationsModule } from '@cisstech/nge-ide/notifications'
 
 import { ShowcaseComponent } from './showcase.component'
-import { MatTooltipModule } from '@angular/material/tooltip'
 
 @NgModule({
   imports: [
@@ -24,7 +23,6 @@ import { MatTooltipModule } from '@angular/material/tooltip'
 
     NgeIdeProblemsModule,
     NgeIdeNotificationsModule,
-    MatTooltipModule,
 
     RouterModule.forChild([{ path: '', component: ShowcaseComponent }]),
   ],

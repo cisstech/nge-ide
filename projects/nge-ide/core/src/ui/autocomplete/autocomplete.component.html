@@ -1,0 +1,11 @@
+<ng-template>
+  <div
+    class="ide-autocomplete-panel"
+    role="listbox"
+    [id]="id"
+    [attr.aria-label]="ariaLabel || null"
+    [class.ide-autocomplete-panel--empty]="!showPanel()"
+  >
+    <ng-content></ng-content>
+  </div>
+</ng-template>

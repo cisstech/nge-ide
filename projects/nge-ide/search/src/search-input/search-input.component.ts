@@ -1,12 +1,13 @@
-import { Component, OnInit, Input, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core'
+import { Component, Input, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core'
 
 @Component({
   selector: 'ide-search-input',
   templateUrl: 'search-input.component.html',
   styleUrls: ['./search-input.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: false,
 })
-export class SearchInputComponent implements OnInit {
+export class SearchInputComponent {
   @Input() ariaLabel = ''
   @Input() placeholder = ''
 
@@ -26,13 +27,11 @@ export class SearchInputComponent implements OnInit {
   @Output() patternChange = new EventEmitter<RegExp>()
 
   @Output()
-  search = new EventEmitter()
+  submitted = new EventEmitter<void>()
 
   @Input() controls = false
 
   error = ''
-
-  ngOnInit() {}
 
   onKeyEnter() {
     this.error = ''
@@ -58,7 +57,7 @@ export class SearchInputComponent implements OnInit {
           this.pattern = new RegExp(`(${query})`, opts.join(''))
         }
       } catch (error) {
-        this.error = (error as any).message
+        this.error = (error as Error).message
       }
     }
 
@@ -69,7 +68,7 @@ export class SearchInputComponent implements OnInit {
     this.patternChange.emit(this.pattern)
 
     if (!this.error) {
-      this.search.emit()
+      this.submitted.emit()
     }
   }
 }

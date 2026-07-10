@@ -1,0 +1,89 @@
+<button
+  #triggerButton
+  cdkOverlayOrigin
+  #trigger="cdkOverlayOrigin"
+  type="button"
+  class="ide-select__trigger"
+  [class.ide-select__trigger--open]="isOpen()"
+  [id]="triggerId"
+  [disabled]="isDisabled()"
+  aria-haspopup="listbox"
+  [attr.aria-expanded]="isOpen()"
+  [attr.aria-controls]="isOpen() ? listboxId : null"
+  (click)="toggle()"
+  (keydown)="onTriggerKeydown($event)"
+>
+  <span class="ide-select__label" [title]="selectedLabel()">{{ selectedLabel() }}</span>
+  <svg
+    class="ide-select__arrow"
+    viewBox="0 0 12 12"
+    width="12"
+    height="12"
+    aria-hidden="true"
+    focusable="false"
+  >
+    <path
+      d="M2.75 4.5 6 7.75 9.25 4.5"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="1.4"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+    />
+  </svg>
+</button>
+
+<ng-template
+  cdkConnectedOverlay
+  [cdkConnectedOverlayOrigin]="trigger"
+  [cdkConnectedOverlayOpen]="isOpen()"
+  [cdkConnectedOverlayPositions]="overlayPositions"
+  [cdkConnectedOverlayMinWidth]="panelWidth()"
+  [cdkConnectedOverlayViewportMargin]="8"
+  [cdkConnectedOverlayDisableClose]="true"
+  [cdkConnectedOverlayPanelClass]="overlayPanelClass()"
+  (attach)="onOverlayAttached()"
+  (detach)="close()"
+  (overlayOutsideClick)="onOutsideClick()"
+  (overlayKeydown)="onOverlayKeydown($event)"
+>
+  <ul
+    class="ide-select__panel"
+    cdkListbox
+    [id]="listboxId"
+    [attr.aria-labelledby]="triggerId"
+    [cdkListboxValue]="selectedValues()"
+    (cdkListboxValueChange)="onSelectionChange($event)"
+  >
+    @for (option of options(); track option) {
+      <li
+        class="ide-select__option"
+        [cdkOption]="option.value()"
+        (click)="closeAndFocusTrigger()"
+      >
+        <span class="ide-select__option-label" [title]="option.displayLabel()">{{ option.displayLabel() }}</span>
+        <svg
+          class="ide-select__option-check"
+          viewBox="0 0 16 16"
+          width="14"
+          height="14"
+          aria-hidden="true"
+          focusable="false"
+        >
+          <path
+            d="M3.5 8.5 6.5 11.5 12.5 4.5"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.6"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+        </svg>
+      </li>
+    } @empty {
+      <li class="ide-select__empty">No options</li>
+    }
+  </ul>
+</ng-template>
+
+<span class="ide-select__sources" hidden><ng-content></ng-content></span>

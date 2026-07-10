@@ -1,8 +1,7 @@
 // ANGULAR
-import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http'
+import { provideHttpClient, withInterceptorsFromDi, withXhr } from '@angular/common/http'
 import { NgModule } from '@angular/core'
 import { BrowserModule } from '@angular/platform-browser'
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 
 // LIBS
 import { NGE_DOC_RENDERERS } from '@cisstech/nge/doc'
@@ -35,10 +34,11 @@ import { AppComponent } from './app.component'
       theming: {
         themes: NGE_MONACO_THEMES.map((theme) => 'assets/vendors/nge/monaco/themes/' + theme),
         default: 'github',
+        // The IDE's own theme toggle drives the editor theme (github / github-dark),
+        // so no darkThemeClassName sync here to avoid the two fighting over it.
       },
     }),
     AppRoutingModule,
-    BrowserAnimationsModule,
   ],
   providers: [
     NgeMarkdownKatexProvider,
@@ -61,7 +61,7 @@ import { AppComponent } from './app.component'
         },
       },
     },
-    provideHttpClient(withInterceptorsFromDi()),
+    provideHttpClient(withXhr(), withInterceptorsFromDi()),
   ],
 })
 export class AppModule {}

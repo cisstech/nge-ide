@@ -1,0 +1,4 @@
+<ng-content></ng-content>
+@if (visible()) {
+  <span class="ide-badge-count" [style.right.px]="right()" [style.margin-top.px]="top()">{{ count() }}</span>
+}

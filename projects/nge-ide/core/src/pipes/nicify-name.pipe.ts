@@ -1,6 +1,9 @@
 import { Pipe, PipeTransform } from '@angular/core'
 
-@Pipe({ name: 'nicifyName' })
+@Pipe({
+  name: 'nicifyName',
+  standalone: false,
+})
 export class NicifyNamePipe implements PipeTransform {
   transform(v: string, nicifyProperty?: boolean): string {
     if (!v) {

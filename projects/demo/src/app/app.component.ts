@@ -1,16 +1,10 @@
-import { OnInit } from '@angular/core'
-import { Component } from '@angular/core'
-import { NzIconService } from 'ng-zorro-antd/icon'
+import { Component, ChangeDetectionStrategy } from '@angular/core'
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
+  changeDetection: ChangeDetectionStrategy.Eager,
+  standalone: false,
 })
-export class AppComponent implements OnInit {
-  constructor(private readonly nzIconService: NzIconService) {}
-
-  ngOnInit() {
-    this.nzIconService.changeAssetsSource('assets/vendors/@ant-design')
-  }
-}
+export class AppComponent {}

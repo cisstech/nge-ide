@@ -1,7 +1,7 @@
-// https://thymikee.github.io/jest-preset-angular/docs/getting-started/installation/
-
-import 'jest-preset-angular/setup-jest';
+import { setupZoneTestEnv } from 'jest-preset-angular/setup-env/zone';
 import { TextEncoder, TextDecoder } from 'util'
+
+setupZoneTestEnv();
 
 Object.defineProperties(globalThis, {
   TextDecoder: { value: TextDecoder, writable: true },

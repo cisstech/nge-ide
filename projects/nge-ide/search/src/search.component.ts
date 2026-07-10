@@ -26,6 +26,7 @@ import { Subscription } from 'rxjs'
   templateUrl: './search.component.html',
   styleUrls: ['./search.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: false,
 })
 export class SearchComponent implements OnInit, OnDestroy, AfterViewChecked {
   private readonly storageId = 'sidebar.view.search.query'

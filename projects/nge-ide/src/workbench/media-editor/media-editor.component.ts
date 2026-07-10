@@ -7,6 +7,7 @@ import { Subscription } from 'rxjs'
   templateUrl: 'media-editor.component.html',
   styleUrls: ['media-editor.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: false,
 })
 export class MediaEditorComponent implements OnInit, OnDestroy {
   private readonly subscriptions: Subscription[] = []

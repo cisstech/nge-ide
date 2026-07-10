@@ -1,0 +1,47 @@
+<div class="ide-tabs__bar">
+  <div class="ide-tabs__nav" role="tablist" aria-orientation="horizontal" (keydown)="onTabListKeydown($event)">
+    @for (tab of tabs(); track tab; let i = $index) {
+      @let titleValue = tab.title();
+      <div
+        ideTabButton
+        class="ide-tabs__tab"
+        [class.ide-tabs__tab--active]="selectedIndex() === i"
+        role="tab"
+        [id]="tabId(i)"
+        [attr.aria-selected]="selectedIndex() === i"
+        [attr.aria-controls]="panelId(i)"
+        [attr.tabindex]="selectedIndex() === i ? 0 : -1"
+        (click)="onTabClick(i)"
+      >
+        @if (asTemplate(titleValue); as titleTpl) {
+          <ng-container [ngTemplateOutlet]="titleTpl"></ng-container>
+        } @else {
+          {{ titleValue }}
+        }
+      </div>
+    }
+  </div>
+
+  @if (tabBarExtraContent(); as extra) {
+    <div class="ide-tabs__extra">
+      <ng-container [ngTemplateOutlet]="extra"></ng-container>
+    </div>
+  }
+</div>
+
+<div class="ide-tabs__body">
+  @for (tab of tabs(); track tab; let i = $index) {
+    @if (tab.bodyTemplate(); as body) {
+      <div
+        class="ide-tabs__panel"
+        role="tabpanel"
+        [id]="panelId(i)"
+        [attr.aria-labelledby]="tabId(i)"
+        [hidden]="selectedIndex() !== i"
+        [attr.tabindex]="selectedIndex() === i ? 0 : null"
+      >
+        <ng-container [ngTemplateOutlet]="body"></ng-container>
+      </div>
+    }
+  }
+</div>

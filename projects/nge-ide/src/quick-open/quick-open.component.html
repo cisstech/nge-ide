@@ -1,25 +1,25 @@
-<div *ngIf="visible" class="quick-open-container">
-  <input
-    #input
-    type="text"
-    placeholder="Entrez un nom de fichier pour filtrer.."
-    (blur)="onBlured()"
-    [nzAutocomplete]="auto"
-    [formControl]="form"
-    [cdkTrapFocus]="visible"
-    [cdkTrapFocusAutoCapture]="true"
+@if (visible) {
+  <div class="quick-open-container">
+    <input
+      #input
+      type="text"
+      placeholder="Entrez un nom de fichier pour filtrer.."
+      (blur)="onBlured()"
+      [ideAutocomplete]="auto"
+      [formControl]="form"
+      [cdkTrapFocus]="visible"
+      [cdkTrapFocusAutoCapture]="true"
     />
-  <nz-autocomplete nzBackfill #auto (selectionChange)="onSelected($event.nzValue)">
-  @for(entry of $entries|async; track $index) {
-    <nz-auto-option
-      [nzValue]="entry" [nzLabel]="entry.uri|fileName">
-      <div class="entry">
-        <ui-icon class="entry-icon" [icon]="entry.uri.path|iconFile"></ui-icon>
-        <span class="entry-name">{{ entry.uri|fileName }}</span>
-        <span class="entry-path">{{ entry.uri|fileName:true }}</span>
-      </div>
-    </nz-auto-option>
-
-  }
-  </nz-autocomplete>
-</div>
+    <ide-autocomplete backfill #auto (selectionChange)="onSelected($event.value)">
+      @for (entry of $entries | async; track $index) {
+        <ide-auto-option [value]="entry" [label]="entry.uri | fileName">
+          <div class="entry">
+            <ui-icon class="entry-icon" [icon]="entry.uri.path | iconFile"></ui-icon>
+            <span class="entry-name">{{ entry.uri | fileName }}</span>
+            <span class="entry-path">{{ entry.uri | fileName: true }}</span>
+          </div>
+        </ide-auto-option>
+      }
+    </ide-autocomplete>
+  </div>
+}

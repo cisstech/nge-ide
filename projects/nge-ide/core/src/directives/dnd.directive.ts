@@ -12,8 +12,9 @@ export const DndDataTransfer = 'dnd-data'
  * - the class `dnd-drag` is added to the element when the element is dragged.
  */
 @Directive({
-  // tslint:disable-next-line: directive-selector
+  // eslint-disable-next-line @angular-eslint/directive-selector
   selector: '[dnd]',
+  standalone: false,
 })
 export class DndDirective implements AfterContentInit {
   @Input()
@@ -39,11 +40,11 @@ export class DndDirective implements AfterContentInit {
 
   /** emits after a data hover the element */
   @Output()
-  hovered: EventEmitter<any> = new EventEmitter()
+  hovered: EventEmitter<boolean> = new EventEmitter()
 
   /** The data to share with the element */
   @Input()
-  dndData: any
+  dndData?: string
 
   constructor(private el: ElementRef) {}
 
@@ -63,7 +64,7 @@ export class DndDirective implements AfterContentInit {
       }
       if (e.dataTransfer) {
         e.dataTransfer.effectAllowed = 'move'
-        e.dataTransfer.setData(DndDataTransfer, this.dndData)
+        e.dataTransfer.setData(DndDataTransfer, this.dndData ?? '')
         if (typeof this.dndData === 'string') {
           // standard way to share a string data, this is handled by most applications
           // like vscode, chrome, firefox, etc.
@@ -75,7 +76,7 @@ export class DndDirective implements AfterContentInit {
     }
     node.addEventListener('dragstart', dragstart, false)
 
-    const dragend = (e: DragEvent) => {
+    const dragend = () => {
       node.classList.remove('dnd-drag')
       return false
     }
@@ -112,14 +113,14 @@ export class DndDirective implements AfterContentInit {
     }
     node.addEventListener('dragover', dragover, false)
 
-    const dragenter = (e: DragEvent) => {
+    const dragenter = () => {
       ancestor(node).classList.remove('dnd-over')
       this.hovered.emit(true)
       return false
     }
     node.addEventListener('dragenter', dragenter, false)
 
-    const dragleave = (e: DragEvent) => {
+    const dragleave = () => {
       ancestor(node).classList.remove('dnd-over')
       this.hovered.emit(false)
       return false
@@ -154,7 +155,7 @@ export class DndDirective implements AfterContentInit {
         const dst = this.dndData
         const src = e.dataTransfer.getData(DndDataTransfer)
         if (src || file) {
-          this.dropped.emit({ src, file: file as any, dst })
+          this.dropped.emit({ src, file: file ?? undefined, dst })
         }
       }
       return false

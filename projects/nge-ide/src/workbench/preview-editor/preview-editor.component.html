@@ -1,19 +1,26 @@
-<ng-container *ngIf="preview; else: noPreview">
-  <ng-container [ngSwitch]="preview!.type">
-    <div class="preview-editor" *ngSwitchCase="'URL'">
-      <iframe [src]="preview!.data|safe:'resource'" frameborder="0"></iframe>
-    </div>
-    <div class="preview-editor" *ngSwitchCase="'HTML'">
-      <iframe [srcdoc]="preview!.data|safe:'html'" frameborder="0"></iframe>
-    </div>
-    <div class="preview-editor" *ngSwitchCase="'MARKDOWN'">
-      <nge-markdown [data]="preview!.data"></nge-markdown>
-    </div>
-    <div class="preview-editor" *ngSwitchDefault>
-      <div class="center">NO PREVIEW</div>
-    </div>
-  </ng-container>
-</ng-container>
-<ng-template #noPreview>
+@if (preview) {
+  @switch (preview!.type) {
+    @case ('URL') {
+      <div class="preview-editor">
+        <iframe [src]="preview!.data | safe: 'resource'" frameborder="0"></iframe>
+      </div>
+    }
+    @case ('HTML') {
+      <div class="preview-editor">
+        <iframe [srcdoc]="preview!.data | safe: 'html'" frameborder="0"></iframe>
+      </div>
+    }
+    @case ('MARKDOWN') {
+      <div class="preview-editor">
+        <nge-markdown [data]="preview!.data"></nge-markdown>
+      </div>
+    }
+    @default {
+      <div class="preview-editor">
+        <div class="center">NO PREVIEW</div>
+      </div>
+    }
+  }
+} @else {
   <div class="center">NO PREVIEW</div>
-</ng-template>
+}

@@ -1,0 +1,152 @@
+:host {
+  display: inline-block;
+  max-width: 100%;
+  font-family: inherit;
+}
+
+/* Trigger ---------------------------------------------------------------- */
+
+.ide-select__trigger {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  box-sizing: border-box;
+  width: auto;
+  min-width: 72px;
+  max-width: 240px;
+  min-height: 24px;
+  margin: 0;
+  padding: 2px 6px 2px 8px;
+  font-family: inherit;
+  font-size: 13px;
+  line-height: 1.4;
+  text-align: left;
+  cursor: pointer;
+  color: var(--dropdown-foreground, var(--input-foreground, var(--foreground, #cccccc)));
+  background: var(--dropdown-background, var(--input-background, #2b2b2b));
+  border: 1px solid var(--dropdown-border, var(--input-border, var(--tab-border, #3c3c3c)));
+  border-radius: 3px;
+  outline: none;
+  transition: border-color 0.1s ease-in-out, box-shadow 0.1s ease-in-out;
+}
+
+.ide-select__trigger:hover:not(:disabled) {
+  border-color: var(--input-border-hover, var(--focus-border, #0a84ff));
+}
+
+.ide-select__trigger:focus-visible,
+.ide-select__trigger--open {
+  border-color: var(--focus-border, #0a84ff);
+  box-shadow: 0 0 0 1px var(--focus-border, #0a84ff);
+}
+
+.ide-select__trigger:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.ide-select__label {
+  flex: 1 1 auto;
+  min-width: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.ide-select__arrow {
+  flex: 0 0 auto;
+  opacity: 0.85;
+  transition: transform 0.12s ease;
+}
+
+.ide-select__trigger--open .ide-select__arrow {
+  transform: rotate(180deg);
+}
+
+/* Panel ----------------------------------------------------------------- *
+ * Rendered inside the CDK overlay (appended to the document body). Emulated
+ * view encapsulation still scopes these rules because the elements originate
+ * from this component's template.                                          */
+
+.ide-select__panel {
+  box-sizing: border-box;
+  width: max-content;
+  min-width: 100%;
+  max-width: 320px;
+  margin: 0;
+  padding: 4px;
+  max-height: 260px;
+  overflow-y: auto;
+  list-style: none;
+  font-size: 13px;
+  color: var(--dropdown-foreground, var(--foreground, #cccccc));
+  background: var(--dropdown-background, var(--input-background, #252526));
+  border: 1px solid var(--dropdown-border, var(--tab-border, #454545));
+  border-radius: 4px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.36);
+  outline: none;
+}
+
+.ide-select__option {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  box-sizing: border-box;
+  min-height: 22px;
+  padding: 4px 8px;
+  border-radius: 3px;
+  cursor: pointer;
+  outline: none;
+  user-select: none;
+}
+
+.ide-select__option:hover {
+  background: var(--list-hoverBackground, rgba(255, 255, 255, 0.08));
+}
+
+/* Keyboard-highlighted option (cdkListbox roving focus). */
+.ide-select__option.cdk-option-active {
+  background: var(--list-focusBackground, var(--list-activeSelectionBackground, #094771));
+  color: var(--list-activeSelectionForeground, #ffffff);
+  outline: 1px solid var(--list-focusOutline, transparent);
+  outline-offset: -1px;
+}
+
+.ide-select__option[aria-selected='true'] {
+  color: var(--list-activeSelectionForeground, var(--foreground, #ffffff));
+  font-weight: 500;
+}
+
+.ide-select__option[aria-disabled='true'] {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.ide-select__option-label {
+  flex: 1 1 auto;
+  min-width: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.ide-select__option-check {
+  flex: 0 0 auto;
+  color: var(--focus-border, #0a84ff);
+  visibility: hidden;
+}
+
+.ide-select__option.cdk-option-active .ide-select__option-check {
+  color: currentColor;
+}
+
+.ide-select__option[aria-selected='true'] .ide-select__option-check {
+  visibility: visible;
+}
+
+.ide-select__empty {
+  padding: 4px 8px;
+  opacity: 0.6;
+  cursor: default;
+}

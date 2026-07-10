@@ -1,25 +1,25 @@
 import { Injectable, inject } from '@angular/core'
-import { NzModalService } from 'ng-zorro-antd/modal'
+import { IdeModalService } from '../ui/dialog/ide-modal.service'
 import { ConfirmOptions } from './dialog'
 
 @Injectable()
 export class DialogService {
-  private readonly nzModalService = inject(NzModalService)
+  private readonly modalService = inject(IdeModalService)
 
   confirmAsync(options: ConfirmOptions): Promise<boolean | string> {
     return new Promise<boolean | string>((resolve) => {
-      const modal = this.nzModalService.create({
-        nzTitle: options.title,
-        nzContent: options.message,
-        nzClosable: false,
-        nzMaskClosable: false,
-        nzMask: true,
-        nzCentered: true,
-        nzModalType: 'default',
-        nzBodyStyle: {
+      const modal = this.modalService.create<unknown, boolean | string>({
+        title: options.title,
+        content: options.message,
+        closable: false,
+        maskClosable: false,
+        mask: true,
+        centered: true,
+        modalType: 'default',
+        bodyStyle: {
           ...(!options.message && { display: 'none' }),
         },
-        nzFooter: [
+        footer: [
           ...(options.buttons?.map((button) => ({
             label: button.title,
             danger: button.danger ?? false,

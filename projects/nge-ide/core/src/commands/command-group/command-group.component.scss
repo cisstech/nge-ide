@@ -12,7 +12,7 @@
   margin: 0 4px;
   background-color: transparent;
   &:hover {
-    background-color: #f0f0f0;
+    background-color: var(--list-hover);
     border-radius: 4px;
   }
 }

@@ -6,9 +6,11 @@ import {
   HostListener,
   OnDestroy,
   OnInit,
+  TemplateRef,
   ViewChild,
 } from '@angular/core'
 import {
+  ContextMenuService,
   DialogService,
   DndData,
   EditorService,
@@ -21,7 +23,6 @@ import {
   StorageService,
 } from '@cisstech/nge-ide/core'
 import { ITreeState, TreeComponent, TreeState } from '@cisstech/nge/ui/tree'
-import { NzContextMenuService, NzDropdownMenuComponent } from 'ng-zorro-antd/dropdown'
 import { BehaviorSubject, Subscription } from 'rxjs'
 import { IExplorerCommand } from './commands'
 import { ExplorerService } from './explorer.service'
@@ -31,6 +32,7 @@ import { ExplorerService } from './explorer.service'
   templateUrl: './explorer.component.html',
   styleUrls: ['./explorer.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: false,
 })
 export class ExplorerComponent implements OnInit, OnDestroy, AfterViewChecked {
   private readonly subscriptions: Subscription[] = []
@@ -42,8 +44,8 @@ export class ExplorerComponent implements OnInit, OnDestroy, AfterViewChecked {
   @ViewChild(TreeComponent, { static: true })
   tree!: TreeComponent<IFile>
 
-  @ViewChild(NzDropdownMenuComponent, { static: true })
-  dropdown!: NzDropdownMenuComponent
+  @ViewChild('menu', { static: true })
+  menu!: TemplateRef<unknown>
 
   constructor(
     private readonly ideService: IdeService,
@@ -53,7 +55,7 @@ export class ExplorerComponent implements OnInit, OnDestroy, AfterViewChecked {
     private readonly dialogService: DialogService,
     private readonly storageService: StorageService,
     private readonly explorerService: ExplorerService,
-    private readonly contextMenuService: NzContextMenuService,
+    private readonly contextMenuService: ContextMenuService,
     private readonly notificationService: NotificationService
   ) {}
 
@@ -80,7 +82,7 @@ export class ExplorerComponent implements OnInit, OnDestroy, AfterViewChecked {
     this.subscriptions.push(
       this.explorerService.onDidContextMenu.subscribe((e) => {
         this.commands.next(this.explorerService.listCommands())
-        this.contextMenuService.create(e.event, this.dropdown)
+        this.contextMenuService.open(e.event, this.menu)
       })
     )
 
@@ -104,10 +106,6 @@ export class ExplorerComponent implements OnInit, OnDestroy, AfterViewChecked {
   @HostListener('window:click')
   protected closeContextMenu() {
     this.commands.next([])
-  }
-
-  protected trackById(_: number, e: any): string {
-    return e.id
   }
 
   /**
