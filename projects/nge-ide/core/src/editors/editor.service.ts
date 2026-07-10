@@ -353,13 +353,19 @@ export class EditorService implements IContribution {
 
     this.editorGroups$.next(this.listGroups())
 
-    this.state$.next(this.emptyEditorState())
+    if (!group.isEmpty) {
+      // close() keeps (or re-selects) the group's active editor after a tab is
+      // removed, so reflect it instead of emptying the workbench.
+      this.setActiveGroup(group)
+      return
+    }
 
-    if (group.isEmpty) {
-      const randomGroup = this.findGroup((g) => !g.isEmpty)
-      if (randomGroup) {
-        this.setActiveGroup(randomGroup)
-      }
+    // The group is now empty: fall back to another non-empty group, or clear.
+    const randomGroup = this.findGroup((g) => !g.isEmpty)
+    if (randomGroup) {
+      this.setActiveGroup(randomGroup)
+    } else {
+      this.state$.next(this.emptyEditorState())
     }
   }
 
