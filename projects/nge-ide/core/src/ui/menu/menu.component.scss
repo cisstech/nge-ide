@@ -1,0 +1,73 @@
+/* The panel and its items are projected into a CDK overlay that lives outside
+   this component's view, so IdeMenuComponent uses ViewEncapsulation.None and the
+   rules below are published globally under stable class names. Colors read from
+   the IDE theme variables with VS-Code-like dark fallbacks. */
+
+.ide-menu {
+  box-sizing: border-box;
+  display: block;
+  min-width: 180px;
+  max-width: 400px;
+  max-height: min(60vh, 460px);
+  margin: 0;
+  padding: 4px 0;
+  overflow-x: hidden;
+  overflow-y: auto;
+  list-style: none;
+  font-family: inherit;
+  font-size: 13px;
+  line-height: 1.4;
+  color: var(--foreground, #cccccc);
+  background: var(--dropdown-background, var(--input-background, #252526));
+  border: 1px solid var(--dropdown-border, var(--tab-border, #454545));
+  border-radius: 5px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.36);
+  outline: none;
+}
+
+.ide-menu-item {
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 26px;
+  margin: 0;
+  padding: 0 12px;
+  list-style: none;
+  color: inherit;
+  white-space: nowrap;
+  cursor: pointer;
+  user-select: none;
+  outline: none;
+}
+
+.ide-menu-item:hover {
+  background: var(--list-hover, rgba(128, 128, 128, 0.17));
+}
+
+/* The key manager gives the active item real DOM focus, so :focus doubles as the
+   keyboard-active state and gets the stronger selection color. */
+.ide-menu-item:focus,
+.ide-menu-item:focus-visible,
+.ide-menu-item.cdk-focused {
+  color: var(--list-active-foreground, #ffffff);
+  background: var(--list-active, var(--focus-border, #0a84ff));
+  outline: none;
+}
+
+.ide-menu-item.cdk-menu-item-disabled,
+.ide-menu-item[aria-disabled='true'] {
+  color: var(--disabled, #7f7f7f);
+  cursor: default;
+  opacity: 0.6;
+}
+
+.ide-menu-item.cdk-menu-item-disabled:hover,
+.ide-menu-item[aria-disabled='true']:hover {
+  background: transparent;
+}
+
+/* Separators dropped inside a menu (e.g. a projected <ide-divider/>). */
+.ide-menu > .ide-divider {
+  margin: 4px 8px;
+}

@@ -1,0 +1,67 @@
+:host {
+  // Default ("default") preset; overridden by the size modifier classes below.
+  --ide-spinner-size: 20px;
+  --ide-spinner-thickness: 2px;
+
+  // Leading arc color: dedicated progress token, then focus ring, then blue.
+  --ide-spinner-color: var(--progress-bar-background, var(--focus-border, #0a84ff));
+
+  display: inline-flex;
+  box-sizing: border-box;
+  width: var(--ide-spinner-size);
+  height: var(--ide-spinner-size);
+  vertical-align: middle;
+  flex: 0 0 auto;
+}
+
+:host(.ide-spinner--small) {
+  --ide-spinner-size: 14px;
+  --ide-spinner-thickness: 2px;
+}
+
+:host(.ide-spinner--large) {
+  --ide-spinner-size: 32px;
+  --ide-spinner-thickness: 3px;
+}
+
+.ide-spinner__ring {
+  box-sizing: border-box;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  border-style: solid;
+  border-width: var(--ide-spinner-thickness);
+
+  // Faint track ring. Fallback first, theme-aware color-mix second.
+  border-color: rgba(140, 140, 140, 0.25);
+  border-color: color-mix(in srgb, var(--foreground, #cccccc) 22%, transparent);
+
+  // Only the top edge carries the accent, producing the rotating arc.
+  border-top-color: var(--ide-spinner-color);
+
+  animation: ide-spinner-rotate 0.8s linear infinite;
+}
+
+@keyframes ide-spinner-rotate {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+// Respect reduced-motion: drop the spin for a gentle full-ring opacity pulse.
+@media (prefers-reduced-motion: reduce) {
+  .ide-spinner__ring {
+    border-color: var(--ide-spinner-color);
+    animation: ide-spinner-pulse 1.4s ease-in-out infinite;
+  }
+}
+
+@keyframes ide-spinner-pulse {
+  0%,
+  100% {
+    opacity: 0.3;
+  }
+  50% {
+    opacity: 1;
+  }
+}

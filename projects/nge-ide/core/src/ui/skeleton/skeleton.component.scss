@@ -1,0 +1,64 @@
+:host {
+  display: block;
+  padding: 8px 12px;
+}
+
+.ide-skeleton__line {
+  position: relative;
+  height: 12px;
+  margin-bottom: 10px;
+  border-radius: 4px;
+  overflow: hidden;
+
+  // Base placeholder tint. Fallback first, theme-aware color-mix second.
+  background-color: rgba(140, 140, 140, 0.18);
+  background-color: color-mix(in srgb, var(--foreground, #cccccc) 14%, transparent);
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
+.ide-skeleton__line--title {
+  width: 38%;
+  height: 16px;
+  margin-bottom: 14px;
+}
+
+.ide-skeleton__line--short {
+  width: 61%;
+}
+
+// Shimmer sweep, only rendered when [active] is set.
+.ide-skeleton--active .ide-skeleton__line::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  transform: translateX(-100%);
+  background-image: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.14) 50%,
+    transparent 100%
+  );
+  background-image: linear-gradient(
+    90deg,
+    transparent 0%,
+    color-mix(in srgb, var(--foreground, #cccccc) 20%, transparent) 50%,
+    transparent 100%
+  );
+  animation: ide-skeleton-shimmer 1.4s ease-in-out infinite;
+}
+
+@keyframes ide-skeleton-shimmer {
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+// Respect users who prefer reduced motion: keep static placeholder bars.
+@media (prefers-reduced-motion: reduce) {
+  .ide-skeleton--active .ide-skeleton__line::after {
+    animation: none;
+  }
+}

@@ -1,0 +1,32 @@
+:host {
+  display: flex;
+  align-items: center;
+  box-sizing: border-box;
+  min-height: 22px;
+  padding: 2px 10px;
+  font-family: inherit;
+  font-size: 13px;
+  line-height: 18px;
+  color: var(--foreground, #cccccc);
+  cursor: pointer;
+  user-select: none;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+:host(:hover) {
+  color: var(--list-hoverForeground, var(--foreground, #ffffff));
+  background: var(--list-hoverBackground, rgba(255, 255, 255, 0.08));
+}
+
+:host(.ide-auto-option--active) {
+  color: var(--list-activeSelectionForeground, var(--foreground, #ffffff));
+  background: var(--list-activeSelectionBackground, var(--focus-border, #094771));
+}
+
+:host(.ide-auto-option--disabled) {
+  color: var(--disabledForeground, #8a8a8a);
+  cursor: default;
+  pointer-events: none;
+  opacity: 0.6;
+}

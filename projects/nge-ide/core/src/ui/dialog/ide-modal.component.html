@@ -1,0 +1,45 @@
+@if (showHeader) {
+  <div class="ide-modal__header">
+    @if (data.title) {
+      <h2 class="ide-modal__title" [id]="data.titleId">{{ data.title }}</h2>
+    }
+    @if (data.closable) {
+      <button type="button" class="ide-modal__close" aria-label="Close" (click)="onCloseClick()">
+        <svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true" focusable="false">
+          <path
+            fill="currentColor"
+            d="M8 8.707l3.646 3.647.708-.708L8.707 8l3.647-3.646-.708-.708L8 7.293 4.354 3.646l-.708.708L7.293 8l-3.647 3.646.708.708L8 8.707z"
+          />
+        </svg>
+      </button>
+    }
+  </div>
+}
+
+<div class="ide-modal__body" [ngStyle]="data.bodyStyle">
+  @if (stringContent !== null) {
+    <div class="ide-modal__message" [innerHTML]="stringContent"></div>
+  } @else if (componentContent) {
+    <ng-container
+      [ngComponentOutlet]="componentContent"
+      [ngComponentOutletInputs]="data.componentParams"
+    ></ng-container>
+  }
+</div>
+
+@if (data.footer.length) {
+  <div class="ide-modal__footer">
+    @for (button of data.footer; track $index) {
+      <button
+        type="button"
+        class="ide-modal__btn"
+        [class.ide-modal__btn--primary]="button.type === 'primary'"
+        [class.ide-modal__btn--danger]="button.danger"
+        [disabled]="!!button.disabled"
+        (click)="onFooterClick(button)"
+      >
+        {{ button.label }}
+      </button>
+    }
+  </div>
+}

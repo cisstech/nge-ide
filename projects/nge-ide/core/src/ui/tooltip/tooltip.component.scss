@@ -1,0 +1,36 @@
+:host {
+  display: block;
+  box-sizing: border-box;
+  max-width: 320px;
+  padding: 4px 8px;
+  font-family: inherit;
+  font-size: 12px;
+  line-height: 1.4;
+  white-space: normal;
+  overflow-wrap: break-word;
+  word-break: break-word;
+  border-radius: 3px;
+  pointer-events: none;
+  user-select: none;
+  color: var(--editorHoverWidget-foreground, var(--foreground, #cccccc));
+  background: var(--editorHoverWidget-background, var(--input-background, #252526));
+  border: 1px solid var(--editorHoverWidget-border, var(--tab-border, #454545));
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.36);
+  animation: ide-tooltip-fade-in 0.1s ease-out;
+}
+
+@keyframes ide-tooltip-fade-in {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :host {
+    animation: none;
+  }
+}

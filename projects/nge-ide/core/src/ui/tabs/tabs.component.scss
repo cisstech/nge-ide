@@ -1,0 +1,105 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  width: 100%;
+  font-family: inherit;
+}
+
+.ide-tabs__bar {
+  display: flex;
+  align-items: stretch;
+  min-width: 0;
+  min-height: 35px;
+  background: var(--editorGroupHeader-tabsBackground, var(--tab-bar-background, #252526));
+  border-bottom: 1px solid var(--editorGroupHeader-tabsBorder, var(--tab-border, #1e1e1e));
+}
+
+.ide-tabs__nav {
+  display: flex;
+  flex: 1 1 auto;
+  align-items: stretch;
+  min-width: 0;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scrollbar-width: none;
+}
+
+.ide-tabs__nav::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+}
+
+.ide-tabs__extra {
+  display: flex;
+  flex: 0 0 auto;
+  align-items: center;
+  gap: 4px;
+  padding: 0 6px;
+}
+
+.ide-tabs__tab {
+  display: inline-flex;
+  flex: 0 0 auto;
+  align-items: center;
+  gap: 6px;
+  box-sizing: border-box;
+  max-width: 240px;
+  height: 35px;
+  padding: 0 10px;
+  white-space: nowrap;
+  cursor: pointer;
+  user-select: none;
+  font-size: 13px;
+  line-height: 1;
+  color: var(--tab-inactiveForeground, #969696);
+  background: var(--tab-inactiveBackground, #2d2d2d);
+  border: none;
+  border-right: 1px solid var(--tab-border, #252526);
+  border-top: 2px solid transparent;
+  transition: background-color 0.08s ease, color 0.08s ease;
+}
+
+.ide-tabs__tab:hover {
+  color: var(--tab-activeForeground, #ffffff);
+  background: var(--tab-hoverBackground, var(--tab-inactiveBackground, #2d2d2d));
+}
+
+.ide-tabs__tab--active {
+  color: var(--tab-activeForeground, #ffffff);
+  background: var(--tab-activeBackground, var(--editor-background, #1e1e1e));
+  border-top-color: var(--tab-activeBorderTop, var(--focus-border, #0a84ff));
+}
+
+/* Keyboard focus ring (roving tabindex is driven by the CDK FocusKeyManager). */
+.ide-tabs__tab:focus-visible {
+  outline: 1px solid var(--focus-border, #0a84ff);
+  outline-offset: -2px;
+}
+
+/* Line variant: underline the active tab instead of drawing card edges. */
+:host(.ide-tabs--line) .ide-tabs__tab {
+  background: transparent;
+  border-right: none;
+  border-top: none;
+  border-bottom: 2px solid transparent;
+}
+
+:host(.ide-tabs--line) .ide-tabs__tab--active {
+  background: transparent;
+  border-bottom-color: var(--focus-border, #0a84ff);
+}
+
+.ide-tabs__body {
+  min-width: 0;
+  min-height: 0;
+}
+
+.ide-tabs__panel {
+  min-width: 0;
+  outline: none;
+}
+
+.ide-tabs__panel[hidden] {
+  display: none;
+}

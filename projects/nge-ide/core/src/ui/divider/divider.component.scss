@@ -1,0 +1,33 @@
+/* Horizontal rule (default): a full-width hairline with compact spacing. */
+:host {
+  box-sizing: border-box;
+  display: block;
+  width: 100%;
+  min-width: 100%;
+  height: 0;
+  margin: 4px 0;
+  border: 0;
+  border-top: 1px solid var(--divider-color, var(--tab-border, #3c3c3c));
+}
+
+:host(.ide-divider--dashed) {
+  border-top-style: dashed;
+}
+
+/* Vertical rule: a short hairline that sits inline between adjacent content. */
+:host(.ide-divider--vertical) {
+  position: relative;
+  top: -0.06em;
+  display: inline-block;
+  width: 0;
+  height: 0.9em;
+  min-width: 0;
+  margin: 0 8px;
+  vertical-align: middle;
+  border-top: 0;
+  border-left: 1px solid var(--divider-color, var(--tab-border, #3c3c3c));
+}
+
+:host(.ide-divider--vertical.ide-divider--dashed) {
+  border-left-style: dashed;
+}

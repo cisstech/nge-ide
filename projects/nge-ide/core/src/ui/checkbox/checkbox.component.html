@@ -1,0 +1,25 @@
+<label class="ide-checkbox" [class.ide-checkbox--disabled]="isDisabled()">
+  <span class="ide-checkbox__control">
+    <input
+      #input
+      type="checkbox"
+      class="ide-checkbox__native"
+      [id]="inputId"
+      [checked]="checked()"
+      [disabled]="isDisabled()"
+      (change)="handleChange($event)"
+    />
+    <span class="ide-checkbox__box" [class.ide-checkbox__box--focused]="focusedByKeyboard()" aria-hidden="true">
+      <svg class="ide-checkbox__check" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path
+          d="M3.5 8.5 6.5 11.5 12.5 4.5"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        />
+      </svg>
+    </span>
+  </span>
+  <span class="ide-checkbox__label"><ng-content></ng-content></span>
+</label>
