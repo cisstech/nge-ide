@@ -2,7 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
-## 18.1.0 (2025-03-04)
+## [18.1.0](https://github.com/cisstech/nge-ide/compare/v18.0.1...v18.1.0) (2025-03-04)
+
+
+### Features
+
+* **toolbar:** expose api to change button type ([c55ab8c](https://github.com/cisstech/nge-ide/commit/c55ab8c43ae808c6f73462ebde9cc309ef8ebfc6))
 
 ### [18.0.1](https://github.com/cisstech/nge-ide/compare/v18.0.0...v18.0.1) (2025-02-04)
 
@@ -10,8 +15,6 @@ All notable changes to this project will be documented in this file. See [standa
 ### Bug Fixes
 
 * **preview-command:** remove previsualisation shortcut ([c6a309f](https://github.com/cisstech/nge-ide/commit/c6a309feaccbd6567ebf29f810c25b74c34ac6c6))
-
-## 18.0.0 (2024-08-27)
 
 ### [17.7.4](https://github.com/cisstech/nge-ide/compare/v17.7.3...v17.7.4) (2024-07-20)
 
@@ -81,6 +84,11 @@ All notable changes to this project will be documented in this file. See [standa
 ## [17.5.0](https://github.com/cisstech/nge-ide/compare/v17.4.0...v17.5.0) (2024-01-07)
 
 
+### Bug Fixes
+
+* **toolbar:** typo in ToolbarService name ([62090d1](https://github.com/cisstech/nge-ide/commit/62090d1b6cf794867b7cccd7f009f121fd8b2d33))
+
+
 ### Features
 
 * **file:** implements multi root folders for inmemory fs ([3f5e8d1](https://github.com/cisstech/nge-ide/commit/3f5e8d1d5802f51e17c49c909269c2a3b3180fe5))
@@ -89,17 +97,13 @@ All notable changes to this project will be documented in this file. See [standa
 * **sidebar:** dropdown items ([71a2768](https://github.com/cisstech/nge-ide/commit/71a2768f78431b2227c88bfa4b91c1e2c135e47a))
 * **workbench:** allow to specify custom label and value for OnDropIntoEditorHandlers ([2060950](https://github.com/cisstech/nge-ide/commit/20609505db8a4e3d877e202133cb89eff91fc9ec))
 
-
-### Bug Fixes
-
-* **toolbar:** typo in ToolbarService name ([62090d1](https://github.com/cisstech/nge-ide/commit/62090d1b6cf794867b7cccd7f009f121fd8b2d33))
-
 ## [17.4.0](https://github.com/cisstech/nge-ide/compare/v17.1.0...v17.4.0) (2024-01-07)
 
 
-### ⚠ BREAKING CHANGES
+### Code Refactoring
 
-* **file:** fileService.open calls should be awaited
+* **file:** async open and read files ([87b4fa2](https://github.com/cisstech/nge-ide/commit/87b4fa2ddfe1f2280a0e60ed0f5bca1ea0acd9c6))
+
 
 ### Features
 
@@ -111,7 +115,9 @@ All notable changes to this project will be documented in this file. See [standa
 * **workbench:** drop file path into editor ([e1286dd](https://github.com/cisstech/nge-ide/commit/e1286dd49e1b52f0fcb7823690c7513c72428557))
 
 
-* **file:** async open and read files ([87b4fa2](https://github.com/cisstech/nge-ide/commit/87b4fa2ddfe1f2280a0e60ed0f5bca1ea0acd9c6))
+### BREAKING CHANGES
+
+* **file:** fileService.open calls should be awaited
 
 ## [17.1.0](https://github.com/cisstech/nge-ide/compare/v17.0.0...v17.1.0) (2023-12-10)
 
@@ -131,8 +137,6 @@ All notable changes to this project will be documented in this file. See [standa
 
 ### [15.2.3](https://github.com/cisstech/nge-ide/compare/v15.2.1...v15.2.3) (2023-07-10)
 
-### [15.2.2](https://github.com/cisstech/nge-ide/compare/v15.2.1...v15.2.2) (2023-07-10)
-
 ### [15.2.1](https://github.com/cisstech/nge-ide/compare/v15.2.0...v15.2.1) (2023-07-10)
 
 
@@ -143,14 +147,14 @@ All notable changes to this project will be documented in this file. See [standa
 ## [15.2.0](https://github.com/cisstech/nge-ide/compare/v15.1.3...v15.2.0) (2023-07-10)
 
 
-### Features
-
-* add editor preview reload command ([01e213f](https://github.com/cisstech/nge-ide/commit/01e213fbc491e347e85e7d38e26af265858de95a))
-
-
 ### Bug Fixes
 
 * ignore query params while call URI.toString ([5ebd306](https://github.com/cisstech/nge-ide/commit/5ebd306fd783ba5aa640c2608c2a5196b164c493))
+
+
+### Features
+
+* add editor preview reload command ([01e213f](https://github.com/cisstech/nge-ide/commit/01e213fbc491e347e85e7d38e26af265858de95a))
 
 ### [15.1.3](https://github.com/cisstech/nge-ide/compare/v15.1.2...v15.1.3) (2023-06-06)
 
@@ -195,8 +199,6 @@ All notable changes to this project will be documented in this file. See [standa
 
 ### [13.0.3](https://github.com/cisstech/nge-ide/compare/v13.0.1...v13.0.3) (2022-02-08)
 
-### [13.0.2](https://github.com/cisstech/nge-ide/compare/v13.0.1...v13.0.2) (2022-02-08)
-
 ### [13.0.1](https://github.com/cisstech/nge-ide/compare/v0.0.1...v13.0.1) (2022-01-17)
 
 
@@ -208,7 +210,12 @@ All notable changes to this project will be documented in this file. See [standa
 * uri.toString() encoding ([042256f](https://github.com/cisstech/nge-ide/commit/042256fcda323db3fd851c91fc55b69b4657c633))
 * wrong import path ([ff7b1a7](https://github.com/cisstech/nge-ide/commit/ff7b1a769959f2257b3e10446d43f652d3d8abcb))
 
-### 0.0.1 (2021-12-04)
+### [0.0.1](https://github.com/cisstech/nge-ide/compare/93f147457970a7ceaa782bb5a744201096b8b728...v0.0.1) (2021-12-04)
+
+
+### Bug Fixes
+
+* bugs with tree component ([e047663](https://github.com/cisstech/nge-ide/commit/e047663fa7b51899068c50e54d896a21ed37911b))
 
 
 ### Features
@@ -231,8 +238,3 @@ All notable changes to this project will be documented in this file. See [standa
 * add task module ([5c73382](https://github.com/cisstech/nge-ide/commit/5c73382d18d9a62174e42b0c70d90fc3685c5240))
 * add toolbar api ([902afed](https://github.com/cisstech/nge-ide/commit/902afed2a430cebc664f4912cad2286c29dfa77f))
 * override mmonaco editor open editor api ([d892185](https://github.com/cisstech/nge-ide/commit/d892185fd104089e9cbb1efc513ed7601a0b79e5))
-
-
-### Bug Fixes
-
-* bugs with tree component ([e047663](https://github.com/cisstech/nge-ide/commit/e047663fa7b51899068c50e54d896a21ed37911b))
