@@ -106,6 +106,13 @@ export class ContextMenuService {
     event.stopPropagation()
     this.close()
 
+    // The opening gesture emits a trailing event (pointerup/auxclick/click, and
+    // for a right click the very `contextmenu` that opened us) that lands just
+    // after the overlay attaches and targets the same element. CDK's outside
+    // dispatcher would read it as an outside click and close the menu at once,
+    // so we ignore outside events aimed at the opener, like CdkMenuTrigger does.
+    const openTarget = event.target as Node | null
+
     const templateRef = menu instanceof TemplateRef ? menu : menu.templateRef
     const autoFocus = config.autoFocus !== false
     const restoreFocus = autoFocus ? (document.activeElement as HTMLElement | null) : null
@@ -177,7 +184,15 @@ export class ContextMenuService {
     // The stack empties on selection, Escape and Tab. Defer teardown so the
     // item's own (click)/(keydown) listeners finish before the view is gone.
     subscription.add(menuStack.emptied.subscribe(() => queueMicrotask(dispose)))
-    subscription.add(overlayRef.outsidePointerEvents().subscribe(() => queueMicrotask(dispose)))
+    subscription.add(
+      overlayRef.outsidePointerEvents().subscribe((outsideEvent) => {
+        const target = outsideEvent.target as Node | null
+        if (openTarget && target && (openTarget === target || openTarget.contains(target))) {
+          return
+        }
+        queueMicrotask(dispose)
+      })
+    )
     // Safety net for self-disposal (e.g. disposeOnNavigation) so bookkeeping is cleared.
     subscription.add(overlayRef.detachments().subscribe(() => queueMicrotask(dispose)))
 
