@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [18.1.1](https://github.com/cisstech/nge-ide/compare/v18.1.0...v18.1.1) (2026-07-10)
+
+
+### Bug Fixes
+
+* **editor:** keep a single editor in the DOM when switching editors ([#442](https://github.com/cisstech/nge-ide/issues/442))
+* **editor:** focus a neighbouring tab when the active tab is closed
+* **editor:** destroy cached editor components on directive teardown
+
 ## 18.1.0 (2025-03-04)
 
 ### [18.0.1](https://github.com/cisstech/nge-ide/compare/v18.0.0...v18.0.1) (2025-02-04)
