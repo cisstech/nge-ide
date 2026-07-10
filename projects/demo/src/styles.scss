@@ -5,22 +5,18 @@
 @use './styles/variables';
 
 html {
-  width: 100vw;
-  height: 100vh;
-  overflow: hidden;
   color: var(--brand-text-primary);
   background-color: var(--brand-background-color);
   font-family: var(--brand-font);
 }
 
-// Carry a definite height down to <ide-root> so the IDE fills the viewport
-// (its own overflow is hidden) instead of growing to its content and scrolling.
 body {
-  height: 100%;
   margin: 0;
 }
 
+// The playground route sizes itself to the viewport (see showcase.component.scss),
+// while the landing and docs pages flow and scroll with their content. A global
+// `overflow: hidden` here would break scrolling on those pages.
 app-root {
   display: block;
-  height: 100%;
 }

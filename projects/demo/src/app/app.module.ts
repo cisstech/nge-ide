@@ -4,7 +4,7 @@ import { NgModule } from '@angular/core'
 import { BrowserModule } from '@angular/platform-browser'
 
 // LIBS
-import { NGE_DOC_RENDERERS } from '@cisstech/nge/doc'
+import { provideNgeDoc, withBrand, withDarkMode, withMarkdownRenderer, withNavbar } from '@cisstech/nge/doc'
 import {
   NgeMarkdownAdmonitionsProvider,
   NgeMarkdownEmojiProvider,
@@ -34,8 +34,9 @@ import { AppComponent } from './app.component'
       theming: {
         themes: NGE_MONACO_THEMES.map((theme) => 'assets/vendors/nge/monaco/themes/' + theme),
         default: 'github',
-        // The IDE's own theme toggle drives the editor theme (github / github-dark),
-        // so no darkThemeClassName sync here to avoid the two fighting over it.
+        light: 'github',
+        dark: 'github-dark',
+        darkThemeClassName: 'nge-doc-dark',
       },
     }),
     AppRoutingModule,
@@ -53,14 +54,18 @@ import { AppComponent } from './app.component'
       styleUrl: 'assets/vendors/nge/markdown/themes/github.css',
     }),
     NgeMarkdownHighlighterMonacoProvider(NgeMonacoColorizerService),
-    {
-      provide: NGE_DOC_RENDERERS,
-      useValue: {
-        markdown: {
-          component: () => import('@cisstech/nge/markdown').then((m) => m.NgeMarkdownComponent),
-        },
-      },
-    },
+    provideNgeDoc(
+      withBrand({ title: 'NGE IDE', icon: 'assets/images/nge.svg', href: '/' }),
+      withNavbar([
+        { title: 'Docs', href: '/docs/introduction' },
+        { title: 'Playground', href: '/playground' },
+        { title: 'GitHub', href: 'https://github.com/cisstech/nge-ide', external: true },
+      ]),
+      withMarkdownRenderer({
+        component: () => import('@cisstech/nge/markdown').then((m) => m.NgeMarkdownComponent),
+      }),
+      withDarkMode('auto')
+    ),
     provideHttpClient(withXhr(), withInterceptorsFromDi()),
   ],
 })
