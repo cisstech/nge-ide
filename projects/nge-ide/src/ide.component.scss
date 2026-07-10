@@ -14,8 +14,8 @@
   background: var(--editor-background);
 }
 
-// Theme tokens (colors) are provided globally by assets/theme.css so that CDK
-// overlays inherit them; only layout-level tokens and structural rules live here.
+// Theme tokens (colors) are injected at runtime by ThemeService, scoped to this
+// host and IDE overlay panels; only layout-level tokens and structural rules live here.
 :host::ng-deep {
   --tab-height: 36px;
 

@@ -15,6 +15,7 @@ import {
   viewChild,
 } from '@angular/core'
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms'
+import { ThemeService } from '../../theme/theme.service'
 import { OptionComponent } from './option.component'
 
 /** Minimal shape of the event emitted by `cdkListbox` (its type is not exported by the CDK). */
@@ -63,6 +64,9 @@ let nextUniqueId = 0
 export class SelectComponent implements ControlValueAccessor {
   private readonly injector = inject(Injector)
   private readonly document = inject(DOCUMENT)
+
+  /** IDE theme class stamped on the overlay panel so it renders under the right theme. */
+  protected readonly overlayPanelClass = inject(ThemeService).overlayClass
 
   private readonly uid = nextUniqueId++
 

@@ -62,7 +62,6 @@
               { "glob": "**/*", "input": "./node_modules/@cisstech/nge/assets/ui/icon/assets/icons/files", "output": "./assets/vendors/nge/ui/icon/icons/files/" }
             ],
             "styles": [
-              "projects/nge-ide/assets/theme.css",
               "projects/demo/src/styles.scss"
             ],
             "scripts": [],

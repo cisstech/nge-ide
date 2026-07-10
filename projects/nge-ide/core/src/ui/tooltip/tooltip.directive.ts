@@ -18,6 +18,7 @@ import {
   input,
 } from '@angular/core'
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop'
+import { ThemeService } from '../../theme/theme.service'
 import { TooltipComponent } from './tooltip.component'
 
 let nextUniqueId = 0
@@ -82,6 +83,7 @@ export class TooltipDirective implements OnDestroy {
   private readonly ngZone = inject(NgZone)
   private readonly focusMonitor = inject(FocusMonitor)
   private readonly destroyRef = inject(DestroyRef)
+  private readonly themeService = inject(ThemeService)
 
   /** Tooltip text; an empty or whitespace-only value shows nothing (replaces `nz-tooltip`). */
   readonly text = input<string | null | undefined>('', { alias: 'ideTooltip' })
@@ -190,7 +192,7 @@ export class TooltipDirective implements OnDestroy {
     this.overlayRef = this.overlay.create({
       positionStrategy: this.positionStrategy,
       scrollStrategy: this.overlay.scrollStrategies.close(),
-      panelClass: 'ide-tooltip-panel',
+      panelClass: ['ide-tooltip-panel', this.themeService.overlayClass()],
       disposeOnNavigation: true,
     })
 

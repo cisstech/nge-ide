@@ -41,6 +41,7 @@
   [cdkConnectedOverlayMinWidth]="panelWidth()"
   [cdkConnectedOverlayViewportMargin]="8"
   [cdkConnectedOverlayDisableClose]="true"
+  [cdkConnectedOverlayPanelClass]="overlayPanelClass()"
   (attach)="onOverlayAttached()"
   (detach)="close()"
   (overlayOutsideClick)="onOutsideClick()"

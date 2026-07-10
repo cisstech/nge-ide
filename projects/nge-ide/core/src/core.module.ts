@@ -11,6 +11,7 @@ import { SettingsService } from './settings/index'
 import { StatusBarService } from './status-bar/index'
 import { StorageService } from './storage/index'
 import { TaskService } from './tasks/index'
+import { ThemeService } from './theme/index'
 import { ToolbarService } from './toolbar/index'
 import { ViewContainerService, ViewService } from './views/index'
 import { DialogModule } from './dialog'
@@ -48,6 +49,7 @@ import { DialogModule } from './dialog'
     { provide: CONTRIBUTION, multi: true, useExisting: DiagnosticService },
     { provide: CONTRIBUTION, multi: true, useExisting: NotificationService },
     { provide: CONTRIBUTION, multi: true, useExisting: ViewContainerService },
+    { provide: CONTRIBUTION, multi: true, useExisting: ThemeService },
   ],
 })
 export class CoreModule {}

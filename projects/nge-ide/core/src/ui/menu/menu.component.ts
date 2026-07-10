@@ -1,5 +1,6 @@
-import { ChangeDetectionStrategy, Component, ViewEncapsulation } from '@angular/core'
+import { ChangeDetectionStrategy, Component, ViewEncapsulation, inject } from '@angular/core'
 import { CdkMenu } from '@angular/cdk/menu'
+import { ThemeService } from '../../theme/theme.service'
 
 /**
  * Menu panel that lays out a list of {@link IdeMenuItemDirective} entries.
@@ -40,6 +41,12 @@ import { CdkMenu } from '@angular/cdk/menu'
   hostDirectives: [CdkMenu],
   host: {
     class: 'ide-menu',
+    // The panel renders in a CDK overlay under <body>; carry the IDE theme so
+    // its tokens resolve there too.
+    '[class.ide-theme-dark]': "theme() === 'dark'",
+    '[class.ide-theme-light]': "theme() === 'light'",
   },
 })
-export class IdeMenuComponent {}
+export class IdeMenuComponent {
+  protected readonly theme = inject(ThemeService).resolved
+}

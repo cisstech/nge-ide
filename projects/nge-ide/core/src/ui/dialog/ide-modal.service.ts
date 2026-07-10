@@ -3,6 +3,7 @@ import { hasModifierKey } from '@angular/cdk/keycodes'
 import { Overlay } from '@angular/cdk/overlay'
 import { DOCUMENT, Injectable, inject } from '@angular/core'
 import { takeUntil } from 'rxjs'
+import { ThemeService } from '../../theme/theme.service'
 import { IdeModalContainerComponent } from './ide-modal.component'
 import { IdeModalRef } from './ide-modal-ref'
 import { IdeModalContainerData, IdeModalOptions } from './ide-modal.types'
@@ -156,6 +157,7 @@ export class IdeModalService {
   private readonly dialog = inject(Dialog)
   private readonly overlay = inject(Overlay)
   private readonly document = inject(DOCUMENT)
+  private readonly themeService = inject(ThemeService)
 
   constructor() {
     this.ensureStylesInjected()
@@ -192,8 +194,8 @@ export class IdeModalService {
       width,
       maxWidth: '90vw',
       hasBackdrop: mask,
-      backdropClass: 'ide-modal-backdrop',
-      panelClass: 'ide-modal-panel',
+      backdropClass: ['ide-modal-backdrop', this.themeService.overlayClass()],
+      panelClass: ['ide-modal-panel', this.themeService.overlayClass()],
       // Close on ESC/backdrop is driven manually below so `keyboard` and
       // `maskClosable` can be honored independently of each other.
       disableClose: true,

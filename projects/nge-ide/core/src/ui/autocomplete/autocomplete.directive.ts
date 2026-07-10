@@ -13,6 +13,7 @@ import {
 } from '@angular/core'
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms'
 import { Subscription } from 'rxjs'
+import { ThemeService } from '../../theme/theme.service'
 import { IdeAutoOptionComponent } from './auto-option.component'
 import { IdeAutocompleteComponent } from './autocomplete.component'
 
@@ -105,6 +106,7 @@ export class IdeAutocompleteDirective implements ControlValueAccessor, OnDestroy
   private readonly viewContainerRef = inject(ViewContainerRef)
   private readonly elementRef = inject<ElementRef<HTMLInputElement>>(ElementRef)
   private readonly document = inject(DOCUMENT)
+  private readonly themeService = inject(ThemeService)
 
   private overlayRef: OverlayRef | null = null
   private portal: TemplatePortal | null = null
@@ -355,7 +357,7 @@ export class IdeAutocompleteDirective implements ControlValueAccessor, OnDestroy
         positionStrategy,
         scrollStrategy: this.overlay.scrollStrategies.reposition(),
         width: this.input.getBoundingClientRect().width,
-        panelClass: 'ide-autocomplete-overlay',
+        panelClass: ['ide-autocomplete-overlay', this.themeService.overlayClass()],
       })
     )
 

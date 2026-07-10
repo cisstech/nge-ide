@@ -1,20 +1,17 @@
-/*
- * Default theme for @cisstech/nge-ide.
+/**
+ * IDE theme tokens (GitHub Light + GitHub Dark), bundled as a string and
+ * injected at runtime by ThemeService so consumers never copy an asset.
  *
- * The IDE and its built-in UI kit read their colors from these CSS custom
- * properties (VS Code naming). They are declared on :root so that CDK overlays
- * (menus, dropdowns, tooltips), which render under <body>, inherit them too.
- *
- * Consumers add this file to their angular.json "styles":
- *   "node_modules/@cisstech/nge-ide/assets/theme.css"
- *
- * Dark mode: add the class "dark-theme" to a common ancestor (e.g. <body>).
- * `color-scheme` also drives the Monaco editor (nge/monaco follows it) and
- * native form controls. Light is GitHub Light, dark is GitHub Dark; pair the
- * editor with the "github" and "github-dark" Monaco themes for a seamless look.
- * Override any token to rebrand.
+ * Scoping: tokens live on the IDE host (`ide-root`) and, because CDK overlays
+ * render under <body> outside that subtree, on any element tagged with
+ * `ide-theme-light` / `ide-theme-dark` (an overlay pane or its content host).
+ * Nothing is written to <body>/<html>, so the IDE theme is fully independent of
+ * the host app's theme.
  */
-:root {
+export const IDE_THEME_CSS = `
+ide-root,
+ide-root[data-theme='light'],
+.ide-theme-light {
   color-scheme: light;
 
   --foreground: #24292f;
@@ -115,7 +112,8 @@
  * chrome and popups, #30363d/#21262d the borders. Pair with the Monaco
  * "github-dark" theme (same #0d1117 background) for a seamless editor.
  */
-.dark-theme {
+ide-root[data-theme='dark'],
+.ide-theme-dark {
   color-scheme: dark;
 
   --foreground: #e6edf3;
@@ -209,3 +207,4 @@
   --drop-controller-widget-hover-background: #21262d;
   --drop-controller-widget-hover-color: #e6edf3;
 }
+`

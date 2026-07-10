@@ -1,5 +1,5 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core'
-import { IdeService, ITask, TaskService } from '@cisstech/nge-ide/core'
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit, inject } from '@angular/core'
+import { IdeService, ITask, TaskService, ThemeService } from '@cisstech/nge-ide/core'
 import { Subscription } from 'rxjs'
 
 @Component({
@@ -8,9 +8,15 @@ import { Subscription } from 'rxjs'
   styleUrls: ['ide.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: false,
+  host: {
+    '[attr.data-theme]': 'theme()',
+  },
 })
 export class IdeComponent implements OnInit, OnDestroy {
   private readonly subscriptions: Subscription[] = []
+
+  /** Resolved IDE theme ('light' | 'dark'); drives the `data-theme` host attribute. */
+  protected readonly theme = inject(ThemeService).resolved
 
   task?: ITask
 
