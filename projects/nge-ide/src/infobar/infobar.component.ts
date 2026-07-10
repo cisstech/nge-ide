@@ -104,10 +104,6 @@ export class InfobarComponent implements OnInit, OnDestroy {
     })
   }
 
-  trackById(_: number, item: any): string {
-    return item.id
-  }
-
   private onChangeContainers(containers: InfobarContainer[]): void {
     this.empty = !containers.length
     this.activeContainerViews = []

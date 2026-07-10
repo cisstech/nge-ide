@@ -83,9 +83,6 @@ export class ViewGroupComponent {
     return size <= this.minSize ? 'codicon codicon-chevron-right' : 'codicon codicon-chevron-down'
   }
 
-  _trackById(_: number, e: any): string {
-    return e.id
-  }
   //#endregion
 
   private detectChanges() {

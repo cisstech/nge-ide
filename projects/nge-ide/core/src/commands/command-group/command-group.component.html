@@ -1,5 +1,5 @@
 @if (commands) {
-  @for (command of commands; track _trackById($index, command)) {
+  @for (command of commands; track command.id) {
     @if (command.enabled) {
       <div
         class="command"

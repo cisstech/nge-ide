@@ -36,7 +36,7 @@
 <ng-template #menu>
   <ul ideMenu>
     @for (group of commands | async; track group; let isLastGroup = $last) {
-      @for (command of group; track trackById($index, command); let isLastCommand = $last) {
+      @for (command of group; track command.id; let isLastCommand = $last) {
         <li ideMenuItem (click)="command.execute()">
           {{ command.label }}
         </li>

@@ -24,8 +24,4 @@ export class CommandGroupComponent {
       command.execute()
     }
   }
-
-  _trackById(_: number, command: ICommand): any {
-    return command.id
-  }
 }

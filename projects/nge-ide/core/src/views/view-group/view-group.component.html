@@ -1,5 +1,5 @@
 <as-split [direction]="direction" [gutterSize]="2" [useTransition]="true" (dragEnd)="_dragEnd($event)">
-  @for (view of views; track _trackById(i, view); let i = $index) {
+  @for (view of views; track view.id; let i = $index) {
     <as-split-area [size]="state.sizes[i]" [minSize]="minSize">
       <header class="tab-bar" (click)="_toggle(i)">
         @if (views.length > 1) {

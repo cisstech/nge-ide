@@ -108,10 +108,6 @@ export class ExplorerComponent implements OnInit, OnDestroy, AfterViewChecked {
     this.commands.next([])
   }
 
-  protected trackById(_: number, e: any): string {
-    return e.id
-  }
-
   /**
    * Handles drag and drop event by asking a confirmation to the user then :
    * - If 'data.file' exists, the function will save the file on the server to the directory 'data.dst'.

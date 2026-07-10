@@ -1,5 +1,5 @@
 <ide-tabs [type]="'card'" [tabBarExtraContent]="extra" [(selectedIndex)]="activeContainerIndex">
-  @for (container of containers; track trackById($index, container)) {
+  @for (container of containers; track container.id) {
     <ide-tab [title]="title" (tabClick)="setActiveContainer(container)">
       <ng-template #title>
         <ide-badge [count]="(container.badge | async) || 0" [showZero]="false" [offset]="[0, 0]">
@@ -12,7 +12,7 @@
     @if (activeContainerView) {
       @if (activeContainerViews.length > 1) {
         <ide-select [ngModel]="activeContainerView!.id" (ngModelChange)="setActiveView($event)">
-          @for (view of activeContainerViews; track trackById($index, view)) {
+          @for (view of activeContainerViews; track view.id) {
             <ide-option [value]="view.id" [label]="view.title"></ide-option>
           }
         </ide-select>
