@@ -9,7 +9,7 @@ import { IdeService } from './ide.service'
 import { NotificationService } from './notifications/index'
 import { SettingsService } from './settings/index'
 import { StatusBarService } from './status-bar/index'
-import { StorageService } from './storage/index'
+import { DEFAULT_STORAGE_PREFIX, STORAGE_PREFIX, StorageService } from './storage/index'
 import { TaskService } from './tasks/index'
 import { ThemeService } from './theme/index'
 import { ToolbarService } from './toolbar/index'
@@ -29,6 +29,7 @@ import { DialogModule } from './dialog'
     ToolbarService,
     CommandService,
     StorageService,
+    { provide: STORAGE_PREFIX, useValue: DEFAULT_STORAGE_PREFIX },
     PreviewService,
     SettingsService,
     StatusBarService,

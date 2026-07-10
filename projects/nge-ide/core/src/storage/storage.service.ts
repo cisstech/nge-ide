@@ -5,6 +5,9 @@ import { map } from 'rxjs/operators'
 
 export const STORAGE_PREFIX = new InjectionToken<string>('STORAGE_PREFIX')
 
+/** Namespace applied to every stored key when {@link STORAGE_PREFIX} is not provided. */
+export const DEFAULT_STORAGE_PREFIX = '@cisstech/nge-ide'
+
 @Injectable()
 export class StorageService {
   constructor(
@@ -52,7 +55,11 @@ export class StorageService {
     return this.storageMap.watch(this.addPrefix(key)) as Observable<T>
   }
 
-  addPrefix(key: string) {
-    return this.prefix || '' + `_${key}_`
+  addPrefix(key: string): string {
+    // Scope every key under a namespace so it cannot collide with other apps (or
+    // other keys) on the same origin. Falls back to a default when STORAGE_PREFIX
+    // is not provided, which also fixes the earlier precedence bug that dropped the
+    // key entirely once a prefix was set.
+    return `${this.prefix || DEFAULT_STORAGE_PREFIX}:${key}`
   }
 }
