@@ -13,6 +13,12 @@ export type ThemeMode = 'light' | 'dark' | 'system'
 export type ResolvedTheme = 'light' | 'dark'
 
 const STORAGE_KEY = 'theme.mode'
+// Synchronous mirror of the mode. The primary store (StorageService) is async
+// (IndexedDB), so the mode is also written here to resolve the theme on the first
+// frame and avoid a flash of the wrong theme (and loading overlay) on startup.
+// Namespaced with the package name so it cannot collide with other localStorage
+// keys sharing the origin.
+const LOCAL_MODE_KEY = '@cisstech/nge-ide:theme.mode'
 const STYLE_ID = 'nge-ide-theme'
 
 /** Monaco theme names paired with the IDE light/dark themes (from @cisstech/nge). */
@@ -67,6 +73,11 @@ export class ThemeService implements IContribution {
   readonly overlayClass = computed(() => `ide-theme-${this.resolved()}`)
 
   constructor() {
+    // Resolve the persisted mode synchronously so the theme is correct on the
+    // first render, before the async store is read in activate(); this keeps the
+    // startup loading overlay from flashing the wrong theme.
+    this._mode.set(this.readLocalMode() ?? 'system')
+
     // Keep Monaco (a page-global editor theme) in sync with the resolved theme,
     // but only once the editor is loaded (guarded by `_ready`).
     effect(() => {
@@ -83,8 +94,13 @@ export class ThemeService implements IContribution {
     this.watchSystem()
     this.capturePreviousMonacoTheme()
 
-    const saved = await firstValueFrom(this.storage.get<ThemeMode>(STORAGE_KEY, 'system'))
-    this._mode.set(this.normalize(saved))
+    // Seed the synchronous mirror from the legacy async store the first time, so
+    // a choice made before the mirror existed is preserved; afterwards the
+    // constructor's synchronous read is authoritative.
+    if (this.readLocalMode() == null) {
+      const saved = await firstValueFrom(this.storage.get<ThemeMode>(STORAGE_KEY, 'system'))
+      this.setMode(this.normalize(saved))
+    }
 
     this._ready.set(true)
     this.applyMonaco(this.resolved())
@@ -107,6 +123,7 @@ export class ThemeService implements IContribution {
   /** Sets the theme mode and persists the choice. */
   setMode(mode: ThemeMode): void {
     this._mode.set(this.normalize(mode))
+    this.writeLocalMode(this._mode())
     this.storage?.set(STORAGE_KEY, this._mode()).subscribe()
   }
 
@@ -130,6 +147,25 @@ export class ThemeService implements IContribution {
 
   private normalize(mode?: ThemeMode | null): ThemeMode {
     return mode === 'light' || mode === 'dark' || mode === 'system' ? mode : 'system'
+  }
+
+  /** Reads the mode from the synchronous localStorage mirror, if present. */
+  private readLocalMode(): ThemeMode | null {
+    try {
+      const value = this.document.defaultView?.localStorage?.getItem(LOCAL_MODE_KEY)
+      return value === 'light' || value === 'dark' || value === 'system' ? value : null
+    } catch {
+      return null
+    }
+  }
+
+  /** Mirrors the mode to localStorage for a synchronous read on the next boot. */
+  private writeLocalMode(mode: ThemeMode): void {
+    try {
+      this.document.defaultView?.localStorage?.setItem(LOCAL_MODE_KEY, mode)
+    } catch {
+      // Storage may be unavailable (private mode / SSR); the async store still persists.
+    }
   }
 
   private injectStyle(): void {
