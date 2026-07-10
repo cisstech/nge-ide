@@ -1,4 +1,11 @@
 import { NgeDocSettings } from '@cisstech/nge/doc'
+import { editInGithubAction } from './actions'
+
+/** A doc page whose href matches its markdown file under assets/docs/ide. */
+const page = (title: string, href: string) => {
+  const file = `assets/docs/ide/${href}.md`
+  return { title, href, renderer: file, actions: [editInGithubAction(file)] }
+}
 
 /**
  * Documentation site for @cisstech/nge-ide, rendered by nge-doc at /docs.
@@ -16,12 +23,12 @@ export const IDE_DOCS: NgeDocSettings = {
     },
   },
   pages: [
-    { title: 'Introduction', href: 'introduction', renderer: 'assets/docs/ide/introduction.md' },
-    { title: 'Getting started', href: 'getting-started', renderer: 'assets/docs/ide/getting-started.md' },
-    { title: 'File system', href: 'file-system', renderer: 'assets/docs/ide/file-system.md' },
-    { title: 'Editors', href: 'editors', renderer: 'assets/docs/ide/editors.md' },
-    { title: 'Extending the IDE', href: 'extending', renderer: 'assets/docs/ide/extending.md' },
-    { title: 'Theming', href: 'theming', renderer: 'assets/docs/ide/theming.md' },
-    { title: 'Services reference', href: 'services', renderer: 'assets/docs/ide/services.md' },
+    page('Introduction', 'introduction'),
+    page('Getting started', 'getting-started'),
+    page('File system', 'file-system'),
+    page('Editors', 'editors'),
+    page('Extending the IDE', 'extending'),
+    page('Theming', 'theming'),
+    page('Services reference', 'services'),
   ],
 }
