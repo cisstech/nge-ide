@@ -8,7 +8,7 @@
     [(pattern)]="pattern"
     placeholder="Rechercher"
     arialLabel="Rechercher: Écrivez votre texte et pressez Entrer pour rechercher or Esc pour annuler"
-    (search)="search()"
+    (submitted)="search()"
   >
   </ide-search-input>
 </div>
@@ -20,7 +20,7 @@
   [(query)]="form.include"
   placeholder="src,home/a.ts"
   arialLabel="Fichiers à inclure"
-  (search)="search()">
+  (submitted)="search()">
 </ide-search-input>
 </div>
 <div>
@@ -30,7 +30,7 @@
     [(query)]="form.exclude"
     placeholder="src,home/a.ts"
     arialLabel="Fichiers à exclure"
-    (search)="search()">
+    (submitted)="search()">
   </ide-search-input>
 </div>
 -->

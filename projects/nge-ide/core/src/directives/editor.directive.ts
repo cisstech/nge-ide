@@ -8,9 +8,9 @@ import { Editor } from '../editors/index'
   standalone: false,
 })
 export class EditorDirective implements OnChanges, OnDestroy {
-  private readonly componentRefs = new Map<string, ComponentRef<any>>()
+  private readonly componentRefs = new Map<string, ComponentRef<unknown>>()
 
-  @Input('editor') editor?: Editor
+  @Input() editor?: Editor
 
   constructor(
     private readonly compiler: CompilerService,

@@ -30,7 +30,7 @@ export class HighlightDirective implements OnChanges {
     if (typeof this.pattern === 'string') {
       // string
       this.pattern = this.pattern.trim()
-      this.renderer.setProperty(this.el.nativeElement, 'innerHTML', !!this.pattern ? this.hightlightRegex() : this.text)
+      this.renderer.setProperty(this.el.nativeElement, 'innerHTML', this.pattern ? this.hightlightRegex() : this.text)
       return
     }
 
@@ -73,7 +73,7 @@ export class HighlightDirective implements OnChanges {
   }
 
   private escape(str: string) {
-    const replacements: any = {
+    const replacements: Record<string, string> = {
       '&': '&amp;',
       '<': '&lt;',
       '>': '&gt;',

@@ -17,7 +17,7 @@ export class StorageService {
     private readonly storageMap: StorageMap
   ) {}
 
-  set<T>(key: string, value: T): Observable<any> {
+  set<T>(key: string, value: T): Observable<undefined> {
     return this.storageMap.set(this.addPrefix(key), value)
   }
 
@@ -43,11 +43,11 @@ export class StorageService {
       .pipe(map((e) => (e == null ? defaultValue : e)))
   }
 
-  remove(key: string): Observable<any> {
+  remove(key: string): Observable<undefined> {
     return this.storageMap.delete(this.addPrefix(key))
   }
 
-  clear(): Observable<any> {
+  clear(): Observable<undefined> {
     return this.storageMap.clear()
   }
 
