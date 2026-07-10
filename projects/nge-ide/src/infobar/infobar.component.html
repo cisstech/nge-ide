@@ -1,26 +1,26 @@
-<nz-tabs [nzType]="'card'" [nzTabBarExtraContent]="extra" [(nzSelectedIndex)]="activeContainerIndex">
+<ide-tabs [type]="'card'" [tabBarExtraContent]="extra" [(selectedIndex)]="activeContainerIndex">
   @for (container of containers; track trackById($index, container)) {
-    <nz-tab [nzTitle]="title" (nzClick)="setActiveContainer(container)">
+    <ide-tab [title]="title" (tabClick)="setActiveContainer(container)">
       <ng-template #title>
-        <nz-badge [nzCount]="(container.badge | async) || 0" [nzShowZero]="false" [nzOffset]="[0, 0]">
+        <ide-badge [count]="(container.badge | async) || 0" [showZero]="false" [offset]="[0, 0]">
           <span>{{ container.title }}</span>
-        </nz-badge>
+        </ide-badge>
       </ng-template>
-    </nz-tab>
+    </ide-tab>
   }
   <ng-template #extra>
     @if (activeContainerView) {
       @if (activeContainerViews.length > 1) {
-        <nz-select [ngModel]="activeContainerView!.id" (ngModelChange)="setActiveView($event)">
+        <ide-select [ngModel]="activeContainerView!.id" (ngModelChange)="setActiveView($event)">
           @for (view of activeContainerViews; track trackById($index, view)) {
-            <nz-option [nzValue]="view.id" [nzLabel]="view.title"></nz-option>
+            <ide-option [value]="view.id" [label]="view.title"></ide-option>
           }
-        </nz-select>
+        </ide-select>
       }
       <ide-command-group [commands]="(activeContainerView!.commands | async) || []"></ide-command-group>
     }
   </ng-template>
-</nz-tabs>
+</ide-tabs>
 @if (activeContainerView) {
   <div class="infobar-content">
     <ng-template [view]="activeContainerView"></ng-template>

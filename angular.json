@@ -62,8 +62,8 @@
               { "glob": "**/*", "input": "./node_modules/@cisstech/nge/assets/ui/icon/assets/icons/files", "output": "./assets/vendors/nge/ui/icon/icons/files/" }
             ],
             "styles": [
-              "projects/demo/src/styles.scss",
-              "node_modules/ng-zorro-antd/ng-zorro-antd.min.css"
+              "projects/nge-ide/assets/theme.css",
+              "projects/demo/src/styles.scss"
             ],
             "scripts": [],
             "extractLicenses": false,

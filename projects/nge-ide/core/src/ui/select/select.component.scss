@@ -70,7 +70,9 @@
 
 .ide-select__panel {
   box-sizing: border-box;
-  width: 100%;
+  width: max-content;
+  min-width: 100%;
+  max-width: 320px;
   margin: 0;
   padding: 4px;
   max-height: 260px;

@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, Input, OnDestroy, OnInit } from '@angular/core'
+import { ChangeDetectorRef, Component, Input, OnDestroy, OnInit, ChangeDetectionStrategy } from '@angular/core'
 import {
   Editor,
   EditorService,
@@ -17,6 +17,7 @@ import IStandaloneDiffEditor = monaco.editor.IStandaloneDiffEditor
   selector: 'ide-code-editor',
   templateUrl: './code-editor.component.html',
   styleUrls: ['./code-editor.component.scss'],
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: false,
 })
 export class CodeEditorComponent implements OnInit, OnDestroy {

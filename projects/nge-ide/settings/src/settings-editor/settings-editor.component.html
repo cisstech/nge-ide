@@ -20,22 +20,22 @@
         <div class="setting-item-input">
           @switch (setting.type) {
             @case ('Checkbox') {
-              <label nz-checkbox [(ngModel)]="setting.value" (nzCheckedChange)="didChange()">{{
+              <ide-checkbox [(ngModel)]="setting.value" (checkedChange)="didChange()">{{
                 setting.comment
-              }}</label>
+              }}</ide-checkbox>
             }
             @case ('Number') {
-              <input type="number" nz-input [(ngModel)]="setting.value" (ngModelChange)="didChange()" />
+              <input type="number" ideInput [(ngModel)]="setting.value" (ngModelChange)="didChange()" />
             }
             @case ('Input') {
-              <input type="text" nz-input [(ngModel)]="setting.value" (ngModelChange)="didChange()" />
+              <input type="text" ideInput [(ngModel)]="setting.value" (ngModelChange)="didChange()" />
             }
             @case ('Dropdown') {
-              <nz-select [(ngModel)]="setting.value" (ngModelChange)="didChange()" nzAllowClear>
+              <ide-select [(ngModel)]="setting.value" (ngModelChange)="didChange()">
                 @for (item of setting.choices; track item) {
-                  <nz-option [nzLabel]="item" [nzValue]="item"> </nz-option>
+                  <ide-option [label]="item" [value]="item"> </ide-option>
                 }
-              </nz-select>
+              </ide-select>
             }
           }
         </div>

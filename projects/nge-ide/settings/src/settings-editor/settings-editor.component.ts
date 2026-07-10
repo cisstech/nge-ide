@@ -1,10 +1,11 @@
-import { Component, OnInit } from '@angular/core'
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core'
 import { Settings, SettingsService } from '@cisstech/nge-ide/core'
 
 @Component({
   selector: 'ide-settings-editor',
   templateUrl: './settings-editor.component.html',
   styleUrls: ['./settings-editor.component.scss'],
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: false,
 })
 export class SettingsEditorComponent implements OnInit {

@@ -2,7 +2,7 @@
   @for (item of leftViews; track track($index, item)) {
     @if (item.active | async) {
       <div
-        [nz-tooltip]="item.tooltip || ''"
+        [ideTooltip]="item.tooltip || ''"
         class="status-bar-item"
         [class.clickable]="!!item.action"
         [innerHTML]="item.content | async | safe: 'html'"
@@ -14,7 +14,7 @@
   @for (item of rightViews; track track($index, item)) {
     @if (item.active | async) {
       <div
-        [nz-tooltip]="item.tooltip || ''"
+        [ideTooltip]="item.tooltip || ''"
         class="status-bar-item"
         [class.clickable]="!!item.action"
         [innerHTML]="item.content | async | safe: 'html'"

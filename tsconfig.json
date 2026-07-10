@@ -1,7 +1,6 @@
 {
   "compileOnSave": false,
   "compilerOptions": {
-    "baseUrl": "./",
     "outDir": "./dist/out-tsc",
     "sourceMap": true,
     "declaration": false,
@@ -16,13 +15,13 @@
     "moduleDetection": "force",
     "target": "ES2022",
     "paths": {
-      "@cisstech/nge-ide": ["projects/nge-ide"],
-      "@cisstech/nge-ide/core": ["projects/nge-ide/core"],
-      "@cisstech/nge-ide/explorer": ["projects/nge-ide/explorer"],
-      "@cisstech/nge-ide/search": ["projects/nge-ide/search"],
-      "@cisstech/nge-ide/settings": ["projects/nge-ide/settings"],
-      "@cisstech/nge-ide/problems": ["projects/nge-ide/problems"],
-      "@cisstech/nge-ide/notifications": ["projects/nge-ide/notifications"]
+      "@cisstech/nge-ide": ["./projects/nge-ide"],
+      "@cisstech/nge-ide/core": ["./projects/nge-ide/core"],
+      "@cisstech/nge-ide/explorer": ["./projects/nge-ide/explorer"],
+      "@cisstech/nge-ide/search": ["./projects/nge-ide/search"],
+      "@cisstech/nge-ide/settings": ["./projects/nge-ide/settings"],
+      "@cisstech/nge-ide/problems": ["./projects/nge-ide/problems"],
+      "@cisstech/nge-ide/notifications": ["./projects/nge-ide/notifications"]
     },
     "useDefineForClassFields": false
   },

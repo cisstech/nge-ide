@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core'
+import { Component, OnDestroy, OnInit, ChangeDetectionStrategy } from '@angular/core'
 import { FileService, IdeService, MemFileProvider } from '@cisstech/nge-ide/core'
 import { Subscription } from 'rxjs'
 
@@ -6,6 +6,7 @@ import { Subscription } from 'rxjs'
   selector: 'app-showcase',
   templateUrl: 'showcase.component.html',
   styleUrls: ['showcase.component.scss'],
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: false,
 })
 export class ShowcaseComponent implements OnInit, OnDestroy {

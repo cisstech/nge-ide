@@ -31,6 +31,36 @@ Documentation available at [https://cisstech.github.io/nge-ide/](https://cisstec
 npm install @cisstech/nge @cisstech/nge-ide monaco-editor marked
 ```
 
+### Theme
+
+The IDE and its built-in UI components read their colors from CSS custom properties. Add the bundled theme to the `styles` array of your `angular.json` so those tokens are defined. It is a global stylesheet on purpose: the CDK overlays used by the IDE (menus, dropdowns, tooltips) render under `<body>`, outside the IDE component, so a component-scoped stylesheet could not reach them.
+
+```json
+"styles": [
+  "node_modules/@cisstech/nge-ide/assets/theme.css",
+  "src/styles.scss"
+]
+```
+
+For dark mode, add the `dark-theme` class to a common ancestor (for example `<body class="dark-theme">`). Override any token in your own stylesheet to re-brand.
+
+#### Editor theme
+
+The Monaco editor keeps its own theme. `@cisstech/nge` ships many, but the `github` (light) and `github-dark` (dark) pair is tuned to match this IDE theme, so configure `NgeMonacoModule` with them and let it follow the same `dark-theme` class:
+
+```ts
+NgeMonacoModule.forRoot({
+  theming: {
+    themes: ['github', 'github-dark'].map((t) => `assets/vendors/nge/monaco/themes/${t}.json`),
+    light: 'github',
+    dark: 'github-dark',
+    darkThemeClassName: 'dark-theme',
+  },
+})
+```
+
+Both `light` and `dark` must be set for the editor to follow the class; otherwise it falls back to the OS `prefers-color-scheme`.
+
 ## 🚀 Quick Start
 
 ### Basic Integration

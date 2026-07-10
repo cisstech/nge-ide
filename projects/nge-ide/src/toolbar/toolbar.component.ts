@@ -1,4 +1,4 @@
-import { Component, DestroyRef, OnInit, inject } from '@angular/core'
+import { Component, DestroyRef, OnInit, inject, ChangeDetectionStrategy } from '@angular/core'
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop'
 import { IToolbarItem, ToolbarGroups, ToolbarService } from '@cisstech/nge-ide/core'
 import { Observable } from 'rxjs'
@@ -8,6 +8,7 @@ import { map } from 'rxjs/operators'
   selector: 'ide-toolbar',
   templateUrl: './toolbar.component.html',
   styleUrls: ['./toolbar.component.scss'],
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: false,
 })
 export class ToolbarComponent implements OnInit {

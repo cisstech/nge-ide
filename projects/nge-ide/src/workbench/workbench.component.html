@@ -6,14 +6,14 @@
 <as-split direction="horizontal" [gutterSize]="2" [useTransition]="true" cdkDropListGroup>
   @for (group of groups | async; track trackGroup($index, group)) {
     <as-split-area class="editor-group" [class.editor-group--active]="isActiveGroup(group)">
-      <nz-tabs
-        nzType="card"
+      <ide-tabs
+        type="card"
         (click)="setActiveGroup(group)"
-        [(nzSelectedIndex)]="group.activeIndex"
-        [nzTabBarExtraContent]="buttons"
+        [(selectedIndex)]="group.activeIndex"
+        [tabBarExtraContent]="buttons"
       >
         @for (tab of group.tabs; track trackTab($index, tab)) {
-          <nz-tab [nzTitle]="title">
+          <ide-tab [title]="title">
             <ng-template #title>
               <div class="tab-content">
                 @if (tab.options.icon) {
@@ -21,11 +21,11 @@
                 } @else {
                   <ui-icon class="tab-icon" [icon]="tab.options.title | iconFile" />
                 }
-                <span class="tab-title" [nz-tooltip]="tab.options.tooltip" [nzTooltipPlacement]="['top', 'bottom']">{{
+                <span class="tab-title" [ideTooltip]="tab.options.tooltip" [ideTooltipPlacement]="['top', 'bottom']">{{
                   tab.options.title
                 }}</span>
                 @if (tab.file?.readOnly) {
-                  <span class="codicon codicon-lock-small" nz-tooltip="Éditeur en lecture seule"></span>
+                  <span class="codicon codicon-lock-small" ideTooltip="Éditeur en lecture seule"></span>
                 }
                 @if (tab.resource | fileChanged | async) {
                   <span class="tab-dirty codicon codicon-close-dirty" (click)="group.close(tab.resource)"></span>
@@ -34,14 +34,14 @@
                 }
               </div>
             </ng-template>
-          </nz-tab>
+          </ide-tab>
         }
         <ng-template #buttons>
           @if (isActiveGroup(group)) {
             <ide-command-group [commands]="(commands | async) || []"></ide-command-group>
           }
         </ng-template>
-      </nz-tabs>
+      </ide-tabs>
       <div class="editor-wrapper" (click)="setActiveGroup(group)">
         <ng-template [editor]="group.activeEditor"></ng-template>
       </div>

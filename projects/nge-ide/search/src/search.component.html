@@ -44,13 +44,13 @@
   </div>
 }
 @if (searching) {
-  <nz-skeleton [nzActive]="true"></nz-skeleton>
-  <nz-skeleton [nzActive]="true"></nz-skeleton>
-  <nz-skeleton [nzActive]="true"></nz-skeleton>
+  <ide-skeleton [active]="true"></ide-skeleton>
+  <ide-skeleton [active]="true"></ide-skeleton>
+  <ide-skeleton [active]="true"></ide-skeleton>
 }
 <ui-tree #treeRef [nodes]="nodes" [adapter]="adapter">
   <ng-container *treeNode="let node">
-    <span class="tree-label" [nz-tooltip]="node.data.resource | fileName: true">
+    <span class="tree-label" [ideTooltip]="node.data.resource | fileName: true">
       @if (node.expandable) {
         <div class="codicon codicon-{{ treeRef.isExpanded(node) ? 'chevron-down' : 'chevron-right' }}"></div>
         &nbsp; <ui-icon [icon]="node.name | iconFile"></ui-icon>&nbsp;

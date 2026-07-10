@@ -17,7 +17,7 @@
     <div
       class="tree-label"
       [title]="node.data.uri | fileName: true"
-      nzTooltipPlacement="topRight"
+      ideTooltipPlacement="topRight"
       [highlight]="node.name"
       [highlightPattern]="treeRef.filter.term"
       dnd
@@ -33,17 +33,17 @@
     </div>
   </ng-container>
 </ui-tree>
-<nz-dropdown-menu #menu="nzDropdownMenu">
-  <ul nz-menu role="menu" #m="nzMenu">
+<ng-template #menu>
+  <ul ideMenu>
     @for (group of commands | async; track group; let isLastGroup = $last) {
       @for (command of group; track trackById($index, command); let isLastCommand = $last) {
-        <li role="menuitem" nz-menu-item (click)="command.execute()">
+        <li ideMenuItem (click)="command.execute()">
           {{ command.label }}
         </li>
       }
       @if (!isLastGroup) {
-        <li nz-menu-divider></li>
+        <ide-divider></ide-divider>
       }
     }
   </ul>
-</nz-dropdown-menu>
+</ng-template>

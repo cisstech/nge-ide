@@ -21,17 +21,16 @@
 <ng-template #activityBarItemTplt let-item>
   @if (item.dropdown) {
     <div class="activitybar-item" role="button" [id]="item.id" [attr.aria-label]="item.title">
-      <nz-badge [nzCount]="(item.badge | async) || 0">
+      <ide-badge [count]="(item.badge | async) || 0">
         <ui-icon
           class="activitybar-icon"
           [id]="item.id"
           [icon]="item.icon"
-          [nz-tooltip]="item.title"
-          nz-dropdown
-          [nzDropdownMenu]="menu"
+          [ideTooltip]="item.title"
+          [ideMenuTriggerFor]="menu"
         >
         </ui-icon>
-      </nz-badge>
+      </ide-badge>
     </div>
   } @else {
     <div
@@ -41,23 +40,23 @@
       [class.active]="isActive(item)"
       [attr.aria-label]="item.title"
     >
-      <nz-badge [nzCount]="(item.badge | async) || 0">
+      <ide-badge [count]="(item.badge | async) || 0">
         <ui-icon
           class="activitybar-icon"
           [id]="item.id"
           [icon]="item.icon"
-          [nz-tooltip]="item.title"
+          [ideTooltip]="item.title"
           (click)="setActive(item)"
         >
         </ui-icon>
-      </nz-badge>
+      </ide-badge>
     </div>
   }
-  <nz-dropdown-menu #menu="nzDropdownMenu">
-    <ul nz-menu nzSelectable>
+  <ng-template #menu>
+    <ul ideMenu>
       @for (menuItem of item.dropdown; track $index) {
-        <li nz-menu-item (click)="menuItem.action()">{{ menuItem.label }}</li>
+        <li ideMenuItem (click)="menuItem.action()">{{ menuItem.label }}</li>
       }
     </ul>
-  </nz-dropdown-menu>
+  </ng-template>
 </ng-template>

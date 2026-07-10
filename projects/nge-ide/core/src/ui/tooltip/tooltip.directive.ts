@@ -70,6 +70,9 @@ const POSITIONS: Record<string, ConnectedPosition> = {
   host: {
     '(mouseenter)': 'show()',
     '(mouseleave)': 'hide()',
+    // Dismiss on click so a tooltip on a toggle button does not linger after the
+    // button is activated (and its content re-renders).
+    '(mousedown)': 'hide()',
   },
 })
 export class TooltipDirective implements OnDestroy {
@@ -186,7 +189,7 @@ export class TooltipDirective implements OnDestroy {
 
     this.overlayRef = this.overlay.create({
       positionStrategy: this.positionStrategy,
-      scrollStrategy: this.overlay.scrollStrategies.reposition(),
+      scrollStrategy: this.overlay.scrollStrategies.close(),
       panelClass: 'ide-tooltip-panel',
       disposeOnNavigation: true,
     })

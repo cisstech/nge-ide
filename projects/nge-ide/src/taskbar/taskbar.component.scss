@@ -15,8 +15,8 @@
   height: 40px;
   font-size: 12px;
   padding: 0 8px;
-  background-color: rgb(59, 66, 82);
-  color: rgb(216, 222, 233);
+  background-color: var(--activityBar-background);
+  color: var(--activityBar-foreground);
   border-bottom: 1px solid var(--tab-border);
   border-top-left-radius: 8px;
   border-top-right-radius: 8px;

@@ -1,15 +1,26 @@
-@import 'node_modules/@cisstech/nge/assets/ui/icon/assets/fonts/codicons/codicons.scss';
+@use '@cisstech/nge/assets/ui/icon/assets/fonts/codicons/codicons.scss';
 
-@import './styles//normalize.scss';
-@import './styles/fonts';
-@import './styles/variables';
-@import './styles/material/light.scss';
+@use './styles//normalize.scss';
+@use './styles/fonts';
+@use './styles/variables';
 
 html {
   width: 100vw;
   height: 100vh;
-  overflow: auto;
+  overflow: hidden;
   color: var(--brand-text-primary);
   background-color: var(--brand-background-color);
   font-family: var(--brand-font);
+}
+
+// Carry a definite height down to <ide-root> so the IDE fills the viewport
+// (its own overflow is hidden) instead of growing to its content and scrolling.
+body {
+  height: 100%;
+  margin: 0;
+}
+
+app-root {
+  display: block;
+  height: 100%;
 }
