@@ -2517,7 +2517,7 @@ __metadata:
     "@angular/platform-browser": "npm:^22.0.6"
     "@angular/platform-browser-dynamic": "npm:^22.0.6"
     "@angular/router": "npm:^22.0.6"
-    "@cisstech/nge": "npm:^22.2.1"
+    "@cisstech/nge": "npm:^22.3.0"
     "@commitlint/cli": "npm:^19.4.0"
     "@commitlint/config-conventional": "npm:^19.2.2"
     "@ngx-pwa/local-storage": "npm:^18.0.0"
@@ -2560,9 +2560,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@cisstech/nge@npm:^22.2.1":
-  version: 22.2.1
-  resolution: "@cisstech/nge@npm:22.2.1"
+"@cisstech/nge@npm:^22.3.0":
+  version: 22.3.0
+  resolution: "@cisstech/nge@npm:22.3.0"
   dependencies:
     tslib: "npm:^2.3.0"
   peerDependencies:
@@ -2580,7 +2580,7 @@ __metadata:
       optional: true
     ngx-pipes:
       optional: true
-  checksum: 10c0/98f1c74b3563257c8e08bfa4bfb7f2aa0332662cfb120206aa36746784a4b60a2319f28cccbb1bf6daefc9692b18a1639bedb2ee0dc191634fe2a5a51a95848c
+  checksum: 10c0/2d65dbd4b340d6361526099ff98cd5289f3dcb6904c4ae393606b3e37690eb3cc596a4dd8cb2595a2c65cb8e0eba4d578a8216e216f5c88e06b2eb6c2c4fd4b2
   languageName: node
   linkType: hard
 

@@ -23,7 +23,7 @@
     "@angular/core": "^22.0.0",
     "@angular/cdk": "^22.0.0",
     "@ngx-pwa/local-storage": "^18.0.0",
-    "@cisstech/nge": "^22.0.0",
+    "@cisstech/nge": "^22.3.0",
     "angular-split": "^20.0.0",
     "ng-event-bus": "^7.0.0",
     "rxjs": "^7.5.2"

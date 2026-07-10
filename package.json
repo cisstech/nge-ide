@@ -51,7 +51,7 @@
     "@angular/platform-browser": "^22.0.6",
     "@angular/platform-browser-dynamic": "^22.0.6",
     "@angular/router": "^22.0.6",
-    "@cisstech/nge": "^22.2.1",
+    "@cisstech/nge": "^22.3.0",
     "@ngx-pwa/local-storage": "^18.0.0",
     "angular-split": "^20.0.0",
     "marked": "^11.0.1",
