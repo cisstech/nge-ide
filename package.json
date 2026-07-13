@@ -34,7 +34,7 @@
     "format:check": "prettier --list-different 'projects/**/*.ts'",
     "format:write": "prettier --write 'projects/**/*.ts'",
     "publish:lib": "npm publish ./dist/nge-ide --access public",
-    "publish:demo": "yarn build:demo && bash scripts/stage-ghpages.sh dist/demo/browser && npx angular-cli-ghpages --no-build --dir=dist/demo/browser --repo=https://github.com/cisstech/nge-ide.git",
+    "publish:demo": "yarn build:demo && bash scripts/stage-ghpages.sh dist/demo/browser && npx angular-cli-ghpages --dir=dist/demo/browser --repo=https://github.com/cisstech/nge-ide.git",
     "release": "standard-version",
     "release:major": "standard-version --release-as major",
     "release:minor": "standard-version --release-as minor",
