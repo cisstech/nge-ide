@@ -54,3 +54,12 @@ testem.log
 # System Files
 .DS_Store
 Thumbs.db
+
+# nge-doc generated outputs (compiled in place by the @cisstech/nge:docs builder)
+projects/demo/public/docs/nge-doc.json
+projects/demo/public/docs/search.json
+projects/demo/public/docs/api/
+projects/demo/public/sitemap.xml
+projects/demo/public/robots.txt
+projects/demo/public/llms.txt
+projects/demo/public/llms-full.txt

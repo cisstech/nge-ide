@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core'
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router'
-import { IDE_DOCS } from './docs/ide'
+import { docsFromManifest } from '@cisstech/nge/doc'
 
 const routes: Routes = [
   {
@@ -11,7 +11,7 @@ const routes: Routes = [
   {
     path: 'docs',
     loadChildren: () => import('@cisstech/nge/doc').then((m) => m.NGE_DOC_ROUTES),
-    data: [IDE_DOCS],
+    data: docsFromManifest('docs/nge-doc.json'),
   },
   {
     path: 'playground',
@@ -23,6 +23,9 @@ const routes: Routes = [
 @NgModule({
   imports: [
     RouterModule.forRoot(routes, {
+      // Server rendering must wait for the lazy docs route to resolve before it
+      // serializes, otherwise prerendered pages ship without their content.
+      initialNavigation: 'enabledBlocking',
       scrollOffset: [0, 64],
       anchorScrolling: 'enabled',
       scrollPositionRestoration: 'enabled',
