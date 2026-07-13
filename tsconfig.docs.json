@@ -1,0 +1,22 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "moduleResolution": "bundler",
+    "module": "esnext",
+    "noEmit": true,
+    "skipLibCheck": true,
+    "types": [
+      "node"
+    ]
+  },
+  "include": [
+    "projects/nge-ide/index.ts",
+    "projects/nge-ide/core/index.ts",
+    "projects/nge-ide/explorer/index.ts",
+    "projects/nge-ide/notifications/index.ts",
+    "projects/nge-ide/problems/index.ts",
+    "projects/nge-ide/search/index.ts",
+    "projects/nge-ide/settings/index.ts",
+    "node_modules/monaco-editor/monaco.d.ts"
+  ]
+}

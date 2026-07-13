@@ -3,7 +3,9 @@
   "version": 1,
   "newProjectRoot": "projects",
   "cli": {
-    "schematicCollections": ["@angular-eslint/schematics"]
+    "schematicCollections": [
+      "@angular-eslint/schematics"
+    ]
   },
   "projects": {
     "nge-ide": {
@@ -28,7 +30,10 @@
           "builder": "@angular-eslint/builder:lint",
           "options": {
             "eslintConfig": ".eslintrc.json",
-            "lintFilePatterns": ["**/*.spec.ts", "**/*.d.ts"]
+            "lintFilePatterns": [
+              "**/*.spec.ts",
+              "**/*.d.ts"
+            ]
           }
         }
       }
@@ -45,7 +50,7 @@
       "prefix": "app",
       "architect": {
         "build": {
-          "builder": "@angular-devkit/build-angular:browser-esbuild",
+          "builder": "@angular-devkit/build-angular:application",
           "options": {
             "outputPath": "dist/demo",
             "index": "projects/demo/src/index.html",
@@ -55,11 +60,32 @@
             "tsConfig": "projects/demo/tsconfig.app.json",
             "preserveSymlinks": true,
             "assets": [
+              {
+                "glob": "**/*",
+                "input": "projects/demo/public",
+                "output": "."
+              },
               "projects/demo/src/assets",
-              { "glob": "**/*", "input": "./node_modules/@ant-design/icons-angular/src/inline-svg/", "output": "/assets/vendors/@ant-design/assets/" },
-              { "glob": "**/*", "input": "./node_modules/@cisstech/nge/assets/monaco", "output": "./assets/vendors/nge/monaco/" },
-              { "glob": "**/*", "input": "./node_modules/@cisstech/nge/assets/markdown/", "output": "./assets/vendors/nge/markdown/" },
-              { "glob": "**/*", "input": "./node_modules/@cisstech/nge/assets/ui/icon/assets/icons/files", "output": "./assets/vendors/nge/ui/icon/icons/files/" }
+              {
+                "glob": "**/*",
+                "input": "./node_modules/@ant-design/icons-angular/src/inline-svg/",
+                "output": "/assets/vendors/@ant-design/assets/"
+              },
+              {
+                "glob": "**/*",
+                "input": "./node_modules/@cisstech/nge/assets/monaco",
+                "output": "./assets/vendors/nge/monaco/"
+              },
+              {
+                "glob": "**/*",
+                "input": "./node_modules/@cisstech/nge/assets/markdown/",
+                "output": "./assets/vendors/nge/markdown/"
+              },
+              {
+                "glob": "**/*",
+                "input": "./node_modules/@cisstech/nge/assets/ui/icon/assets/icons/files",
+                "output": "./assets/vendors/nge/ui/icon/icons/files/"
+              }
             ],
             "styles": [
               "projects/demo/src/styles.scss"
@@ -69,7 +95,9 @@
             "sourceMap": true,
             "optimization": false,
             "namedChunks": true,
-            "main": "projects/demo/src/main.ts"
+            "browser": "projects/demo/src/main.ts",
+            "server": "projects/demo/src/main.server.ts",
+            "outputMode": "static"
           },
           "configurations": {
             "production": {
@@ -95,7 +123,8 @@
                   "maximumWarning": "6kb",
                   "maximumError": "10kb"
                 }
-              ]
+              ],
+              "baseHref": "/nge-ide/"
             }
           },
           "defaultConfiguration": ""
@@ -121,16 +150,31 @@
           "builder": "@angular-eslint/builder:lint",
           "options": {
             "eslintConfig": ".eslintrc.json",
-            "lintFilePatterns": ["**/*.spec.ts", "**/*.d.ts"]
+            "lintFilePatterns": [
+              "**/*.spec.ts",
+              "**/*.d.ts"
+            ]
           }
         },
-        "deploy": {
-          "builder": "angular-cli-ghpages:deploy",
+        "docs": {
+          "builder": "@cisstech/nge:docs",
           "options": {
-            "dir": "./dist/demo",
-            "repo": "https://github.com/cisstech/nge-ide.git",
-            "buildTarget": "demo:build:production",
-            "baseHref": "https://cisstech.github.io/nge-ide/"
+            "publicDir": "projects/demo/public",
+            "root": "/docs",
+            "name": "nge-ide",
+            "siteUrl": "https://cisstech.github.io/nge-ide",
+            "api": {
+              "entryPoints": [
+                "projects/nge-ide/index.ts",
+                "projects/nge-ide/core/index.ts",
+                "projects/nge-ide/explorer/index.ts",
+                "projects/nge-ide/notifications/index.ts",
+                "projects/nge-ide/problems/index.ts",
+                "projects/nge-ide/search/index.ts",
+                "projects/nge-ide/settings/index.ts"
+              ],
+              "tsconfig": "tsconfig.docs.json"
+            }
           }
         }
       }
