@@ -9,49 +9,49 @@
       "href": "/docs/introduction",
       "renderer": "docs/introduction.md",
       "sourcePath": "introduction.md",
-      "lastUpdated": "2026-07-13T21:10:33+02:00"
+      "lastUpdated": "2026-07-14T00:07:18+02:00"
     },
     {
       "title": "Getting started",
       "href": "/docs/getting-started",
       "renderer": "docs/getting-started.md",
       "sourcePath": "getting-started.md",
-      "lastUpdated": "2026-07-13T21:10:33+02:00"
+      "lastUpdated": "2026-07-14T00:07:18+02:00"
     },
     {
       "title": "File system",
       "href": "/docs/file-system",
       "renderer": "docs/file-system.md",
       "sourcePath": "file-system.md",
-      "lastUpdated": "2026-07-13T21:10:33+02:00"
+      "lastUpdated": "2026-07-14T00:07:18+02:00"
     },
     {
       "title": "Editors",
       "href": "/docs/editors",
       "renderer": "docs/editors.md",
       "sourcePath": "editors.md",
-      "lastUpdated": "2026-07-13T21:10:33+02:00"
+      "lastUpdated": "2026-07-14T00:07:18+02:00"
     },
     {
       "title": "Extending the IDE",
       "href": "/docs/extending",
       "renderer": "docs/extending.md",
       "sourcePath": "extending.md",
-      "lastUpdated": "2026-07-13T21:10:33+02:00"
+      "lastUpdated": "2026-07-14T00:07:18+02:00"
     },
     {
       "title": "Theming",
       "href": "/docs/theming",
       "renderer": "docs/theming.md",
       "sourcePath": "theming.md",
-      "lastUpdated": "2026-07-13T21:10:33+02:00"
+      "lastUpdated": "2026-07-14T00:07:18+02:00"
     },
     {
       "title": "Services reference",
       "href": "/docs/services",
       "renderer": "docs/services.md",
       "sourcePath": "services.md",
-      "lastUpdated": "2026-07-13T21:10:33+02:00"
+      "lastUpdated": "2026-07-14T00:07:18+02:00"
     },
     {
       "title": "API reference",
