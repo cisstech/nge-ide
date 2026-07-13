@@ -22,10 +22,10 @@ import {
   withIcons,
   withKatex,
   withLinkAnchor,
-  withShiki,
   withTabbedSet,
   withThemes,
 } from '@cisstech/nge/markdown'
+import { withShiki } from '@cisstech/nge/markdown/shiki'
 import { NGE_MONACO_THEMES, provideNgeMonaco } from '@cisstech/nge/monaco'
 
 // MODULE

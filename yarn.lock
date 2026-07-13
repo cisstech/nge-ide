@@ -2552,7 +2552,7 @@ __metadata:
     "@angular/platform-server": "npm:^22.0.6"
     "@angular/router": "npm:^22.0.6"
     "@angular/ssr": "npm:^22.0.6"
-    "@cisstech/nge": "npm:^22.4.2"
+    "@cisstech/nge": "npm:^22.4.3"
     "@commitlint/cli": "npm:^19.4.0"
     "@commitlint/config-conventional": "npm:^19.2.2"
     "@ngx-pwa/local-storage": "npm:^18.0.0"
@@ -2597,9 +2597,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@cisstech/nge@npm:^22.4.2":
-  version: 22.4.2
-  resolution: "@cisstech/nge@npm:22.4.2"
+"@cisstech/nge@npm:^22.4.3":
+  version: 22.4.3
+  resolution: "@cisstech/nge@npm:22.4.3"
   dependencies:
     marked: "npm:^11.0.1"
     tslib: "npm:^2.3.0"
@@ -2627,7 +2627,7 @@ __metadata:
       optional: true
     typedoc:
       optional: true
-  checksum: 10c0/d379de7947b855e15b08f6a3cd4aa70326e8c1970ecc723b2b3190b5b902960099197c8bf8bcbba65bcf427ee620df9d1a572fdf59ba8f425ecc902a8da0244e
+  checksum: 10c0/24dcb33a622e22a0962f630a279695d306b0e83f3d7d95afb7f58afd16833fb4029501306ac3fee37609ba4cabf3509507e775c12c934c8fff333ad64d88b726
   languageName: node
   linkType: hard
 
