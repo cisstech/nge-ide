@@ -1,0 +1,6 @@
+---
+title: NgeIdeExplorerModule
+---
+# NgeIdeExplorerModule
+
+`class`

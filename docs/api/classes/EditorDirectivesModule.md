@@ -1,0 +1,6 @@
+---
+title: EditorDirectivesModule
+---
+# EditorDirectivesModule
+
+`class`

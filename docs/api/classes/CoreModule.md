@@ -1,0 +1,6 @@
+---
+title: CoreModule
+---
+# CoreModule
+
+`class`

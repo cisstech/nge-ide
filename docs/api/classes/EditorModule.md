@@ -1,0 +1,6 @@
+---
+title: EditorModule
+---
+# EditorModule
+
+`class`

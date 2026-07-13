@@ -1,0 +1,20 @@
+{
+  "emptySearchForm": {
+    "title": "emptySearchForm"
+  },
+  "fileSystemProviderCapabilityName": {
+    "title": "fileSystemProviderCapabilityName"
+  },
+  "hasKeycode": {
+    "title": "hasKeycode"
+  },
+  "hasModifierKey": {
+    "title": "hasModifierKey"
+  },
+  "stringFromByArray": {
+    "title": "stringFromByArray"
+  },
+  "stringToByteArray": {
+    "title": "stringToByteArray"
+  }
+}

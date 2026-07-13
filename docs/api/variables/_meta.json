@@ -1,0 +1,101 @@
+{
+  "CONTRIBUTION": {
+    "title": "CONTRIBUTION"
+  },
+  "DEFAULT_STORAGE_PREFIX": {
+    "title": "DEFAULT_STORAGE_PREFIX"
+  },
+  "DndDataTransfer": {
+    "title": "DndDataTransfer"
+  },
+  "EXPLORER_COMMAND_COLLAPSE": {
+    "title": "EXPLORER_COMMAND_COLLAPSE"
+  },
+  "EXPLORER_COMMAND_COPY": {
+    "title": "EXPLORER_COMMAND_COPY"
+  },
+  "EXPLORER_COMMAND_COPY_PATH": {
+    "title": "EXPLORER_COMMAND_COPY_PATH"
+  },
+  "EXPLORER_COMMAND_CREATE_FILE": {
+    "title": "EXPLORER_COMMAND_CREATE_FILE"
+  },
+  "EXPLORER_COMMAND_CREATE_FOLDER": {
+    "title": "EXPLORER_COMMAND_CREATE_FOLDER"
+  },
+  "EXPLORER_COMMAND_DELETE": {
+    "title": "EXPLORER_COMMAND_DELETE"
+  },
+  "EXPLORER_COMMAND_FILE_EXPORT": {
+    "title": "EXPLORER_COMMAND_FILE_EXPORT"
+  },
+  "EXPLORER_COMMAND_FILE_UPLOAD": {
+    "title": "EXPLORER_COMMAND_FILE_UPLOAD"
+  },
+  "EXPLORER_COMMAND_PASTE": {
+    "title": "EXPLORER_COMMAND_PASTE"
+  },
+  "EXPLORER_COMMAND_REFRESH": {
+    "title": "EXPLORER_COMMAND_REFRESH"
+  },
+  "EXPLORER_COMMAND_RENAME": {
+    "title": "EXPLORER_COMMAND_RENAME"
+  },
+  "EXPLORER_COMMAND_TOGGLE_FILTERING": {
+    "title": "EXPLORER_COMMAND_TOGGLE_FILTERING"
+  },
+  "EXPLORER_CONTAINER_ID": {
+    "title": "EXPLORER_CONTAINER_ID"
+  },
+  "EXPLORER_VIEW_ID": {
+    "title": "EXPLORER_VIEW_ID"
+  },
+  "IDE_MENU_DIRECTIVES": {
+    "title": "IDE_MENU_DIRECTIVES"
+  },
+  "IDE_THEME_CSS": {
+    "title": "IDE_THEME_CSS"
+  },
+  "KeyCodes": {
+    "title": "KeyCodes"
+  },
+  "KeyModifiers": {
+    "title": "KeyModifiers"
+  },
+  "NOTIFICATION_EVENT_CHANNEL": {
+    "title": "NOTIFICATION_EVENT_CHANNEL"
+  },
+  "NOTIFICATIONS_CONTAINER_ID": {
+    "title": "NOTIFICATIONS_CONTAINER_ID"
+  },
+  "NOTIFICATIONS_VIEW_ID": {
+    "title": "NOTIFICATIONS_VIEW_ID"
+  },
+  "PROBLEMS_CONTAINER_ID": {
+    "title": "PROBLEMS_CONTAINER_ID"
+  },
+  "PROBLEMS_VIEW_ID": {
+    "title": "PROBLEMS_VIEW_ID"
+  },
+  "SEARCH_CONTAINER_ID": {
+    "title": "SEARCH_CONTAINER_ID"
+  },
+  "SEARCH_VIEW_ID": {
+    "title": "SEARCH_VIEW_ID"
+  },
+  "SETTINGS_CONTAINER_ID": {
+    "title": "SETTINGS_CONTAINER_ID"
+  },
+  "SETTINGS_URI": {
+    "title": "SETTINGS_URI"
+  },
+  "STORAGE_PREFIX": {
+    "title": "STORAGE_PREFIX"
+  },
+  "THEME_CONTAINER_ID": {
+    "title": "THEME_CONTAINER_ID"
+  },
+  "TOGGLE_THEME_COMMAND": {
+    "title": "TOGGLE_THEME_COMMAND"
+  }
+}

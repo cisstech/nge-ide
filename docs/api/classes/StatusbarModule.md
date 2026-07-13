@@ -1,0 +1,6 @@
+---
+title: StatusbarModule
+---
+# StatusbarModule
+
+`class`

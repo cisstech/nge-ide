@@ -1,0 +1,413 @@
+{
+  "BadgeComponent": {
+    "title": "BadgeComponent"
+  },
+  "BinarySize": {
+    "title": "BinarySize"
+  },
+  "CheckboxComponent": {
+    "title": "CheckboxComponent"
+  },
+  "CodeEditor": {
+    "title": "CodeEditor"
+  },
+  "CodeEditorComponent": {
+    "title": "CodeEditorComponent"
+  },
+  "CodeEditorModule": {
+    "title": "CodeEditorModule"
+  },
+  "CommandEvent": {
+    "title": "CommandEvent"
+  },
+  "CommandGroupComponent": {
+    "title": "CommandGroupComponent"
+  },
+  "CommandModule": {
+    "title": "CommandModule"
+  },
+  "CommandService": {
+    "title": "CommandService"
+  },
+  "ContextMenuService": {
+    "title": "ContextMenuService"
+  },
+  "Contribution": {
+    "title": "Contribution"
+  },
+  "CoreModule": {
+    "title": "CoreModule"
+  },
+  "DiagnosticService": {
+    "title": "DiagnosticService"
+  },
+  "DialogModule": {
+    "title": "DialogModule"
+  },
+  "DialogService": {
+    "title": "DialogService"
+  },
+  "DividerComponent": {
+    "title": "DividerComponent"
+  },
+  "DndDirective": {
+    "title": "DndDirective"
+  },
+  "Editor": {
+    "title": "Editor"
+  },
+  "EditorContribution": {
+    "title": "EditorContribution"
+  },
+  "EditorDirective": {
+    "title": "EditorDirective"
+  },
+  "EditorDirectivesModule": {
+    "title": "EditorDirectivesModule"
+  },
+  "EditorGroup": {
+    "title": "EditorGroup"
+  },
+  "EditorModule": {
+    "title": "EditorModule"
+  },
+  "EditorPipesModule": {
+    "title": "EditorPipesModule"
+  },
+  "EditorService": {
+    "title": "EditorService"
+  },
+  "ErrorNotification": {
+    "title": "ErrorNotification"
+  },
+  "ExplorerCommandCollapseAll": {
+    "title": "ExplorerCommandCollapseAll"
+  },
+  "ExplorerCommandCopy": {
+    "title": "ExplorerCommandCopy"
+  },
+  "ExplorerCommandCopyPath": {
+    "title": "ExplorerCommandCopyPath"
+  },
+  "ExplorerCommandCreateFile": {
+    "title": "ExplorerCommandCreateFile"
+  },
+  "ExplorerCommandCreateFolder": {
+    "title": "ExplorerCommandCreateFolder"
+  },
+  "ExplorerCommandDelete": {
+    "title": "ExplorerCommandDelete"
+  },
+  "ExplorerCommandFileExport": {
+    "title": "ExplorerCommandFileExport"
+  },
+  "ExplorerCommandFileUpload": {
+    "title": "ExplorerCommandFileUpload"
+  },
+  "ExplorerCommandPaste": {
+    "title": "ExplorerCommandPaste"
+  },
+  "ExplorerCommandRefresh": {
+    "title": "ExplorerCommandRefresh"
+  },
+  "ExplorerCommandRename": {
+    "title": "ExplorerCommandRename"
+  },
+  "ExplorerCommandToggleFiltering": {
+    "title": "ExplorerCommandToggleFiltering"
+  },
+  "ExplorerComponent": {
+    "title": "ExplorerComponent"
+  },
+  "ExplorerContribution": {
+    "title": "ExplorerContribution"
+  },
+  "ExplorerModule": {
+    "title": "ExplorerModule"
+  },
+  "ExplorerService": {
+    "title": "ExplorerService"
+  },
+  "FileChangedPipe": {
+    "title": "FileChangedPipe"
+  },
+  "FileNamePipe": {
+    "title": "FileNamePipe"
+  },
+  "FileService": {
+    "title": "FileService"
+  },
+  "FileSystemError": {
+    "title": "FileSystemError"
+  },
+  "FileSystemProvider": {
+    "title": "FileSystemProvider"
+  },
+  "HighlightDirective": {
+    "title": "HighlightDirective"
+  },
+  "HtmlPreviewHandler": {
+    "title": "HtmlPreviewHandler"
+  },
+  "IdeAutocompleteComponent": {
+    "title": "IdeAutocompleteComponent"
+  },
+  "IdeAutocompleteDirective": {
+    "title": "IdeAutocompleteDirective"
+  },
+  "IdeAutoOptionComponent": {
+    "title": "IdeAutoOptionComponent"
+  },
+  "IdeButtonDirective": {
+    "title": "IdeButtonDirective"
+  },
+  "IdeComponent": {
+    "title": "IdeComponent"
+  },
+  "IdeInputDirective": {
+    "title": "IdeInputDirective"
+  },
+  "IdeMenuComponent": {
+    "title": "IdeMenuComponent"
+  },
+  "IdeMenuItemDirective": {
+    "title": "IdeMenuItemDirective"
+  },
+  "IdeMenuTriggerDirective": {
+    "title": "IdeMenuTriggerDirective"
+  },
+  "IdeModalContainerComponent": {
+    "title": "IdeModalContainerComponent"
+  },
+  "IdeModalRef": {
+    "title": "IdeModalRef"
+  },
+  "IdeModalService": {
+    "title": "IdeModalService"
+  },
+  "IdeService": {
+    "title": "IdeService"
+  },
+  "InfobarComponent": {
+    "title": "InfobarComponent"
+  },
+  "InfobarContainer": {
+    "title": "InfobarContainer"
+  },
+  "InfobarModule": {
+    "title": "InfobarModule"
+  },
+  "InfoNotification": {
+    "title": "InfoNotification"
+  },
+  "Keybinding": {
+    "title": "Keybinding"
+  },
+  "KeyBindService": {
+    "title": "KeyBindService"
+  },
+  "MarkdownPreviewHandler": {
+    "title": "MarkdownPreviewHandler"
+  },
+  "MediaEditor": {
+    "title": "MediaEditor"
+  },
+  "MediaEditorComponent": {
+    "title": "MediaEditorComponent"
+  },
+  "MediaEditorModule": {
+    "title": "MediaEditorModule"
+  },
+  "MemFileProvider": {
+    "title": "MemFileProvider"
+  },
+  "MonacoService": {
+    "title": "MonacoService"
+  },
+  "NgeIdeExplorerModule": {
+    "title": "NgeIdeExplorerModule"
+  },
+  "NgeIdeModule": {
+    "title": "NgeIdeModule"
+  },
+  "NgeIdeNotificationsModule": {
+    "title": "NgeIdeNotificationsModule"
+  },
+  "NgeIdeProblemsModule": {
+    "title": "NgeIdeProblemsModule"
+  },
+  "NgeIdeSearchModule": {
+    "title": "NgeIdeSearchModule"
+  },
+  "NgeIdeSettingsModule": {
+    "title": "NgeIdeSettingsModule"
+  },
+  "NicifyNamePipe": {
+    "title": "NicifyNamePipe"
+  },
+  "NotificationsComponent": {
+    "title": "NotificationsComponent"
+  },
+  "NotificationService": {
+    "title": "NotificationService"
+  },
+  "NotificationsModule": {
+    "title": "NotificationsModule"
+  },
+  "OpenRequest": {
+    "title": "OpenRequest"
+  },
+  "OptionComponent": {
+    "title": "OptionComponent"
+  },
+  "Paths": {
+    "title": "Paths"
+  },
+  "PreviewEditor": {
+    "title": "PreviewEditor"
+  },
+  "PreviewEditorComponent": {
+    "title": "PreviewEditorComponent"
+  },
+  "PreviewEditorModule": {
+    "title": "PreviewEditorModule"
+  },
+  "PreviewService": {
+    "title": "PreviewService"
+  },
+  "ProblemsComponent": {
+    "title": "ProblemsComponent"
+  },
+  "ProblemsModule": {
+    "title": "ProblemsModule"
+  },
+  "QuickOpenComponent": {
+    "title": "QuickOpenComponent"
+  },
+  "QuickOpenModule": {
+    "title": "QuickOpenModule"
+  },
+  "SearchComponent": {
+    "title": "SearchComponent"
+  },
+  "SearchInputComponent": {
+    "title": "SearchInputComponent"
+  },
+  "SearchModule": {
+    "title": "SearchModule"
+  },
+  "SelectComponent": {
+    "title": "SelectComponent"
+  },
+  "SettingsEditorComponent": {
+    "title": "SettingsEditorComponent"
+  },
+  "SettingsEditorModule": {
+    "title": "SettingsEditorModule"
+  },
+  "SettingsService": {
+    "title": "SettingsService"
+  },
+  "SidebarComponent": {
+    "title": "SidebarComponent"
+  },
+  "SidebarContainer": {
+    "title": "SidebarContainer"
+  },
+  "SidebarModule": {
+    "title": "SidebarModule"
+  },
+  "SkeletonComponent": {
+    "title": "SkeletonComponent"
+  },
+  "SpinnerComponent": {
+    "title": "SpinnerComponent"
+  },
+  "StatusbarComponent": {
+    "title": "StatusbarComponent"
+  },
+  "StatusbarModule": {
+    "title": "StatusbarModule"
+  },
+  "StatusBarService": {
+    "title": "StatusBarService"
+  },
+  "StorageService": {
+    "title": "StorageService"
+  },
+  "SvgPreviewHandler": {
+    "title": "SvgPreviewHandler"
+  },
+  "TabButtonDirective": {
+    "title": "TabButtonDirective"
+  },
+  "TabComponent": {
+    "title": "TabComponent"
+  },
+  "TabsComponent": {
+    "title": "TabsComponent"
+  },
+  "TaskbarComponent": {
+    "title": "TaskbarComponent"
+  },
+  "TaskbarModule": {
+    "title": "TaskbarModule"
+  },
+  "TaskService": {
+    "title": "TaskService"
+  },
+  "ThemeService": {
+    "title": "ThemeService"
+  },
+  "ThemeSidebarContainer": {
+    "title": "ThemeSidebarContainer"
+  },
+  "ToggleThemeCommand": {
+    "title": "ToggleThemeCommand"
+  },
+  "ToolbarButton": {
+    "title": "ToolbarButton"
+  },
+  "ToolbarComponent": {
+    "title": "ToolbarComponent"
+  },
+  "ToolbarModule": {
+    "title": "ToolbarModule"
+  },
+  "ToolbarSeparator": {
+    "title": "ToolbarSeparator"
+  },
+  "ToolbarService": {
+    "title": "ToolbarService"
+  },
+  "TooltipComponent": {
+    "title": "TooltipComponent"
+  },
+  "TooltipDirective": {
+    "title": "TooltipDirective"
+  },
+  "ViewContainerService": {
+    "title": "ViewContainerService"
+  },
+  "ViewDirective": {
+    "title": "ViewDirective"
+  },
+  "ViewGroupComponent": {
+    "title": "ViewGroupComponent"
+  },
+  "ViewModule": {
+    "title": "ViewModule"
+  },
+  "ViewService": {
+    "title": "ViewService"
+  },
+  "WarningNotification": {
+    "title": "WarningNotification"
+  },
+  "WorkbenchComponent": {
+    "title": "WorkbenchComponent"
+  },
+  "WorkbenchModule": {
+    "title": "WorkbenchModule"
+  }
+}

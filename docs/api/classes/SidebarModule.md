@@ -1,0 +1,6 @@
+---
+title: SidebarModule
+---
+# SidebarModule
+
+`class`

@@ -1,0 +1,6 @@
+---
+title: NgeIdeProblemsModule
+---
+# NgeIdeProblemsModule
+
+`class`

@@ -1,0 +1,6 @@
+---
+title: NgeIdeNotificationsModule
+---
+# NgeIdeNotificationsModule
+
+`class`

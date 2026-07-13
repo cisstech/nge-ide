@@ -1,0 +1,6 @@
+---
+title: ToolbarModule
+---
+# ToolbarModule
+
+`class`

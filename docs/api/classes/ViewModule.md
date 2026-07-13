@@ -1,0 +1,6 @@
+---
+title: ViewModule
+---
+# ViewModule
+
+`class`

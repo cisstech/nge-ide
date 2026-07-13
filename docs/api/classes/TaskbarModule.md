@@ -1,0 +1,6 @@
+---
+title: TaskbarModule
+---
+# TaskbarModule
+
+`class`

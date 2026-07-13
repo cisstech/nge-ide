@@ -1,0 +1,10 @@
+{
+  "introduction": { "title": "Introduction" },
+  "getting-started": { "title": "Getting started" },
+  "file-system": { "title": "File system" },
+  "editors": { "title": "Editors" },
+  "extending": { "title": "Extending the IDE" },
+  "theming": { "title": "Theming" },
+  "services": { "title": "Services reference" },
+  "api": { "title": "API reference" }
+}

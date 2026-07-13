@@ -1,0 +1,6 @@
+---
+title: CommandModule
+---
+# CommandModule
+
+`class`

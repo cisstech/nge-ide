@@ -1,0 +1,6 @@
+---
+title: InfobarModule
+---
+# InfobarModule
+
+`class`

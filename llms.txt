@@ -1,0 +1,229 @@
+# nge-ide
+
+## Documentation
+
+- [Introduction](https://cisstech.github.io/nge-ide/docs/introduction)
+- [Getting started](https://cisstech.github.io/nge-ide/docs/getting-started)
+- [File system](https://cisstech.github.io/nge-ide/docs/file-system)
+- [Editors](https://cisstech.github.io/nge-ide/docs/editors)
+- [Extending the IDE](https://cisstech.github.io/nge-ide/docs/extending)
+- [Theming](https://cisstech.github.io/nge-ide/docs/theming)
+- [Services reference](https://cisstech.github.io/nge-ide/docs/services)
+- [API reference](https://cisstech.github.io/nge-ide/docs/api)
+- [emptySearchForm](https://cisstech.github.io/nge-ide/docs/api/functions/emptySearchForm)
+- [fileSystemProviderCapabilityName](https://cisstech.github.io/nge-ide/docs/api/functions/fileSystemProviderCapabilityName): Gets a human readable name of the given `capability`
+- [hasKeycode](https://cisstech.github.io/nge-ide/docs/api/functions/hasKeycode): Checks if an event has any of the provided
+- [hasModifierKey](https://cisstech.github.io/nge-ide/docs/api/functions/hasModifierKey): Checks whether a modifier key is pressed.
+- [stringFromByArray](https://cisstech.github.io/nge-ide/docs/api/functions/stringFromByArray)
+- [stringToByteArray](https://cisstech.github.io/nge-ide/docs/api/functions/stringToByteArray)
+- [BadgeComponent](https://cisstech.github.io/nge-ide/docs/api/classes/BadgeComponent): Projects arbitrary content and overlays a small count bubble at its
+- [BinarySize](https://cisstech.github.io/nge-ide/docs/api/classes/BinarySize)
+- [CheckboxComponent](https://cisstech.github.io/nge-ide/docs/api/classes/CheckboxComponent): A compact, VS-Code-like checkbox built on a native `<input type="checkbox">`.
+- [CodeEditor](https://cisstech.github.io/nge-ide/docs/api/classes/CodeEditor): Represents an editor that is attached to a component.
+- [CodeEditorComponent](https://cisstech.github.io/nge-ide/docs/api/classes/CodeEditorComponent)
+- [CodeEditorModule](https://cisstech.github.io/nge-ide/docs/api/classes/CodeEditorModule)
+- [CommandEvent](https://cisstech.github.io/nge-ide/docs/api/classes/CommandEvent)
+- [CommandGroupComponent](https://cisstech.github.io/nge-ide/docs/api/classes/CommandGroupComponent)
+- [CommandModule](https://cisstech.github.io/nge-ide/docs/api/classes/CommandModule)
+- [CommandService](https://cisstech.github.io/nge-ide/docs/api/classes/CommandService)
+- [ContextMenuService](https://cisstech.github.io/nge-ide/docs/api/classes/ContextMenuService): Opens a menu at the pointer position, on top of `@angular/cdk`.
+- [Contribution](https://cisstech.github.io/nge-ide/docs/api/classes/Contribution)
+- [CoreModule](https://cisstech.github.io/nge-ide/docs/api/classes/CoreModule)
+- [DiagnosticService](https://cisstech.github.io/nge-ide/docs/api/classes/DiagnosticService)
+- [DialogModule](https://cisstech.github.io/nge-ide/docs/api/classes/DialogModule)
+- [DialogService](https://cisstech.github.io/nge-ide/docs/api/classes/DialogService)
+- [DividerComponent](https://cisstech.github.io/nge-ide/docs/api/classes/DividerComponent): A thin rule that separates content, laid out horizontally (default) or
+- [DndDirective](https://cisstech.github.io/nge-ide/docs/api/classes/DndDirective): Element that can share or accept a data of dragged dom element.
+- [Editor](https://cisstech.github.io/nge-ide/docs/api/classes/Editor): Represents an editor that is attached to a component.
+- [EditorContribution](https://cisstech.github.io/nge-ide/docs/api/classes/EditorContribution)
+- [EditorDirective](https://cisstech.github.io/nge-ide/docs/api/classes/EditorDirective)
+- [EditorDirectivesModule](https://cisstech.github.io/nge-ide/docs/api/classes/EditorDirectivesModule)
+- [EditorGroup](https://cisstech.github.io/nge-ide/docs/api/classes/EditorGroup): Represents an editor group.
+- [EditorModule](https://cisstech.github.io/nge-ide/docs/api/classes/EditorModule)
+- [EditorPipesModule](https://cisstech.github.io/nge-ide/docs/api/classes/EditorPipesModule)
+- [EditorService](https://cisstech.github.io/nge-ide/docs/api/classes/EditorService)
+- [ErrorNotification](https://cisstech.github.io/nge-ide/docs/api/classes/ErrorNotification)
+- [ExplorerCommandCollapseAll](https://cisstech.github.io/nge-ide/docs/api/classes/ExplorerCommandCollapseAll)
+- [ExplorerCommandCopy](https://cisstech.github.io/nge-ide/docs/api/classes/ExplorerCommandCopy): Commands available inside the explorer container.
+- [ExplorerCommandCopyPath](https://cisstech.github.io/nge-ide/docs/api/classes/ExplorerCommandCopyPath): Commands available inside the explorer container.
+- [ExplorerCommandCreateFile](https://cisstech.github.io/nge-ide/docs/api/classes/ExplorerCommandCreateFile): Commands available inside the explorer container.
+- [ExplorerCommandCreateFolder](https://cisstech.github.io/nge-ide/docs/api/classes/ExplorerCommandCreateFolder): Commands available inside the explorer container.
+- [ExplorerCommandDelete](https://cisstech.github.io/nge-ide/docs/api/classes/ExplorerCommandDelete): Commands available inside the explorer container.
+- [ExplorerCommandFileExport](https://cisstech.github.io/nge-ide/docs/api/classes/ExplorerCommandFileExport): Commands available inside the explorer container.
+- [ExplorerCommandFileUpload](https://cisstech.github.io/nge-ide/docs/api/classes/ExplorerCommandFileUpload): Commands available inside the explorer container.
+- [ExplorerCommandPaste](https://cisstech.github.io/nge-ide/docs/api/classes/ExplorerCommandPaste): Commands available inside the explorer container.
+- [ExplorerCommandRefresh](https://cisstech.github.io/nge-ide/docs/api/classes/ExplorerCommandRefresh): Command that refresh the explorer file tree.
+- [ExplorerCommandRename](https://cisstech.github.io/nge-ide/docs/api/classes/ExplorerCommandRename): Commands available inside the explorer container.
+- [ExplorerCommandToggleFiltering](https://cisstech.github.io/nge-ide/docs/api/classes/ExplorerCommandToggleFiltering)
+- [ExplorerComponent](https://cisstech.github.io/nge-ide/docs/api/classes/ExplorerComponent)
+- [ExplorerContribution](https://cisstech.github.io/nge-ide/docs/api/classes/ExplorerContribution)
+- [ExplorerModule](https://cisstech.github.io/nge-ide/docs/api/classes/ExplorerModule)
+- [ExplorerService](https://cisstech.github.io/nge-ide/docs/api/classes/ExplorerService): Provides an API to interact with the explorer view tree.
+- [FileChangedPipe](https://cisstech.github.io/nge-ide/docs/api/classes/FileChangedPipe)
+- [FileNamePipe](https://cisstech.github.io/nge-ide/docs/api/classes/FileNamePipe)
+- [FileService](https://cisstech.github.io/nge-ide/docs/api/classes/FileService)
+- [FileSystemError](https://cisstech.github.io/nge-ide/docs/api/classes/FileSystemError): A type that filesystem providers should use to signal errors.
+- [FileSystemProvider](https://cisstech.github.io/nge-ide/docs/api/classes/FileSystemProvider): The filesystem provider defines what the editor needs to read, write, discover,
+- [HighlightDirective](https://cisstech.github.io/nge-ide/docs/api/classes/HighlightDirective)
+- [HtmlPreviewHandler](https://cisstech.github.io/nge-ide/docs/api/classes/HtmlPreviewHandler)
+- [IdeAutocompleteComponent](https://cisstech.github.io/nge-ide/docs/api/classes/IdeAutocompleteComponent): Floating list of `<ide-auto-option>` items shown under an input by the
+- [IdeAutocompleteDirective](https://cisstech.github.io/nge-ide/docs/api/classes/IdeAutocompleteDirective): Trigger that binds a native `<input>` (or `<textarea>`) to an
+- [IdeAutoOptionComponent](https://cisstech.github.io/nge-ide/docs/api/classes/IdeAutoOptionComponent): A single selectable row inside an `<ide-autocomplete>` panel.
+- [IdeButtonDirective](https://cisstech.github.io/nge-ide/docs/api/classes/IdeButtonDirective): Styling primitive that replaces ng-zorro's `nz-button`.
+- [IdeComponent](https://cisstech.github.io/nge-ide/docs/api/classes/IdeComponent)
+- [IdeInputDirective](https://cisstech.github.io/nge-ide/docs/api/classes/IdeInputDirective): Styling primitive that replaces ng-zorro's `nz-input`.
+- [IdeMenuComponent](https://cisstech.github.io/nge-ide/docs/api/classes/IdeMenuComponent): Menu panel that lays out a list of IdeMenuItemDirective entries.
+- [IdeMenuItemDirective](https://cisstech.github.io/nge-ide/docs/api/classes/IdeMenuItemDirective): A single entry inside an IdeMenuComponent.
+- [IdeMenuTriggerDirective](https://cisstech.github.io/nge-ide/docs/api/classes/IdeMenuTriggerDirective): Turns its host element into a click trigger that opens an
+- [IdeModalContainerComponent](https://cisstech.github.io/nge-ide/docs/api/classes/IdeModalContainerComponent): Presentational container rendered inside the CDK dialog overlay. It lays out
+- [IdeModalRef](https://cisstech.github.io/nge-ide/docs/api/classes/IdeModalRef): Handle to a modal opened through `IdeModalService`. Wraps the CDK `DialogRef`
+- [IdeModalService](https://cisstech.github.io/nge-ide/docs/api/classes/IdeModalService): Injectable, VS-Code-like modal service built on `@angular/cdk/dialog`. It is a
+- [IdeService](https://cisstech.github.io/nge-ide/docs/api/classes/IdeService)
+- [InfobarComponent](https://cisstech.github.io/nge-ide/docs/api/classes/InfobarComponent)
+- [InfobarContainer](https://cisstech.github.io/nge-ide/docs/api/classes/InfobarContainer): Representation of view container inside the infobar area.
+- [InfobarModule](https://cisstech.github.io/nge-ide/docs/api/classes/InfobarModule)
+- [InfoNotification](https://cisstech.github.io/nge-ide/docs/api/classes/InfoNotification)
+- [Keybinding](https://cisstech.github.io/nge-ide/docs/api/classes/Keybinding)
+- [KeyBindService](https://cisstech.github.io/nge-ide/docs/api/classes/KeyBindService)
+- [MarkdownPreviewHandler](https://cisstech.github.io/nge-ide/docs/api/classes/MarkdownPreviewHandler)
+- [MediaEditor](https://cisstech.github.io/nge-ide/docs/api/classes/MediaEditor): Represents an editor that is attached to a component.
+- [MediaEditorComponent](https://cisstech.github.io/nge-ide/docs/api/classes/MediaEditorComponent)
+- [MediaEditorModule](https://cisstech.github.io/nge-ide/docs/api/classes/MediaEditorModule)
+- [MemFileProvider](https://cisstech.github.io/nge-ide/docs/api/classes/MemFileProvider): The filesystem provider defines what the editor needs to read, write, discover,
+- [MonacoService](https://cisstech.github.io/nge-ide/docs/api/classes/MonacoService)
+- [NgeIdeExplorerModule](https://cisstech.github.io/nge-ide/docs/api/classes/NgeIdeExplorerModule)
+- [NgeIdeModule](https://cisstech.github.io/nge-ide/docs/api/classes/NgeIdeModule)
+- [NgeIdeNotificationsModule](https://cisstech.github.io/nge-ide/docs/api/classes/NgeIdeNotificationsModule)
+- [NgeIdeProblemsModule](https://cisstech.github.io/nge-ide/docs/api/classes/NgeIdeProblemsModule)
+- [NgeIdeSearchModule](https://cisstech.github.io/nge-ide/docs/api/classes/NgeIdeSearchModule)
+- [NgeIdeSettingsModule](https://cisstech.github.io/nge-ide/docs/api/classes/NgeIdeSettingsModule)
+- [NicifyNamePipe](https://cisstech.github.io/nge-ide/docs/api/classes/NicifyNamePipe)
+- [NotificationsComponent](https://cisstech.github.io/nge-ide/docs/api/classes/NotificationsComponent)
+- [NotificationService](https://cisstech.github.io/nge-ide/docs/api/classes/NotificationService)
+- [NotificationsModule](https://cisstech.github.io/nge-ide/docs/api/classes/NotificationsModule)
+- [OpenRequest](https://cisstech.github.io/nge-ide/docs/api/classes/OpenRequest): Represents file open request.
+- [OptionComponent](https://cisstech.github.io/nge-ide/docs/api/classes/OptionComponent): A single choice inside an SelectComponent (`ide-select`).
+- [Paths](https://cisstech.github.io/nge-ide/docs/api/classes/Paths)
+- [PreviewEditor](https://cisstech.github.io/nge-ide/docs/api/classes/PreviewEditor): Represents an editor that is attached to a component.
+- [PreviewEditorComponent](https://cisstech.github.io/nge-ide/docs/api/classes/PreviewEditorComponent)
+- [PreviewEditorModule](https://cisstech.github.io/nge-ide/docs/api/classes/PreviewEditorModule)
+- [PreviewService](https://cisstech.github.io/nge-ide/docs/api/classes/PreviewService)
+- [ProblemsComponent](https://cisstech.github.io/nge-ide/docs/api/classes/ProblemsComponent)
+- [ProblemsModule](https://cisstech.github.io/nge-ide/docs/api/classes/ProblemsModule)
+- [QuickOpenComponent](https://cisstech.github.io/nge-ide/docs/api/classes/QuickOpenComponent)
+- [QuickOpenModule](https://cisstech.github.io/nge-ide/docs/api/classes/QuickOpenModule)
+- [SearchComponent](https://cisstech.github.io/nge-ide/docs/api/classes/SearchComponent)
+- [SearchInputComponent](https://cisstech.github.io/nge-ide/docs/api/classes/SearchInputComponent)
+- [SearchModule](https://cisstech.github.io/nge-ide/docs/api/classes/SearchModule)
+- [SelectComponent](https://cisstech.github.io/nge-ide/docs/api/classes/SelectComponent): A compact, VS-Code-like single-select dropdown.
+- [SettingsEditorComponent](https://cisstech.github.io/nge-ide/docs/api/classes/SettingsEditorComponent)
+- [SettingsEditorModule](https://cisstech.github.io/nge-ide/docs/api/classes/SettingsEditorModule)
+- [SettingsService](https://cisstech.github.io/nge-ide/docs/api/classes/SettingsService)
+- [SidebarComponent](https://cisstech.github.io/nge-ide/docs/api/classes/SidebarComponent): Renders on the sidebar area of the ide.
+- [SidebarContainer](https://cisstech.github.io/nge-ide/docs/api/classes/SidebarContainer): Representation of view container inside the sidebar area.
+- [SidebarModule](https://cisstech.github.io/nge-ide/docs/api/classes/SidebarModule)
+- [SkeletonComponent](https://cisstech.github.io/nge-ide/docs/api/classes/SkeletonComponent): Lightweight loading placeholder rendering a few content lines with an
+- [SpinnerComponent](https://cisstech.github.io/nge-ide/docs/api/classes/SpinnerComponent): Indeterminate loading spinner. Standalone, pure-CSS replacement for
+- [StatusbarComponent](https://cisstech.github.io/nge-ide/docs/api/classes/StatusbarComponent)
+- [StatusbarModule](https://cisstech.github.io/nge-ide/docs/api/classes/StatusbarModule)
+- [StatusBarService](https://cisstech.github.io/nge-ide/docs/api/classes/StatusBarService)
+- [StorageService](https://cisstech.github.io/nge-ide/docs/api/classes/StorageService)
+- [SvgPreviewHandler](https://cisstech.github.io/nge-ide/docs/api/classes/SvgPreviewHandler)
+- [TabButtonDirective](https://cisstech.github.io/nge-ide/docs/api/classes/TabButtonDirective): Internal directive applied to every tab header rendered by
+- [TabComponent](https://cisstech.github.io/nge-ide/docs/api/classes/TabComponent): A single tab hosted by TabsComponent. Standalone replacement for
+- [TabsComponent](https://cisstech.github.io/nge-ide/docs/api/classes/TabsComponent): Card-style (or line-style) tab bar. Standalone replacement for ng-zorro's
+- [TaskbarComponent](https://cisstech.github.io/nge-ide/docs/api/classes/TaskbarComponent)
+- [TaskbarModule](https://cisstech.github.io/nge-ide/docs/api/classes/TaskbarModule)
+- [TaskService](https://cisstech.github.io/nge-ide/docs/api/classes/TaskService)
+- [ThemeService](https://cisstech.github.io/nge-ide/docs/api/classes/ThemeService): Owns the IDE's color theme.
+- [ThemeSidebarContainer](https://cisstech.github.io/nge-ide/docs/api/classes/ThemeSidebarContainer): Activity-bar (bottom) entry offering Light / Dark / System. The title is a
+- [ToggleThemeCommand](https://cisstech.github.io/nge-ide/docs/api/classes/ToggleThemeCommand): Command-palette entry that cycles the color theme (light -> dark -> system).
+- [ToolbarButton](https://cisstech.github.io/nge-ide/docs/api/classes/ToolbarButton)
+- [ToolbarComponent](https://cisstech.github.io/nge-ide/docs/api/classes/ToolbarComponent)
+- [ToolbarModule](https://cisstech.github.io/nge-ide/docs/api/classes/ToolbarModule)
+- [ToolbarSeparator](https://cisstech.github.io/nge-ide/docs/api/classes/ToolbarSeparator)
+- [ToolbarService](https://cisstech.github.io/nge-ide/docs/api/classes/ToolbarService)
+- [TooltipComponent](https://cisstech.github.io/nge-ide/docs/api/classes/TooltipComponent): The floating bubble rendered by TooltipDirective.
+- [TooltipDirective](https://cisstech.github.io/nge-ide/docs/api/classes/TooltipDirective): Attribute directive that shows a compact, VS-Code-like tooltip on hover and on
+- [ViewContainerService](https://cisstech.github.io/nge-ide/docs/api/classes/ViewContainerService)
+- [ViewDirective](https://cisstech.github.io/nge-ide/docs/api/classes/ViewDirective)
+- [ViewGroupComponent](https://cisstech.github.io/nge-ide/docs/api/classes/ViewGroupComponent)
+- [ViewModule](https://cisstech.github.io/nge-ide/docs/api/classes/ViewModule)
+- [ViewService](https://cisstech.github.io/nge-ide/docs/api/classes/ViewService)
+- [WarningNotification](https://cisstech.github.io/nge-ide/docs/api/classes/WarningNotification)
+- [WorkbenchComponent](https://cisstech.github.io/nge-ide/docs/api/classes/WorkbenchComponent)
+- [WorkbenchModule](https://cisstech.github.io/nge-ide/docs/api/classes/WorkbenchModule)
+- [ConfirmOptions](https://cisstech.github.io/nge-ide/docs/api/interfaces/ConfirmOptions)
+- [Diagnostic](https://cisstech.github.io/nge-ide/docs/api/interfaces/Diagnostic): Represents a diagnostic, such as a compiler error or warning.
+- [DiagnosticGroup](https://cisstech.github.io/nge-ide/docs/api/interfaces/DiagnosticGroup)
+- [DndData](https://cisstech.github.io/nge-ide/docs/api/interfaces/DndData): Representation of a data shared with a drag and drop action.
+- [EditorState](https://cisstech.github.io/nge-ide/docs/api/interfaces/EditorState): Represents the state of the editor.
+- [EditorTab](https://cisstech.github.io/nge-ide/docs/api/interfaces/EditorTab)
+- [FileNestingPattern](https://cisstech.github.io/nge-ide/docs/api/interfaces/FileNestingPattern)
+- [ICommand](https://cisstech.github.io/nge-ide/docs/api/interfaces/ICommand)
+- [IContribution](https://cisstech.github.io/nge-ide/docs/api/interfaces/IContribution)
+- [IdeAutoOptionSelectionEvent](https://cisstech.github.io/nge-ide/docs/api/interfaces/IdeAutoOptionSelectionEvent): Payload emitted when an option is chosen.
+- [IdeContextMenuConfig](https://cisstech.github.io/nge-ide/docs/api/interfaces/IdeContextMenuConfig): Options accepted by ContextMenuService.open.
+- [IdeModalButton](https://cisstech.github.io/nge-ide/docs/api/interfaces/IdeModalButton): Declarative footer button of a modal, mirroring the plain objects the IDE
+- [IdeModalContainerData](https://cisstech.github.io/nge-ide/docs/api/interfaces/IdeModalContainerData): Normalized data handed to `IdeModalContainerComponent` through `DIALOG_DATA`.
+- [IdeModalOptions](https://cisstech.github.io/nge-ide/docs/api/interfaces/IdeModalOptions): Options accepted by `IdeModalService.create`/`open`. Each field is the plain
+- [IExplorerCommand](https://cisstech.github.io/nge-ide/docs/api/interfaces/IExplorerCommand): Commands available inside the explorer container.
+- [IFile](https://cisstech.github.io/nge-ide/docs/api/interfaces/IFile): Representation of a file/directory.
+- [IFileChange](https://cisstech.github.io/nge-ide/docs/api/interfaces/IFileChange): Identifies a single change in a file.
+- [IFileSystemProvider](https://cisstech.github.io/nge-ide/docs/api/interfaces/IFileSystemProvider): The filesystem provider defines what the editor needs to read, write, discover,
+- [IStatusBarItem](https://cisstech.github.io/nge-ide/docs/api/interfaces/IStatusBarItem)
+- [ITask](https://cisstech.github.io/nge-ide/docs/api/interfaces/ITask)
+- [IToolbarButton](https://cisstech.github.io/nge-ide/docs/api/interfaces/IToolbarButton)
+- [IToolbarCustomGroup](https://cisstech.github.io/nge-ide/docs/api/interfaces/IToolbarCustomGroup)
+- [IToolbarItem](https://cisstech.github.io/nge-ide/docs/api/interfaces/IToolbarItem)
+- [IView](https://cisstech.github.io/nge-ide/docs/api/interfaces/IView): Representation of a part of the editor (statusbar, sidebar...).
+- [IViewContainer](https://cisstech.github.io/nge-ide/docs/api/interfaces/IViewContainer): Representation of view container inside the infobar area.
+- [Notification](https://cisstech.github.io/nge-ide/docs/api/interfaces/Notification)
+- [OpenOptions](https://cisstech.github.io/nge-ide/docs/api/interfaces/OpenOptions): Represents file open options.
+- [Preview](https://cisstech.github.io/nge-ide/docs/api/interfaces/Preview)
+- [PreviewHandler](https://cisstech.github.io/nge-ide/docs/api/interfaces/PreviewHandler)
+- [SearchForm](https://cisstech.github.io/nge-ide/docs/api/interfaces/SearchForm)
+- [SearchMatch](https://cisstech.github.io/nge-ide/docs/api/interfaces/SearchMatch)
+- [SearchResult](https://cisstech.github.io/nge-ide/docs/api/interfaces/SearchResult)
+- [IdeButtonSize](https://cisstech.github.io/nge-ide/docs/api/type-aliases/IdeButtonSize): Height/padding scale of an `[ideButton]` (replaces ng-zorro's `nzSize`).
+- [IdeButtonType](https://cisstech.github.io/nge-ide/docs/api/type-aliases/IdeButtonType): Visual style of an `[ideButton]` (replaces ng-zorro's `nzType`).
+- [IdeContextMenuContent](https://cisstech.github.io/nge-ide/docs/api/type-aliases/IdeContextMenuContent): A menu source: a bare `TemplateRef`, or an object that carries one.
+- [IdeModalButtonType](https://cisstech.github.io/nge-ide/docs/api/type-aliases/IdeModalButtonType): Visual style of an IdeModalButton (replaces ng-zorro's button `nzType`).
+- [IdeSpinnerSize](https://cisstech.github.io/nge-ide/docs/api/type-aliases/IdeSpinnerSize): Diameter preset for SpinnerComponent.
+- [IdeTabsType](https://cisstech.github.io/nge-ide/docs/api/type-aliases/IdeTabsType): Visual style of the tab bar (renamed from ng-zorro's `nzType`).
+- [NotificationLevel](https://cisstech.github.io/nge-ide/docs/api/type-aliases/NotificationLevel)
+- [ResolvedTheme](https://cisstech.github.io/nge-ide/docs/api/type-aliases/ResolvedTheme)
+- [ThemeMode](https://cisstech.github.io/nge-ide/docs/api/type-aliases/ThemeMode)
+- [CONTRIBUTION](https://cisstech.github.io/nge-ide/docs/api/variables/CONTRIBUTION)
+- [DEFAULT_STORAGE_PREFIX](https://cisstech.github.io/nge-ide/docs/api/variables/DEFAULT_STORAGE_PREFIX): Namespace applied to every stored key when STORAGE_PREFIX is not provided.
+- [DndDataTransfer](https://cisstech.github.io/nge-ide/docs/api/variables/DndDataTransfer): Data passed to dataTransfer.setData method when a data is dragged using DndDirective.
+- [EXPLORER_COMMAND_COLLAPSE](https://cisstech.github.io/nge-ide/docs/api/variables/EXPLORER_COMMAND_COLLAPSE)
+- [EXPLORER_COMMAND_COPY](https://cisstech.github.io/nge-ide/docs/api/variables/EXPLORER_COMMAND_COPY)
+- [EXPLORER_COMMAND_COPY_PATH](https://cisstech.github.io/nge-ide/docs/api/variables/EXPLORER_COMMAND_COPY_PATH)
+- [EXPLORER_COMMAND_CREATE_FILE](https://cisstech.github.io/nge-ide/docs/api/variables/EXPLORER_COMMAND_CREATE_FILE)
+- [EXPLORER_COMMAND_CREATE_FOLDER](https://cisstech.github.io/nge-ide/docs/api/variables/EXPLORER_COMMAND_CREATE_FOLDER)
+- [EXPLORER_COMMAND_DELETE](https://cisstech.github.io/nge-ide/docs/api/variables/EXPLORER_COMMAND_DELETE)
+- [EXPLORER_COMMAND_FILE_EXPORT](https://cisstech.github.io/nge-ide/docs/api/variables/EXPLORER_COMMAND_FILE_EXPORT)
+- [EXPLORER_COMMAND_FILE_UPLOAD](https://cisstech.github.io/nge-ide/docs/api/variables/EXPLORER_COMMAND_FILE_UPLOAD)
+- [EXPLORER_COMMAND_PASTE](https://cisstech.github.io/nge-ide/docs/api/variables/EXPLORER_COMMAND_PASTE)
+- [EXPLORER_COMMAND_REFRESH](https://cisstech.github.io/nge-ide/docs/api/variables/EXPLORER_COMMAND_REFRESH)
+- [EXPLORER_COMMAND_RENAME](https://cisstech.github.io/nge-ide/docs/api/variables/EXPLORER_COMMAND_RENAME)
+- [EXPLORER_COMMAND_TOGGLE_FILTERING](https://cisstech.github.io/nge-ide/docs/api/variables/EXPLORER_COMMAND_TOGGLE_FILTERING)
+- [EXPLORER_CONTAINER_ID](https://cisstech.github.io/nge-ide/docs/api/variables/EXPLORER_CONTAINER_ID): Identifier of the explorer container.
+- [EXPLORER_VIEW_ID](https://cisstech.github.io/nge-ide/docs/api/variables/EXPLORER_VIEW_ID): Identifier of the explorer view component.
+- [IDE_MENU_DIRECTIVES](https://cisstech.github.io/nge-ide/docs/api/variables/IDE_MENU_DIRECTIVES): Every menu directive/component, for a single-line `imports` entry.
+- [IDE_THEME_CSS](https://cisstech.github.io/nge-ide/docs/api/variables/IDE_THEME_CSS): IDE theme tokens (GitHub Light + GitHub Dark), bundled as a string and
+- [KeyCodes](https://cisstech.github.io/nge-ide/docs/api/variables/KeyCodes)
+- [KeyModifiers](https://cisstech.github.io/nge-ide/docs/api/variables/KeyModifiers)
+- [NOTIFICATION_EVENT_CHANNEL](https://cisstech.github.io/nge-ide/docs/api/variables/NOTIFICATION_EVENT_CHANNEL)
+- [NOTIFICATIONS_CONTAINER_ID](https://cisstech.github.io/nge-ide/docs/api/variables/NOTIFICATIONS_CONTAINER_ID): Identifier of the notifications container.
+- [NOTIFICATIONS_VIEW_ID](https://cisstech.github.io/nge-ide/docs/api/variables/NOTIFICATIONS_VIEW_ID): Identifier of the notifications view component.
+- [PROBLEMS_CONTAINER_ID](https://cisstech.github.io/nge-ide/docs/api/variables/PROBLEMS_CONTAINER_ID): Identifier of the problems container.
+- [PROBLEMS_VIEW_ID](https://cisstech.github.io/nge-ide/docs/api/variables/PROBLEMS_VIEW_ID): Identifier of the problems view component.
+- [SEARCH_CONTAINER_ID](https://cisstech.github.io/nge-ide/docs/api/variables/SEARCH_CONTAINER_ID): Identifier of the search container.
+- [SEARCH_VIEW_ID](https://cisstech.github.io/nge-ide/docs/api/variables/SEARCH_VIEW_ID): Identifier of the search view component.
+- [SETTINGS_CONTAINER_ID](https://cisstech.github.io/nge-ide/docs/api/variables/SETTINGS_CONTAINER_ID): Identifier of the settings container.
+- [SETTINGS_URI](https://cisstech.github.io/nge-ide/docs/api/variables/SETTINGS_URI)
+- [STORAGE_PREFIX](https://cisstech.github.io/nge-ide/docs/api/variables/STORAGE_PREFIX)
+- [THEME_CONTAINER_ID](https://cisstech.github.io/nge-ide/docs/api/variables/THEME_CONTAINER_ID)
+- [TOGGLE_THEME_COMMAND](https://cisstech.github.io/nge-ide/docs/api/variables/TOGGLE_THEME_COMMAND)

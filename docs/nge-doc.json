@@ -1,0 +1,1485 @@
+{
+  "meta": {
+    "name": "nge-ide",
+    "root": "/docs"
+  },
+  "pages": [
+    {
+      "title": "Introduction",
+      "href": "/docs/introduction",
+      "renderer": "docs/introduction.md",
+      "sourcePath": "introduction.md",
+      "lastUpdated": "2026-07-13T21:10:33+02:00"
+    },
+    {
+      "title": "Getting started",
+      "href": "/docs/getting-started",
+      "renderer": "docs/getting-started.md",
+      "sourcePath": "getting-started.md",
+      "lastUpdated": "2026-07-13T21:10:33+02:00"
+    },
+    {
+      "title": "File system",
+      "href": "/docs/file-system",
+      "renderer": "docs/file-system.md",
+      "sourcePath": "file-system.md",
+      "lastUpdated": "2026-07-13T21:10:33+02:00"
+    },
+    {
+      "title": "Editors",
+      "href": "/docs/editors",
+      "renderer": "docs/editors.md",
+      "sourcePath": "editors.md",
+      "lastUpdated": "2026-07-13T21:10:33+02:00"
+    },
+    {
+      "title": "Extending the IDE",
+      "href": "/docs/extending",
+      "renderer": "docs/extending.md",
+      "sourcePath": "extending.md",
+      "lastUpdated": "2026-07-13T21:10:33+02:00"
+    },
+    {
+      "title": "Theming",
+      "href": "/docs/theming",
+      "renderer": "docs/theming.md",
+      "sourcePath": "theming.md",
+      "lastUpdated": "2026-07-13T21:10:33+02:00"
+    },
+    {
+      "title": "Services reference",
+      "href": "/docs/services",
+      "renderer": "docs/services.md",
+      "sourcePath": "services.md",
+      "lastUpdated": "2026-07-13T21:10:33+02:00"
+    },
+    {
+      "title": "API reference",
+      "href": "/docs/api",
+      "renderer": "docs/api/index.md",
+      "children": [
+        {
+          "title": "Functions",
+          "href": "/docs/api/functions",
+          "children": [
+            {
+              "title": "emptySearchForm",
+              "href": "/docs/api/functions/emptySearchForm",
+              "renderer": "docs/api/functions/emptySearchForm.md",
+              "sourcePath": "api/functions/emptySearchForm.md"
+            },
+            {
+              "title": "fileSystemProviderCapabilityName",
+              "href": "/docs/api/functions/fileSystemProviderCapabilityName",
+              "renderer": "docs/api/functions/fileSystemProviderCapabilityName.md",
+              "description": "Gets a human readable name of the given `capability`",
+              "sourcePath": "api/functions/fileSystemProviderCapabilityName.md"
+            },
+            {
+              "title": "hasKeycode",
+              "href": "/docs/api/functions/hasKeycode",
+              "renderer": "docs/api/functions/hasKeycode.md",
+              "description": "Checks if an event has any of the provided",
+              "sourcePath": "api/functions/hasKeycode.md"
+            },
+            {
+              "title": "hasModifierKey",
+              "href": "/docs/api/functions/hasModifierKey",
+              "renderer": "docs/api/functions/hasModifierKey.md",
+              "description": "Checks whether a modifier key is pressed.",
+              "sourcePath": "api/functions/hasModifierKey.md"
+            },
+            {
+              "title": "stringFromByArray",
+              "href": "/docs/api/functions/stringFromByArray",
+              "renderer": "docs/api/functions/stringFromByArray.md",
+              "sourcePath": "api/functions/stringFromByArray.md"
+            },
+            {
+              "title": "stringToByteArray",
+              "href": "/docs/api/functions/stringToByteArray",
+              "renderer": "docs/api/functions/stringToByteArray.md",
+              "sourcePath": "api/functions/stringToByteArray.md"
+            }
+          ]
+        },
+        {
+          "title": "Classes",
+          "href": "/docs/api/classes",
+          "children": [
+            {
+              "title": "BadgeComponent",
+              "href": "/docs/api/classes/BadgeComponent",
+              "renderer": "docs/api/classes/BadgeComponent.md",
+              "description": "Projects arbitrary content and overlays a small count bubble at its",
+              "sourcePath": "api/classes/BadgeComponent.md"
+            },
+            {
+              "title": "BinarySize",
+              "href": "/docs/api/classes/BinarySize",
+              "renderer": "docs/api/classes/BinarySize.md",
+              "sourcePath": "api/classes/BinarySize.md"
+            },
+            {
+              "title": "CheckboxComponent",
+              "href": "/docs/api/classes/CheckboxComponent",
+              "renderer": "docs/api/classes/CheckboxComponent.md",
+              "description": "A compact, VS-Code-like checkbox built on a native `<input type=\"checkbox\">`.",
+              "sourcePath": "api/classes/CheckboxComponent.md"
+            },
+            {
+              "title": "CodeEditor",
+              "href": "/docs/api/classes/CodeEditor",
+              "renderer": "docs/api/classes/CodeEditor.md",
+              "description": "Represents an editor that is attached to a component.",
+              "sourcePath": "api/classes/CodeEditor.md"
+            },
+            {
+              "title": "CodeEditorComponent",
+              "href": "/docs/api/classes/CodeEditorComponent",
+              "renderer": "docs/api/classes/CodeEditorComponent.md",
+              "sourcePath": "api/classes/CodeEditorComponent.md"
+            },
+            {
+              "title": "CodeEditorModule",
+              "href": "/docs/api/classes/CodeEditorModule",
+              "renderer": "docs/api/classes/CodeEditorModule.md",
+              "sourcePath": "api/classes/CodeEditorModule.md"
+            },
+            {
+              "title": "CommandEvent",
+              "href": "/docs/api/classes/CommandEvent",
+              "renderer": "docs/api/classes/CommandEvent.md",
+              "sourcePath": "api/classes/CommandEvent.md"
+            },
+            {
+              "title": "CommandGroupComponent",
+              "href": "/docs/api/classes/CommandGroupComponent",
+              "renderer": "docs/api/classes/CommandGroupComponent.md",
+              "sourcePath": "api/classes/CommandGroupComponent.md"
+            },
+            {
+              "title": "CommandModule",
+              "href": "/docs/api/classes/CommandModule",
+              "renderer": "docs/api/classes/CommandModule.md",
+              "sourcePath": "api/classes/CommandModule.md"
+            },
+            {
+              "title": "CommandService",
+              "href": "/docs/api/classes/CommandService",
+              "renderer": "docs/api/classes/CommandService.md",
+              "sourcePath": "api/classes/CommandService.md"
+            },
+            {
+              "title": "ContextMenuService",
+              "href": "/docs/api/classes/ContextMenuService",
+              "renderer": "docs/api/classes/ContextMenuService.md",
+              "description": "Opens a menu at the pointer position, on top of `@angular/cdk`.",
+              "sourcePath": "api/classes/ContextMenuService.md"
+            },
+            {
+              "title": "Contribution",
+              "href": "/docs/api/classes/Contribution",
+              "renderer": "docs/api/classes/Contribution.md",
+              "sourcePath": "api/classes/Contribution.md"
+            },
+            {
+              "title": "CoreModule",
+              "href": "/docs/api/classes/CoreModule",
+              "renderer": "docs/api/classes/CoreModule.md",
+              "sourcePath": "api/classes/CoreModule.md"
+            },
+            {
+              "title": "DiagnosticService",
+              "href": "/docs/api/classes/DiagnosticService",
+              "renderer": "docs/api/classes/DiagnosticService.md",
+              "sourcePath": "api/classes/DiagnosticService.md"
+            },
+            {
+              "title": "DialogModule",
+              "href": "/docs/api/classes/DialogModule",
+              "renderer": "docs/api/classes/DialogModule.md",
+              "sourcePath": "api/classes/DialogModule.md"
+            },
+            {
+              "title": "DialogService",
+              "href": "/docs/api/classes/DialogService",
+              "renderer": "docs/api/classes/DialogService.md",
+              "sourcePath": "api/classes/DialogService.md"
+            },
+            {
+              "title": "DividerComponent",
+              "href": "/docs/api/classes/DividerComponent",
+              "renderer": "docs/api/classes/DividerComponent.md",
+              "description": "A thin rule that separates content, laid out horizontally (default) or",
+              "sourcePath": "api/classes/DividerComponent.md"
+            },
+            {
+              "title": "DndDirective",
+              "href": "/docs/api/classes/DndDirective",
+              "renderer": "docs/api/classes/DndDirective.md",
+              "description": "Element that can share or accept a data of dragged dom element.",
+              "sourcePath": "api/classes/DndDirective.md"
+            },
+            {
+              "title": "Editor",
+              "href": "/docs/api/classes/Editor",
+              "renderer": "docs/api/classes/Editor.md",
+              "description": "Represents an editor that is attached to a component.",
+              "sourcePath": "api/classes/Editor.md"
+            },
+            {
+              "title": "EditorContribution",
+              "href": "/docs/api/classes/EditorContribution",
+              "renderer": "docs/api/classes/EditorContribution.md",
+              "sourcePath": "api/classes/EditorContribution.md"
+            },
+            {
+              "title": "EditorDirective",
+              "href": "/docs/api/classes/EditorDirective",
+              "renderer": "docs/api/classes/EditorDirective.md",
+              "sourcePath": "api/classes/EditorDirective.md"
+            },
+            {
+              "title": "EditorDirectivesModule",
+              "href": "/docs/api/classes/EditorDirectivesModule",
+              "renderer": "docs/api/classes/EditorDirectivesModule.md",
+              "sourcePath": "api/classes/EditorDirectivesModule.md"
+            },
+            {
+              "title": "EditorGroup",
+              "href": "/docs/api/classes/EditorGroup",
+              "renderer": "docs/api/classes/EditorGroup.md",
+              "description": "Represents an editor group.",
+              "sourcePath": "api/classes/EditorGroup.md"
+            },
+            {
+              "title": "EditorModule",
+              "href": "/docs/api/classes/EditorModule",
+              "renderer": "docs/api/classes/EditorModule.md",
+              "sourcePath": "api/classes/EditorModule.md"
+            },
+            {
+              "title": "EditorPipesModule",
+              "href": "/docs/api/classes/EditorPipesModule",
+              "renderer": "docs/api/classes/EditorPipesModule.md",
+              "sourcePath": "api/classes/EditorPipesModule.md"
+            },
+            {
+              "title": "EditorService",
+              "href": "/docs/api/classes/EditorService",
+              "renderer": "docs/api/classes/EditorService.md",
+              "sourcePath": "api/classes/EditorService.md"
+            },
+            {
+              "title": "ErrorNotification",
+              "href": "/docs/api/classes/ErrorNotification",
+              "renderer": "docs/api/classes/ErrorNotification.md",
+              "sourcePath": "api/classes/ErrorNotification.md"
+            },
+            {
+              "title": "ExplorerCommandCollapseAll",
+              "href": "/docs/api/classes/ExplorerCommandCollapseAll",
+              "renderer": "docs/api/classes/ExplorerCommandCollapseAll.md",
+              "sourcePath": "api/classes/ExplorerCommandCollapseAll.md"
+            },
+            {
+              "title": "ExplorerCommandCopy",
+              "href": "/docs/api/classes/ExplorerCommandCopy",
+              "renderer": "docs/api/classes/ExplorerCommandCopy.md",
+              "description": "Commands available inside the explorer container.",
+              "sourcePath": "api/classes/ExplorerCommandCopy.md"
+            },
+            {
+              "title": "ExplorerCommandCopyPath",
+              "href": "/docs/api/classes/ExplorerCommandCopyPath",
+              "renderer": "docs/api/classes/ExplorerCommandCopyPath.md",
+              "description": "Commands available inside the explorer container.",
+              "sourcePath": "api/classes/ExplorerCommandCopyPath.md"
+            },
+            {
+              "title": "ExplorerCommandCreateFile",
+              "href": "/docs/api/classes/ExplorerCommandCreateFile",
+              "renderer": "docs/api/classes/ExplorerCommandCreateFile.md",
+              "description": "Commands available inside the explorer container.",
+              "sourcePath": "api/classes/ExplorerCommandCreateFile.md"
+            },
+            {
+              "title": "ExplorerCommandCreateFolder",
+              "href": "/docs/api/classes/ExplorerCommandCreateFolder",
+              "renderer": "docs/api/classes/ExplorerCommandCreateFolder.md",
+              "description": "Commands available inside the explorer container.",
+              "sourcePath": "api/classes/ExplorerCommandCreateFolder.md"
+            },
+            {
+              "title": "ExplorerCommandDelete",
+              "href": "/docs/api/classes/ExplorerCommandDelete",
+              "renderer": "docs/api/classes/ExplorerCommandDelete.md",
+              "description": "Commands available inside the explorer container.",
+              "sourcePath": "api/classes/ExplorerCommandDelete.md"
+            },
+            {
+              "title": "ExplorerCommandFileExport",
+              "href": "/docs/api/classes/ExplorerCommandFileExport",
+              "renderer": "docs/api/classes/ExplorerCommandFileExport.md",
+              "description": "Commands available inside the explorer container.",
+              "sourcePath": "api/classes/ExplorerCommandFileExport.md"
+            },
+            {
+              "title": "ExplorerCommandFileUpload",
+              "href": "/docs/api/classes/ExplorerCommandFileUpload",
+              "renderer": "docs/api/classes/ExplorerCommandFileUpload.md",
+              "description": "Commands available inside the explorer container.",
+              "sourcePath": "api/classes/ExplorerCommandFileUpload.md"
+            },
+            {
+              "title": "ExplorerCommandPaste",
+              "href": "/docs/api/classes/ExplorerCommandPaste",
+              "renderer": "docs/api/classes/ExplorerCommandPaste.md",
+              "description": "Commands available inside the explorer container.",
+              "sourcePath": "api/classes/ExplorerCommandPaste.md"
+            },
+            {
+              "title": "ExplorerCommandRefresh",
+              "href": "/docs/api/classes/ExplorerCommandRefresh",
+              "renderer": "docs/api/classes/ExplorerCommandRefresh.md",
+              "description": "Command that refresh the explorer file tree.",
+              "sourcePath": "api/classes/ExplorerCommandRefresh.md"
+            },
+            {
+              "title": "ExplorerCommandRename",
+              "href": "/docs/api/classes/ExplorerCommandRename",
+              "renderer": "docs/api/classes/ExplorerCommandRename.md",
+              "description": "Commands available inside the explorer container.",
+              "sourcePath": "api/classes/ExplorerCommandRename.md"
+            },
+            {
+              "title": "ExplorerCommandToggleFiltering",
+              "href": "/docs/api/classes/ExplorerCommandToggleFiltering",
+              "renderer": "docs/api/classes/ExplorerCommandToggleFiltering.md",
+              "sourcePath": "api/classes/ExplorerCommandToggleFiltering.md"
+            },
+            {
+              "title": "ExplorerComponent",
+              "href": "/docs/api/classes/ExplorerComponent",
+              "renderer": "docs/api/classes/ExplorerComponent.md",
+              "sourcePath": "api/classes/ExplorerComponent.md"
+            },
+            {
+              "title": "ExplorerContribution",
+              "href": "/docs/api/classes/ExplorerContribution",
+              "renderer": "docs/api/classes/ExplorerContribution.md",
+              "sourcePath": "api/classes/ExplorerContribution.md"
+            },
+            {
+              "title": "ExplorerModule",
+              "href": "/docs/api/classes/ExplorerModule",
+              "renderer": "docs/api/classes/ExplorerModule.md",
+              "sourcePath": "api/classes/ExplorerModule.md"
+            },
+            {
+              "title": "ExplorerService",
+              "href": "/docs/api/classes/ExplorerService",
+              "renderer": "docs/api/classes/ExplorerService.md",
+              "description": "Provides an API to interact with the explorer view tree.",
+              "sourcePath": "api/classes/ExplorerService.md"
+            },
+            {
+              "title": "FileChangedPipe",
+              "href": "/docs/api/classes/FileChangedPipe",
+              "renderer": "docs/api/classes/FileChangedPipe.md",
+              "sourcePath": "api/classes/FileChangedPipe.md"
+            },
+            {
+              "title": "FileNamePipe",
+              "href": "/docs/api/classes/FileNamePipe",
+              "renderer": "docs/api/classes/FileNamePipe.md",
+              "sourcePath": "api/classes/FileNamePipe.md"
+            },
+            {
+              "title": "FileService",
+              "href": "/docs/api/classes/FileService",
+              "renderer": "docs/api/classes/FileService.md",
+              "sourcePath": "api/classes/FileService.md"
+            },
+            {
+              "title": "FileSystemError",
+              "href": "/docs/api/classes/FileSystemError",
+              "renderer": "docs/api/classes/FileSystemError.md",
+              "description": "A type that filesystem providers should use to signal errors.",
+              "sourcePath": "api/classes/FileSystemError.md"
+            },
+            {
+              "title": "FileSystemProvider",
+              "href": "/docs/api/classes/FileSystemProvider",
+              "renderer": "docs/api/classes/FileSystemProvider.md",
+              "description": "The filesystem provider defines what the editor needs to read, write, discover,",
+              "sourcePath": "api/classes/FileSystemProvider.md"
+            },
+            {
+              "title": "HighlightDirective",
+              "href": "/docs/api/classes/HighlightDirective",
+              "renderer": "docs/api/classes/HighlightDirective.md",
+              "sourcePath": "api/classes/HighlightDirective.md"
+            },
+            {
+              "title": "HtmlPreviewHandler",
+              "href": "/docs/api/classes/HtmlPreviewHandler",
+              "renderer": "docs/api/classes/HtmlPreviewHandler.md",
+              "sourcePath": "api/classes/HtmlPreviewHandler.md"
+            },
+            {
+              "title": "IdeAutocompleteComponent",
+              "href": "/docs/api/classes/IdeAutocompleteComponent",
+              "renderer": "docs/api/classes/IdeAutocompleteComponent.md",
+              "description": "Floating list of `<ide-auto-option>` items shown under an input by the",
+              "sourcePath": "api/classes/IdeAutocompleteComponent.md"
+            },
+            {
+              "title": "IdeAutocompleteDirective",
+              "href": "/docs/api/classes/IdeAutocompleteDirective",
+              "renderer": "docs/api/classes/IdeAutocompleteDirective.md",
+              "description": "Trigger that binds a native `<input>` (or `<textarea>`) to an",
+              "sourcePath": "api/classes/IdeAutocompleteDirective.md"
+            },
+            {
+              "title": "IdeAutoOptionComponent",
+              "href": "/docs/api/classes/IdeAutoOptionComponent",
+              "renderer": "docs/api/classes/IdeAutoOptionComponent.md",
+              "description": "A single selectable row inside an `<ide-autocomplete>` panel.",
+              "sourcePath": "api/classes/IdeAutoOptionComponent.md"
+            },
+            {
+              "title": "IdeButtonDirective",
+              "href": "/docs/api/classes/IdeButtonDirective",
+              "renderer": "docs/api/classes/IdeButtonDirective.md",
+              "description": "Styling primitive that replaces ng-zorro's `nz-button`.",
+              "sourcePath": "api/classes/IdeButtonDirective.md"
+            },
+            {
+              "title": "IdeComponent",
+              "href": "/docs/api/classes/IdeComponent",
+              "renderer": "docs/api/classes/IdeComponent.md",
+              "sourcePath": "api/classes/IdeComponent.md"
+            },
+            {
+              "title": "IdeInputDirective",
+              "href": "/docs/api/classes/IdeInputDirective",
+              "renderer": "docs/api/classes/IdeInputDirective.md",
+              "description": "Styling primitive that replaces ng-zorro's `nz-input`.",
+              "sourcePath": "api/classes/IdeInputDirective.md"
+            },
+            {
+              "title": "IdeMenuComponent",
+              "href": "/docs/api/classes/IdeMenuComponent",
+              "renderer": "docs/api/classes/IdeMenuComponent.md",
+              "description": "Menu panel that lays out a list of IdeMenuItemDirective entries.",
+              "sourcePath": "api/classes/IdeMenuComponent.md"
+            },
+            {
+              "title": "IdeMenuItemDirective",
+              "href": "/docs/api/classes/IdeMenuItemDirective",
+              "renderer": "docs/api/classes/IdeMenuItemDirective.md",
+              "description": "A single entry inside an IdeMenuComponent.",
+              "sourcePath": "api/classes/IdeMenuItemDirective.md"
+            },
+            {
+              "title": "IdeMenuTriggerDirective",
+              "href": "/docs/api/classes/IdeMenuTriggerDirective",
+              "renderer": "docs/api/classes/IdeMenuTriggerDirective.md",
+              "description": "Turns its host element into a click trigger that opens an",
+              "sourcePath": "api/classes/IdeMenuTriggerDirective.md"
+            },
+            {
+              "title": "IdeModalContainerComponent",
+              "href": "/docs/api/classes/IdeModalContainerComponent",
+              "renderer": "docs/api/classes/IdeModalContainerComponent.md",
+              "description": "Presentational container rendered inside the CDK dialog overlay. It lays out",
+              "sourcePath": "api/classes/IdeModalContainerComponent.md"
+            },
+            {
+              "title": "IdeModalRef",
+              "href": "/docs/api/classes/IdeModalRef",
+              "renderer": "docs/api/classes/IdeModalRef.md",
+              "description": "Handle to a modal opened through `IdeModalService`. Wraps the CDK `DialogRef`",
+              "sourcePath": "api/classes/IdeModalRef.md"
+            },
+            {
+              "title": "IdeModalService",
+              "href": "/docs/api/classes/IdeModalService",
+              "renderer": "docs/api/classes/IdeModalService.md",
+              "description": "Injectable, VS-Code-like modal service built on `@angular/cdk/dialog`. It is a",
+              "sourcePath": "api/classes/IdeModalService.md"
+            },
+            {
+              "title": "IdeService",
+              "href": "/docs/api/classes/IdeService",
+              "renderer": "docs/api/classes/IdeService.md",
+              "sourcePath": "api/classes/IdeService.md"
+            },
+            {
+              "title": "InfobarComponent",
+              "href": "/docs/api/classes/InfobarComponent",
+              "renderer": "docs/api/classes/InfobarComponent.md",
+              "sourcePath": "api/classes/InfobarComponent.md"
+            },
+            {
+              "title": "InfobarContainer",
+              "href": "/docs/api/classes/InfobarContainer",
+              "renderer": "docs/api/classes/InfobarContainer.md",
+              "description": "Representation of view container inside the infobar area.",
+              "sourcePath": "api/classes/InfobarContainer.md"
+            },
+            {
+              "title": "InfobarModule",
+              "href": "/docs/api/classes/InfobarModule",
+              "renderer": "docs/api/classes/InfobarModule.md",
+              "sourcePath": "api/classes/InfobarModule.md"
+            },
+            {
+              "title": "InfoNotification",
+              "href": "/docs/api/classes/InfoNotification",
+              "renderer": "docs/api/classes/InfoNotification.md",
+              "sourcePath": "api/classes/InfoNotification.md"
+            },
+            {
+              "title": "Keybinding",
+              "href": "/docs/api/classes/Keybinding",
+              "renderer": "docs/api/classes/Keybinding.md",
+              "sourcePath": "api/classes/Keybinding.md"
+            },
+            {
+              "title": "KeyBindService",
+              "href": "/docs/api/classes/KeyBindService",
+              "renderer": "docs/api/classes/KeyBindService.md",
+              "sourcePath": "api/classes/KeyBindService.md"
+            },
+            {
+              "title": "MarkdownPreviewHandler",
+              "href": "/docs/api/classes/MarkdownPreviewHandler",
+              "renderer": "docs/api/classes/MarkdownPreviewHandler.md",
+              "sourcePath": "api/classes/MarkdownPreviewHandler.md"
+            },
+            {
+              "title": "MediaEditor",
+              "href": "/docs/api/classes/MediaEditor",
+              "renderer": "docs/api/classes/MediaEditor.md",
+              "description": "Represents an editor that is attached to a component.",
+              "sourcePath": "api/classes/MediaEditor.md"
+            },
+            {
+              "title": "MediaEditorComponent",
+              "href": "/docs/api/classes/MediaEditorComponent",
+              "renderer": "docs/api/classes/MediaEditorComponent.md",
+              "sourcePath": "api/classes/MediaEditorComponent.md"
+            },
+            {
+              "title": "MediaEditorModule",
+              "href": "/docs/api/classes/MediaEditorModule",
+              "renderer": "docs/api/classes/MediaEditorModule.md",
+              "sourcePath": "api/classes/MediaEditorModule.md"
+            },
+            {
+              "title": "MemFileProvider",
+              "href": "/docs/api/classes/MemFileProvider",
+              "renderer": "docs/api/classes/MemFileProvider.md",
+              "description": "The filesystem provider defines what the editor needs to read, write, discover,",
+              "sourcePath": "api/classes/MemFileProvider.md"
+            },
+            {
+              "title": "MonacoService",
+              "href": "/docs/api/classes/MonacoService",
+              "renderer": "docs/api/classes/MonacoService.md",
+              "sourcePath": "api/classes/MonacoService.md"
+            },
+            {
+              "title": "NgeIdeExplorerModule",
+              "href": "/docs/api/classes/NgeIdeExplorerModule",
+              "renderer": "docs/api/classes/NgeIdeExplorerModule.md",
+              "sourcePath": "api/classes/NgeIdeExplorerModule.md"
+            },
+            {
+              "title": "NgeIdeModule",
+              "href": "/docs/api/classes/NgeIdeModule",
+              "renderer": "docs/api/classes/NgeIdeModule.md",
+              "sourcePath": "api/classes/NgeIdeModule.md"
+            },
+            {
+              "title": "NgeIdeNotificationsModule",
+              "href": "/docs/api/classes/NgeIdeNotificationsModule",
+              "renderer": "docs/api/classes/NgeIdeNotificationsModule.md",
+              "sourcePath": "api/classes/NgeIdeNotificationsModule.md"
+            },
+            {
+              "title": "NgeIdeProblemsModule",
+              "href": "/docs/api/classes/NgeIdeProblemsModule",
+              "renderer": "docs/api/classes/NgeIdeProblemsModule.md",
+              "sourcePath": "api/classes/NgeIdeProblemsModule.md"
+            },
+            {
+              "title": "NgeIdeSearchModule",
+              "href": "/docs/api/classes/NgeIdeSearchModule",
+              "renderer": "docs/api/classes/NgeIdeSearchModule.md",
+              "sourcePath": "api/classes/NgeIdeSearchModule.md"
+            },
+            {
+              "title": "NgeIdeSettingsModule",
+              "href": "/docs/api/classes/NgeIdeSettingsModule",
+              "renderer": "docs/api/classes/NgeIdeSettingsModule.md",
+              "sourcePath": "api/classes/NgeIdeSettingsModule.md"
+            },
+            {
+              "title": "NicifyNamePipe",
+              "href": "/docs/api/classes/NicifyNamePipe",
+              "renderer": "docs/api/classes/NicifyNamePipe.md",
+              "sourcePath": "api/classes/NicifyNamePipe.md"
+            },
+            {
+              "title": "NotificationsComponent",
+              "href": "/docs/api/classes/NotificationsComponent",
+              "renderer": "docs/api/classes/NotificationsComponent.md",
+              "sourcePath": "api/classes/NotificationsComponent.md"
+            },
+            {
+              "title": "NotificationService",
+              "href": "/docs/api/classes/NotificationService",
+              "renderer": "docs/api/classes/NotificationService.md",
+              "sourcePath": "api/classes/NotificationService.md"
+            },
+            {
+              "title": "NotificationsModule",
+              "href": "/docs/api/classes/NotificationsModule",
+              "renderer": "docs/api/classes/NotificationsModule.md",
+              "sourcePath": "api/classes/NotificationsModule.md"
+            },
+            {
+              "title": "OpenRequest",
+              "href": "/docs/api/classes/OpenRequest",
+              "renderer": "docs/api/classes/OpenRequest.md",
+              "description": "Represents file open request.",
+              "sourcePath": "api/classes/OpenRequest.md"
+            },
+            {
+              "title": "OptionComponent",
+              "href": "/docs/api/classes/OptionComponent",
+              "renderer": "docs/api/classes/OptionComponent.md",
+              "description": "A single choice inside an SelectComponent (`ide-select`).",
+              "sourcePath": "api/classes/OptionComponent.md"
+            },
+            {
+              "title": "Paths",
+              "href": "/docs/api/classes/Paths",
+              "renderer": "docs/api/classes/Paths.md",
+              "sourcePath": "api/classes/Paths.md"
+            },
+            {
+              "title": "PreviewEditor",
+              "href": "/docs/api/classes/PreviewEditor",
+              "renderer": "docs/api/classes/PreviewEditor.md",
+              "description": "Represents an editor that is attached to a component.",
+              "sourcePath": "api/classes/PreviewEditor.md"
+            },
+            {
+              "title": "PreviewEditorComponent",
+              "href": "/docs/api/classes/PreviewEditorComponent",
+              "renderer": "docs/api/classes/PreviewEditorComponent.md",
+              "sourcePath": "api/classes/PreviewEditorComponent.md"
+            },
+            {
+              "title": "PreviewEditorModule",
+              "href": "/docs/api/classes/PreviewEditorModule",
+              "renderer": "docs/api/classes/PreviewEditorModule.md",
+              "sourcePath": "api/classes/PreviewEditorModule.md"
+            },
+            {
+              "title": "PreviewService",
+              "href": "/docs/api/classes/PreviewService",
+              "renderer": "docs/api/classes/PreviewService.md",
+              "sourcePath": "api/classes/PreviewService.md"
+            },
+            {
+              "title": "ProblemsComponent",
+              "href": "/docs/api/classes/ProblemsComponent",
+              "renderer": "docs/api/classes/ProblemsComponent.md",
+              "sourcePath": "api/classes/ProblemsComponent.md"
+            },
+            {
+              "title": "ProblemsModule",
+              "href": "/docs/api/classes/ProblemsModule",
+              "renderer": "docs/api/classes/ProblemsModule.md",
+              "sourcePath": "api/classes/ProblemsModule.md"
+            },
+            {
+              "title": "QuickOpenComponent",
+              "href": "/docs/api/classes/QuickOpenComponent",
+              "renderer": "docs/api/classes/QuickOpenComponent.md",
+              "sourcePath": "api/classes/QuickOpenComponent.md"
+            },
+            {
+              "title": "QuickOpenModule",
+              "href": "/docs/api/classes/QuickOpenModule",
+              "renderer": "docs/api/classes/QuickOpenModule.md",
+              "sourcePath": "api/classes/QuickOpenModule.md"
+            },
+            {
+              "title": "SearchComponent",
+              "href": "/docs/api/classes/SearchComponent",
+              "renderer": "docs/api/classes/SearchComponent.md",
+              "sourcePath": "api/classes/SearchComponent.md"
+            },
+            {
+              "title": "SearchInputComponent",
+              "href": "/docs/api/classes/SearchInputComponent",
+              "renderer": "docs/api/classes/SearchInputComponent.md",
+              "sourcePath": "api/classes/SearchInputComponent.md"
+            },
+            {
+              "title": "SearchModule",
+              "href": "/docs/api/classes/SearchModule",
+              "renderer": "docs/api/classes/SearchModule.md",
+              "sourcePath": "api/classes/SearchModule.md"
+            },
+            {
+              "title": "SelectComponent",
+              "href": "/docs/api/classes/SelectComponent",
+              "renderer": "docs/api/classes/SelectComponent.md",
+              "description": "A compact, VS-Code-like single-select dropdown.",
+              "sourcePath": "api/classes/SelectComponent.md"
+            },
+            {
+              "title": "SettingsEditorComponent",
+              "href": "/docs/api/classes/SettingsEditorComponent",
+              "renderer": "docs/api/classes/SettingsEditorComponent.md",
+              "sourcePath": "api/classes/SettingsEditorComponent.md"
+            },
+            {
+              "title": "SettingsEditorModule",
+              "href": "/docs/api/classes/SettingsEditorModule",
+              "renderer": "docs/api/classes/SettingsEditorModule.md",
+              "sourcePath": "api/classes/SettingsEditorModule.md"
+            },
+            {
+              "title": "SettingsService",
+              "href": "/docs/api/classes/SettingsService",
+              "renderer": "docs/api/classes/SettingsService.md",
+              "sourcePath": "api/classes/SettingsService.md"
+            },
+            {
+              "title": "SidebarComponent",
+              "href": "/docs/api/classes/SidebarComponent",
+              "renderer": "docs/api/classes/SidebarComponent.md",
+              "description": "Renders on the sidebar area of the ide.",
+              "sourcePath": "api/classes/SidebarComponent.md"
+            },
+            {
+              "title": "SidebarContainer",
+              "href": "/docs/api/classes/SidebarContainer",
+              "renderer": "docs/api/classes/SidebarContainer.md",
+              "description": "Representation of view container inside the sidebar area.",
+              "sourcePath": "api/classes/SidebarContainer.md"
+            },
+            {
+              "title": "SidebarModule",
+              "href": "/docs/api/classes/SidebarModule",
+              "renderer": "docs/api/classes/SidebarModule.md",
+              "sourcePath": "api/classes/SidebarModule.md"
+            },
+            {
+              "title": "SkeletonComponent",
+              "href": "/docs/api/classes/SkeletonComponent",
+              "renderer": "docs/api/classes/SkeletonComponent.md",
+              "description": "Lightweight loading placeholder rendering a few content lines with an",
+              "sourcePath": "api/classes/SkeletonComponent.md"
+            },
+            {
+              "title": "SpinnerComponent",
+              "href": "/docs/api/classes/SpinnerComponent",
+              "renderer": "docs/api/classes/SpinnerComponent.md",
+              "description": "Indeterminate loading spinner. Standalone, pure-CSS replacement for",
+              "sourcePath": "api/classes/SpinnerComponent.md"
+            },
+            {
+              "title": "StatusbarComponent",
+              "href": "/docs/api/classes/StatusbarComponent",
+              "renderer": "docs/api/classes/StatusbarComponent.md",
+              "sourcePath": "api/classes/StatusbarComponent.md"
+            },
+            {
+              "title": "StatusbarModule",
+              "href": "/docs/api/classes/StatusbarModule",
+              "renderer": "docs/api/classes/StatusbarModule.md",
+              "sourcePath": "api/classes/StatusbarModule.md"
+            },
+            {
+              "title": "StatusBarService",
+              "href": "/docs/api/classes/StatusBarService",
+              "renderer": "docs/api/classes/StatusBarService.md",
+              "sourcePath": "api/classes/StatusBarService.md"
+            },
+            {
+              "title": "StorageService",
+              "href": "/docs/api/classes/StorageService",
+              "renderer": "docs/api/classes/StorageService.md",
+              "sourcePath": "api/classes/StorageService.md"
+            },
+            {
+              "title": "SvgPreviewHandler",
+              "href": "/docs/api/classes/SvgPreviewHandler",
+              "renderer": "docs/api/classes/SvgPreviewHandler.md",
+              "sourcePath": "api/classes/SvgPreviewHandler.md"
+            },
+            {
+              "title": "TabButtonDirective",
+              "href": "/docs/api/classes/TabButtonDirective",
+              "renderer": "docs/api/classes/TabButtonDirective.md",
+              "description": "Internal directive applied to every tab header rendered by",
+              "sourcePath": "api/classes/TabButtonDirective.md"
+            },
+            {
+              "title": "TabComponent",
+              "href": "/docs/api/classes/TabComponent",
+              "renderer": "docs/api/classes/TabComponent.md",
+              "description": "A single tab hosted by TabsComponent. Standalone replacement for",
+              "sourcePath": "api/classes/TabComponent.md"
+            },
+            {
+              "title": "TabsComponent",
+              "href": "/docs/api/classes/TabsComponent",
+              "renderer": "docs/api/classes/TabsComponent.md",
+              "description": "Card-style (or line-style) tab bar. Standalone replacement for ng-zorro's",
+              "sourcePath": "api/classes/TabsComponent.md"
+            },
+            {
+              "title": "TaskbarComponent",
+              "href": "/docs/api/classes/TaskbarComponent",
+              "renderer": "docs/api/classes/TaskbarComponent.md",
+              "sourcePath": "api/classes/TaskbarComponent.md"
+            },
+            {
+              "title": "TaskbarModule",
+              "href": "/docs/api/classes/TaskbarModule",
+              "renderer": "docs/api/classes/TaskbarModule.md",
+              "sourcePath": "api/classes/TaskbarModule.md"
+            },
+            {
+              "title": "TaskService",
+              "href": "/docs/api/classes/TaskService",
+              "renderer": "docs/api/classes/TaskService.md",
+              "sourcePath": "api/classes/TaskService.md"
+            },
+            {
+              "title": "ThemeService",
+              "href": "/docs/api/classes/ThemeService",
+              "renderer": "docs/api/classes/ThemeService.md",
+              "description": "Owns the IDE's color theme.",
+              "sourcePath": "api/classes/ThemeService.md"
+            },
+            {
+              "title": "ThemeSidebarContainer",
+              "href": "/docs/api/classes/ThemeSidebarContainer",
+              "renderer": "docs/api/classes/ThemeSidebarContainer.md",
+              "description": "Activity-bar (bottom) entry offering Light / Dark / System. The title is a",
+              "sourcePath": "api/classes/ThemeSidebarContainer.md"
+            },
+            {
+              "title": "ToggleThemeCommand",
+              "href": "/docs/api/classes/ToggleThemeCommand",
+              "renderer": "docs/api/classes/ToggleThemeCommand.md",
+              "description": "Command-palette entry that cycles the color theme (light -> dark -> system).",
+              "sourcePath": "api/classes/ToggleThemeCommand.md"
+            },
+            {
+              "title": "ToolbarButton",
+              "href": "/docs/api/classes/ToolbarButton",
+              "renderer": "docs/api/classes/ToolbarButton.md",
+              "sourcePath": "api/classes/ToolbarButton.md"
+            },
+            {
+              "title": "ToolbarComponent",
+              "href": "/docs/api/classes/ToolbarComponent",
+              "renderer": "docs/api/classes/ToolbarComponent.md",
+              "sourcePath": "api/classes/ToolbarComponent.md"
+            },
+            {
+              "title": "ToolbarModule",
+              "href": "/docs/api/classes/ToolbarModule",
+              "renderer": "docs/api/classes/ToolbarModule.md",
+              "sourcePath": "api/classes/ToolbarModule.md"
+            },
+            {
+              "title": "ToolbarSeparator",
+              "href": "/docs/api/classes/ToolbarSeparator",
+              "renderer": "docs/api/classes/ToolbarSeparator.md",
+              "sourcePath": "api/classes/ToolbarSeparator.md"
+            },
+            {
+              "title": "ToolbarService",
+              "href": "/docs/api/classes/ToolbarService",
+              "renderer": "docs/api/classes/ToolbarService.md",
+              "sourcePath": "api/classes/ToolbarService.md"
+            },
+            {
+              "title": "TooltipComponent",
+              "href": "/docs/api/classes/TooltipComponent",
+              "renderer": "docs/api/classes/TooltipComponent.md",
+              "description": "The floating bubble rendered by TooltipDirective.",
+              "sourcePath": "api/classes/TooltipComponent.md"
+            },
+            {
+              "title": "TooltipDirective",
+              "href": "/docs/api/classes/TooltipDirective",
+              "renderer": "docs/api/classes/TooltipDirective.md",
+              "description": "Attribute directive that shows a compact, VS-Code-like tooltip on hover and on",
+              "sourcePath": "api/classes/TooltipDirective.md"
+            },
+            {
+              "title": "ViewContainerService",
+              "href": "/docs/api/classes/ViewContainerService",
+              "renderer": "docs/api/classes/ViewContainerService.md",
+              "sourcePath": "api/classes/ViewContainerService.md"
+            },
+            {
+              "title": "ViewDirective",
+              "href": "/docs/api/classes/ViewDirective",
+              "renderer": "docs/api/classes/ViewDirective.md",
+              "sourcePath": "api/classes/ViewDirective.md"
+            },
+            {
+              "title": "ViewGroupComponent",
+              "href": "/docs/api/classes/ViewGroupComponent",
+              "renderer": "docs/api/classes/ViewGroupComponent.md",
+              "sourcePath": "api/classes/ViewGroupComponent.md"
+            },
+            {
+              "title": "ViewModule",
+              "href": "/docs/api/classes/ViewModule",
+              "renderer": "docs/api/classes/ViewModule.md",
+              "sourcePath": "api/classes/ViewModule.md"
+            },
+            {
+              "title": "ViewService",
+              "href": "/docs/api/classes/ViewService",
+              "renderer": "docs/api/classes/ViewService.md",
+              "sourcePath": "api/classes/ViewService.md"
+            },
+            {
+              "title": "WarningNotification",
+              "href": "/docs/api/classes/WarningNotification",
+              "renderer": "docs/api/classes/WarningNotification.md",
+              "sourcePath": "api/classes/WarningNotification.md"
+            },
+            {
+              "title": "WorkbenchComponent",
+              "href": "/docs/api/classes/WorkbenchComponent",
+              "renderer": "docs/api/classes/WorkbenchComponent.md",
+              "sourcePath": "api/classes/WorkbenchComponent.md"
+            },
+            {
+              "title": "WorkbenchModule",
+              "href": "/docs/api/classes/WorkbenchModule",
+              "renderer": "docs/api/classes/WorkbenchModule.md",
+              "sourcePath": "api/classes/WorkbenchModule.md"
+            }
+          ]
+        },
+        {
+          "title": "Interfaces",
+          "href": "/docs/api/interfaces",
+          "children": [
+            {
+              "title": "ConfirmOptions",
+              "href": "/docs/api/interfaces/ConfirmOptions",
+              "renderer": "docs/api/interfaces/ConfirmOptions.md",
+              "sourcePath": "api/interfaces/ConfirmOptions.md"
+            },
+            {
+              "title": "Diagnostic",
+              "href": "/docs/api/interfaces/Diagnostic",
+              "renderer": "docs/api/interfaces/Diagnostic.md",
+              "description": "Represents a diagnostic, such as a compiler error or warning.",
+              "sourcePath": "api/interfaces/Diagnostic.md"
+            },
+            {
+              "title": "DiagnosticGroup",
+              "href": "/docs/api/interfaces/DiagnosticGroup",
+              "renderer": "docs/api/interfaces/DiagnosticGroup.md",
+              "sourcePath": "api/interfaces/DiagnosticGroup.md"
+            },
+            {
+              "title": "DndData",
+              "href": "/docs/api/interfaces/DndData",
+              "renderer": "docs/api/interfaces/DndData.md",
+              "description": "Representation of a data shared with a drag and drop action.",
+              "sourcePath": "api/interfaces/DndData.md"
+            },
+            {
+              "title": "EditorState",
+              "href": "/docs/api/interfaces/EditorState",
+              "renderer": "docs/api/interfaces/EditorState.md",
+              "description": "Represents the state of the editor.",
+              "sourcePath": "api/interfaces/EditorState.md"
+            },
+            {
+              "title": "EditorTab",
+              "href": "/docs/api/interfaces/EditorTab",
+              "renderer": "docs/api/interfaces/EditorTab.md",
+              "sourcePath": "api/interfaces/EditorTab.md"
+            },
+            {
+              "title": "FileNestingPattern",
+              "href": "/docs/api/interfaces/FileNestingPattern",
+              "renderer": "docs/api/interfaces/FileNestingPattern.md",
+              "sourcePath": "api/interfaces/FileNestingPattern.md"
+            },
+            {
+              "title": "ICommand",
+              "href": "/docs/api/interfaces/ICommand",
+              "renderer": "docs/api/interfaces/ICommand.md",
+              "sourcePath": "api/interfaces/ICommand.md"
+            },
+            {
+              "title": "IContribution",
+              "href": "/docs/api/interfaces/IContribution",
+              "renderer": "docs/api/interfaces/IContribution.md",
+              "sourcePath": "api/interfaces/IContribution.md"
+            },
+            {
+              "title": "IdeAutoOptionSelectionEvent",
+              "href": "/docs/api/interfaces/IdeAutoOptionSelectionEvent",
+              "renderer": "docs/api/interfaces/IdeAutoOptionSelectionEvent.md",
+              "description": "Payload emitted when an option is chosen.",
+              "sourcePath": "api/interfaces/IdeAutoOptionSelectionEvent.md"
+            },
+            {
+              "title": "IdeContextMenuConfig",
+              "href": "/docs/api/interfaces/IdeContextMenuConfig",
+              "renderer": "docs/api/interfaces/IdeContextMenuConfig.md",
+              "description": "Options accepted by ContextMenuService.open.",
+              "sourcePath": "api/interfaces/IdeContextMenuConfig.md"
+            },
+            {
+              "title": "IdeModalButton",
+              "href": "/docs/api/interfaces/IdeModalButton",
+              "renderer": "docs/api/interfaces/IdeModalButton.md",
+              "description": "Declarative footer button of a modal, mirroring the plain objects the IDE",
+              "sourcePath": "api/interfaces/IdeModalButton.md"
+            },
+            {
+              "title": "IdeModalContainerData",
+              "href": "/docs/api/interfaces/IdeModalContainerData",
+              "renderer": "docs/api/interfaces/IdeModalContainerData.md",
+              "description": "Normalized data handed to `IdeModalContainerComponent` through `DIALOG_DATA`.",
+              "sourcePath": "api/interfaces/IdeModalContainerData.md"
+            },
+            {
+              "title": "IdeModalOptions",
+              "href": "/docs/api/interfaces/IdeModalOptions",
+              "renderer": "docs/api/interfaces/IdeModalOptions.md",
+              "description": "Options accepted by `IdeModalService.create`/`open`. Each field is the plain",
+              "sourcePath": "api/interfaces/IdeModalOptions.md"
+            },
+            {
+              "title": "IExplorerCommand",
+              "href": "/docs/api/interfaces/IExplorerCommand",
+              "renderer": "docs/api/interfaces/IExplorerCommand.md",
+              "description": "Commands available inside the explorer container.",
+              "sourcePath": "api/interfaces/IExplorerCommand.md"
+            },
+            {
+              "title": "IFile",
+              "href": "/docs/api/interfaces/IFile",
+              "renderer": "docs/api/interfaces/IFile.md",
+              "description": "Representation of a file/directory.",
+              "sourcePath": "api/interfaces/IFile.md"
+            },
+            {
+              "title": "IFileChange",
+              "href": "/docs/api/interfaces/IFileChange",
+              "renderer": "docs/api/interfaces/IFileChange.md",
+              "description": "Identifies a single change in a file.",
+              "sourcePath": "api/interfaces/IFileChange.md"
+            },
+            {
+              "title": "IFileSystemProvider",
+              "href": "/docs/api/interfaces/IFileSystemProvider",
+              "renderer": "docs/api/interfaces/IFileSystemProvider.md",
+              "description": "The filesystem provider defines what the editor needs to read, write, discover,",
+              "sourcePath": "api/interfaces/IFileSystemProvider.md"
+            },
+            {
+              "title": "IStatusBarItem",
+              "href": "/docs/api/interfaces/IStatusBarItem",
+              "renderer": "docs/api/interfaces/IStatusBarItem.md",
+              "sourcePath": "api/interfaces/IStatusBarItem.md"
+            },
+            {
+              "title": "ITask",
+              "href": "/docs/api/interfaces/ITask",
+              "renderer": "docs/api/interfaces/ITask.md",
+              "sourcePath": "api/interfaces/ITask.md"
+            },
+            {
+              "title": "IToolbarButton",
+              "href": "/docs/api/interfaces/IToolbarButton",
+              "renderer": "docs/api/interfaces/IToolbarButton.md",
+              "sourcePath": "api/interfaces/IToolbarButton.md"
+            },
+            {
+              "title": "IToolbarCustomGroup",
+              "href": "/docs/api/interfaces/IToolbarCustomGroup",
+              "renderer": "docs/api/interfaces/IToolbarCustomGroup.md",
+              "sourcePath": "api/interfaces/IToolbarCustomGroup.md"
+            },
+            {
+              "title": "IToolbarItem",
+              "href": "/docs/api/interfaces/IToolbarItem",
+              "renderer": "docs/api/interfaces/IToolbarItem.md",
+              "sourcePath": "api/interfaces/IToolbarItem.md"
+            },
+            {
+              "title": "IView",
+              "href": "/docs/api/interfaces/IView",
+              "renderer": "docs/api/interfaces/IView.md",
+              "description": "Representation of a part of the editor (statusbar, sidebar...).",
+              "sourcePath": "api/interfaces/IView.md"
+            },
+            {
+              "title": "IViewContainer",
+              "href": "/docs/api/interfaces/IViewContainer",
+              "renderer": "docs/api/interfaces/IViewContainer.md",
+              "description": "Representation of view container inside the infobar area.",
+              "sourcePath": "api/interfaces/IViewContainer.md"
+            },
+            {
+              "title": "Notification",
+              "href": "/docs/api/interfaces/Notification",
+              "renderer": "docs/api/interfaces/Notification.md",
+              "sourcePath": "api/interfaces/Notification.md"
+            },
+            {
+              "title": "OpenOptions",
+              "href": "/docs/api/interfaces/OpenOptions",
+              "renderer": "docs/api/interfaces/OpenOptions.md",
+              "description": "Represents file open options.",
+              "sourcePath": "api/interfaces/OpenOptions.md"
+            },
+            {
+              "title": "Preview",
+              "href": "/docs/api/interfaces/Preview",
+              "renderer": "docs/api/interfaces/Preview.md",
+              "sourcePath": "api/interfaces/Preview.md"
+            },
+            {
+              "title": "PreviewHandler",
+              "href": "/docs/api/interfaces/PreviewHandler",
+              "renderer": "docs/api/interfaces/PreviewHandler.md",
+              "sourcePath": "api/interfaces/PreviewHandler.md"
+            },
+            {
+              "title": "SearchForm",
+              "href": "/docs/api/interfaces/SearchForm",
+              "renderer": "docs/api/interfaces/SearchForm.md",
+              "sourcePath": "api/interfaces/SearchForm.md"
+            },
+            {
+              "title": "SearchMatch",
+              "href": "/docs/api/interfaces/SearchMatch",
+              "renderer": "docs/api/interfaces/SearchMatch.md",
+              "sourcePath": "api/interfaces/SearchMatch.md"
+            },
+            {
+              "title": "SearchResult",
+              "href": "/docs/api/interfaces/SearchResult",
+              "renderer": "docs/api/interfaces/SearchResult.md",
+              "sourcePath": "api/interfaces/SearchResult.md"
+            }
+          ]
+        },
+        {
+          "title": "Type aliases",
+          "href": "/docs/api/type-aliases",
+          "children": [
+            {
+              "title": "IdeButtonSize",
+              "href": "/docs/api/type-aliases/IdeButtonSize",
+              "renderer": "docs/api/type-aliases/IdeButtonSize.md",
+              "description": "Height/padding scale of an `[ideButton]` (replaces ng-zorro's `nzSize`).",
+              "sourcePath": "api/type-aliases/IdeButtonSize.md"
+            },
+            {
+              "title": "IdeButtonType",
+              "href": "/docs/api/type-aliases/IdeButtonType",
+              "renderer": "docs/api/type-aliases/IdeButtonType.md",
+              "description": "Visual style of an `[ideButton]` (replaces ng-zorro's `nzType`).",
+              "sourcePath": "api/type-aliases/IdeButtonType.md"
+            },
+            {
+              "title": "IdeContextMenuContent",
+              "href": "/docs/api/type-aliases/IdeContextMenuContent",
+              "renderer": "docs/api/type-aliases/IdeContextMenuContent.md",
+              "description": "A menu source: a bare `TemplateRef`, or an object that carries one.",
+              "sourcePath": "api/type-aliases/IdeContextMenuContent.md"
+            },
+            {
+              "title": "IdeModalButtonType",
+              "href": "/docs/api/type-aliases/IdeModalButtonType",
+              "renderer": "docs/api/type-aliases/IdeModalButtonType.md",
+              "description": "Visual style of an IdeModalButton (replaces ng-zorro's button `nzType`).",
+              "sourcePath": "api/type-aliases/IdeModalButtonType.md"
+            },
+            {
+              "title": "IdeSpinnerSize",
+              "href": "/docs/api/type-aliases/IdeSpinnerSize",
+              "renderer": "docs/api/type-aliases/IdeSpinnerSize.md",
+              "description": "Diameter preset for SpinnerComponent.",
+              "sourcePath": "api/type-aliases/IdeSpinnerSize.md"
+            },
+            {
+              "title": "IdeTabsType",
+              "href": "/docs/api/type-aliases/IdeTabsType",
+              "renderer": "docs/api/type-aliases/IdeTabsType.md",
+              "description": "Visual style of the tab bar (renamed from ng-zorro's `nzType`).",
+              "sourcePath": "api/type-aliases/IdeTabsType.md"
+            },
+            {
+              "title": "NotificationLevel",
+              "href": "/docs/api/type-aliases/NotificationLevel",
+              "renderer": "docs/api/type-aliases/NotificationLevel.md",
+              "sourcePath": "api/type-aliases/NotificationLevel.md"
+            },
+            {
+              "title": "ResolvedTheme",
+              "href": "/docs/api/type-aliases/ResolvedTheme",
+              "renderer": "docs/api/type-aliases/ResolvedTheme.md",
+              "sourcePath": "api/type-aliases/ResolvedTheme.md"
+            },
+            {
+              "title": "ThemeMode",
+              "href": "/docs/api/type-aliases/ThemeMode",
+              "renderer": "docs/api/type-aliases/ThemeMode.md",
+              "sourcePath": "api/type-aliases/ThemeMode.md"
+            }
+          ]
+        },
+        {
+          "title": "Variables",
+          "href": "/docs/api/variables",
+          "children": [
+            {
+              "title": "CONTRIBUTION",
+              "href": "/docs/api/variables/CONTRIBUTION",
+              "renderer": "docs/api/variables/CONTRIBUTION.md",
+              "sourcePath": "api/variables/CONTRIBUTION.md"
+            },
+            {
+              "title": "DEFAULT_STORAGE_PREFIX",
+              "href": "/docs/api/variables/DEFAULT_STORAGE_PREFIX",
+              "renderer": "docs/api/variables/DEFAULT_STORAGE_PREFIX.md",
+              "description": "Namespace applied to every stored key when STORAGE_PREFIX is not provided.",
+              "sourcePath": "api/variables/DEFAULT_STORAGE_PREFIX.md"
+            },
+            {
+              "title": "DndDataTransfer",
+              "href": "/docs/api/variables/DndDataTransfer",
+              "renderer": "docs/api/variables/DndDataTransfer.md",
+              "description": "Data passed to dataTransfer.setData method when a data is dragged using DndDirective.",
+              "sourcePath": "api/variables/DndDataTransfer.md"
+            },
+            {
+              "title": "EXPLORER_COMMAND_COLLAPSE",
+              "href": "/docs/api/variables/EXPLORER_COMMAND_COLLAPSE",
+              "renderer": "docs/api/variables/EXPLORER_COMMAND_COLLAPSE.md",
+              "sourcePath": "api/variables/EXPLORER_COMMAND_COLLAPSE.md"
+            },
+            {
+              "title": "EXPLORER_COMMAND_COPY",
+              "href": "/docs/api/variables/EXPLORER_COMMAND_COPY",
+              "renderer": "docs/api/variables/EXPLORER_COMMAND_COPY.md",
+              "sourcePath": "api/variables/EXPLORER_COMMAND_COPY.md"
+            },
+            {
+              "title": "EXPLORER_COMMAND_COPY_PATH",
+              "href": "/docs/api/variables/EXPLORER_COMMAND_COPY_PATH",
+              "renderer": "docs/api/variables/EXPLORER_COMMAND_COPY_PATH.md",
+              "sourcePath": "api/variables/EXPLORER_COMMAND_COPY_PATH.md"
+            },
+            {
+              "title": "EXPLORER_COMMAND_CREATE_FILE",
+              "href": "/docs/api/variables/EXPLORER_COMMAND_CREATE_FILE",
+              "renderer": "docs/api/variables/EXPLORER_COMMAND_CREATE_FILE.md",
+              "sourcePath": "api/variables/EXPLORER_COMMAND_CREATE_FILE.md"
+            },
+            {
+              "title": "EXPLORER_COMMAND_CREATE_FOLDER",
+              "href": "/docs/api/variables/EXPLORER_COMMAND_CREATE_FOLDER",
+              "renderer": "docs/api/variables/EXPLORER_COMMAND_CREATE_FOLDER.md",
+              "sourcePath": "api/variables/EXPLORER_COMMAND_CREATE_FOLDER.md"
+            },
+            {
+              "title": "EXPLORER_COMMAND_DELETE",
+              "href": "/docs/api/variables/EXPLORER_COMMAND_DELETE",
+              "renderer": "docs/api/variables/EXPLORER_COMMAND_DELETE.md",
+              "sourcePath": "api/variables/EXPLORER_COMMAND_DELETE.md"
+            },
+            {
+              "title": "EXPLORER_COMMAND_FILE_EXPORT",
+              "href": "/docs/api/variables/EXPLORER_COMMAND_FILE_EXPORT",
+              "renderer": "docs/api/variables/EXPLORER_COMMAND_FILE_EXPORT.md",
+              "sourcePath": "api/variables/EXPLORER_COMMAND_FILE_EXPORT.md"
+            },
+            {
+              "title": "EXPLORER_COMMAND_FILE_UPLOAD",
+              "href": "/docs/api/variables/EXPLORER_COMMAND_FILE_UPLOAD",
+              "renderer": "docs/api/variables/EXPLORER_COMMAND_FILE_UPLOAD.md",
+              "sourcePath": "api/variables/EXPLORER_COMMAND_FILE_UPLOAD.md"
+            },
+            {
+              "title": "EXPLORER_COMMAND_PASTE",
+              "href": "/docs/api/variables/EXPLORER_COMMAND_PASTE",
+              "renderer": "docs/api/variables/EXPLORER_COMMAND_PASTE.md",
+              "sourcePath": "api/variables/EXPLORER_COMMAND_PASTE.md"
+            },
+            {
+              "title": "EXPLORER_COMMAND_REFRESH",
+              "href": "/docs/api/variables/EXPLORER_COMMAND_REFRESH",
+              "renderer": "docs/api/variables/EXPLORER_COMMAND_REFRESH.md",
+              "sourcePath": "api/variables/EXPLORER_COMMAND_REFRESH.md"
+            },
+            {
+              "title": "EXPLORER_COMMAND_RENAME",
+              "href": "/docs/api/variables/EXPLORER_COMMAND_RENAME",
+              "renderer": "docs/api/variables/EXPLORER_COMMAND_RENAME.md",
+              "sourcePath": "api/variables/EXPLORER_COMMAND_RENAME.md"
+            },
+            {
+              "title": "EXPLORER_COMMAND_TOGGLE_FILTERING",
+              "href": "/docs/api/variables/EXPLORER_COMMAND_TOGGLE_FILTERING",
+              "renderer": "docs/api/variables/EXPLORER_COMMAND_TOGGLE_FILTERING.md",
+              "sourcePath": "api/variables/EXPLORER_COMMAND_TOGGLE_FILTERING.md"
+            },
+            {
+              "title": "EXPLORER_CONTAINER_ID",
+              "href": "/docs/api/variables/EXPLORER_CONTAINER_ID",
+              "renderer": "docs/api/variables/EXPLORER_CONTAINER_ID.md",
+              "description": "Identifier of the explorer container.",
+              "sourcePath": "api/variables/EXPLORER_CONTAINER_ID.md"
+            },
+            {
+              "title": "EXPLORER_VIEW_ID",
+              "href": "/docs/api/variables/EXPLORER_VIEW_ID",
+              "renderer": "docs/api/variables/EXPLORER_VIEW_ID.md",
+              "description": "Identifier of the explorer view component.",
+              "sourcePath": "api/variables/EXPLORER_VIEW_ID.md"
+            },
+            {
+              "title": "IDE_MENU_DIRECTIVES",
+              "href": "/docs/api/variables/IDE_MENU_DIRECTIVES",
+              "renderer": "docs/api/variables/IDE_MENU_DIRECTIVES.md",
+              "description": "Every menu directive/component, for a single-line `imports` entry.",
+              "sourcePath": "api/variables/IDE_MENU_DIRECTIVES.md"
+            },
+            {
+              "title": "IDE_THEME_CSS",
+              "href": "/docs/api/variables/IDE_THEME_CSS",
+              "renderer": "docs/api/variables/IDE_THEME_CSS.md",
+              "description": "IDE theme tokens (GitHub Light + GitHub Dark), bundled as a string and",
+              "sourcePath": "api/variables/IDE_THEME_CSS.md"
+            },
+            {
+              "title": "KeyCodes",
+              "href": "/docs/api/variables/KeyCodes",
+              "renderer": "docs/api/variables/KeyCodes.md",
+              "sourcePath": "api/variables/KeyCodes.md"
+            },
+            {
+              "title": "KeyModifiers",
+              "href": "/docs/api/variables/KeyModifiers",
+              "renderer": "docs/api/variables/KeyModifiers.md",
+              "sourcePath": "api/variables/KeyModifiers.md"
+            },
+            {
+              "title": "NOTIFICATION_EVENT_CHANNEL",
+              "href": "/docs/api/variables/NOTIFICATION_EVENT_CHANNEL",
+              "renderer": "docs/api/variables/NOTIFICATION_EVENT_CHANNEL.md",
+              "sourcePath": "api/variables/NOTIFICATION_EVENT_CHANNEL.md"
+            },
+            {
+              "title": "NOTIFICATIONS_CONTAINER_ID",
+              "href": "/docs/api/variables/NOTIFICATIONS_CONTAINER_ID",
+              "renderer": "docs/api/variables/NOTIFICATIONS_CONTAINER_ID.md",
+              "description": "Identifier of the notifications container.",
+              "sourcePath": "api/variables/NOTIFICATIONS_CONTAINER_ID.md"
+            },
+            {
+              "title": "NOTIFICATIONS_VIEW_ID",
+              "href": "/docs/api/variables/NOTIFICATIONS_VIEW_ID",
+              "renderer": "docs/api/variables/NOTIFICATIONS_VIEW_ID.md",
+              "description": "Identifier of the notifications view component.",
+              "sourcePath": "api/variables/NOTIFICATIONS_VIEW_ID.md"
+            },
+            {
+              "title": "PROBLEMS_CONTAINER_ID",
+              "href": "/docs/api/variables/PROBLEMS_CONTAINER_ID",
+              "renderer": "docs/api/variables/PROBLEMS_CONTAINER_ID.md",
+              "description": "Identifier of the problems container.",
+              "sourcePath": "api/variables/PROBLEMS_CONTAINER_ID.md"
+            },
+            {
+              "title": "PROBLEMS_VIEW_ID",
+              "href": "/docs/api/variables/PROBLEMS_VIEW_ID",
+              "renderer": "docs/api/variables/PROBLEMS_VIEW_ID.md",
+              "description": "Identifier of the problems view component.",
+              "sourcePath": "api/variables/PROBLEMS_VIEW_ID.md"
+            },
+            {
+              "title": "SEARCH_CONTAINER_ID",
+              "href": "/docs/api/variables/SEARCH_CONTAINER_ID",
+              "renderer": "docs/api/variables/SEARCH_CONTAINER_ID.md",
+              "description": "Identifier of the search container.",
+              "sourcePath": "api/variables/SEARCH_CONTAINER_ID.md"
+            },
+            {
+              "title": "SEARCH_VIEW_ID",
+              "href": "/docs/api/variables/SEARCH_VIEW_ID",
+              "renderer": "docs/api/variables/SEARCH_VIEW_ID.md",
+              "description": "Identifier of the search view component.",
+              "sourcePath": "api/variables/SEARCH_VIEW_ID.md"
+            },
+            {
+              "title": "SETTINGS_CONTAINER_ID",
+              "href": "/docs/api/variables/SETTINGS_CONTAINER_ID",
+              "renderer": "docs/api/variables/SETTINGS_CONTAINER_ID.md",
+              "description": "Identifier of the settings container.",
+              "sourcePath": "api/variables/SETTINGS_CONTAINER_ID.md"
+            },
+            {
+              "title": "SETTINGS_URI",
+              "href": "/docs/api/variables/SETTINGS_URI",
+              "renderer": "docs/api/variables/SETTINGS_URI.md",
+              "sourcePath": "api/variables/SETTINGS_URI.md"
+            },
+            {
+              "title": "STORAGE_PREFIX",
+              "href": "/docs/api/variables/STORAGE_PREFIX",
+              "renderer": "docs/api/variables/STORAGE_PREFIX.md",
+              "sourcePath": "api/variables/STORAGE_PREFIX.md"
+            },
+            {
+              "title": "THEME_CONTAINER_ID",
+              "href": "/docs/api/variables/THEME_CONTAINER_ID",
+              "renderer": "docs/api/variables/THEME_CONTAINER_ID.md",
+              "sourcePath": "api/variables/THEME_CONTAINER_ID.md"
+            },
+            {
+              "title": "TOGGLE_THEME_COMMAND",
+              "href": "/docs/api/variables/TOGGLE_THEME_COMMAND",
+              "renderer": "docs/api/variables/TOGGLE_THEME_COMMAND.md",
+              "sourcePath": "api/variables/TOGGLE_THEME_COMMAND.md"
+            }
+          ]
+        }
+      ],
+      "sourcePath": "api/index.md"
+    }
+  ]
+}

@@ -1,0 +1,6 @@
+---
+title: WorkbenchModule
+---
+# WorkbenchModule
+
+`class`

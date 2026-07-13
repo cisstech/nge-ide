@@ -1,0 +1,6 @@
+---
+title: NgeIdeSettingsModule
+---
+# NgeIdeSettingsModule
+
+`class`

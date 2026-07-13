@@ -1,0 +1,238 @@
+# API reference
+
+Generated from the source. Every export, grouped by kind.
+
+## Functions
+
+- [emptySearchForm](/docs/api/functions/emptySearchForm)
+- [fileSystemProviderCapabilityName](/docs/api/functions/fileSystemProviderCapabilityName) - Gets a human readable name of the given `capability`
+- [hasKeycode](/docs/api/functions/hasKeycode) - Checks if an event has any of the provided
+- [hasModifierKey](/docs/api/functions/hasModifierKey) - Checks whether a modifier key is pressed.
+- [stringFromByArray](/docs/api/functions/stringFromByArray)
+- [stringToByteArray](/docs/api/functions/stringToByteArray)
+
+## Classes
+
+- [BadgeComponent](/docs/api/classes/BadgeComponent) - Projects arbitrary content and overlays a small count bubble at its
+- [BinarySize](/docs/api/classes/BinarySize)
+- [CheckboxComponent](/docs/api/classes/CheckboxComponent) - A compact, VS-Code-like checkbox built on a native `<input type="checkbox">`.
+- [CodeEditor](/docs/api/classes/CodeEditor) - Represents an editor that is attached to a component.
+- [CodeEditorComponent](/docs/api/classes/CodeEditorComponent)
+- [CodeEditorModule](/docs/api/classes/CodeEditorModule)
+- [CommandEvent](/docs/api/classes/CommandEvent)
+- [CommandGroupComponent](/docs/api/classes/CommandGroupComponent)
+- [CommandModule](/docs/api/classes/CommandModule)
+- [CommandService](/docs/api/classes/CommandService)
+- [ContextMenuService](/docs/api/classes/ContextMenuService) - Opens a menu at the pointer position, on top of `@angular/cdk`.
+- [Contribution](/docs/api/classes/Contribution)
+- [Contribution](/docs/api/classes/Contribution)
+- [Contribution](/docs/api/classes/Contribution)
+- [Contribution](/docs/api/classes/Contribution)
+- [CoreModule](/docs/api/classes/CoreModule)
+- [DiagnosticService](/docs/api/classes/DiagnosticService)
+- [DialogModule](/docs/api/classes/DialogModule)
+- [DialogService](/docs/api/classes/DialogService)
+- [DividerComponent](/docs/api/classes/DividerComponent) - A thin rule that separates content, laid out horizontally (default) or
+- [DndDirective](/docs/api/classes/DndDirective) - Element that can share or accept a data of dragged dom element.
+- [Editor](/docs/api/classes/Editor) - Represents an editor that is attached to a component.
+- [EditorContribution](/docs/api/classes/EditorContribution)
+- [EditorDirective](/docs/api/classes/EditorDirective)
+- [EditorDirectivesModule](/docs/api/classes/EditorDirectivesModule)
+- [EditorGroup](/docs/api/classes/EditorGroup) - Represents an editor group.
+- [EditorModule](/docs/api/classes/EditorModule)
+- [EditorPipesModule](/docs/api/classes/EditorPipesModule)
+- [EditorService](/docs/api/classes/EditorService)
+- [ErrorNotification](/docs/api/classes/ErrorNotification)
+- [ExplorerCommandCollapseAll](/docs/api/classes/ExplorerCommandCollapseAll)
+- [ExplorerCommandCopy](/docs/api/classes/ExplorerCommandCopy) - Commands available inside the explorer container.
+- [ExplorerCommandCopyPath](/docs/api/classes/ExplorerCommandCopyPath) - Commands available inside the explorer container.
+- [ExplorerCommandCreateFile](/docs/api/classes/ExplorerCommandCreateFile) - Commands available inside the explorer container.
+- [ExplorerCommandCreateFolder](/docs/api/classes/ExplorerCommandCreateFolder) - Commands available inside the explorer container.
+- [ExplorerCommandDelete](/docs/api/classes/ExplorerCommandDelete) - Commands available inside the explorer container.
+- [ExplorerCommandFileExport](/docs/api/classes/ExplorerCommandFileExport) - Commands available inside the explorer container.
+- [ExplorerCommandFileUpload](/docs/api/classes/ExplorerCommandFileUpload) - Commands available inside the explorer container.
+- [ExplorerCommandPaste](/docs/api/classes/ExplorerCommandPaste) - Commands available inside the explorer container.
+- [ExplorerCommandRefresh](/docs/api/classes/ExplorerCommandRefresh) - Command that refresh the explorer file tree.
+- [ExplorerCommandRename](/docs/api/classes/ExplorerCommandRename) - Commands available inside the explorer container.
+- [ExplorerCommandToggleFiltering](/docs/api/classes/ExplorerCommandToggleFiltering)
+- [ExplorerComponent](/docs/api/classes/ExplorerComponent)
+- [ExplorerContribution](/docs/api/classes/ExplorerContribution)
+- [ExplorerModule](/docs/api/classes/ExplorerModule)
+- [ExplorerService](/docs/api/classes/ExplorerService) - Provides an API to interact with the explorer view tree.
+- [FileChangedPipe](/docs/api/classes/FileChangedPipe)
+- [FileNamePipe](/docs/api/classes/FileNamePipe)
+- [FileService](/docs/api/classes/FileService)
+- [FileSystemError](/docs/api/classes/FileSystemError) - A type that filesystem providers should use to signal errors.
+- [FileSystemProvider](/docs/api/classes/FileSystemProvider) - The filesystem provider defines what the editor needs to read, write, discover,
+- [HighlightDirective](/docs/api/classes/HighlightDirective)
+- [HtmlPreviewHandler](/docs/api/classes/HtmlPreviewHandler)
+- [IdeAutocompleteComponent](/docs/api/classes/IdeAutocompleteComponent) - Floating list of `<ide-auto-option>` items shown under an input by the
+- [IdeAutocompleteDirective](/docs/api/classes/IdeAutocompleteDirective) - Trigger that binds a native `<input>` (or `<textarea>`) to an
+- [IdeAutoOptionComponent](/docs/api/classes/IdeAutoOptionComponent) - A single selectable row inside an `<ide-autocomplete>` panel.
+- [IdeButtonDirective](/docs/api/classes/IdeButtonDirective) - Styling primitive that replaces ng-zorro's `nz-button`.
+- [IdeComponent](/docs/api/classes/IdeComponent)
+- [IdeInputDirective](/docs/api/classes/IdeInputDirective) - Styling primitive that replaces ng-zorro's `nz-input`.
+- [IdeMenuComponent](/docs/api/classes/IdeMenuComponent) - Menu panel that lays out a list of IdeMenuItemDirective entries.
+- [IdeMenuItemDirective](/docs/api/classes/IdeMenuItemDirective) - A single entry inside an IdeMenuComponent.
+- [IdeMenuTriggerDirective](/docs/api/classes/IdeMenuTriggerDirective) - Turns its host element into a click trigger that opens an
+- [IdeModalContainerComponent](/docs/api/classes/IdeModalContainerComponent) - Presentational container rendered inside the CDK dialog overlay. It lays out
+- [IdeModalRef](/docs/api/classes/IdeModalRef) - Handle to a modal opened through `IdeModalService`. Wraps the CDK `DialogRef`
+- [IdeModalService](/docs/api/classes/IdeModalService) - Injectable, VS-Code-like modal service built on `@angular/cdk/dialog`. It is a
+- [IdeService](/docs/api/classes/IdeService)
+- [InfobarComponent](/docs/api/classes/InfobarComponent)
+- [InfobarContainer](/docs/api/classes/InfobarContainer) - Representation of view container inside the infobar area.
+- [InfobarModule](/docs/api/classes/InfobarModule)
+- [InfoNotification](/docs/api/classes/InfoNotification)
+- [Keybinding](/docs/api/classes/Keybinding)
+- [KeyBindService](/docs/api/classes/KeyBindService)
+- [MarkdownPreviewHandler](/docs/api/classes/MarkdownPreviewHandler)
+- [MediaEditor](/docs/api/classes/MediaEditor) - Represents an editor that is attached to a component.
+- [MediaEditorComponent](/docs/api/classes/MediaEditorComponent)
+- [MediaEditorModule](/docs/api/classes/MediaEditorModule)
+- [MemFileProvider](/docs/api/classes/MemFileProvider) - The filesystem provider defines what the editor needs to read, write, discover,
+- [MonacoService](/docs/api/classes/MonacoService)
+- [NgeIdeExplorerModule](/docs/api/classes/NgeIdeExplorerModule)
+- [NgeIdeModule](/docs/api/classes/NgeIdeModule)
+- [NgeIdeNotificationsModule](/docs/api/classes/NgeIdeNotificationsModule)
+- [NgeIdeProblemsModule](/docs/api/classes/NgeIdeProblemsModule)
+- [NgeIdeSearchModule](/docs/api/classes/NgeIdeSearchModule)
+- [NgeIdeSettingsModule](/docs/api/classes/NgeIdeSettingsModule)
+- [NicifyNamePipe](/docs/api/classes/NicifyNamePipe)
+- [NotificationsComponent](/docs/api/classes/NotificationsComponent)
+- [NotificationService](/docs/api/classes/NotificationService)
+- [NotificationsModule](/docs/api/classes/NotificationsModule)
+- [OpenRequest](/docs/api/classes/OpenRequest) - Represents file open request.
+- [OptionComponent](/docs/api/classes/OptionComponent) - A single choice inside an SelectComponent (`ide-select`).
+- [Paths](/docs/api/classes/Paths)
+- [PreviewEditor](/docs/api/classes/PreviewEditor) - Represents an editor that is attached to a component.
+- [PreviewEditorComponent](/docs/api/classes/PreviewEditorComponent)
+- [PreviewEditorModule](/docs/api/classes/PreviewEditorModule)
+- [PreviewService](/docs/api/classes/PreviewService)
+- [ProblemsComponent](/docs/api/classes/ProblemsComponent)
+- [ProblemsModule](/docs/api/classes/ProblemsModule)
+- [QuickOpenComponent](/docs/api/classes/QuickOpenComponent)
+- [QuickOpenModule](/docs/api/classes/QuickOpenModule)
+- [SearchComponent](/docs/api/classes/SearchComponent)
+- [SearchInputComponent](/docs/api/classes/SearchInputComponent)
+- [SearchModule](/docs/api/classes/SearchModule)
+- [SelectComponent](/docs/api/classes/SelectComponent) - A compact, VS-Code-like single-select dropdown.
+- [SettingsEditorComponent](/docs/api/classes/SettingsEditorComponent)
+- [SettingsEditorModule](/docs/api/classes/SettingsEditorModule)
+- [SettingsService](/docs/api/classes/SettingsService)
+- [SidebarComponent](/docs/api/classes/SidebarComponent) - Renders on the sidebar area of the ide.
+- [SidebarContainer](/docs/api/classes/SidebarContainer) - Representation of view container inside the sidebar area.
+- [SidebarModule](/docs/api/classes/SidebarModule)
+- [SkeletonComponent](/docs/api/classes/SkeletonComponent) - Lightweight loading placeholder rendering a few content lines with an
+- [SpinnerComponent](/docs/api/classes/SpinnerComponent) - Indeterminate loading spinner. Standalone, pure-CSS replacement for
+- [StatusbarComponent](/docs/api/classes/StatusbarComponent)
+- [StatusbarModule](/docs/api/classes/StatusbarModule)
+- [StatusBarService](/docs/api/classes/StatusBarService)
+- [StorageService](/docs/api/classes/StorageService)
+- [SvgPreviewHandler](/docs/api/classes/SvgPreviewHandler)
+- [TabButtonDirective](/docs/api/classes/TabButtonDirective) - Internal directive applied to every tab header rendered by
+- [TabComponent](/docs/api/classes/TabComponent) - A single tab hosted by TabsComponent. Standalone replacement for
+- [TabsComponent](/docs/api/classes/TabsComponent) - Card-style (or line-style) tab bar. Standalone replacement for ng-zorro's
+- [TaskbarComponent](/docs/api/classes/TaskbarComponent)
+- [TaskbarModule](/docs/api/classes/TaskbarModule)
+- [TaskService](/docs/api/classes/TaskService)
+- [ThemeService](/docs/api/classes/ThemeService) - Owns the IDE's color theme.
+- [ThemeSidebarContainer](/docs/api/classes/ThemeSidebarContainer) - Activity-bar (bottom) entry offering Light / Dark / System. The title is a
+- [ToggleThemeCommand](/docs/api/classes/ToggleThemeCommand) - Command-palette entry that cycles the color theme (light -> dark -> system).
+- [ToolbarButton](/docs/api/classes/ToolbarButton)
+- [ToolbarComponent](/docs/api/classes/ToolbarComponent)
+- [ToolbarModule](/docs/api/classes/ToolbarModule)
+- [ToolbarSeparator](/docs/api/classes/ToolbarSeparator)
+- [ToolbarService](/docs/api/classes/ToolbarService)
+- [TooltipComponent](/docs/api/classes/TooltipComponent) - The floating bubble rendered by TooltipDirective.
+- [TooltipDirective](/docs/api/classes/TooltipDirective) - Attribute directive that shows a compact, VS-Code-like tooltip on hover and on
+- [ViewContainerService](/docs/api/classes/ViewContainerService)
+- [ViewDirective](/docs/api/classes/ViewDirective)
+- [ViewGroupComponent](/docs/api/classes/ViewGroupComponent)
+- [ViewModule](/docs/api/classes/ViewModule)
+- [ViewService](/docs/api/classes/ViewService)
+- [WarningNotification](/docs/api/classes/WarningNotification)
+- [WorkbenchComponent](/docs/api/classes/WorkbenchComponent)
+- [WorkbenchModule](/docs/api/classes/WorkbenchModule)
+
+## Interfaces
+
+- [ConfirmOptions](/docs/api/interfaces/ConfirmOptions)
+- [Diagnostic](/docs/api/interfaces/Diagnostic) - Represents a diagnostic, such as a compiler error or warning.
+- [DiagnosticGroup](/docs/api/interfaces/DiagnosticGroup)
+- [DndData](/docs/api/interfaces/DndData) - Representation of a data shared with a drag and drop action.
+- [EditorState](/docs/api/interfaces/EditorState) - Represents the state of the editor.
+- [EditorTab](/docs/api/interfaces/EditorTab)
+- [FileNestingPattern](/docs/api/interfaces/FileNestingPattern)
+- [ICommand](/docs/api/interfaces/ICommand)
+- [IContribution](/docs/api/interfaces/IContribution)
+- [IdeAutoOptionSelectionEvent](/docs/api/interfaces/IdeAutoOptionSelectionEvent) - Payload emitted when an option is chosen.
+- [IdeContextMenuConfig](/docs/api/interfaces/IdeContextMenuConfig) - Options accepted by ContextMenuService.open.
+- [IdeModalButton](/docs/api/interfaces/IdeModalButton) - Declarative footer button of a modal, mirroring the plain objects the IDE
+- [IdeModalContainerData](/docs/api/interfaces/IdeModalContainerData) - Normalized data handed to `IdeModalContainerComponent` through `DIALOG_DATA`.
+- [IdeModalOptions](/docs/api/interfaces/IdeModalOptions) - Options accepted by `IdeModalService.create`/`open`. Each field is the plain
+- [IExplorerCommand](/docs/api/interfaces/IExplorerCommand) - Commands available inside the explorer container.
+- [IFile](/docs/api/interfaces/IFile) - Representation of a file/directory.
+- [IFileChange](/docs/api/interfaces/IFileChange) - Identifies a single change in a file.
+- [IFileSystemProvider](/docs/api/interfaces/IFileSystemProvider) - The filesystem provider defines what the editor needs to read, write, discover,
+- [IStatusBarItem](/docs/api/interfaces/IStatusBarItem)
+- [ITask](/docs/api/interfaces/ITask)
+- [IToolbarButton](/docs/api/interfaces/IToolbarButton)
+- [IToolbarCustomGroup](/docs/api/interfaces/IToolbarCustomGroup)
+- [IToolbarItem](/docs/api/interfaces/IToolbarItem)
+- [IView](/docs/api/interfaces/IView) - Representation of a part of the editor (statusbar, sidebar...).
+- [IViewContainer](/docs/api/interfaces/IViewContainer) - Representation of view container inside the infobar area.
+- [Notification](/docs/api/interfaces/Notification)
+- [OpenOptions](/docs/api/interfaces/OpenOptions) - Represents file open options.
+- [Preview](/docs/api/interfaces/Preview)
+- [PreviewHandler](/docs/api/interfaces/PreviewHandler)
+- [SearchForm](/docs/api/interfaces/SearchForm)
+- [SearchMatch](/docs/api/interfaces/SearchMatch)
+- [SearchResult](/docs/api/interfaces/SearchResult)
+
+## Type aliases
+
+- [IdeButtonSize](/docs/api/type-aliases/IdeButtonSize) - Height/padding scale of an `[ideButton]` (replaces ng-zorro's `nzSize`).
+- [IdeButtonType](/docs/api/type-aliases/IdeButtonType) - Visual style of an `[ideButton]` (replaces ng-zorro's `nzType`).
+- [IdeContextMenuContent](/docs/api/type-aliases/IdeContextMenuContent) - A menu source: a bare `TemplateRef`, or an object that carries one.
+- [IdeModalButtonType](/docs/api/type-aliases/IdeModalButtonType) - Visual style of an IdeModalButton (replaces ng-zorro's button `nzType`).
+- [IdeSpinnerSize](/docs/api/type-aliases/IdeSpinnerSize) - Diameter preset for SpinnerComponent.
+- [IdeTabsType](/docs/api/type-aliases/IdeTabsType) - Visual style of the tab bar (renamed from ng-zorro's `nzType`).
+- [NotificationLevel](/docs/api/type-aliases/NotificationLevel)
+- [ResolvedTheme](/docs/api/type-aliases/ResolvedTheme)
+- [ThemeMode](/docs/api/type-aliases/ThemeMode)
+
+## Variables
+
+- [CONTRIBUTION](/docs/api/variables/CONTRIBUTION)
+- [DEFAULT_STORAGE_PREFIX](/docs/api/variables/DEFAULT_STORAGE_PREFIX) - Namespace applied to every stored key when STORAGE_PREFIX is not provided.
+- [DndDataTransfer](/docs/api/variables/DndDataTransfer) - Data passed to dataTransfer.setData method when a data is dragged using DndDirective.
+- [EXPLORER_COMMAND_COLLAPSE](/docs/api/variables/EXPLORER_COMMAND_COLLAPSE)
+- [EXPLORER_COMMAND_COPY](/docs/api/variables/EXPLORER_COMMAND_COPY)
+- [EXPLORER_COMMAND_COPY_PATH](/docs/api/variables/EXPLORER_COMMAND_COPY_PATH)
+- [EXPLORER_COMMAND_CREATE_FILE](/docs/api/variables/EXPLORER_COMMAND_CREATE_FILE)
+- [EXPLORER_COMMAND_CREATE_FOLDER](/docs/api/variables/EXPLORER_COMMAND_CREATE_FOLDER)
+- [EXPLORER_COMMAND_DELETE](/docs/api/variables/EXPLORER_COMMAND_DELETE)
+- [EXPLORER_COMMAND_FILE_EXPORT](/docs/api/variables/EXPLORER_COMMAND_FILE_EXPORT)
+- [EXPLORER_COMMAND_FILE_UPLOAD](/docs/api/variables/EXPLORER_COMMAND_FILE_UPLOAD)
+- [EXPLORER_COMMAND_PASTE](/docs/api/variables/EXPLORER_COMMAND_PASTE)
+- [EXPLORER_COMMAND_REFRESH](/docs/api/variables/EXPLORER_COMMAND_REFRESH)
+- [EXPLORER_COMMAND_RENAME](/docs/api/variables/EXPLORER_COMMAND_RENAME)
+- [EXPLORER_COMMAND_TOGGLE_FILTERING](/docs/api/variables/EXPLORER_COMMAND_TOGGLE_FILTERING)
+- [EXPLORER_CONTAINER_ID](/docs/api/variables/EXPLORER_CONTAINER_ID) - Identifier of the explorer container.
+- [EXPLORER_VIEW_ID](/docs/api/variables/EXPLORER_VIEW_ID) - Identifier of the explorer view component.
+- [IDE_MENU_DIRECTIVES](/docs/api/variables/IDE_MENU_DIRECTIVES) - Every menu directive/component, for a single-line `imports` entry.
+- [IDE_THEME_CSS](/docs/api/variables/IDE_THEME_CSS) - IDE theme tokens (GitHub Light + GitHub Dark), bundled as a string and
+- [KeyCodes](/docs/api/variables/KeyCodes)
+- [KeyModifiers](/docs/api/variables/KeyModifiers)
+- [NOTIFICATION_EVENT_CHANNEL](/docs/api/variables/NOTIFICATION_EVENT_CHANNEL)
+- [NOTIFICATIONS_CONTAINER_ID](/docs/api/variables/NOTIFICATIONS_CONTAINER_ID) - Identifier of the notifications container.
+- [NOTIFICATIONS_VIEW_ID](/docs/api/variables/NOTIFICATIONS_VIEW_ID) - Identifier of the notifications view component.
+- [PROBLEMS_CONTAINER_ID](/docs/api/variables/PROBLEMS_CONTAINER_ID) - Identifier of the problems container.
+- [PROBLEMS_VIEW_ID](/docs/api/variables/PROBLEMS_VIEW_ID) - Identifier of the problems view component.
+- [SEARCH_CONTAINER_ID](/docs/api/variables/SEARCH_CONTAINER_ID) - Identifier of the search container.
+- [SEARCH_VIEW_ID](/docs/api/variables/SEARCH_VIEW_ID) - Identifier of the search view component.
+- [SETTINGS_CONTAINER_ID](/docs/api/variables/SETTINGS_CONTAINER_ID) - Identifier of the settings container.
+- [SETTINGS_URI](/docs/api/variables/SETTINGS_URI)
+- [STORAGE_PREFIX](/docs/api/variables/STORAGE_PREFIX)
+- [THEME_CONTAINER_ID](/docs/api/variables/THEME_CONTAINER_ID)
+- [TOGGLE_THEME_COMMAND](/docs/api/variables/TOGGLE_THEME_COMMAND)

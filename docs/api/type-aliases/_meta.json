@@ -1,0 +1,29 @@
+{
+  "IdeButtonSize": {
+    "title": "IdeButtonSize"
+  },
+  "IdeButtonType": {
+    "title": "IdeButtonType"
+  },
+  "IdeContextMenuContent": {
+    "title": "IdeContextMenuContent"
+  },
+  "IdeModalButtonType": {
+    "title": "IdeModalButtonType"
+  },
+  "IdeSpinnerSize": {
+    "title": "IdeSpinnerSize"
+  },
+  "IdeTabsType": {
+    "title": "IdeTabsType"
+  },
+  "NotificationLevel": {
+    "title": "NotificationLevel"
+  },
+  "ResolvedTheme": {
+    "title": "ResolvedTheme"
+  },
+  "ThemeMode": {
+    "title": "ThemeMode"
+  }
+}

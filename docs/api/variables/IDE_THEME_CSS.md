@@ -1,0 +1,219 @@
+---
+title: IDE_THEME_CSS
+description: IDE theme tokens (GitHub Light + GitHub Dark), bundled as a string and
+---
+# IDE_THEME_CSS
+
+`const`
+
+IDE theme tokens (GitHub Light + GitHub Dark), bundled as a string and
+injected at runtime by ThemeService so consumers never copy an asset.
+
+Scoping: tokens live on the IDE host (`ide-root`) and, because CDK overlays
+render under <body> outside that subtree, on any element tagged with
+`ide-theme-light` / `ide-theme-dark` (an overlay pane or its content host).
+Nothing is written to <body>/<html>, so the IDE theme is fully independent of
+the host app's theme.
+
+```typescript
+const IDE_THEME_CSS: "
+ide-root,
+ide-root[data-theme='light'],
+.ide-theme-light {
+  color-scheme: light;
+
+  --foreground: #24292f;
+  --disabled: #afb8c1;
+  --disabledForeground: #8c959f;
+  --error-foreground: #cf222e;
+  --focus-border: #0969da;
+
+  --input-background: #ffffff;
+  --input-foreground: #24292f;
+  --input-border: #d0d7de;
+  --input-border-hover: #0969da;
+  --input-placeholderForeground: #6e7781;
+
+  --dropdown-background: #ffffff;
+  --dropdown-foreground: #24292f;
+  --dropdown-border: #d0d7de;
+
+  --button-background: #1f6feb;
+  --button-foreground: #ffffff;
+  --button-border: transparent;
+  --button-hover-background: #0969da;
+  --button-secondary-background: #f6f8fa;
+  --button-secondary-foreground: #24292f;
+
+  --checkbox-background: #ffffff;
+  --checkbox-border: #d0d7de;
+  --checkbox-foreground: #24292f;
+
+  --badge-background: #0969da;
+  --badge-foreground: #ffffff;
+
+  --list-hover: rgba(208, 215, 222, 0.32);
+  --list-hoverBackground: rgba(208, 215, 222, 0.32);
+  --list-hoverForeground: #24292f;
+  --list-active: rgba(9, 105, 218, 0.1);
+  --list-active-foreground: #24292f;
+  --list-activeSelectionBackground: rgba(9, 105, 218, 0.1);
+  --list-activeSelectionForeground: #24292f;
+  --list-focusBackground: rgba(9, 105, 218, 0.1);
+  --list-focusOutline: #0969da;
+
+  --tab-border: #d0d7de;
+  --tab-bar-background: #f6f8fa;
+  --tab-activeBackground: #ffffff;
+  --tab-activeForeground: #24292f;
+  --tab-activeBorderTop: #0969da;
+  --tab-inactiveBackground: #f6f8fa;
+  --tab-inactiveForeground: #57606a;
+  --tab-hoverBackground: #ffffff;
+
+  --editor-background: #ffffff;
+  --editorGroupHeader-tabsBackground: #f6f8fa;
+  --editorGroupHeader-tabsBorder: #d0d7de;
+  --editorHoverWidget-background: #ffffff;
+  --editorHoverWidget-border: #d0d7de;
+  --editorHoverWidget-foreground: #24292f;
+  --editorSuggestWidget-background: #ffffff;
+  --editorSuggestWidget-border: #d0d7de;
+
+  --link-foreground: #0969da;
+  --link-active-foreground: #0969da;
+
+  --toolbar-hover-background: rgba(208, 215, 222, 0.32);
+  --divider-color: #d8dee4;
+  --modal-backdrop: rgba(140, 149, 159, 0.35);
+  --progress-bar-background: #0969da;
+
+  /* IDE chrome (title bar, activity bar, side bar, status bar). */
+  --titleBar-background: #f6f8fa;
+  --titleBar-foreground: #24292f;
+  --activityBar-background: #f6f8fa;
+  --activityBar-foreground: #24292f;
+  --activityBar-inactiveForeground: #6e7781;
+  --activityBar-activeBorder: #0969da;
+  --activityBar-dropBackground: rgba(9, 105, 218, 0.1);
+  --activityBarBadge-background: #0969da;
+  --activityBarBadge-foreground: #ffffff;
+  --sideBar-background: #f6f8fa;
+  --sideBar-foreground: #24292f;
+  --sideBar-border: #d0d7de;
+  --sideBar-dropBackground: rgba(9, 105, 218, 0.08);
+  --sideBarSectionHeader-background: #f6f8fa;
+  --sideBarSectionHeader-foreground: #24292f;
+  --statusBar-background: #f6f8fa;
+  --statusBar-foreground: #57606a;
+  --drop-controller-widget-background: #ffffff;
+  --drop-controller-widget-color: #24292f;
+  --drop-controller-widget-border: #d0d7de;
+  --drop-controller-widget-box-shadow: 0 8px 24px rgba(140, 149, 159, 0.2);
+  --drop-controller-widget-hover-background: #f3f4f6;
+  --drop-controller-widget-hover-color: #24292f;
+}
+
+/*
+ * Dark palette: GitHub Dark (https://primer.style). canvas #0d1117 is the base
+ * surface, #010409 the inset (activity bar, tab strip), #161b22 the elevated
+ * chrome and popups, #30363d/#21262d the borders. Pair with the Monaco
+ * "github-dark" theme (same #0d1117 background) for a seamless editor.
+ */
+ide-root[data-theme='dark'],
+.ide-theme-dark {
+  color-scheme: dark;
+
+  --foreground: #e6edf3;
+  --disabled: #484f58;
+  --disabledForeground: #6e7681;
+  --error-foreground: #f85149;
+  --focus-border: #2f81f7;
+
+  --input-background: #0d1117;
+  --input-foreground: #e6edf3;
+  --input-border: #30363d;
+  --input-border-hover: #2f81f7;
+  --input-placeholderForeground: #6e7681;
+
+  --dropdown-background: #161b22;
+  --dropdown-foreground: #e6edf3;
+  --dropdown-border: #30363d;
+
+  --button-background: #1f6feb;
+  --button-foreground: #ffffff;
+  --button-border: transparent;
+  --button-hover-background: #388bfd;
+  --button-secondary-background: #21262d;
+  --button-secondary-foreground: #c9d1d9;
+
+  --checkbox-background: #0d1117;
+  --checkbox-border: #30363d;
+  --checkbox-foreground: #e6edf3;
+
+  --badge-background: #1f6feb;
+  --badge-foreground: #ffffff;
+
+  --list-hover: rgba(177, 186, 196, 0.08);
+  --list-hoverBackground: rgba(177, 186, 196, 0.08);
+  --list-hoverForeground: #e6edf3;
+  --list-active: rgba(56, 139, 253, 0.15);
+  --list-active-foreground: #e6edf3;
+  --list-activeSelectionBackground: rgba(56, 139, 253, 0.15);
+  --list-activeSelectionForeground: #e6edf3;
+  --list-focusBackground: rgba(56, 139, 253, 0.15);
+  --list-focusOutline: #2f81f7;
+
+  --tab-border: #30363d;
+  --tab-bar-background: #010409;
+  --tab-activeBackground: #0d1117;
+  --tab-activeForeground: #e6edf3;
+  --tab-activeBorderTop: #2f81f7;
+  --tab-inactiveBackground: #010409;
+  --tab-inactiveForeground: #7d8590;
+  --tab-hoverBackground: #0d1117;
+
+  --editor-background: #0d1117;
+  --editorGroupHeader-tabsBackground: #010409;
+  --editorGroupHeader-tabsBorder: #30363d;
+  --editorHoverWidget-background: #161b22;
+  --editorHoverWidget-border: #30363d;
+  --editorHoverWidget-foreground: #e6edf3;
+  --editorSuggestWidget-background: #161b22;
+  --editorSuggestWidget-border: #30363d;
+
+  --link-foreground: #2f81f7;
+  --link-active-foreground: #58a6ff;
+
+  --toolbar-hover-background: rgba(177, 186, 196, 0.08);
+  --divider-color: #21262d;
+  --modal-backdrop: rgba(1, 4, 9, 0.8);
+  --progress-bar-background: #2f81f7;
+
+  /* IDE chrome. */
+  --titleBar-background: #161b22;
+  --titleBar-foreground: #e6edf3;
+  --activityBar-background: #010409;
+  --activityBar-foreground: #e6edf3;
+  --activityBar-inactiveForeground: #7d8590;
+  --activityBar-activeBorder: #2f81f7;
+  --activityBar-dropBackground: rgba(56, 139, 253, 0.15);
+  --activityBarBadge-background: #1f6feb;
+  --activityBarBadge-foreground: #ffffff;
+  --sideBar-background: #0d1117;
+  --sideBar-foreground: #c9d1d9;
+  --sideBar-border: #21262d;
+  --sideBar-dropBackground: rgba(56, 139, 253, 0.1);
+  --sideBarSectionHeader-background: #0d1117;
+  --sideBarSectionHeader-foreground: #e6edf3;
+  --statusBar-background: #0d1117;
+  --statusBar-foreground: #adbac7;
+  --drop-controller-widget-background: #161b22;
+  --drop-controller-widget-color: #e6edf3;
+  --drop-controller-widget-border: #30363d;
+  --drop-controller-widget-box-shadow: 0 8px 24px rgba(1, 4, 9, 0.6);
+  --drop-controller-widget-hover-background: #21262d;
+  --drop-controller-widget-hover-color: #e6edf3;
+}
+"
+```

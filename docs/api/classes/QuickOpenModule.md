@@ -1,0 +1,6 @@
+---
+title: QuickOpenModule
+---
+# QuickOpenModule
+
+`class`

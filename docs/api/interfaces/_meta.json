@@ -1,0 +1,98 @@
+{
+  "ConfirmOptions": {
+    "title": "ConfirmOptions"
+  },
+  "Diagnostic": {
+    "title": "Diagnostic"
+  },
+  "DiagnosticGroup": {
+    "title": "DiagnosticGroup"
+  },
+  "DndData": {
+    "title": "DndData"
+  },
+  "EditorState": {
+    "title": "EditorState"
+  },
+  "EditorTab": {
+    "title": "EditorTab"
+  },
+  "FileNestingPattern": {
+    "title": "FileNestingPattern"
+  },
+  "ICommand": {
+    "title": "ICommand"
+  },
+  "IContribution": {
+    "title": "IContribution"
+  },
+  "IdeAutoOptionSelectionEvent": {
+    "title": "IdeAutoOptionSelectionEvent"
+  },
+  "IdeContextMenuConfig": {
+    "title": "IdeContextMenuConfig"
+  },
+  "IdeModalButton": {
+    "title": "IdeModalButton"
+  },
+  "IdeModalContainerData": {
+    "title": "IdeModalContainerData"
+  },
+  "IdeModalOptions": {
+    "title": "IdeModalOptions"
+  },
+  "IExplorerCommand": {
+    "title": "IExplorerCommand"
+  },
+  "IFile": {
+    "title": "IFile"
+  },
+  "IFileChange": {
+    "title": "IFileChange"
+  },
+  "IFileSystemProvider": {
+    "title": "IFileSystemProvider"
+  },
+  "IStatusBarItem": {
+    "title": "IStatusBarItem"
+  },
+  "ITask": {
+    "title": "ITask"
+  },
+  "IToolbarButton": {
+    "title": "IToolbarButton"
+  },
+  "IToolbarCustomGroup": {
+    "title": "IToolbarCustomGroup"
+  },
+  "IToolbarItem": {
+    "title": "IToolbarItem"
+  },
+  "IView": {
+    "title": "IView"
+  },
+  "IViewContainer": {
+    "title": "IViewContainer"
+  },
+  "Notification": {
+    "title": "Notification"
+  },
+  "OpenOptions": {
+    "title": "OpenOptions"
+  },
+  "Preview": {
+    "title": "Preview"
+  },
+  "PreviewHandler": {
+    "title": "PreviewHandler"
+  },
+  "SearchForm": {
+    "title": "SearchForm"
+  },
+  "SearchMatch": {
+    "title": "SearchMatch"
+  },
+  "SearchResult": {
+    "title": "SearchResult"
+  }
+}

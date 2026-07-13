@@ -1,0 +1,6 @@
+---
+title: EditorPipesModule
+---
+# EditorPipesModule
+
+`class`
