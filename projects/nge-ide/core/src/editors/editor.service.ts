@@ -258,10 +258,27 @@ export class EditorService implements IContribution {
    * Closes the resource from all the editor groups.
    * @param resource the resource to close.
    * @param force When `true`, force close the resource without asking to save it if it is dirty.
+   * @param isPreview if defined, close the resource only if it is opened as a preview or not depending on the value of this parameter.
    */
-  async close(resource: monaco.Uri, force?: boolean): Promise<any> {
-    const groups = this.findGroups((group) => group.contains(resource))
-    return Promise.all(groups.map((g) => g.close(resource, force)))
+  async close(resource: monaco.Uri, force?: boolean, isPreview?: boolean): Promise<any> {
+    const groups = this.findGroups((group) => group.contains(resource, isPreview))
+
+    return Promise.all(
+      groups.map(async (group) => {
+        if (isPreview === undefined) {
+          // When isPreview is undefined, we want to close the resource whether it is opened as a preview or not.
+          // So we need to close it until it is no longer opened in the group.
+          while (await group.close(resource, force)) {
+            if (!group.contains(resource)) {
+              break
+            }
+          }
+          return
+        }
+
+        await group.close(resource, force, isPreview)
+      })
+    )
   }
 
   /**

@@ -25,7 +25,11 @@ export class EditorCloseCommand implements ICommand {
 
   async execute(): Promise<void> {
     if (this.editorService.activeResource) {
-      this.editorService.close(this.editorService.activeResource)
+      this.editorService.close(
+        this.editorService.activeResource,
+        false,
+        this.editorService.activeGroup?.isInPreviewMode
+      )
     }
   }
 }

@@ -28,9 +28,15 @@
                   <span class="codicon codicon-lock-small" ideTooltip="Éditeur en lecture seule"></span>
                 }
                 @if (tab.resource | fileChanged | async) {
-                  <span class="tab-dirty codicon codicon-close-dirty" (click)="group.close(tab.resource)"></span>
+                  <span
+                    class="tab-dirty codicon codicon-close-dirty"
+                    (click)="group.close(tab.resource, undefined, !!tab.options.preview)"
+                  ></span>
                 } @else {
-                  <span class="tab-close codicon codicon-close" (click)="group.close(tab.resource)"></span>
+                  <span
+                    class="tab-close codicon codicon-close"
+                    (click)="group.close(tab.resource, undefined, !!tab.options.preview)"
+                  ></span>
                 }
               </div>
             </ng-template>
