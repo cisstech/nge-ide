@@ -180,9 +180,10 @@ export class EditorGroup {
    * @param isPreview if `true`, check if the resource is opened as a preview.
    * @throws {ReferenceError} if any of the arguments is null.
    */
-  contains(resource: monaco.Uri): boolean {
+  contains(resource: monaco.Uri, isPreview?: boolean): boolean {
     return this._tabs.some((e) => {
       return e.resource.toString(true) === resource.toString(true)
+        && (isPreview === undefined || isPreview === !!e.options.preview)
     })
   }
 
@@ -202,8 +203,8 @@ export class EditorGroup {
    * @param resource the resource.
    * @throws {ReferenceError} if any of the arguments is null.
    */
-  isActive(resource: monaco.Uri): boolean {
-    return this.activeResource?.toString(true) === resource.toString(true)
+  isActive(resource: monaco.Uri, isPreview?: boolean): boolean {
+    return this.activeResource?.toString(true) === resource.toString(true) && (isPreview === undefined || isPreview === !!this._request?.options.preview)
   }
 
   /**
@@ -211,9 +212,9 @@ export class EditorGroup {
    * @param resource the resource to check the index for.
    * @returns The index of the resource or `-1` if the resource is not opened.
    */
-  findIndex(resource: monaco.Uri): number {
+  findIndex(resource: monaco.Uri, isPreview?: boolean): number {
     return this._tabs.findIndex((e) => {
-      return e.resource.toString(true) === resource.toString(true)
+      return e.resource.toString(true) === resource.toString(true) && (isPreview === undefined || isPreview === !!e.options.preview)
     })
   }
 
@@ -229,7 +230,7 @@ export class EditorGroup {
    * @returns An promise that resolve once the resource is opened.
    */
   async open(resource: monaco.Uri, options: OpenOptions): Promise<void> {
-    if (this.isActive(resource) && !options.preview) return
+    if (this.isActive(resource, !!options.preview) && !options.preview) return
 
     this.fileService = this.fileService || this.injector.get(FileService)
 
@@ -253,12 +254,12 @@ export class EditorGroup {
       throw new Error(`There is no registered editor to open "${request.uri}"`)
     }
 
-    if (!this.contains(resource)) {
+    if (!this.contains(resource, !!options.preview)) {
       this._tabs.push({ options, resource, file })
     }
 
     this._request = request
-    this._activeIndex = this.findIndex(resource)
+    this._activeIndex = this.findIndex(resource, !!options.preview)
     this._activeEditor = editor
     this._history.push(this._tabs[this._activeIndex])
 
@@ -277,8 +278,8 @@ export class EditorGroup {
    * @throws {ReferenceError} if any of the arguments is null.
    * @returns A promise that resolve with `true` if the resource is removed `false` otherwise.
    */
-  async close(resource: monaco.Uri, force?: boolean): Promise<boolean> {
-    const index = this.findIndex(resource)
+  async close(resource: monaco.Uri, force?: boolean, isPreview?: boolean): Promise<boolean> {
+    const index = this.findIndex(resource, isPreview)
     if (index === -1) return false
 
     const tab = this._tabs[index]
@@ -289,8 +290,8 @@ export class EditorGroup {
 
     if (!closeable) return false
 
-    const wasActive = this.isActive(resource)
-    const activeResource = this.activeResource
+    const activeIndex = this._activeIndex
+    const wasActive = activeIndex === index
     this._tabs.splice(index, 1)
 
     if (this.isEmpty) {
@@ -309,10 +310,9 @@ export class EditorGroup {
       await this.open(next.resource, next.options).catch(() => undefined)
       this.closed(this, tab.resource, !!tab.options.preview)
     } else {
-      // A background tab was closed: keep the active one and fix its shifted index.
-      if (activeResource) {
-        this._activeIndex = this.findIndex(activeResource)
-      }
+      // A background tab was closed: keep the active tab selected and shift its
+      // index only when the removed tab was before it.
+      this._activeIndex = index < activeIndex ? activeIndex - 1 : activeIndex
       this.closed(this, tab.resource, !!tab.options.preview)
     }
 
