@@ -57,7 +57,7 @@
     "angular-split": "^20.0.0",
     "marked": "^11.0.1",
     "monaco-editor": "^0.52.2",
-    "ng-event-bus": "^7.0.1",
+    "ng-event-bus": "^10.0.0",
     "ngx-pipes": "^3.2.2",
     "rxjs": "^7.5.2",
     "tslib": "^2.0.0",

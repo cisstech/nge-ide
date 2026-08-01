@@ -2574,7 +2574,7 @@ __metadata:
     jest-environment-jsdom: "npm:^30.0.0"
     marked: "npm:^11.0.1"
     monaco-editor: "npm:^0.52.2"
-    ng-event-bus: "npm:^7.0.1"
+    ng-event-bus: "npm:^10.0.0"
     ng-packagr: "npm:^22.0.1"
     ngx-pipes: "npm:^3.2.2"
     npm-run-all: "npm:^4.1.5"
@@ -15359,16 +15359,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"ng-event-bus@npm:^7.0.1":
-  version: 7.0.1
-  resolution: "ng-event-bus@npm:7.0.1"
+"ng-event-bus@npm:^10.0.0":
+  version: 10.0.0
+  resolution: "ng-event-bus@npm:10.0.0"
   dependencies:
-    rxjs: "npm:^7.8.1"
-    tslib: "npm:^2.6.3"
+    rxjs: "npm:^7.8.2"
+    tslib: "npm:^2.8.1"
   peerDependencies:
-    "@angular/common": ^18.0.0
-    "@angular/core": ^18.0.0
-  checksum: 10c0/00490dec7179da324ee83476b932874702611638f9dd5a51607b9168b36f0191f5fe2bef4807ba2f22514d7ea1c5e8dbd38f2e2b13e98c9c8c35db18b282b57f
+    "@angular/common": ^21.0.0
+    "@angular/core": ^21.0.0
+  checksum: 10c0/b771bfa59edf4b1b29e4ae2135f4bc9add4bc92bf3fa870df767bb6ed4927419be0b5c772afeed8b405a6c96ea8de68de211e31c530edc7a68aacbcd41a3efb7
   languageName: node
   linkType: hard
 
@@ -17727,7 +17727,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"rxjs@npm:7.8.2":
+"rxjs@npm:7.8.2, rxjs@npm:^7.8.2":
   version: 7.8.2
   resolution: "rxjs@npm:7.8.2"
   dependencies:
@@ -19489,7 +19489,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"tslib@npm:^2.0.0, tslib@npm:^2.0.1, tslib@npm:^2.1.0, tslib@npm:^2.3.0, tslib@npm:^2.5.0, tslib@npm:^2.6.2, tslib@npm:^2.6.3":
+"tslib@npm:^2.0.0, tslib@npm:^2.0.1, tslib@npm:^2.1.0, tslib@npm:^2.3.0, tslib@npm:^2.5.0, tslib@npm:^2.6.2":
   version: 2.7.0
   resolution: "tslib@npm:2.7.0"
   checksum: 10c0/469e1d5bf1af585742128827000711efa61010b699cb040ab1800bcd3ccdd37f63ec30642c9e07c4439c1db6e46345582614275daca3e0f4abae29b0083f04a6
