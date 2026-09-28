@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [22.0.2](https://github.com/cisstech/nge-ide/compare/v22.0.1...v22.0.2) (2026-09-28)
+
+
+### Bug Fixes
+
+* **editor:** allow an editor and a preview to be displayed in the same group ([28be7b5](https://github.com/cisstech/nge-ide/commit/28be7b507e53cd04806adf6e9073ffa90bff94fb))
+* **editor:** switch content when selecting an editor tab ([4348a9e](https://github.com/cisstech/nge-ide/commit/4348a9e91fd83b5c5ec8ed9e2bdf981b499130be))
+
 ### [22.0.1](https://github.com/cisstech/nge-ide/compare/v22.0.0...v22.0.1) (2026-09-28)
 
 
