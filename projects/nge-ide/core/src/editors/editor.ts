@@ -5,11 +5,19 @@ import { FileService, IFile } from '../files'
 
 declare type OpenHandler = (group: EditorGroup, editor: Editor, resource: monaco.Uri) => void
 
-declare type CloseHandler = (group: EditorGroup, resource: monaco.Uri, isPreview?: boolean) => void
+declare type CloseHandler = (group: EditorGroup, resource: monaco.Uri) => void
 
 declare type CloseGuard = (group: EditorGroup, resource: monaco.Uri) => Promise<boolean>
 
+const sameResource = (a: monaco.Uri, b: monaco.Uri) => a.toString(true) === b.toString(true)
+
+/** Whether a tab shows its resource in an editor or as a preview. */
+export type EditorTabKind = 'editor' | 'preview'
+
 export interface EditorTab {
+  /** Whether the tab shows the resource in an editor or as a preview. */
+  readonly kind: EditorTabKind
+
   /** The options associated with the tab. */
   readonly options: OpenOptions
 
@@ -125,6 +133,11 @@ export class EditorGroup {
     }
   }
 
+  /** Tab of the current active editor. */
+  get activeTab(): EditorTab | undefined {
+    return this._tabs[this._activeIndex]
+  }
+
   /** Current active editor. */
   get activeEditor(): Editor | undefined {
     return this._activeEditor
@@ -175,16 +188,12 @@ export class EditorGroup {
   ) {}
 
   /**
-   * Checks whether the resource is opened in the group.
+   * Checks whether the resource is opened in the group, in an editor or as a preview.
    * @param resource the resource.
-   * @param isPreview if `true`, check if the resource is opened as a preview.
    * @throws {ReferenceError} if any of the arguments is null.
    */
-  contains(resource: monaco.Uri, isPreview?: boolean): boolean {
-    return this._tabs.some((e) => {
-      return e.resource.toString(true) === resource.toString(true)
-        && (isPreview === undefined || isPreview === !!e.options.preview)
-    })
+  contains(resource: monaco.Uri): boolean {
+    return !!this.findTab(resource)
   }
 
   /**
@@ -193,9 +202,7 @@ export class EditorGroup {
    * @throws {ReferenceError} if any of the arguments is null.
    */
   containsPreview(resource: monaco.Uri): boolean {
-    return this._tabs.some((e) => {
-      return e.resource.toString(true) === resource.toString(true) && !!e.options.preview
-    })
+    return !!this.findTab(resource, 'preview')
   }
 
   /**
@@ -203,8 +210,8 @@ export class EditorGroup {
    * @param resource the resource.
    * @throws {ReferenceError} if any of the arguments is null.
    */
-  isActive(resource: monaco.Uri, isPreview?: boolean): boolean {
-    return this.activeResource?.toString(true) === resource.toString(true) && (isPreview === undefined || isPreview === !!this._request?.options.preview)
+  isActive(resource: monaco.Uri): boolean {
+    return !!this.activeResource && sameResource(this.activeResource, resource)
   }
 
   /**
@@ -212,17 +219,25 @@ export class EditorGroup {
    * @param resource the resource to check the index for.
    * @returns The index of the resource or `-1` if the resource is not opened.
    */
-  findIndex(resource: monaco.Uri, isPreview?: boolean): number {
-    return this._tabs.findIndex((e) => {
-      return e.resource.toString(true) === resource.toString(true) && (isPreview === undefined || isPreview === !!e.options.preview)
-    })
+  findIndex(resource: monaco.Uri): number {
+    return this._tabs.findIndex((tab) => sameResource(tab.resource, resource))
+  }
+
+  /**
+   * Finds the tab showing the given resource inside the group.
+   * @param resource the resource.
+   * @param kind restricts the search to the editor or the preview tab of the resource, any of them matches when omitted.
+   * @returns The tab or `undefined` if the resource is not opened.
+   */
+  findTab(resource: monaco.Uri, kind?: EditorTabKind): EditorTab | undefined {
+    return this._tabs.find((tab) => sameResource(tab.resource, resource) && (!kind || tab.kind === kind))
   }
 
   /**
    * Add an editor tab for the given resource inside the group.
    *
    * Note :
-   * A new tab will be created only if the resource is not opened in the group, otherwise the existing tab will be reused.
+   * A resource can have one editor tab and one preview tab in the group, an existing tab of the same kind is reused.
    *
    * @param resource the resource to open.
    * @param options options to pass to the editor that will open the resource.
@@ -230,7 +245,10 @@ export class EditorGroup {
    * @returns An promise that resolve once the resource is opened.
    */
   async open(resource: monaco.Uri, options: OpenOptions): Promise<void> {
-    if (this.isActive(resource, !!options.preview) && !options.preview) return
+    const kind: EditorTabKind = options.preview ? 'preview' : 'editor'
+    // A preview is rendered again on each open, an editor already in front is left as is.
+    const active = this.activeTab
+    if (kind === 'editor' && active?.kind === 'editor' && sameResource(active.resource, resource)) return
 
     this.fileService = this.fileService || this.injector.get(FileService)
 
@@ -254,41 +272,60 @@ export class EditorGroup {
       throw new Error(`There is no registered editor to open "${request.uri}"`)
     }
 
-    if (!this.contains(resource, !!options.preview)) {
-      this._tabs.push({ options, resource, file })
+    let tab = this.findTab(resource, kind)
+    if (!tab) {
+      tab = { kind, options, resource, file }
+      this._tabs.push(tab)
     }
 
     this._request = request
-    this._activeIndex = this.findIndex(resource, !!options.preview)
+    this._activeIndex = this._tabs.indexOf(tab)
     this._activeEditor = editor
-    this._history.push(this._tabs[this._activeIndex])
+    this._history.push(tab)
 
     this.opened(this, editor, resource)
   }
 
   /**
-   * Removes a resource from the group if it has not changed
-   * otherwise ask the user to confirme the closing.
-   *
-   * Note :
-   * The resource will be alwayes removed if it is opened as a preview.
-   *
+   * Removes every tab of the resource from the group (its editor and its preview).
    * @param resource the resource to close.
    * @param force When `true`, force close the resource without asking to save dirty files.
    * @throws {ReferenceError} if any of the arguments is null.
    * @returns A promise that resolve with `true` if the resource is removed `false` otherwise.
    */
-  async close(resource: monaco.Uri, force?: boolean, isPreview?: boolean): Promise<boolean> {
-    const index = this.findIndex(resource, isPreview)
-    if (index === -1) return false
+  async close(resource: monaco.Uri, force?: boolean): Promise<boolean> {
+    const tabs = this._tabs.filter((tab) => sameResource(tab.resource, resource))
+    if (!tabs.length) return false
 
-    const tab = this._tabs[index]
+    for (const tab of tabs) {
+      if (!(await this.closeTab(tab, force))) {
+        return false
+      }
+    }
+    return true
+  }
+
+  /**
+   * Removes a tab from the group if its resource has not changed
+   * otherwise ask the user to confirme the closing.
+   *
+   * Note :
+   * A preview tab is always removed.
+   *
+   * @param tab the tab to close.
+   * @param force When `true`, force close the tab without asking to save dirty files.
+   * @returns A promise that resolve with `true` if the tab is removed `false` otherwise.
+   */
+  async closeTab(tab: EditorTab, force?: boolean): Promise<boolean> {
+    if (!this._tabs.includes(tab)) return false
+
     const closeable =
       force || // close if forced
-      tab.options.preview || // preview resource is always closeable
+      tab.kind === 'preview' || // preview is always closeable
       (await this.closeGuard(this, tab.resource)) // check if dirty
 
-    if (!closeable) return false
+    const index = this._tabs.indexOf(tab)
+    if (!closeable || index === -1) return false
 
     const activeIndex = this._activeIndex
     const wasActive = activeIndex === index
@@ -298,7 +335,6 @@ export class EditorGroup {
       this._request = undefined
       this._activeIndex = -1
       this._activeEditor = undefined
-      this.closed(this, tab.resource, !!tab.options.preview)
     } else if (wasActive) {
       // The active tab was closed but others remain: focus the neighbour (the
       // tab that shifted into its place, or the new last one) so the group is
@@ -308,14 +344,12 @@ export class EditorGroup {
       this._activeEditor = undefined
       const next = this._tabs[Math.min(index, this._tabs.length - 1)]
       await this.open(next.resource, next.options).catch(() => undefined)
-      this.closed(this, tab.resource, !!tab.options.preview)
-    } else {
-      // A background tab was closed: keep the active tab selected and shift its
-      // index only when the removed tab was before it.
-      this._activeIndex = index < activeIndex ? activeIndex - 1 : activeIndex
-      this.closed(this, tab.resource, !!tab.options.preview)
+    } else if (index < activeIndex) {
+      // A background tab before the active one was closed: the active tab shifted left.
+      this._activeIndex = activeIndex - 1
     }
 
+    this.closed(this, tab.resource)
     return true
   }
 
@@ -326,7 +360,7 @@ export class EditorGroup {
    */
   async closeAll(force?: boolean): Promise<boolean> {
     while (this._tabs.length) {
-      if (!(await this.close(this._tabs[0].resource, force))) {
+      if (!(await this.closeTab(this._tabs[0], force))) {
         return false
       }
     }

@@ -48,7 +48,7 @@ export class WorkbenchComponent implements OnInit, OnDestroy {
   }
 
   trackTab(_: number, item: EditorTab) {
-    return `${item.resource.toString(true)}-${item.options.preview ? 'preview' : 'editor'}`
+    return `${item.kind}:${item.resource.toString(true)}`
   }
 
   trackGroup(_: number, item: EditorGroup) {

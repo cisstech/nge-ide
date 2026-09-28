@@ -218,7 +218,7 @@ export class EditorService implements IContribution {
     } else {
       group =
         options.openInGroup ||
-        editorGroups.find((g) => g.contains(resource)) || // open with an existing group containing the resource
+        editorGroups.find((g) => !!g.findTab(resource, 'editor')) || // open with an existing group editing the resource
         this.activeGroup || // open with the active group
         editorGroups.find((_) => true) || // open with any group
         this.createGroup() // open with a new group
@@ -258,27 +258,10 @@ export class EditorService implements IContribution {
    * Closes the resource from all the editor groups.
    * @param resource the resource to close.
    * @param force When `true`, force close the resource without asking to save it if it is dirty.
-   * @param isPreview if defined, close the resource only if it is opened as a preview or not depending on the value of this parameter.
    */
-  async close(resource: monaco.Uri, force?: boolean, isPreview?: boolean): Promise<any> {
-    const groups = this.findGroups((group) => group.contains(resource, isPreview))
-
-    return Promise.all(
-      groups.map(async (group) => {
-        if (isPreview === undefined) {
-          // When isPreview is undefined, we want to close the resource whether it is opened as a preview or not.
-          // So we need to close it until it is no longer opened in the group.
-          while (await group.close(resource, force)) {
-            if (!group.contains(resource)) {
-              break
-            }
-          }
-          return
-        }
-
-        await group.close(resource, force, isPreview)
-      })
-    )
+  async close(resource: monaco.Uri, force?: boolean): Promise<any> {
+    const groups = this.findGroups((group) => group.contains(resource))
+    return Promise.all(groups.map((g) => g.close(resource, force)))
   }
 
   /**
@@ -326,8 +309,7 @@ export class EditorService implements IContribution {
   }
 
   private async closeGuard(_: EditorGroup, resource: monaco.Uri): Promise<boolean> {
-    const shouldConfirm =
-      this.fileService.isDirty(resource) && this.findGroups((group) => group.contains(resource)).length === 1
+    const shouldConfirm = this.fileService.isDirty(resource) && this.countEditingGroups(resource) === 1
     const options: ConfirmOptions = {
       title: `Voulez-vous fermer le fichier "${Paths.basename(resource.path)}"?`,
       message: 'Vos modifications seront perdues si vous ne les enregistrez pas.',
@@ -359,12 +341,17 @@ export class EditorService implements IContribution {
     this.didOpen.next(resource)
   }
 
-  private closeHandler(group: EditorGroup, resource: monaco.Uri, isPreview?: boolean): void {
+  private countEditingGroups(resource: monaco.Uri): number {
+    return this.findGroups((group) => !!group.findTab(resource, 'editor')).length
+  }
+
+  private closeHandler(group: EditorGroup, resource: monaco.Uri): void {
     if (group.isEmpty) {
       this.groups.delete(group.id)
     }
 
-    if (!isPreview && !this.isOpened(resource)) {
+    // A preview only reads the file: its content is released once no editor tab shows it anymore.
+    if (!this.countEditingGroups(resource)) {
       this.fileService.close(resource)
     }
 
