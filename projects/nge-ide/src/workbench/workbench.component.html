@@ -27,10 +27,10 @@
                 @if (tab.file?.readOnly) {
                   <span class="codicon codicon-lock-small" ideTooltip="Éditeur en lecture seule"></span>
                 }
-                @if (tab.resource | fileChanged | async) {
-                  <span class="tab-dirty codicon codicon-close-dirty" (click)="group.close(tab.resource)"></span>
+                @if (tab.kind === 'editor' && (tab.resource | fileChanged | async)) {
+                  <span class="tab-dirty codicon codicon-close-dirty" (click)="group.closeTab(tab)"></span>
                 } @else {
-                  <span class="tab-close codicon codicon-close" (click)="group.close(tab.resource)"></span>
+                  <span class="tab-close codicon codicon-close" (click)="group.closeTab(tab)"></span>
                 }
               </div>
             </ng-template>
