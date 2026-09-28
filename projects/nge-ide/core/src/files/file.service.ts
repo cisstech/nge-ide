@@ -359,7 +359,7 @@ export class FileService implements IContribution {
       await this.writeFile(uri, content.current)
 
       content.changed = false
-      content.initial = content.current || content.initial
+      content.initial = content.current
 
       this.contents.value.set(id, content)
       this.contents.next(this.contents.value)
