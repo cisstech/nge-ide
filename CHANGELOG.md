@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [22.0.1](https://github.com/cisstech/nge-ide/compare/v22.0.0...v22.0.1) (2026-09-28)
+
+
+### Features
+
+* **demo:** rebuild the docs site on file-based nge-doc ([c498c5d](https://github.com/cisstech/nge-ide/commit/c498c5ddffe679df5efa46bfe99b73410aa5821f))
+
+
+### Bug Fixes
+
+* **demo:** drop unsupported --no-build from the gh-pages publish ([78e84a0](https://github.com/cisstech/nge-ide/commit/78e84a06e819b2d96967b8dd5de5c95f27863028))
+* **files:** allow saving again after an empty file was saved ([f853539](https://github.com/cisstech/nge-ide/commit/f853539a4ee001a11eafcce26977f751978886d8)), closes [#474](https://github.com/cisstech/nge-ide/issues/474)
+
 ## [22.0.0](https://github.com/cisstech/nge-ide/compare/v18.1.1...v22.0.0) (2026-07-10)
 
 
