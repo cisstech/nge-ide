@@ -246,9 +246,10 @@ export class EditorGroup {
    */
   async open(resource: monaco.Uri, options: OpenOptions): Promise<void> {
     const kind: EditorTabKind = options.preview ? 'preview' : 'editor'
-    // A preview is rendered again on each open, an editor already in front is left as is.
-    const active = this.activeTab
-    if (kind === 'editor' && active?.kind === 'editor' && sameResource(active.resource, resource)) return
+    // A preview is rendered again on each open, an editor already displayed is left as is.
+    // The displayed request is checked, not the active tab: selecting a tab moves the index before opening it.
+    const displayed = this._request
+    if (kind === 'editor' && displayed && !displayed.options.preview && sameResource(displayed.uri, resource)) return
 
     this.fileService = this.fileService || this.injector.get(FileService)
 

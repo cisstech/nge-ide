@@ -75,6 +75,18 @@ describe('EditorGroup', () => {
     expect(closeGuard).toHaveBeenCalledTimes(1)
   })
 
+  it('shows the selected tab when navigating between tabs', async () => {
+    await group.open(uri('/a.html'), asPreview)
+    await group.open(uri('/a.html'), asEditor)
+    await group.open(uri('/b.html'), asEditor)
+
+    group.activeIndex = 1
+    await new Promise((resolve) => setTimeout(resolve))
+
+    expect(group.activeResource?.path).toBe('/a.html')
+    expect(group.isInPreviewMode).toBe(false)
+  })
+
   it('keeps the active tab when a tab before it is closed', async () => {
     await group.open(uri('/a.md'), asEditor)
     await group.open(uri('/b.md'), asEditor)
