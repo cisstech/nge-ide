@@ -185,6 +185,7 @@
 - [SearchForm](https://cisstech.github.io/nge-ide/docs/api/interfaces/SearchForm)
 - [SearchMatch](https://cisstech.github.io/nge-ide/docs/api/interfaces/SearchMatch)
 - [SearchResult](https://cisstech.github.io/nge-ide/docs/api/interfaces/SearchResult)
+- [EditorTabKind](https://cisstech.github.io/nge-ide/docs/api/type-aliases/EditorTabKind): Whether a tab shows its resource in an editor or as a preview.
 - [IdeButtonSize](https://cisstech.github.io/nge-ide/docs/api/type-aliases/IdeButtonSize): Height/padding scale of an `[ideButton]` (replaces ng-zorro's `nzSize`).
 - [IdeButtonType](https://cisstech.github.io/nge-ide/docs/api/type-aliases/IdeButtonType): Visual style of an `[ideButton]` (replaces ng-zorro's `nzType`).
 - [IdeContextMenuContent](https://cisstech.github.io/nge-ide/docs/api/type-aliases/IdeContextMenuContent): A menu source: a bare `TemplateRef`, or an object that carries one.

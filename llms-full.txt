@@ -866,6 +866,7 @@ Generated from the source. Every export, grouped by kind.
 
 ## Type aliases
 
+- [EditorTabKind](/docs/api/type-aliases/EditorTabKind) - Whether a tab shows its resource in an editor or as a preview.
 - [IdeButtonSize](/docs/api/type-aliases/IdeButtonSize) - Height/padding scale of an `[ideButton]` (replaces ng-zorro's `nzSize`).
 - [IdeButtonType](/docs/api/type-aliases/IdeButtonType) - Visual style of an `[ideButton]` (replaces ng-zorro's `nzType`).
 - [IdeContextMenuContent](/docs/api/type-aliases/IdeContextMenuContent) - A menu source: a bare `TemplateRef`, or an object that carries one.
@@ -2091,6 +2092,7 @@ A group can contains only one active editor at a time and on instance of a resou
 | `activeEditor` | `unknown` |  |
 | `activeIndex` | `unknown` |  |
 | `activeResource` | `unknown` |  |
+| `activeTab` | `unknown` |  |
 | `isEmpty` | `unknown` |  |
 | `isInPreviewMode` | `unknown` |  |
 | `tabs` | `unknown` |  |
@@ -2123,6 +2125,23 @@ closeAll(force?: boolean): Promise<boolean>
 ### Parameters
 
 - `force` (`boolean`) - When `true`, force close the files without asking to save dirty files.
+
+### Returns
+
+`Promise<boolean>`
+
+## `closeTab()`
+
+## Signature
+
+```typescript
+closeTab(tab: EditorTab, force?: boolean): Promise<boolean>
+```
+
+### Parameters
+
+- `tab` (`EditorTab`) - the tab to close.
+- `force` (`boolean`) - When `true`, force close the tab without asking to save dirty files.
 
 ### Returns
 
@@ -2191,6 +2210,23 @@ findIndex(resource: Uri): number
 ### Returns
 
 `number`
+
+## `findTab()`
+
+## Signature
+
+```typescript
+findTab(resource: Uri, kind?: EditorTabKind): EditorTab | undefined
+```
+
+### Parameters
+
+- `resource` (`Uri`) - the resource.
+- `kind` (`EditorTabKind`) - restricts the search to the editor or the preview tab of the resource, any of them matches when omitted.
+
+### Returns
+
+`EditorTab | undefined`
 
 ## `isActive()`
 
@@ -9049,6 +9085,7 @@ Source: https://cisstech.github.io/nge-ide/docs/api/interfaces/EditorTab
 | Name | Type | Description |
 | --- | --- | --- |
 | `file? (readonly)` | `IFile` | The file associated with the request if any. |
+| `kind (readonly)` | `EditorTabKind` | Whether the tab shows the resource in an editor or as a preview. |
 | `options (readonly)` | `OpenOptions` | The options associated with the tab. |
 | `resource (readonly)` | `Uri` | The uri of the resource. |
 
@@ -9829,6 +9866,21 @@ Source: https://cisstech.github.io/nge-ide/docs/api/interfaces/SearchResult
 | --- | --- | --- |
 | `entry (readonly)` | `T` |  |
 | `matches (readonly)` | `SearchMatch[]` |  |
+
+---
+
+# EditorTabKind
+Source: https://cisstech.github.io/nge-ide/docs/api/type-aliases/EditorTabKind
+
+# EditorTabKind
+
+`type`
+
+Whether a tab shows its resource in an editor or as a preview.
+
+```typescript
+type EditorTabKind = "editor" | "preview"
+```
 
 ---
 

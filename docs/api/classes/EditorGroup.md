@@ -19,6 +19,7 @@ A group can contains only one active editor at a time and on instance of a resou
 | `activeEditor` | `unknown` |  |
 | `activeIndex` | `unknown` |  |
 | `activeResource` | `unknown` |  |
+| `activeTab` | `unknown` |  |
 | `isEmpty` | `unknown` |  |
 | `isInPreviewMode` | `unknown` |  |
 | `tabs` | `unknown` |  |
@@ -51,6 +52,23 @@ closeAll(force?: boolean): Promise<boolean>
 ### Parameters
 
 - `force` (`boolean`) - When `true`, force close the files without asking to save dirty files.
+
+### Returns
+
+`Promise<boolean>`
+
+## `closeTab()`
+
+## Signature
+
+```typescript
+closeTab(tab: EditorTab, force?: boolean): Promise<boolean>
+```
+
+### Parameters
+
+- `tab` (`EditorTab`) - the tab to close.
+- `force` (`boolean`) - When `true`, force close the tab without asking to save dirty files.
 
 ### Returns
 
@@ -119,6 +137,23 @@ findIndex(resource: Uri): number
 ### Returns
 
 `number`
+
+## `findTab()`
+
+## Signature
+
+```typescript
+findTab(resource: Uri, kind?: EditorTabKind): EditorTab | undefined
+```
+
+### Parameters
+
+- `resource` (`Uri`) - the resource.
+- `kind` (`EditorTabKind`) - restricts the search to the editor or the preview tab of the resource, any of them matches when omitted.
+
+### Returns
+
+`EditorTab | undefined`
 
 ## `isActive()`
 

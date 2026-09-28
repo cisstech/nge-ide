@@ -191,6 +191,7 @@ Generated from the source. Every export, grouped by kind.
 
 ## Type aliases
 
+- [EditorTabKind](/docs/api/type-aliases/EditorTabKind) - Whether a tab shows its resource in an editor or as a preview.
 - [IdeButtonSize](/docs/api/type-aliases/IdeButtonSize) - Height/padding scale of an `[ideButton]` (replaces ng-zorro's `nzSize`).
 - [IdeButtonType](/docs/api/type-aliases/IdeButtonType) - Visual style of an `[ideButton]` (replaces ng-zorro's `nzType`).
 - [IdeContextMenuContent](/docs/api/type-aliases/IdeContextMenuContent) - A menu source: a bare `TemplateRef`, or an object that carries one.

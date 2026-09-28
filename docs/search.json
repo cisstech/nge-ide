@@ -265,7 +265,7 @@
     "slug": "/docs/api#type-aliases",
     "title": "API reference",
     "heading": "Type aliases",
-    "content": "IdeButtonSize - Height/padding scale of an [ideButton] (replaces ng-zorro's nzSize). IdeButtonType - Visual style of an [ideButton] (replaces ng-zorro's nzType). IdeContextMenuContent - A menu source: a bare TemplateRef, or an object that carries one. IdeModalButtonType - Visual style of an IdeModalButton (replaces ng-zorro's button nzType). IdeSpinnerSize - Diameter preset for SpinnerComponent. IdeTabsType - Visual style of the tab bar (renamed from ng-zorro's nzType). NotificationLevel ResolvedTheme ThemeMode"
+    "content": "EditorTabKind - Whether a tab shows its resource in an editor or as a preview. IdeButtonSize - Height/padding scale of an [ideButton] (replaces ng-zorro's nzSize). IdeButtonType - Visual style of an [ideButton] (replaces ng-zorro's nzType). IdeContextMenuContent - A menu source: a bare TemplateRef, or an object that carries one. IdeModalButtonType - Visual style of an IdeModalButton (replaces ng-zorro's button nzType). IdeSpinnerSize - Diameter preset for SpinnerComponent. IdeTabsType - Visual style of the tab bar (renamed from ng-zorro's nzType). NotificationLevel ResolvedTheme ThemeMode"
   },
   {
     "slug": "/docs/api#variables",
@@ -1562,7 +1562,7 @@
     "slug": "/docs/api/classes/EditorGroup#properties",
     "title": "EditorGroup",
     "heading": "Properties",
-    "content": "Name Type Description --- --- --- id (readonly) string Unique identifier of this group. activeEditor unknown activeIndex unknown activeResource unknown isEmpty unknown isInPreviewMode unknown tabs unknown"
+    "content": "Name Type Description --- --- --- id (readonly) string Unique identifier of this group. activeEditor unknown activeIndex unknown activeResource unknown activeTab unknown isEmpty unknown isInPreviewMode unknown tabs unknown"
   },
   {
     "slug": "/docs/api/classes/EditorGroup#close",
@@ -1605,6 +1605,30 @@
     "title": "EditorGroup",
     "heading": "Parameters",
     "content": "force (boolean) - When true, force close the files without asking to save dirty files."
+  },
+  {
+    "slug": "/docs/api/classes/EditorGroup#returns",
+    "title": "EditorGroup",
+    "heading": "Returns",
+    "content": "Promise<boolean>"
+  },
+  {
+    "slug": "/docs/api/classes/EditorGroup#closetab",
+    "title": "EditorGroup",
+    "heading": "`closeTab()`",
+    "content": ""
+  },
+  {
+    "slug": "/docs/api/classes/EditorGroup#signature",
+    "title": "EditorGroup",
+    "heading": "Signature",
+    "content": "closeTab(tab: EditorTab, force?: boolean): Promise<boolean>"
+  },
+  {
+    "slug": "/docs/api/classes/EditorGroup#parameters",
+    "title": "EditorGroup",
+    "heading": "Parameters",
+    "content": "tab (EditorTab) - the tab to close. force (boolean) - When true, force close the tab without asking to save dirty files."
   },
   {
     "slug": "/docs/api/classes/EditorGroup#returns",
@@ -1707,6 +1731,30 @@
     "title": "EditorGroup",
     "heading": "Returns",
     "content": "number"
+  },
+  {
+    "slug": "/docs/api/classes/EditorGroup#findtab",
+    "title": "EditorGroup",
+    "heading": "`findTab()`",
+    "content": ""
+  },
+  {
+    "slug": "/docs/api/classes/EditorGroup#signature",
+    "title": "EditorGroup",
+    "heading": "Signature",
+    "content": "findTab(resource: Uri, kind?: EditorTabKind): EditorTab undefined"
+  },
+  {
+    "slug": "/docs/api/classes/EditorGroup#parameters",
+    "title": "EditorGroup",
+    "heading": "Parameters",
+    "content": "resource (Uri) - the resource. kind (EditorTabKind) - restricts the search to the editor or the preview tab of the resource, any of them matches when omitted."
+  },
+  {
+    "slug": "/docs/api/classes/EditorGroup#returns",
+    "title": "EditorGroup",
+    "heading": "Returns",
+    "content": "EditorTab undefined"
   },
   {
     "slug": "/docs/api/classes/EditorGroup#isactive",
@@ -9848,7 +9896,7 @@
     "slug": "/docs/api/interfaces/EditorTab#properties",
     "title": "EditorTab",
     "heading": "Properties",
-    "content": "Name Type Description --- --- --- file? (readonly) IFile The file associated with the request if any. options (readonly) OpenOptions The options associated with the tab. resource (readonly) Uri The uri of the resource."
+    "content": "Name Type Description --- --- --- file? (readonly) IFile The file associated with the request if any. kind (readonly) EditorTabKind Whether the tab shows the resource in an editor or as a preview. options (readonly) OpenOptions The options associated with the tab. resource (readonly) Uri The uri of the resource."
   },
   {
     "slug": "/docs/api/interfaces/FileNestingPattern",
@@ -10537,6 +10585,11 @@
     "title": "SearchResult",
     "heading": "Properties",
     "content": "Name Type Description --- --- --- entry (readonly) T matches (readonly) SearchMatch[]"
+  },
+  {
+    "slug": "/docs/api/type-aliases/EditorTabKind",
+    "title": "EditorTabKind",
+    "content": "type Whether a tab shows its resource in an editor or as a preview. type EditorTabKind = \"editor\" \"preview\""
   },
   {
     "slug": "/docs/api/type-aliases/IdeButtonSize",

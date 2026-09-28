@@ -550,6 +550,9 @@
     <loc>https://cisstech.github.io/nge-ide/docs/api/interfaces/SearchResult</loc>
   </url>
   <url>
+    <loc>https://cisstech.github.io/nge-ide/docs/api/type-aliases/EditorTabKind</loc>
+  </url>
+  <url>
     <loc>https://cisstech.github.io/nge-ide/docs/api/type-aliases/IdeButtonSize</loc>
   </url>
   <url>
