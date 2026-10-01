@@ -61,7 +61,7 @@
     "ngx-pipes": "^3.2.2",
     "rxjs": "^7.5.2",
     "tslib": "^2.0.0",
-    "zone.js": "~0.15.1"
+    "zone.js": "~0.16.3"
   },
   "devDependencies": {
     "@angular-builders/jest": "^21.0.0",
