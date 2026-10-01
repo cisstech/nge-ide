@@ -2555,7 +2555,7 @@ __metadata:
     "@cisstech/nge": "npm:^22.4.4"
     "@commitlint/cli": "npm:^19.4.0"
     "@commitlint/config-conventional": "npm:^19.2.2"
-    "@ngx-pwa/local-storage": "npm:^18.0.0"
+    "@ngx-pwa/local-storage": "npm:^22.0.0"
     "@types/jest": "npm:^29.5.12"
     "@types/marked": "npm:^4.0.1"
     "@types/node": "npm:^24"
@@ -4774,16 +4774,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@ngx-pwa/local-storage@npm:^18.0.0":
-  version: 18.0.0
-  resolution: "@ngx-pwa/local-storage@npm:18.0.0"
+"@ngx-pwa/local-storage@npm:^22.0.0":
+  version: 22.0.0
+  resolution: "@ngx-pwa/local-storage@npm:22.0.0"
   dependencies:
     tslib: "npm:^2.5.0"
   peerDependencies:
-    "@angular/common": ^18.0.0
-    "@angular/core": ^18.0.0
+    "@angular/common": ^22.0.0
+    "@angular/core": ^22.0.0
     rxjs: ^7.6.0
-  checksum: 10c0/3fcee44287b2df80128c52751dd488dfdf41fa8ec953863f253fd961f44de5de6564b9e8806fc410d4bf3bffe101e7a140c01751732cdf3f6a0d4cd8fa639d0d
+  checksum: 10c0/5e0b63deb304d4084aa084393d502f41c6402ea4243fb76f7cbc5852e85b70a47b227bf9866f9cbbac523f7ddd655db3b54d6e8c82d42781f298329857e61ffc
   languageName: node
   linkType: hard
 
