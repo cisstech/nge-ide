@@ -705,14 +705,14 @@ __metadata:
   linkType: hard
 
 "@angular/common@npm:^22.0.6":
-  version: 22.0.6
-  resolution: "@angular/common@npm:22.0.6"
+  version: 22.2.0
+  resolution: "@angular/common@npm:22.2.0"
   dependencies:
     tslib: "npm:^2.3.0"
   peerDependencies:
-    "@angular/core": 22.0.6
+    "@angular/core": 22.2.0
     rxjs: ^6.5.3 || ^7.4.0
-  checksum: 10c0/97dfeb79abd80ddf60e95f4e6a625db729d177a2986fbca174962b6d1e69b85973ec6f21de9a46f65cda540070d895de725aca431c9d74057cd8d881fc592420
+  checksum: 10c0/bdfec2cecd6937be14c60029c2281bdb66c3ce505a15179995fa5b883a5a887a8ddb25ec6663b6b38758561561e94cb7a3fc631a2f07606a1d5de3e918602de7
   languageName: node
   linkType: hard
 
