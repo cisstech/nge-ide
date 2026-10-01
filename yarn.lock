@@ -789,18 +789,18 @@ __metadata:
   linkType: hard
 
 "@angular/forms@npm:^22.0.6":
-  version: 22.0.6
-  resolution: "@angular/forms@npm:22.0.6"
+  version: 22.2.0
+  resolution: "@angular/forms@npm:22.2.0"
   dependencies:
     "@standard-schema/spec": "npm:^1.0.0"
     tslib: "npm:^2.3.0"
     zod: "npm:^4.0.10"
   peerDependencies:
-    "@angular/common": 22.0.6
-    "@angular/core": 22.0.6
-    "@angular/platform-browser": 22.0.6
+    "@angular/common": 22.2.0
+    "@angular/core": 22.2.0
+    "@angular/platform-browser": 22.2.0
     rxjs: ^6.5.3 || ^7.4.0
-  checksum: 10c0/77e9e2ee14880e6c11cadd5ca1b989ac5571c700c8ef4cb1265536951007264adbdb39ecc8d67e74a0f58c21c07e5adfdfd4a5b2dbef3d4454b1c59c16e8e6be
+  checksum: 10c0/1328c716931011e91f144cfe74e752b1ac963ac2e44250e5bb97c0b8fa756e5db13ade271bdb949615a86cef1349fe309d17e0ffde1a5912f8c27d4d3895dcc5
   languageName: node
   linkType: hard
 
