@@ -2,6 +2,8 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [22.0.3](https://github.com/cisstech/nge-ide/compare/v22.0.2...v22.0.3) (2026-10-29)
+
 ### [22.0.2](https://github.com/cisstech/nge-ide/compare/v22.0.1...v22.0.2) (2026-09-28)
 
 
