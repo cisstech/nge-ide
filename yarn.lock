@@ -2598,8 +2598,8 @@ __metadata:
   linkType: soft
 
 "@cisstech/nge@npm:^22.4.4":
-  version: 22.4.4
-  resolution: "@cisstech/nge@npm:22.4.4"
+  version: 22.4.5
+  resolution: "@cisstech/nge@npm:22.4.5"
   dependencies:
     marked: "npm:^11.0.1"
     tslib: "npm:^2.3.0"
@@ -2627,7 +2627,7 @@ __metadata:
       optional: true
     typedoc:
       optional: true
-  checksum: 10c0/ba11844a537c34ff817b5824060e93b6b4f8f6b11ab6f1b833d1b276da494f98187e21bc21086655d225997c3560d9621fbe37ca8bf9852b844b27ddaafc1bc6
+  checksum: 10c0/aaa91169345302315d62680ce2d925fc95a6ca13ca5bb7bebfef2ed0a56389580af8bf63b758c94d688da2609d28f265c4753b51d90dd3bf2c3e1e505c7226fc
   languageName: node
   linkType: hard
 
